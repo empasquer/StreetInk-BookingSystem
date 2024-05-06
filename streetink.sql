@@ -14,7 +14,6 @@ CREATE TABLE tattoo_artist(
 	email VARCHAR(255) NOT NULL,
 	phone_number VARCHAR(255) NOT NULL,
 	profile_picture LONGBLOB,
-	is_active BOOLEAN DEFAULT 1,
 	avg_work_hours INT NOT NULL
 );
 
