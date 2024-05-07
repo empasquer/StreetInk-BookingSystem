@@ -2,9 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Artists</title>
 </head>
 <body>
+<div class="section">
+    <h1>Choose a Profile</h1>
 
+    <form action="/addUser" method="get">
+        <button type="submit">Create new profil</button>
+    </form>
+
+    <hr>
+
+    <table>
+        <tbody>
+        <tr th:each="tattooArtist : ${tattooArtists}">
+            <td th:text="${tattooArtist.username}"></td>
+            <td th:text="${user.username}"></td>
+            <td>
+                <form action="/verifyPassword" method="get">
+                    <input type="hidden" name="id" th:value="${tattooArtist.username}">
+                    <input type="submit" value="Pick user">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

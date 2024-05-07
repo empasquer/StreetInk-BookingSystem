@@ -1,14 +1,18 @@
 package com.example.streetinkbookingsystem.models;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 public class Person {
     private String firstName;
     private String lastName;
     private String email;
     private int phoneNumber;
+    //private JdbcTemplate jdbcTemplate;
 
-    public Person(){
-
+    public Person() {
+        //this.jdbcTemplate = new JdbcTemplate();
     }
+
 
     public String getFirstName() {
         return firstName;
