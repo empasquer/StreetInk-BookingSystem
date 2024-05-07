@@ -12,6 +12,7 @@
 <!--header  -->
 <article>
     <h1 th:text="${date.getMonth()}"></h1>
+    <h2 th:text="${date.getYear()}"></h2>
 <!--prev and next buttons-->
     <form th:action="@{/calender/next}" method="post">
         <input type="hidden" name="year" th:value="${date.year}" />
@@ -53,15 +54,25 @@
                     <li><p>4</p></li>
                     <li><p>5</p></li>
                     <li><p>6</p></li>
-
                 </ul>
 
                 <ul class="dates">
-                    <li th:each="day : ${daysInMonth}">
-                        <p th:text="${day.getDayOfMonth()}"></p>
+                    <!--Should be based on percentage of day booked, but this will do for now -->
+                    <li class="day-wrapper" th:each="day : ${daysInMonth}">
+                        <th:block th:if="${bookingService.getBookingCountForDate(day) > 3}">
+                            <a class="booked-day-date" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                        </th:block>
+
+                        <th:block th:if="${bookingService.getBookingCountForDate(day) <= 3 && bookingService.getBookingCountForDate(day) >= 1}">
+                            <a class="semi-booked-day-date" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                        </th:block>
+
+                        <th:block th:if="${bookingService.getBookingCountForDate(day) < 1}">
+                            <a class="open-day-date" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                        </th:block>
+
                     </li>
                 </ul>
-
 
                 </div>
             </div>

@@ -14,7 +14,7 @@
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    grid-column-gap: 3px; /* Gap between columns */
+    grid-column-gap: 1px; /* Gap between columns */
     grid-row-gap: 4px; /* Gap between rows */
 
 }
@@ -28,6 +28,15 @@
     grid-column-gap: 3px;
     grid-row-gap: 4px;
 }
+
+a {
+    text-decoration: none !important; /* Remove underline */
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
 .dates {
     grid-area: 0 / 2 / 5 / 2;
     display: grid;
@@ -35,9 +44,50 @@
     grid-template-rows: repeat(6,1fr);
     border: 1px solid black;
     padding-left: 7%;
-    grid-column-gap: 3px;
-    grid-row-gap: 4px;
+    grid-column-gap: 1px;
+    grid-row-gap: 38px;
+    padding-top: 5px;
 }
+
 li {
     list-style: none;
 }
+.dates li {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+
+}
+
+.day-wrapper {
+    border-radius: 5px;
+    border: solid black;
+    width: 20%;
+    height: 140%;
+
+}
+.booked-day-date {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    background-color: darkred;
+
+}
+.semi-booked-day-date {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    background-color: orangered;
+}
+
+.open-day-date {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    background-color: lightgrey;
+}
+

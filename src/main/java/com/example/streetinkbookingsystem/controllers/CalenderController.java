@@ -1,6 +1,8 @@
 package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.models.Calendar;
+import com.example.streetinkbookingsystem.repository.BookingRepository;
+import com.example.streetinkbookingsystem.service.BookingService;
 import com.example.streetinkbookingsystem.service.CalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ public class CalenderController {
 
     @Autowired
     CalendarService calendarService;
+    @Autowired
+    BookingService bookingService;
 
     // If there is passed date in the parameters then it display that month/year.
     // otherwise it will display the current month.
@@ -27,11 +31,14 @@ public class CalenderController {
         LocalDate date;
         if (year == null && month == null) {
              date = calendarService.getCurrentDate();
+            System.out.println(bookingService.getBookingCountForDate(date));
         } else
              date= LocalDate.of(year, month, 1); // start day is always the first in the month
         ArrayList<LocalDate> daysInMonth = calendarService.getDaysInMonth(date.getYear(), date.getMonth());
         model.addAttribute("daysInMonth", daysInMonth);
         model.addAttribute("date", date);
+        model.addAttribute("bookingService", bookingService);
+
         return "home/calender";
     }
 
