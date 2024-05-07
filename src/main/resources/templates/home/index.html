@@ -18,7 +18,6 @@
         <tbody>
         <tr th:each="tattooArtist : ${tattooArtists}">
             <td th:text="${tattooArtist.username}"></td>
-            <td th:text="${user.username}"></td>
             <td>
                 <form action="/verifyPassword" method="get">
                     <input type="hidden" name="id" th:value="${tattooArtist.username}">

@@ -6,7 +6,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     //private JdbcTemplate jdbcTemplate;
 
     public Person() {
@@ -38,11 +38,11 @@ public class Person {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

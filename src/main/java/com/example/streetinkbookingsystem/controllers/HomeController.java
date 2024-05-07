@@ -13,8 +13,8 @@ public class HomeController {
     private TattooArtistService tattooArtistService;
 
     @GetMapping("/")
-    public String home(Model model){
-        model.addAttribute("tattooArtist", tattooArtistService.showTattooArtist());
+    public String index(Model model){
+        model.addAttribute("tattooArtists", tattooArtistService.showTattooArtist());
         return "home/index";
     }
 }

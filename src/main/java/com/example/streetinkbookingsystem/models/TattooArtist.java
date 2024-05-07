@@ -9,10 +9,8 @@ public class TattooArtist extends Person {
     private String facebookUrl;
     private String instragramUrl;
     private int avgWorkHours;
-    private JdbcTemplate jdbcTemplate;
 
-    public TattooArtist(){
-        this.jdbcTemplate = new JdbcTemplate();
+    public TattooArtist() {
     }
 
     public String getUsername() {
@@ -63,11 +61,4 @@ public class TattooArtist extends Person {
         this.avgWorkHours = avgWorkHours;
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 }
