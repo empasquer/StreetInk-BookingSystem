@@ -14,7 +14,8 @@ CREATE TABLE tattoo_artist(
 	email VARCHAR(255) NOT NULL,
 	phone_number VARCHAR(255) NOT NULL,
 	profile_picture LONGBLOB,
-	avg_work_hours INT NOT NULL
+	avg_work_hours INT NOT NULL,
+    isAdmin BOOLEAN DEFAULT 0
 );
 
 DROP TABLE IF EXISTS client;
@@ -59,10 +60,10 @@ VALUES
 ("Hella", "Nice", "hellanice@dummy.com", "+45 11 11 11 11", "They're hella nice"),
 ("Seeu", "Later", "aligator@dummy.com", "+45 22 22 22 22", "Always f*cking late");
 
-INSERT INTO tattoo_artist (username, password, first_name, last_name, email, phone_number, avg_work_hours) 
+INSERT INTO tattoo_artist (username, password, first_name, last_name, email, phone_number, avg_work_hours, isAdmin) 
 VALUES 
-("smallDummy", 123, "Small", "Dummy", "smalldummy@dummy.com", "+45 12 34 56 78", 8),
-("bigDummy", 321, "Big", "Dummy", "bigdummy@dummy.com", "+45 87 65 43 21", 4);
+("smallDummy", 123, "Small", "Dummy", "smalldummy@dummy.com", "+45 12 34 56 78", 8,0),
+("bigDummy", 321, "Big", "Dummy", "bigdummy@dummy.com", "+45 87 65 43 21", 4,1);
 
 
 INSERT INTO booking (start_time_slot, end_time_slot, date, client_id, username, project_title, project_desc, personal_note, is_deposit_payed) 
