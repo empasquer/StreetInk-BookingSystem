@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Calender</title>
+    <link rel="stylesheet" type="text/css" href="calendar.css">
 </head>
 <body>
 <main>
@@ -12,30 +13,61 @@
 <article>
     <h1 th:text="${date.getMonth()}"></h1>
 <!--prev and next buttons-->
+    <form th:action="@{/calender/next}" method="post">
+        <input type="hidden" name="year" th:value="${date.year}" />
+        <input type="hidden" name="month" th:value="${date.monthValue}" />
+        <button type="submit">Next</button>
+    </form>
+
+    <form th:action="@{/calender/previous}" method="post">
+        <input type="hidden" name="year" th:value="${date.year}" />
+        <input type="hidden" name="month" th:value="${date.monthValue}" />
+        <button type="submit">Previous</button>
+    </form>
+
 </article>
+
     <!--Calender -->
     <article>
-    <div>
-     <p th:text="${date.getYear()}">
+        <!--Calender -->
+        <article>
+            <div class="parent">
+                <!-- Weekdays -->
+                <ul class="weekdays">
+                    <li>Week</li>
+                    <li>Monday</li>
+                    <li>Tuesday</li>
+                    <li>Wednesday</li>
+                    <li>Thursday</li>
+                    <li>Friday</li>
+                    <li>Saturday</li>
+                    <li>Sunday</li>
+                </ul>
 
-        <form th:action="@{/calender/next}" method="post">
-            <input type="hidden" name="year" th:value="${date.year}" />
-            <input type="hidden" name="month" th:value="${date.monthValue}" />
-            <button type="submit">Next</button>
-        </form>
+                <div class="calendar-grid">
 
-        <form th:action="@{/calender/previous}" method="post">
-            <input type="hidden" name="year" th:value="${date.year}" />
-            <input type="hidden" name="month" th:value="${date.monthValue}" />
-            <button type="submit">Previous</button>
-        </form>
-    <!-- <p th:text="${date.getDay()}"> -->
-        <ul>
-        <li th:each="day : ${daysInMonth}">
-            <p th:text="${day.getDayOfMonth()}"></p>
-        </li>
-    </ul>
-    </div>
+                <ul class="weeknumbers">
+                    <li><p>1</p></li>
+                    <li><p>2</p></li>
+                    <li><p>3</p></li>
+                    <li><p>4</p></li>
+                    <li><p>5</p></li>
+                    <li><p>6</p></li>
+
+                </ul>
+
+                <ul class="dates">
+                    <li th:each="day : ${daysInMonth}">
+                        <p th:text="${day.getDayOfMonth()}"></p>
+                    </li>
+                </ul>
+
+
+                </div>
+            </div>
+        </article>
+
+
     </article>
 <!--footer  -->
 </section>
