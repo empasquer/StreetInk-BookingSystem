@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Calender</title>
+    <title>Calendar</title>
     <link rel="stylesheet" type="text/css" href="calendar.css">
 </head>
 <body>
@@ -14,13 +14,13 @@
     <h1 th:text="${date.getMonth()}"></h1>
     <h2 th:text="${date.getYear()}"></h2>
 <!--prev and next buttons-->
-    <form th:action="@{/calender/next}" method="post">
+    <form th:action="@{/calendar/next}" method="post">
         <input type="hidden" name="year" th:value="${date.year}" />
         <input type="hidden" name="month" th:value="${date.monthValue}" />
         <button type="submit">Next</button>
     </form>
 
-    <form th:action="@{/calender/previous}" method="post">
+    <form th:action="@{/calendar/previous}" method="post">
         <input type="hidden" name="year" th:value="${date.year}" />
         <input type="hidden" name="month" th:value="${date.monthValue}" />
         <button type="submit">Previous</button>
@@ -28,9 +28,7 @@
 
 </article>
 
-    <!--Calender -->
-    <article>
-        <!--Calender -->
+    <!--Calendar -->
         <article>
             <div class="parent">
                 <!-- Weekdays -->
@@ -76,8 +74,6 @@
 
                 </div>
             </div>
-        </article>
-
 
     </article>
 <!--footer  -->

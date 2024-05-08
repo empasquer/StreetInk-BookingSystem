@@ -1,12 +1,13 @@
 package com.example.streetinkbookingsystem.controllers;
 
+import com.example.streetinkbookingsystem.models.Calendar;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String seeIndex(){
+    public String home(){
         return "home/index";
     }
 }
