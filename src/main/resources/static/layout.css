@@ -15,9 +15,13 @@
     --booking-on-day: hsla(0, 50%, 37%, 0.8); /* #813A3A with 80% opacity */
 }
 
-html {
+* {
     margin: 0;
     padding:0;
+}
+
+html {
+    font-size: 16px;
 }
 
 img {
@@ -32,11 +36,21 @@ img {
 
 body {
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
     background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
     color: var(--input-field-gray);
+    flex: 1;
+    padding: 2rem 10vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 a {
@@ -53,11 +67,25 @@ header, footer {
     color: var(--h1-color);
 }
 
-
-
 h1 {
     color: var(--h1-color);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
 
 input {
     border-radius: 5px;
@@ -67,16 +95,33 @@ input {
     box-shadow: 0 14px 18px 5px rgba(0,0,0,0.26) inset;
 }
 
-.box-shadow {
-    box-shadow: 0px 5px 6px 5px rgba(0,0,0,0.37);
-}
 
 section {
     background-color: var(--section-background-color);
     border-radius: 15px;
+    padding: 2rem;
 }
 
-button .gray-button {
+
+button {
+    font-size: 1.25rem;
+}
+
+
+
+
+
+/* classes */
+
+.inset {
+    box-shadow: 0 4px 8px 5px rgba(0,0,0,0.26) inset;
+}
+
+.box-shadow {
+    box-shadow: 0px 5px 6px 5px rgba(0,0,0,0.37);
+}
+
+.gray-button {
     border-radius: 15px;
     background-color: var(--button-gray);
     color: var(--white);
@@ -84,7 +129,7 @@ button .gray-button {
     padding:1rem;
 }
 
-button .red-button {
+.red-button {
     border-radius: 15px;
     background-color: var(--accent-red);
     color: var(--input-field-gray);
@@ -103,6 +148,8 @@ footer {
     justify-content: center;
     align-items: center;
     text-align: center;
+    flex-shrink: 0;
+
 }
 
 footer img {
