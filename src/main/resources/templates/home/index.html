@@ -15,22 +15,24 @@
         <div class="username-container">
             <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
                 <div class="profile-container">
-                    <form action="/verifyPassword" method="get">
-                        <input type="hidden" name="id" th:value="${tattooArtist.username}">
-                        <button type="submit" style="display: none;"></button>
-                    </form>
-                    <img src="/assets/Default_Profile_pic.png" alt="Profile Picture" class="profile-pic">
-                    <div th:text="${tattooArtist.username}"></div>
+                    <!-- i stedet for usynlig knap, linker jeg til Login. Chatmanden siger at det er lige så fint som en knap -->
+                    <a th:href="@{'/login?username=' + ${tattooArtist.username}}">
+                        <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic">
+                        <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
+                    </a>
 
+                    <div th:text="${tattooArtist.username}"></div>
                 </div>
             </div>
         </div>
         <div style="text-align: center;">
-            <form action="/addUser" method="get">
+            <form action="/create-new-profile" method="get">
                 <button type="submit" class="red-button">Create new profile</button>
             </form>
         </div>
+
     </section>
+
 </main>
 <footer th:block th:include="home/footer :: footer"></footer>
 </body>
