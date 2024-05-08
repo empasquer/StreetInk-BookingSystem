@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #imageContainer {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .imageBox {
+      width: 200px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    .imageBox img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div id="imageContainer">
+  <div class="imageBox">
+    <img src="billede1.jpg" alt="Billede 1">
+  </div>
+  <div class="imageBox">
+    <img src="billede2.jpg" alt="Billede 2">
+  </div>
+</div>
+
+<button id="addImageButton">Tilføj billede</button>
+
+</body>
+</html>

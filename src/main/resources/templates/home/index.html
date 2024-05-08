@@ -3,43 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Artists</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
 <main>
-<h1>Choose a Profile</h1>
+    <h1>Choose a Profile</h1>
 
-<div class="section">
+    <section>
 
-    <div class="username-container">
-        <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
-            <div class="profile-container">
-                <form action="/verifyPassword" method="get">
-                    <input type="hidden" name="id" th:value="${tattooArtist.username}">
-                    <button type="submit" style="display: none;"></button>
-                </form>
-                <img src="../../static/Default_Profile_pic.png" alt="Profile Picture" class="profile-pic" onclick="this.closest('form').submit()">
-                <div th:text="${tattooArtist.username}"></div>
+        <div class="username-container">
+            <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
+                <div class="profile-container">
+                    <form action="/verifyPassword" method="get">
+                        <input type="hidden" name="id" th:value="${tattooArtist.username}">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
+                    <img src="/assets/Default_Profile_pic.png" alt="Profile Picture" class="profile-pic">
+                    <div th:text="${tattooArtist.username}"></div>
+
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<form action="/addUser" method="get">
-    <button type="submit">Create new profile</button>
-</form>
-
-
-<p>Choose a Profile</p>
-<table>
-    <tr th:each="tattooArtist : ${tattooArtists}" class="username-item">
-        <td><img class="profile-pic" src="../../static/demo_profile_pic.png" height="260" width="284"/>
-        <td th:text="${tattooArtist.username}"></td></td>
-        <td><img class="profile-pic" src="../../static/demo_profile_pic.png" height="260" width="284"/>
-        <td th:text="${tattooArtist.username}"></td></td>
-    </tr>
-</table>
+        <div style="text-align: center;">
+            <form action="/addUser" method="get">
+                <button type="submit" class="red-button">Create new profile</button>
+            </form>
+        </div>
+    </section>
 </main>
+<footer th:block th:include="home/footer :: footer"></footer>
 </body>
 </html>
