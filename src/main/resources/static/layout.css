@@ -53,6 +53,8 @@ header, footer {
     color: var(--h1-color);
 }
 
+
+
 h1 {
     color: var(--h1-color);
 }
@@ -88,4 +90,22 @@ button .red-button {
     color: var(--input-field-gray);
     border:none;
     padding:1rem;
+}
+
+
+
+/* header og footer styles */
+
+footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+footer img {
+    width: 200px;
+
 }
