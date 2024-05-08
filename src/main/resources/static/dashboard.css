@@ -1,0 +1,28 @@
+.stat-wrapper {
+    background-color: var(--button-gray);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+}
+
+.red {
+    color: var(--accent-red);
+}
+
+.last {
+    margin-bottom: 0;
+}
+
+section {
+    margin-bottom: 3rem;
+}
+
+.red-button {
+    padding: 3rem;
+text-decoration: none;
+}
+
+
+.big {
+    font-size: 3rem;
+}

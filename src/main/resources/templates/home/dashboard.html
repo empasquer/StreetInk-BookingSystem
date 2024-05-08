@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/dashboard.css">
 </head>
 <body>
     <main>
+        <h1 th:text="'Welcome ' + ${profile.username} + '!'"></h1>
+        <section class="box-shadow">
+            <div class="inset stat-wrapper">
+                <h2>You have <span class="red big" th:text="xx"></span> bookings today</h2>
+            </div>
+            <div class="inset stat-wrapper">
+                <h2><span class="red big" th:text="'xx' + '%'"></span> of your month is booked</h2>
+            </div>
+            <div class="inset stat-wrapper">
+                <h2>You are <span  class="red big" th:text="'xx' + '%'"></span> into the month</h2>
+            </div>
+            <div class="inset stat-wrapper last">
+                <h2>You have <span class="red big" th:text="xx"></span> bookings this week</h2>
+            </div>
+
+
+        </section>
+        <a class="red-button box-shadow" href="calender">Calendar</a>
     
     </main>
     
