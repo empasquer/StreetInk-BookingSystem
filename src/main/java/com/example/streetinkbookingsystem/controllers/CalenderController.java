@@ -1,9 +1,7 @@
 package com.example.streetinkbookingsystem.controllers;
 
-import com.example.streetinkbookingsystem.models.Calendar;
-import com.example.streetinkbookingsystem.repository.BookingRepository;
-import com.example.streetinkbookingsystem.service.BookingService;
-import com.example.streetinkbookingsystem.service.CalendarService;
+import com.example.streetinkbookingsystem.services.BookingService;
+import com.example.streetinkbookingsystem.services.CalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.Period;
 import java.util.ArrayList;
 
 @Controller
