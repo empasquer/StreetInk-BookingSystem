@@ -1,6 +1,6 @@
-package com.example.streetinkbookingsystem.service;
+package com.example.streetinkbookingsystem.services;
 
-import com.example.streetinkbookingsystem.repository.BookingRepository;
+import com.example.streetinkbookingsystem.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

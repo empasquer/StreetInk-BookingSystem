@@ -1,4 +1,4 @@
-package com.example.streetinkbookingsystem.service;
+package com.example.streetinkbookingsystem.services;
 
 import com.example.streetinkbookingsystem.models.Calendar;
 import org.springframework.stereotype.Service;
