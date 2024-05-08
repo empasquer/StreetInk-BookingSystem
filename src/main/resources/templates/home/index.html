@@ -3,30 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>Artists</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Dosis", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            color: #E4E4E4;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #464545;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .section {
+            max-width: 600px;
+            width: 90%;
+            padding: 40px;
+            background-color: #787676;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .username-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .username-item {
+            margin-bottom: 10px;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 100px; /* Adjust size as needed */
+            height: 100px; /* Adjust size as needed */
+            border-radius: 50%; /* Makes the image round */
+            cursor: pointer; /* Change cursor to pointer */
+            margin-bottom: 10px;
+
+        }
+
+    </style>
+
+    <!--<link rel="stylesheet" href="../../../../../css/style.css"> -->
 </head>
 <body>
+<h1>Choose a Profile</h1>
+<hr>
 <div class="section">
-    <h1>Choose a Profile</h1>
 
-    <form action="/addUser" method="get">
-        <button type="submit">Create new profil</button>
-    </form>
-
-    <hr>
-
-    <table>
-        <tbody>
-        <tr th:each="tattooArtist : ${tattooArtists}">
-            <td th:text="${tattooArtist.username}"></td>
-            <td>
+    <div class="username-container">
+        <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
+            <div class="profile-container">
                 <form action="/verifyPassword" method="get">
                     <input type="hidden" name="id" th:value="${tattooArtist.username}">
-                    <input type="submit" value="Pick user">
+                    <button type="submit" style="display: none;"></button>
                 </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <img src="Default_Profile_pic.png" alt="Profile Picture" class="profile-pic" onclick="this.closest('form').submit()">
+                <div th:text="${tattooArtist.username}"></div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<form action="/addUser" method="get">
+    <button type="submit">Create new profile</button>
+</form>
+
+<p>hejhejhejehejje</p>
+
+<p>Choose a Profile</p>
+<table>
+    <tr th:each="tattooArtist : ${tattooArtists}" class="username-item">
+        <td><img class="profile-pic" src="demo_profile_pic.png" height="260" width="284"/>
+        <td th:text="${tattooArtist.username}"></td></td>
+        <td><img class="profile-pic" src="demo_profile_pic.png" height="260" width="284"/>
+        <td th:text="${tattooArtist.username}"></td></td>
+    </tr>
+</table>
 </body>
 </html>
