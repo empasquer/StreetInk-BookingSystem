@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calender</title>
+    <link rel="stylesheet" type="text/css" href="calendar.css">
+</head>
+<body>
+<main>
+<section>
+
+<!--header  -->
+<article>
+    <h1 th:text="${date.getMonth()}"></h1>
+    <h2 th:text="${date.getYear()}"></h2>
+<!--prev and next buttons-->
+    <form th:action="@{/calender/next}" method="post">
+        <input type="hidden" name="year" th:value="${date.year}" />
+        <input type="hidden" name="month" th:value="${date.monthValue}" />
+        <button type="submit">Next</button>
+    </form>
+
+    <form th:action="@{/calender/previous}" method="post">
+        <input type="hidden" name="year" th:value="${date.year}" />
+        <input type="hidden" name="month" th:value="${date.monthValue}" />
+        <button type="submit">Previous</button>
+    </form>
+
+</article>
+
+    <!--Calender -->
+    <article>
+        <!--Calender -->
+        <article>
+            <div class="parent">
+                <!-- Weekdays -->
+                <ul class="weekdays">
+                    <li>Week</li>
+                    <li>Monday</li>
+                    <li>Tuesday</li>
+                    <li>Wednesday</li>
+                    <li>Thursday</li>
+                    <li>Friday</li>
+                    <li>Saturday</li>
+                    <li>Sunday</li>
+                </ul>
+
+                <div class="calendar-grid">
+
+                <ul class="weeknumbers">
+                    <li><p>1</p></li>
+                    <li><p>2</p></li>
+                    <li><p>3</p></li>
+                    <li><p>4</p></li>
+                    <li><p>5</p></li>
+                    <li><p>6</p></li>
+                </ul>
+
+                <ul class="dates">
+                    <!--Should be based on percentage of day booked, but this will do for now -->
+                    <li class="day-wrapper" th:each="day : ${daysInMonth}">
+                        <th:block th:if="${bookingService.getBookingCountForDate(day) > 3}">
+                            <a class="booked-day-date" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                        </th:block>
+
+                        <th:block th:if="${bookingService.getBookingCountForDate(day) <= 3 && bookingService.getBookingCountForDate(day) >= 1}">
+                            <a class="semi-booked-day-date" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                        </th:block>
+
+                        <th:block th:if="${bookingService.getBookingCountForDate(day) < 1}">
+                            <a class="open-day-date" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                        </th:block>
+
+                    </li>
+                </ul>
+
+                </div>
+            </div>
+        </article>
+
+
+    </article>
+<!--footer  -->
+</section>
+</main>
+</body>
+</html>
