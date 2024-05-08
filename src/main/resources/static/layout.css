@@ -71,4 +71,21 @@ input {
 
 section {
     background-color: var(--section-background-color);
+    border-radius: 15px;
+}
+
+button .gray-button {
+    border-radius: 15px;
+    background-color: var(--button-gray);
+    color: var(--white);
+    border: none;
+    padding:1rem;
+}
+
+button .red-button {
+    border-radius: 15px;
+    background-color: var(--accent-red);
+    color: var(--input-field-gray);
+    border:none;
+    padding:1rem;
 }
