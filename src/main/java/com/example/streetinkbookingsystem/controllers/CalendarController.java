@@ -51,6 +51,7 @@ public class CalendarController {
         model.addAttribute("date", date);
         model.addAttribute("bookingService", bookingService);
         model.addAttribute("weekNumbers", weekNumbers);
+        model.addAttribute("username", "bigDummy");
 
         return "home/calendar";
     }
