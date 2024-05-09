@@ -31,10 +31,15 @@ public class DashboardController {
         int bookingsADay = dashboardService.calculateAmtBookingsADay(profile.getUsername());
         int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(profile.getUsername());
 
+        int bookingPercentageOfMonth = dashboardService.calculateBookingPercentageOfMonth(profile.getUsername());
+        int monthProgressPercentage = dashboardService.calculateMonthProgressPercentage();
+
 
         model.addAttribute("profile", profile);
         model.addAttribute("bookingsADay", bookingsADay);
         model.addAttribute("bookingsAWeek", bookingsAWeek);
+        model.addAttribute("bookingPercentageOfMonth", bookingPercentageOfMonth);
+        model.addAttribute("monthProgressPercentage", monthProgressPercentage);
         return "home/dashboard";
     }
 }

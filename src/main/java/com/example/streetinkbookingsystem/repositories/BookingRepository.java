@@ -30,4 +30,12 @@ public class BookingRepository {
     }
 
 
+    public int getBookingCountForMonth(int year, int month, String username) {
+        // Finde ud af start og slut dag på måneden
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        LocalDate endOfMonth = startOfMonth.with(TemporalAdjusters.lastDayOfMonth());
+
+        String query = "SELECT COUNT(*) AS booking_count FROM booking WHERE date BETWEEN ? AND ? AND username = ?";
+        return jdbcTemplate.queryForObject(query, Integer.class, startOfMonth, endOfMonth, username);
+    }
 }

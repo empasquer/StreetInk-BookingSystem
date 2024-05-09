@@ -20,4 +20,10 @@ public class TattooArtistRepository {
         RowMapper rowMapper = new BeanPropertyRowMapper(TattooArtist.class);
         return jdbcTemplate.query(query, rowMapper);
     }
+
+    public TattooArtist getTattooArtistByUsername(String username) {
+        String query = "SELECT * FROM tattoo_artist WHERE username = ?";
+        RowMapper<TattooArtist> rowMapper = new BeanPropertyRowMapper<>(TattooArtist.class);
+        return jdbcTemplate.queryForObject(query, rowMapper, username);
+    }
 }
