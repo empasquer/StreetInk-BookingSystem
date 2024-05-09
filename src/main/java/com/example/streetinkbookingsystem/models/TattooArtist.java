@@ -1,15 +1,19 @@
 package com.example.streetinkbookingsystem.models;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 public class TattooArtist extends Person {
     private String username;
     private String password;
-    private Byte profilePicture;
+    private Byte[] profilePicture; // ændret til byte array.
+    // alm. byte kan åbenbart ikke bruge Java's Base64-klasse til dette formål,
+    //hvis den skal kunne samarbejde med database og thymeleaf.
+    // private Byte profilePicture; ** gamle attribute
     private String facebookUrl;
     private String instragramUrl;
     private int avgWorkHours;
 
-    public TattooArtist(){
-
+    public TattooArtist() {
     }
 
     public String getUsername() {
@@ -28,11 +32,11 @@ public class TattooArtist extends Person {
         this.password = password;
     }
 
-    public Byte getProfilePicture() {
+    public Byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(Byte profilePicture) {
+    public void setProfilePicture(Byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 
@@ -59,4 +63,5 @@ public class TattooArtist extends Person {
     public void setAvgWorkHours(int avgWorkHours) {
         this.avgWorkHours = avgWorkHours;
     }
+
 }
