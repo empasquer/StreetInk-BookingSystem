@@ -17,7 +17,7 @@
 
 * {
     margin: 0;
-    padding:0;
+    padding: 0;
 }
 
 html {
@@ -26,7 +26,7 @@ html {
 
 img {
     height: 100%;
-    width:100%;
+    width: 100%;
 }
 
 ::selection {
@@ -108,9 +108,6 @@ button {
 }
 
 
-
-
-
 /* classes */
 
 .inset {
@@ -140,7 +137,6 @@ button {
 
 
 /* header og footer styles */
-
 footer {
     width: 100%;
     display: flex;
@@ -154,5 +150,4 @@ footer {
 
 footer img {
     width: 200px;
-
 }

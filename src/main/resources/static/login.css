@@ -1,0 +1,41 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+form div > * {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 2rem;
+    border-radius: 15px;
+    border-style: none;
+    background-color: var(--input-field-gray);
+    margin-bottom: 3rem;
+}
+
+label {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--input-field-gray);
+    text-align: left;
+}
+
+.error-message {
+    font-size: 1.25rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--header-footer-color);
+    font-style: italic;
+}
+
+a.forgot-password {
+    color: var(--white);
+    font-size: 1.25rem;
+}
+
