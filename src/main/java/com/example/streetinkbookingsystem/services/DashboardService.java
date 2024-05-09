@@ -4,6 +4,7 @@ import com.example.streetinkbookingsystem.models.TattooArtist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 
@@ -38,32 +39,53 @@ public class DashboardService {
 
 
     public int calculateBookingPercentageOfMonth(String username) {
-        // Find month how many days in month and how many bookings in the month for the username
         LocalDate currentDate = LocalDate.now();
-        int totalDaysInMonth = currentDate.lengthOfMonth();
-        int bookingsForMonth = bookingService.getBookingCountForMonth(
-                currentDate.getYear(),
-                currentDate.getMonthValue(),
-                username);
+        int totalDaysInMonth = 0;
+        int bookingsForMonth = 0;
+        int weekdaysInMonth = 0;
 
-        // Find usernames avg work hours a day and make find an avergare monthly bookings available
+        // Calculate total days in the month excluding weekends (saturday and sunday)
+        // DayOfWeek er en java klasse
+
+        // loop alle dagene i en givene måned, altså det her måned og ikke tælle saturday og sunday med
+        for (int day = 1; day <= currentDate.lengthOfMonth(); day++) {
+            LocalDate date = LocalDate.of(currentDate.getYear(), currentDate.getMonthValue(), day);
+            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                weekdaysInMonth++;
+            }
+        }
+
+        // Get the total bookings for the month for the given username
+        bookingsForMonth = bookingService.getBookingCountForMonth(currentDate.getYear(), currentDate.getMonthValue(), username);
+
+        // Find the usernames' average work hours per day and calculate the expected bookings for the month
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         double averageWorkHoursPerDay = tattooArtist.getAvgWorkHours();
-        double expectedBookingsForMonth = averageWorkHoursPerDay * totalDaysInMonth;
-        // find percentage of bookings
-        // -> (bookings in a month / average bookings available a month) * 100
+        double expectedBookingsForMonth = averageWorkHoursPerDay * weekdaysInMonth;
+
+        // Calculate the booking percentage
         double bookingPercentage = (bookingsForMonth / expectedBookingsForMonth) * 100;
-        System.out.println((int) Math.round(bookingPercentage));
+
         return (int) Math.round(bookingPercentage);
     }
 
     public int calculateMonthProgressPercentage() {
         LocalDate currentDate = LocalDate.now();
-        int totalDaysInMonth = currentDate.lengthOfMonth();
+        int totalDaysInMonth = 0;
         int currentDayOfMonth = currentDate.getDayOfMonth();
-        // progress of onth = (current day / total days of the month ) * 100
-        double progressPercentage = ((double) currentDayOfMonth / totalDaysInMonth) * 100;
-        System.out.println((int) Math.round(progressPercentage));
+        int weekdaysInMonth = 0;
+
+        // same as before, calc days in month without counting weekends
+        for (int day = 1; day <= currentDate.lengthOfMonth(); day++) {
+            LocalDate date = LocalDate.of(currentDate.getYear(), currentDate.getMonthValue(), day);
+            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                weekdaysInMonth++;
+            }
+        }
+
+        // Calculate the progress percentage
+        double progressPercentage = ((double) currentDayOfMonth / weekdaysInMonth) * 100;
+
         return (int) Math.round(progressPercentage);
     }
 
