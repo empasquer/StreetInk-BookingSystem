@@ -26,7 +26,7 @@ public class DashboardController {
         ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
 
         // temporary profile
-        TattooArtist profile = profiles.get(0);
+        TattooArtist profile = profiles.get(1);
 
         int bookingsADay = dashboardService.calculateAmtBookingsADay(profile.getUsername());
         int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(profile.getUsername());
