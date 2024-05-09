@@ -40,7 +40,7 @@ h1 {
 display: grid;
     grid-template-columns: 10% 1fr;
     grid-column-gap: 5px;
-    background-color: #813A3A;
+    background-color: var(--accent-red);
     font-size: 1.5em;
     border-radius: 0.5em;
 

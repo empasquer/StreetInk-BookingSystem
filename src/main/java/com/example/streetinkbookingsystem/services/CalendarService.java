@@ -3,8 +3,10 @@ package com.example.streetinkbookingsystem.services;
 import com.example.streetinkbookingsystem.models.Calendar;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 
 @Service
@@ -29,6 +31,32 @@ public class CalendarService {
         return daysInMonth;
     }
 
+    // Method to get week-numbers of a month
+    public  int[] getWeekNumbers(LocalDate firstDateInMonth){
+         int[] weekNumbers = new int[6];
+        int weekNumber = firstDateInMonth.get(WeekFields.ISO.weekOfWeekBasedYear());
+        for (int i=0; i< 6; i++  ){
+            weekNumbers[i]= weekNumber;
+            weekNumber +=1;
+        }
+        return weekNumbers;
+    }
 
+    // Method to find number of empty slots before first day in month
+    public int getEmptyStartFills(LocalDate firstDateInMonth) {
+        int firstDay = firstDateInMonth.getDayOfWeek().getValue();
+        int fillers = firstDay - 1;
+        return fillers;
+    }
+
+
+    public int getEmptyEndFills(LocalDate firstDateInMonth, ArrayList daysInMonth) {
+        int startFillers = getEmptyStartFills(firstDateInMonth);
+        System.out.println(startFillers);
+        int endFillers = 42 - startFillers - daysInMonth.size();
+        System.out.println(endFillers);
+        return endFillers;
+
+    }
 }
 

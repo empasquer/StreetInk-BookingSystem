@@ -57,36 +57,38 @@
                 <div class="calendar-grid">
 
                 <ul class="weeknumbers">
-                    <li><p>1</p></li>
-                    <li><p>2</p></li>
-                    <li><p>3</p></li>
-                    <li><p>4</p></li>
-                    <li><p>5</p></li>
-                    <li><p>6</p></li>
+                    <li th:each="number : ${weekNumbers}">
+                        <p th:text="${number}"></p>
+                    </li>
                 </ul>
 
                 <ul class="dates">
                     <!-- Fill empty slots before the first day of the month -->
-                    <th:block th:each="i: ${#numbers.sequence(1, date.dayOfWeek.value - 1)}">
+                    <th:block th:each="i: ${#numbers.sequence(0,startFillers - 1)} ">
                         <li class="non-existing-date"></li>
                     </th:block>
 
                     <!-- Iterate through days in the month -->
                     <!--Should be based on percentage of day booked, but this will do for now -->
-                    <li class="day-wrapper" th:each="day : ${daysInMonth}">
-                        <th:block th:if="${bookingService.getBookingCountForDate(day, username) > 3}">
-                            <a class="fully-booked-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
-                        </th:block>
+                    <!--
+                      <li class="day-wrapper" th:each="day : ${daysInMonth}">
+                          <th:block th:if="${bookingService.getBookingCountForDate(day) > 3}">
+                              <a class="fully-booked-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                          </th:block>
 
-                        <th:block th:if="${bookingService.getBookingCountForDate(day, username) <= 3 && bookingService.getBookingCountForDate(day, username) >= 1}">
-                            <a class="semi-booked-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
-                        </th:block>
+                          <th:block th:if="${bookingService.getBookingCountForDate(day) <= 3 && bookingService.getBookingCountForDate(day) >= 1}">
+                              <a class="semi-booked-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                          </th:block>
 
-                        <th:block th:if="${bookingService.getBookingCountForDate(day, username) < 1}">
-                            <a class="open-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
-                        </th:block>
+                          <th:block th:if="${bookingService.getBookingCountForDate(day) < 1}">
+                              <a class="open-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                          </th:block>
+                      </li>
 
-                    </li>
+                      <th:block th:each="i: ${#numbers.sequence(0,endFillers - 1) }">
+                          <li class="non-existing-date"></li>
+                      </th:block>
+                      -->
                 </ul>
 
                 </div>

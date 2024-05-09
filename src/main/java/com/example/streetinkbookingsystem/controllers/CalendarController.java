@@ -42,9 +42,15 @@ public class CalendarController {
         } else
              date= LocalDate.of(year, month, 1); // start day is always the first in the month
         ArrayList<LocalDate> daysInMonth = calendarService.getDaysInMonth(date.getYear(), date.getMonth());
+        int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
+       int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
+       int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
+        model.addAttribute("startFillers", startFillers);
+        model.addAttribute("endFillers", endFillers);
         model.addAttribute("daysInMonth", daysInMonth);
         model.addAttribute("date", date);
         model.addAttribute("bookingService", bookingService);
+        model.addAttribute("weekNumbers", weekNumbers);
 
         return "home/calendar";
     }
