@@ -32,6 +32,19 @@ public class TattooArtistRepository {
         }
     }
 
+    public void updatePassword(String username, String password) {
+        String query = "UPDATE tattoo_artist SET password=? WHERE username=?";
+        jdbcTemplate.update(query, password, username);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

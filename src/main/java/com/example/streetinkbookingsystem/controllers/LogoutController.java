@@ -7,7 +7,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 public class LogoutController {
-    @GetMapping
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, SessionStatus sessionStatus) {
         request.getSession().invalidate();
         sessionStatus.setComplete();

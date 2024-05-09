@@ -5,14 +5,15 @@ import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class LoginService {
+
 
     private static final int SALT_LENGTH = 16;
 
@@ -21,6 +22,18 @@ public class LoginService {
 
     @Autowired
     private HttpSession session;
+
+    //Method that hashes and saves the passwords that are already in the database
+    //Should be deleted when everyone have hashed the passwords on local database
+    public void hashExistingPasswords() {
+        List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtist();
+        for (TattooArtist tattooArtist : tattooArtists) {
+            String plainPassword = tattooArtist.getPassword();
+            String hashedPassword = hashPassword(plainPassword);
+            tattooArtist.setPassword(hashedPassword);
+            tattooArtistRepository.updatePassword(tattooArtist.getUsername(), tattooArtist.getPassword());
+        }
+    }
 
     //Basically just checks if the info matches the database with the hashed password this time
     public boolean authenticateUser(String username, String password) {
@@ -62,7 +75,7 @@ public class LoginService {
             System.arraycopy(salt, 0, saltedHashedPassword, 0, salt.length);
             System.arraycopy(hashedPassword, 0, saltedHashedPassword, salt.length, hashedPassword.length);
 
-            //Encodes the whole byte to a string so it is saved like a string in database
+            //Encodes the whole byte to a string,so it is saved like a string in database
             return Base64.getEncoder().encodeToString(saltedHashedPassword);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -86,6 +99,7 @@ public class LoginService {
             System.arraycopy(decodedHashedPassword, salt.length, storedHash, 0, storedHash.length);
 
             int diff = getDiff(hashedPasswordToCompare, storedHash);
+
             return diff == 0;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

@@ -69,7 +69,7 @@ header, footer {
 
 h1 {
     color: var(--h1-color);
-    font-size: 2rem;
+    font-size: 5rem;
     font-weight: bold;
     margin-bottom: 1rem;
 }
