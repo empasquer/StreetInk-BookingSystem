@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" type="text/css" href="calendar.css">
+</head>
+<body>
+<main>
+
+
+<!--header  -->
+<article>
+    <h1 th:text="${date.getMonth()}"></h1>
+
+    <!--prev and next buttons-->
+    <div class="calendar-navigation">
+
+        <form  class="previous" th:action="@{/calendar/previous}" method="post">
+            <input type="hidden" name="year" th:value="${date.year}" />
+            <input type="hidden" name="month" th:value="${date.monthValue}" />
+            <button class="gray-button" type="submit">Previous</button>
+        </form>
+
+
+        <h2 class="year" th:text="${date.getYear()}"></h2>
+
+        <form class="next" th:action="@{/calendar/next}" method="post">
+            <input type="hidden" name="year" th:value="${date.year}" />
+            <input type="hidden" name="month" th:value="${date.monthValue}" />
+            <button class="gray-button"  type="submit">Next</button>
+        </form>
+
+    </div>
+
+</article>
+    <section>
+    <!--Calendar -->
+        <article>
+            <div class="parent">
+
+                <!-- Weekdays -->
+                <div class="calendar-information-bar">
+                    <ul>  <li>Week</li></ul>
+                <ul class="weekdays">
+                    <li>M</li>
+                    <li>T</li>
+                    <li>W</li>
+                    <li>T</li>
+                    <li>F</li>
+                    <li>S</li>
+                    <li>S</li>
+                </ul>
+                </div>
+
+                <div class="calendar-grid">
+
+                <ul class="weeknumbers">
+                    <li th:each="number : ${weekNumbers}">
+                        <p th:text="${number}"></p>
+                    </li>
+                </ul>
+
+                <ul class="dates">
+                    <!-- Fill empty slots before the first day of the month -->
+                    <th:block th:if="${startFillers > 0}" th:each="i: ${#numbers.sequence(0, startFillers - 1)}">
+                        <li class="non-existing-date"></li>
+                    </th:block>
+
+                    <!-- Iterate through days in the month -->
+                    <!--Should be based on percentage of day booked, but this will do for now -->
+
+                      <li class="day-wrapper" th:each="day : ${daysInMonth}">
+                          <th:block th:if="${bookingService.getBookingCountForDate(day, username) > 3}">
+                              <a class="fully-booked-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                          </th:block>
+
+                          <th:block th:if="${bookingService.getBookingCountForDate(day, username) <= 3 && bookingService.getBookingCountForDate(day,username) >= 1}">
+                              <a class="semi-booked-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                          </th:block>
+
+                          <th:block th:if="${bookingService.getBookingCountForDate(day,username) < 1}">
+                              <a class="open-day" th:href="@{/day}" th:text="${day.getDayOfMonth()}"></a>
+                          </th:block>
+                      </li>
+
+                      <th:block  th:if="${endFillers> 0}" th:each="i: ${#numbers.sequence(0,endFillers - 1) }">
+                          <li class="non-existing-date"></li>
+                      </th:block>
+
+                </ul>
+
+                </div>
+            </div>
+
+    </article>
+</section>
+    <!--footer  -->
+    <footer th:block th:include="home/footer :: footer"></footer>
+</main>
+</body>
+</html>
