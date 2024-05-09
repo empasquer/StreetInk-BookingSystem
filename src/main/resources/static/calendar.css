@@ -2,8 +2,8 @@
 section {
     width: 55rem;
     height: 95rem;
-    margin: 0 auto 2em;
-    padding: 0.5em;
+    padding: 1em;
+    Gmargin: auto auto auto -3em;
 }
 h1 {
     display:grid;
