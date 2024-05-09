@@ -1,7 +1,7 @@
 
 section {
-    width: 900px;
-    height: 1330px;
+    width: 55rem;
+    height: 95rem;
     margin: 0 auto 2em;
     padding: 0.5em;
 }
@@ -131,6 +131,18 @@ display: grid;
         background-color: var(--light-gray);
         width: 3.5em;
         height: 5em;
+
+    }
+
+    .non-existing-date{
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: var(--background-color);
+        opacity: 30%;
+        width: 5.3em;
+        height: 7.5em;
+        border-radius: 1.6em;
 
     }
 

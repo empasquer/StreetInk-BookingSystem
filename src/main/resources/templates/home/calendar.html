@@ -66,6 +66,12 @@
                 </ul>
 
                 <ul class="dates">
+                    <!-- Fill empty slots before the first day of the month -->
+                    <th:block th:each="i: ${#numbers.sequence(1, date.dayOfWeek.value - 1)}">
+                        <li class="non-existing-date"></li>
+                    </th:block>
+
+                    <!-- Iterate through days in the month -->
                     <!--Should be based on percentage of day booked, but this will do for now -->
                     <li class="day-wrapper" th:each="day : ${daysInMonth}">
                         <th:block th:if="${bookingService.getBookingCountForDate(day) > 3}">
