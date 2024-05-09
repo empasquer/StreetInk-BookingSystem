@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
-public class CalenderController {
+public class CalendarController {
 
     @Autowired
     CalendarService calendarService;
@@ -22,7 +22,7 @@ public class CalenderController {
 
     // If there is passed date in the parameters then it display that month/year.
     // otherwise it will display the current month.
-    @GetMapping("/calender")
+    @GetMapping("/calendar")
     public String seeCurrentMonth(Model model, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month) {
         LocalDate date;
         if (year == null && month == null) {
@@ -35,7 +35,7 @@ public class CalenderController {
         model.addAttribute("date", date);
         model.addAttribute("bookingService", bookingService);
 
-        return "home/calender";
+        return "home/calendar";
     }
 
 
@@ -55,17 +55,17 @@ public class CalenderController {
     //finds the next month based on the month and year given
     //query parameters: passed along to the get mapping and displayed in the URL.
     // ? is the start of the query, $ separates the parameters.
-    @PostMapping("/calender/next")
+    @PostMapping("/calendar/next")
     public String seeNextMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate nextDate = LocalDate.of(year, month, 1).plusMonths(1);
-        return "redirect:/calender?year=" + nextDate.getYear() + "&month=" + nextDate.getMonthValue();
+        return "redirect:/calendar?year=" + nextDate.getYear() + "&month=" + nextDate.getMonthValue();
     }
 
 
     //finds the previous month based on the month and year given
-    @PostMapping("/calender/previous")
+    @PostMapping("/calendar/previous")
     public String seePreviousMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate previousDate = LocalDate.of(year, month, 1).minusMonths(1);
-        return "redirect:/calender?year=" + previousDate.getYear() + "&month=" + previousDate.getMonthValue();
+        return "redirect:/calendar?year=" + previousDate.getYear() + "&month=" + previousDate.getMonthValue();
     }
 }
