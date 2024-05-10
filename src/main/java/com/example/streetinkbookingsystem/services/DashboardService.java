@@ -71,6 +71,7 @@ public class DashboardService {
         return (int) Math.round(bookingPercentage);
     }
 
+
     public int calculateMonthProgressPercentage() {
         LocalDate currentDate = LocalDate.now();
         int totalWeekdaysInMonth = calculateWeekdaysInMonth(currentDate);
@@ -91,7 +92,7 @@ public class DashboardService {
         return weekdaysInMonth;
     }
 
-    private int calculateTotalBookedHours(List<Booking> bookings) {
+    public int calculateTotalBookedHours(List<Booking> bookings) {
         int totalBookedHours = 0;
         for (Booking booking : bookings) {
             LocalTime startTime = booking.getStartTimeSlot();

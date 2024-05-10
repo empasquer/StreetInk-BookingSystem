@@ -51,4 +51,10 @@ public class BookingRepository {
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
         return jdbcTemplate.query(query, rowMapper, startDate, endDate, username);
     }
+
+    public List<Booking> getBookingsForDay(LocalDate date, String username) {
+        String query = "SELECT * FROM booking WHERE date = ? AND username = ?";
+        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
+        return jdbcTemplate.query(query, rowMapper, date, username);
+    }
 }
