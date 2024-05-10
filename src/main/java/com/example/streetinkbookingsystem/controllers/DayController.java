@@ -19,11 +19,15 @@ public class DayController {
     BookingService bookingService;
 
     @GetMapping("/day")
-    public String seeDay(Model model, @RequestParam LocalDate date, @RequestParam String username){
+    public String seeDay(Model model, @RequestParam LocalDate date, @RequestParam(required = false) String username){
+        if (username == null){
+            //        HttpSession session = get session, if session is null then redirect to index.
+            // else set username to session.getAttribute(username);
+            return "redirect:/";}
+
         List<Booking> bookingList = bookingService.getBookingsForDay(date,username);
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
         return "home/day";
     }
-
 }
