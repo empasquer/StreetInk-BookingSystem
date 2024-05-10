@@ -13,7 +13,7 @@ CREATE TABLE tattoo_artist(
                               first_name VARCHAR(255) NOT NULL,
                               last_name VARCHAR(255) NOT NULL,
                               email VARCHAR(255) NOT NULL,
-                              phone_number INT NOT NULL,
+                              phone_number int NOT NULL,
                               profile_picture LONGBLOB,
                               avg_work_hours INT NOT NULL,
                               isAdmin BOOLEAN DEFAULT 0
@@ -25,7 +25,7 @@ CREATE TABLE client (
                         first_name VARCHAR(255) NOT NULL,
                         last_name VARCHAR(255),
                         email VARCHAR(255) NOT NULL,
-                        phone_number INT,
+                        phone_number int,
                         description TEXT
 );
 
@@ -73,4 +73,3 @@ VALUES (10, 13, '2024-05-16', 1, "smallDummy", "butterfly on forhead", "coloured
        (10, 15, '2024-05-17', 1, "bigDummy", "earworm", "specific worm behind ear", "idk why anyone would want that", 0),
        (14, 18, '2024-05-20', 2, "bigDummy", "illuminati on bellybutton", " ", "late", 0);
 
-SELECT * FROM booking;
