@@ -30,7 +30,7 @@ public class CalendarController {
     public String seeCurrentMonth(Model model, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month) {
 
         // DUMMY USERNAME - skal ændres til den rigtig username
-        String username = tattooArtistService.showTattooArtist().get(0).getUsername();
+        String username = "bigDummy";
         /*
         HttpSession session = get session, if session is null then redirect to index.
          */
