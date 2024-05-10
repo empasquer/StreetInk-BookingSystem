@@ -26,8 +26,4 @@ public class DayController {
         return "home/day";
     }
 
-    // note: In summary, use addFlashAttribute when you need to pass data between requests,
-    // especially during redirects, and you want the data to be available only for the next
-    // request. Use addAttribute when you want to pass data to the view for rendering during
-    // the current request.
 }
