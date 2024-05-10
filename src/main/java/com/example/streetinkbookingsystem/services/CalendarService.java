@@ -24,7 +24,7 @@ public class CalendarService {
     @Autowired
     TattooArtistService tattooArtistService;
     @Autowired
-    BookingRepository bookingRepository;
+    BookingService bookingService;
 
     public LocalDate getCurrentDate(){
         Calendar calendar = new Calendar();
@@ -77,7 +77,7 @@ public class CalendarService {
     public int calculateDegreeOfBookedDay(LocalDate currentDate, String username){
         TattooArtist artist = tattooArtistService.getTattooArtistByUsername(username);
         double avgWorkHours = artist.getAvgWorkHours();
-        List<Booking> bookingsOnDate = bookingRepository.getBookingsForDay(currentDate, username);
+        List<Booking> bookingsOnDate = bookingService.getBookingsForDay(currentDate, username);
         int totalBookedHoursForDay = dashboardService.calculateTotalBookedHours(bookingsOnDate);
         double bookingPercentage = ((double) totalBookedHoursForDay / avgWorkHours) * 100;
         return (int) Math.round(bookingPercentage);

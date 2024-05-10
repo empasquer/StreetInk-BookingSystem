@@ -29,4 +29,9 @@ public class BookingService {
     public List<Booking> getBookingsForMonth(int year, int month, String username) {
         return bookingRepository.getBookingsForMonth(year, month, username);
     }
+
+    public List<Booking> getBookingsForDay(LocalDate date, String username){
+        return bookingRepository.getBookingsForDay(date,username);
+
+    }
 }
