@@ -7,12 +7,39 @@
 </head>
 <body>
 
-<h1 th:text="${date}"></h1>
 
 <main>
+    <!--prev and next buttons-->
+    <div class="day-navigation">
 
+        <form  class="previous" th:action="@{/day/previous(username=${username},date=${date})}" method="post">
+            <button class="gray-button" type="submit">Previous</button>
+        </form>
+
+        <h1 th:text="${date.getDayOfMonth() + ' ' + date.getMonth().toString().substring(0,3)}"></h1>
+
+        <form class="next" th:action="@{/day/next(username=${username},date=${date})}" method="post">
+            <button class="gray-button"  type="submit">Next</button>
+        </form>
+
+    </div>
 
     <section>
+
+        <div class="time-slot" th:each="hour : ${#numbers.sequence(9, 20)}">
+            <div th:text="${hour + ':00'}"></div>
+            <!-- Check if there are bookings for the current hour -->
+            <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot() == hour}">
+                <!-- Calculate top position and height of the booking block based on start and end times -->
+                <div class="booking-block"
+                     th:style="'height:' + (${((booking.bookingTimeEnd - booking.bookingTimeStart) * 61) * 100 / 60 - 1}) + '%;'">
+                    <a th:href="@{'/booking/' + ${booking.bookingId}}"> <!-- Link to booking details page -->
+                        <span th:text="${booking.bookingDescription}"></span> <!-- Booking description -->
+                    </a>
+                </div>
+            </div>
+        </div>
+
 
         <div th:each="booking : ${bookingList}" class="bookingList">
             <div class="bookingList-container">
