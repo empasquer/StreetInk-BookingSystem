@@ -1,0 +1,37 @@
+/* Style for the calendar */
+.calendar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh; /* Set the height of the calendar to the viewport height */
+    overflow-y: scroll; /* Add vertical scrollbar if needed */
+    position: relative; /* Relative positioning for absolute positioning of booking blocks */
+}
+
+/* Style for time slots */
+.time-slot {
+    padding: 5px;
+    background-color: #f9f9f9;
+    position: relative; /* Ensure the parent container for booking blocks is positioned relative */
+    height: 20%; /* Height of each time slot */
+    border-top: 1px solid grey; /* Specify the top border */
+    border-left: none; /* Remove left border */
+    border-right: none; /* Remove right border */
+    border-bottom: none; /* Remove bottom border */
+}
+
+/* Style for booking blocks */
+.booking-block {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 20px;
+    position: absolute;
+    left: 20%; /* Adjust this value as needed */
+    right: 0;
+    cursor: pointer;
+    width: 20%;
+    z-index: 2;
+    box-sizing: border-box;
+    top: -1%;
+    border-radius: 5px;
+}

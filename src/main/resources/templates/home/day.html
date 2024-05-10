@@ -26,31 +26,32 @@
 
     <section>
 
+
         <div class="time-slot" th:each="hour : ${#numbers.sequence(9, 20)}">
             <div th:text="${hour + ':00'}"></div>
             <!-- Check if there are bookings for the current hour -->
             <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot() == hour}">
                 <!-- Calculate top position and height of the booking block based on start and end times -->
                 <div class="booking-block"
-                     th:style="'height:' + (${((booking.bookingTimeEnd - booking.bookingTimeStart) * 61) * 100 / 60 - 1}) + '%;'">
-                    <a th:href="@{'/booking/' + ${booking.bookingId}}"> <!-- Link to booking details page -->
-                        <span th:text="${booking.bookingDescription}"></span> <!-- Booking description -->
+                     th:style="'height:' + (${((booking.getEndTimeSlot - booking.getStartTimeSlot) * 61) * 100 / 60 - 1}) + '%;'">
+                    <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
+                        <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
                     </a>
                 </div>
             </div>
         </div>
 
-
+<!--
         <div th:each="booking : ${bookingList}" class="bookingList">
             <div class="bookingList-container">
-                <!-- bookingId skal måske være dato? så det står i URL også? -->
+
                 <a th:href="@{'/booking?bookingId=' + ${booking.id}}">
                     <div th:text="${booking.projectTitle}"></div>
                     <div th:text="${booking.id}"></div>
                 </a>
             </div>
         </div>
-
+-->
         <!--<div th:each="booking : ${bookingList}" class="bookingList">
             <div class="bookingList-container">
                  bookingId skal måske være dato? så det står i URL også?
