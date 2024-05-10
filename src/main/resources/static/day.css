@@ -1,35 +1,46 @@
-/* Style for the calendar */
+
 .backdrop {
     display: flex;
     flex-direction: column;
 }
 
 /* Style for time slots */
-.time-slot {
-    padding: 5px;
-    position: relative; /* Ensure the parent container for booking blocks is positioned relative */
-    height: 20%; /* Height of each time slot */
-    border-top: 1px var(--white); /* Specify the top border */
-    border-style: dashed;
-    border-left: none; /* Remove left border */
-    border-right: none; /* Remove right border */
-    border-bottom: none; /* Remove bottom border */
+.time-line-wrapper {
+    padding: 0.7em;
+    position: relative;
+    /* height: 20%; */
+    text-align-last: justify;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.time-line {
+    position: relative;
+    color: var(--white);
+    display: inline-block;
+    padding-right: 10px; /
+}
+.time-line::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 90%;
+    left: 10%;
+    border-top: 1px dashed white;
 }
 
 /* Style for booking blocks */
 .booking-block {
     background-color: var(--booking-on-day);
     color: var(--white);
-    padding: 5px 20px;
+    padding: 0.7em 1em;
     position: absolute;
-    left: 20%; /* Adjust this value as needed */
-    right: 0;
-    cursor: pointer;
-    width: 20%;
+    left: 23%;
+    width: 50%;
     z-index: 2;
-    box-sizing: border-box;
-    top: -1%;
-    border-radius: 5px;
+    border-radius: 1em;
+    margin-top: -1em;
 }
 
 .day-navigation {
@@ -53,4 +64,10 @@
 .h1 {
     display: grid;
     place-content: center;
+}
+
+a {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
 }

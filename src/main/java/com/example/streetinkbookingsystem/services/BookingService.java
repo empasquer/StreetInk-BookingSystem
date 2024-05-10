@@ -5,7 +5,9 @@ import com.example.streetinkbookingsystem.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -45,5 +47,20 @@ public class BookingService {
         return bookingRepository.showBookingList();
     }
 
+    public double calculateTotalDurationOfBooking(Booking booking) {
+        LocalTime startTime = booking.getStartTimeSlot();
+        LocalTime endTime = booking.getEndTimeSlot();
+
+        Duration duration = Duration.between(startTime, endTime);
+
+        // total hours from duration -- so  smart toHours method
+        long minutes = duration.toMinutes();
+
+        // Add total hours to total booked hours
+        double totalMinutes = minutes;
+        System.out.println(totalMinutes);
+
+        return totalMinutes;
+    }
 
 }

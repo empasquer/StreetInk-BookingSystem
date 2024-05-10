@@ -27,54 +27,24 @@
 
     <section>
         <article class="backdrop">
-        <div class="time-slot" th:each="hour : ${#numbers.sequence(9, 20)}">
-            <div th:text="${hour + ':00'}"></div>
+        <div class="time-line-wrapper" th:each="hour : ${hours}">
+
+            <!--Only display time hourly -->
+            <p class="time-line" th:if="${hour - hour.intValue() == 0}" th:text="${hour.intValue() + ':00'}"></p>
+
 
             <!-- Check if there are bookings for the current hour -->
-            <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour}">
-                <!-- Calculate top position and height of the booking block based on start and end times -->
+
+            <div th:each="booking : ${bookingList}" th:if="${((booking.getStartTimeSlot().getHour() * 60.0 + booking.getStartTimeSlot().getMinute()) / 60) == hour}">
+                 <!-- Calculate top position and height of the booking block based on start and end times -->
                 <div class=booking-block
-                     th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
-                    <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
+                     th:style="'height:' + (${(bookingService.calculateTotalDurationOfBooking(booking) / 60) * 7} + 'em;')">
+                <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
                         <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
                     </a>
                 </div>
-
             </div>
-                <!-- Check if there are bookings for the current hour + 1 quarter -->
-                <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour+15}">
-                    <!-- Calculate top position and height of the booking block based on start and end times -->
-                    <div class="booking-block"
-                         th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
-                        <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
-                            <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
-                        </a>
-                    </div>
 
-                </div>
-
-                    <!-- Check if there are bookings for the current hour + 2 quarter -->
-                    <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour+30}">
-                        <!-- Calculate top position and height of the booking block based on start and end times -->
-                        <div class="booking-block"
-                             th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
-                            <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
-                                <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
-                            </a>
-                        </div>
-
-                    </div>
-
-                        <!-- Check if there are bookings for the current hour + 3 quarter -->
-                        <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour+45}">
-                            <!-- Calculate top position and height of the booking block based on start and end times -->
-                            <div class="booking-block"
-                                 th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
-                                <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
-                                    <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
-                                </a>
-                            </div>
-                    </div>
         </div>
         </article>
     </section>

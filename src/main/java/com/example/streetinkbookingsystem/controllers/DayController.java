@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +20,8 @@ public class DayController {
 
     @Autowired
     BookingService bookingService;
+
+
     @GetMapping("/day")
     public String seeDay(Model model, @RequestParam LocalDate date, @RequestParam(required = false) String username){
         if (username == null){
@@ -30,6 +33,15 @@ public class DayController {
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
         model.addAttribute("username", username);
+
+        // might move to service, this makes a list of quarter hours
+        List<Double> hours = new ArrayList<>();
+        for (double hour = 9; hour <= 20; hour += 0.25) {
+            hours.add(hour);
+        }
+        model.addAttribute("hours", hours);
+        model.addAttribute("bookingService",bookingService);
+
         return "home/day";
     }
 
