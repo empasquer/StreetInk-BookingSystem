@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>DAY</title>
     <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/day.css">
 </head>
 <body>
 
@@ -25,43 +26,57 @@
     </div>
 
     <section>
-
-
+        <article class="backdrop">
         <div class="time-slot" th:each="hour : ${#numbers.sequence(9, 20)}">
             <div th:text="${hour + ':00'}"></div>
+
             <!-- Check if there are bookings for the current hour -->
-            <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot() == hour}">
+            <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour}">
                 <!-- Calculate top position and height of the booking block based on start and end times -->
-                <div class="booking-block"
-                     th:style="'height:' + (${((booking.getEndTimeSlot - booking.getStartTimeSlot) * 61) * 100 / 60 - 1}) + '%;'">
+                <div class=booking-block
+                     th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
                     <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
                         <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
                     </a>
                 </div>
+
             </div>
+                <!-- Check if there are bookings for the current hour + 1 quarter -->
+                <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour+15}">
+                    <!-- Calculate top position and height of the booking block based on start and end times -->
+                    <div class="booking-block"
+                         th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
+                        <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
+                            <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
+                        </a>
+                    </div>
+
+                </div>
+
+                    <!-- Check if there are bookings for the current hour + 2 quarter -->
+                    <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour+30}">
+                        <!-- Calculate top position and height of the booking block based on start and end times -->
+                        <div class="booking-block"
+                             th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
+                            <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
+                                <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
+                            </a>
+                        </div>
+
+                    </div>
+
+                        <!-- Check if there are bookings for the current hour + 3 quarter -->
+                        <div th:each="booking : ${bookingList}" th:if="${booking.getStartTimeSlot().getHour()+booking.getStartTimeSlot().getMinute() == hour+45}">
+                            <!-- Calculate top position and height of the booking block based on start and end times -->
+                            <div class="booking-block"
+                                 th:style="'height:' + (${((booking.getEndTimeSlot.getHour() - booking.getStartTimeSlot.getHour()) * 61) * 100 / 60 - 1}) + '%;'">
+                                <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
+                                    <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
+                                </a>
+                            </div>
+                    </div>
         </div>
-
-<!--
-        <div th:each="booking : ${bookingList}" class="bookingList">
-            <div class="bookingList-container">
-
-                <a th:href="@{'/booking?bookingId=' + ${booking.id}}">
-                    <div th:text="${booking.projectTitle}"></div>
-                    <div th:text="${booking.id}"></div>
-                </a>
-            </div>
-        </div>
--->
-        <!--<div th:each="booking : ${bookingList}" class="bookingList">
-            <div class="bookingList-container">
-                 bookingId skal måske være dato? så det står i URL også?
-                <a th:href="@{'/booking?bookingId=' + ${booking.bookingId}}">
-                    <div th:text="${booking.projectTitle}"></div>
-                    <div th:text="${booking.bookingId}"></div>
-                </a>
-            </div>
-        </div> -->
-
+        </article>
     </section>
 
 </main>
