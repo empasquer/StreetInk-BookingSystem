@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Controller
 public class DayController {
 
@@ -30,4 +31,6 @@ public class DayController {
         model.addAttribute("date", date);
         return "home/day";
     }
+
+
 }

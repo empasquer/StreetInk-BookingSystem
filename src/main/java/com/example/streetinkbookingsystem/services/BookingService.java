@@ -13,6 +13,7 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
+
     public int getBookingCountForDate(LocalDate specificDate, String username) {
        return bookingRepository.getBookingCountForDate(specificDate, username);
     }
@@ -30,8 +31,19 @@ public class BookingService {
         return bookingRepository.getBookingsForMonth(year, month, username);
     }
 
-    public List<Booking> getBookingsForDay(LocalDate date, String username){
-        return bookingRepository.getBookingsForDay(date,username);
+    public List<Booking> getBookingsForDay(LocalDate date, String username) {
+        return bookingRepository.getBookingsForDay(date, username);
 
     }
+
+    //tror ikke denne skal være liste og skal justeres til visning af specifik booking
+    public List<Booking> showBooking(int bookingId, String tattooUsername){
+        return bookingRepository.showBooking(bookingId, tattooUsername);
+    }
+
+    public List<Booking> showBookingList(){
+        return bookingRepository.showBookingList();
+    }
+
+
 }
