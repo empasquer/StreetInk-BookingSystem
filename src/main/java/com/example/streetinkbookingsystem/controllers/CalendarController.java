@@ -57,6 +57,7 @@ public class CalendarController {
         int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
         int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
+        LocalDate currentDate = LocalDate.now();
         //Ad to model
         model.addAttribute("startFillers", startFillers);
         model.addAttribute("endFillers", endFillers);
