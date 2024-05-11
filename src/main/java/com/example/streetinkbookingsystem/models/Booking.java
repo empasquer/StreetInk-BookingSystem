@@ -1,19 +1,24 @@
 package com.example.streetinkbookingsystem.models;
 
 import java.time.LocalDate;
+
 import java.time.LocalTime;
 
+import java.util.ArrayList;
+
 public class Booking {
-    private int id;
+    private int id; //ved endnu ikke om denne skal bruges.
     private LocalTime startTimeSlot;
     private LocalTime endTimeSlot;
     private LocalDate date;
-    private int clientId;
-    private String username;
+    private Client client;
     private String projectTitle;
     private String projectDesc;
     private String personalNote;
-    private boolean isDepositPayed;
+    private Boolean isDepositPayed;
+    private ArrayList<Byte[]> projectPictures;
+    //Overvej senere om denne skal ændres til string, med billedestier.
+
 
 
     public Booking() {
@@ -26,6 +31,7 @@ public class Booking {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public LocalTime getStartTimeSlot() {
         return startTimeSlot;
@@ -51,20 +57,13 @@ public class Booking {
         this.date = date;
     }
 
-    public int getClientId() {
-        return clientId;
+
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getProjectTitle() {
@@ -83,6 +82,7 @@ public class Booking {
         this.projectDesc = projectDesc;
     }
 
+
     public String getPersonalNote() {
         return personalNote;
     }
@@ -91,11 +91,20 @@ public class Booking {
         this.personalNote = personalNote;
     }
 
-    public boolean isDepositPayed() {
+    public Boolean getDepositPayed() {
         return isDepositPayed;
     }
 
-    public void setDepositPayed(boolean depositPayed) {
+    public void setDepositPayed(Boolean depositPayed) {
         isDepositPayed = depositPayed;
     }
+
+    public ArrayList<Byte[]> getProjectPictures() {
+        return projectPictures;
+    }
+
+    public void setProjectPictures(ArrayList<Byte[]> projectPictures) {
+        this.projectPictures = projectPictures;
+    }
+
 }
