@@ -14,7 +14,7 @@ public class Booking {
     private Client client;
     private String projectTitle;
     private String projectDesc;
-    private String privateNote;
+    private String personalNote;
     private Boolean isDepositPayed;
     private ArrayList<Byte[]> projectPictures;
     //Overvej senere om denne skal ændres til string, med billedestier.
@@ -83,12 +83,12 @@ public class Booking {
     }
 
 
-    public String getPrivateNote() {
-        return privateNote;
+    public String getPersonalNote() {
+        return personalNote;
     }
 
-    public void setPrivateNote(String privateNote) {
-        this.privateNote = privateNote;
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
     }
 
     public Boolean getDepositPayed() {

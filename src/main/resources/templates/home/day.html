@@ -25,27 +25,44 @@
 
     </div>
 
+
     <section>
-        <article class="backdrop">
-        <div class="time-line-wrapper" th:each="hour : ${hours}">
-
-            <!--Only display time hourly -->
-            <p class="time-line" th:if="${hour - hour.intValue() == 0}" th:text="${hour.intValue() + ':00'}"></p>
-
-
-            <!-- Check if there are bookings for the current hour -->
-
-            <div th:each="booking : ${bookingList}" th:if="${((booking.getStartTimeSlot().getHour() * 60.0 + booking.getStartTimeSlot().getMinute()) / 60) == hour}">
-                 <!-- Calculate top position and height of the booking block based on start and end times -->
-                <div class=booking-block
-                     th:style="'height:' + (${(bookingService.calculateTotalDurationOfBooking(booking) / 60) * 7} + 'em;')">
-                <a th:href="@{'/booking/' + ${booking.id}}"> <!-- Link to booking details page -->
-                        <span th:text="${booking.getProjectTitle()}"></span> <!-- Booking description -->
-                    </a>
-                </div>
+        <article class="time-line-box">
+            <!-- Display time hourly -->
+            <div class="timeslots">
+                <span th:each="hour : ${#numbers.sequence(9,20)}">
+                     <p class="time-line" th:text="${hour + ':00'}"></p>
+                </span>
             </div>
 
-        </div>
+            <!--booking slots -->
+            <div class="bookingslots" >
+            <div th:each="hour : ${hours}">
+                    <!-- Check for bookings -->
+                    <div th:each="booking : ${bookingList}" th:if="${((booking.getStartTimeSlot().getHour() * 60.0 + booking.getStartTimeSlot().getMinute()) / 60) == hour}">
+                        <!-- Calculate the duration of the booking -->
+                        <th:block th:with="bookingDuration=${bookingService.calculateTotalDurationOfBooking(booking)}">
+                        <!-- Calculate the height of the booking box based on the duration -->
+                        <th:block th:with="bookingHeight=${(bookingDuration / 60)*4.7}">
+                        <!-- Apply the height dynamically to the booking box -->
+                        <div class="booking-block" th:style="'height:' + ${bookingHeight}  + 'em;'">
+                            <a class="booking-info" th:href="@{'/booking/' + ${booking.id}}">
+                                <h2 th:text="${booking.getStartTimeSlot()}
+                                + ' - ' +
+                                 ${booking.getEndTimeSlot()}
+                                 + ' - ' +
+                                 ${booking.client.getFirstName()}
+                                  + '  ' +
+                                 ${booking.client.getLastName()}"></h2>
+                                <!--Only display project title if the booking i over 1 hour, else i can't fit -->
+                                <p th:if="${bookingDuration >= 60 }" th:text="${booking.getProjectTitle()}"></p>
+                            </a>
+                        </div>
+                        </th:block>
+                        </th:block>
+                    </div>
+                    </div>
+                </div>
         </article>
     </section>
 

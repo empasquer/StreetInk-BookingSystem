@@ -1,17 +1,26 @@
 package com.example.streetinkbookingsystem.models;
 
 public class Client extends Person {
-    private String clientDesc;
+    private int id;
+    private String description;
 
     public Client (){
-
+        //super();
     }
 
-    public String getClientDesc() {
-        return clientDesc;
+    public int getId() {
+        return id;
     }
 
-    public void setClientDesc(String clientDesc) {
-        this.clientDesc = clientDesc;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
