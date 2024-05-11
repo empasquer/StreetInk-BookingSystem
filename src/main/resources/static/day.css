@@ -1,3 +1,6 @@
+section {
+    margin-bottom: 2em;
+}
 .backdrop {
     display: flex;
     flex-direction: column;
@@ -91,13 +94,7 @@
     justify-content: center;
 }
 
-.booking-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 1em;
 
-}
 .day-navigation {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -121,8 +118,20 @@
     place-content: center;
 }
 
-a {
+h2 {
+    color: var(--white);
+}
+.booking-info {
     text-decoration: none;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    color: var(--white);
+        flex-direction: column;
+
+        padding: 1em;
+
+
+}
+p {
+    color: var(--white);
 }

@@ -37,6 +37,10 @@ public class BookingService {
         return bookingRepository.getBookingsForDay(date, username);
 
     }
+    public Booking getBookingDetail(int bookingId) {
+        return bookingRepository.getBookingDetails(bookingId);
+
+    }
 
     //tror ikke denne skal være liste og skal justeres til visning af specifik booking
     public List<Booking> showBooking(int bookingId, String tattooUsername){

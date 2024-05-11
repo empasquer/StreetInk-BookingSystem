@@ -41,14 +41,13 @@ public class BookingRepository {
                 "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =?;";
         RowMapper<Booking> rowMapper = (rs, rowNum) -> {
             Booking booking = new Booking();
-            System.out.println(booking);
             booking.setId(rs.getInt("booking.id"));
             booking.setStartTimeSlot(rs.getTime("start_time_slot").toLocalTime());
             booking.setEndTimeSlot(rs.getTime("end_time_slot").toLocalTime());
             booking.setProjectTitle(rs.getString("project_title"));
 
             Client client = new Client();
-            System.out.println(client);
+
             client.setId(rs.getInt("client.id"));
             client.setFirstName(rs.getString("first_name"));
             client.setLastName(rs.getString("last_name"));
@@ -89,7 +88,7 @@ public class BookingRepository {
             booking.setClient(client);
             return booking;
         };
-        return (Booking) jdbcTemplate.query(query,rowMapper);
+        return  jdbcTemplate.queryForObject(query,rowMapper, bookingId);
     }
     public List<Booking> showBookingList(){
         String query = "SELECT * FROM booking";

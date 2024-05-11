@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 @Controller
 public class BookingController {
@@ -17,14 +18,21 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/booking")
-    public String booking(Model model, @RequestParam("bookingId") int bookingId/*, Principal principal*/){
+    public String booking(Model model, @RequestParam int bookingId, @RequestParam String username/*, Principal principal*/){
        // fjerner denne så man ikke skal bruge en godkendelse endnu.
         //String tattooArtistId = principal.getName();
         //Hardcodet artist username
-        String tattooArtistId = "bigDummy";
-        model.addAttribute("booking", bookingService.showBooking(bookingId, tattooArtistId));
+        String tattooArtistId = username;
+        model.addAttribute("booking", bookingService.getBookingDetail(bookingId));
         return "home/booking";
     }
+
+
+    @GetMapping("/create-new-booking")
+        public String createNewBooking(Model model, @RequestParam LocalDate date){
+            model.addAttribute("date",date);
+            return "home/create-new-booking";
+        }
 
 
 }

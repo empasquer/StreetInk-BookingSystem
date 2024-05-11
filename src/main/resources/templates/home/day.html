@@ -36,7 +36,7 @@
             </div>
 
             <!--booking slots -->
-            <div class="bookingslots" >
+            <article class="bookingslots" >
             <div th:each="hour : ${hours}">
                     <!-- Check for bookings -->
                     <div th:each="booking : ${bookingList}" th:if="${((booking.getStartTimeSlot().getHour() * 60.0 + booking.getStartTimeSlot().getMinute()) / 60) == hour}">
@@ -46,7 +46,7 @@
                         <th:block th:with="bookingHeight=${(bookingDuration / 60)*4.7}">
                         <!-- Apply the height dynamically to the booking box -->
                         <div class="booking-block" th:style="'height:' + ${bookingHeight}  + 'em;'">
-                            <a class="booking-info" th:href="@{'/booking/' + ${booking.id}}">
+                            <a class="booking-info" th:href="@{/booking(bookingId=${booking.id},username=${username})}">
                                 <h2 th:text="${booking.getStartTimeSlot()}
                                 + ' - ' +
                                  ${booking.getEndTimeSlot()}
@@ -62,9 +62,13 @@
                         </th:block>
                     </div>
                     </div>
-                </div>
+                </article>
         </article>
     </section>
+<!--Create new booking and send date over -->
+    <a class="red-button box-shadow" th:href="@{/create-new-booking(date=${date})}">Create Booking</a>
+
+
 
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
