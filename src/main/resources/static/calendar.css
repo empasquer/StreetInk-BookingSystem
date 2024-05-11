@@ -1,9 +1,9 @@
 
 section {
     width: 55rem;
-    height: 95rem;
+    height: 72rem;
     padding: 1em;
-    margin: auto auto auto -4em;
+    margin:  0 0 0 -4em;
 }
 h1 {
     display:grid;
@@ -37,12 +37,14 @@ h1 {
 }
 
 .calendar-information-bar {
+    height: 3em;
     display: grid;
     grid-template-columns: 11% 1fr;
     grid-column-gap: 5px;
     background-color: var(--accent-red);
     font-size: 1.5em;
     border-radius: 0.5em;
+    align-content: center;
 
 }
 .calendar-information-bar .weekdays {
@@ -64,7 +66,7 @@ h1 {
 
     .weeknumbers {
         display: grid;
-        grid-row-gap: 9em;
+        grid-row-gap: 6.2em;
         padding-top: 3em;
     }
 
@@ -79,7 +81,7 @@ h1 {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         grid-template-rows: repeat(6, 1fr);
-        grid-row-gap: 6em;
+        grid-row-gap: 3em;
         margin-left: 2.5em;
         grid-column-gap: 1.7em;
 
@@ -161,9 +163,34 @@ h1 {
 }
 
 .current-date {
-        border:0.2em solid black;
+        border:0.2em solid var(--background-color);
+    width: 3.1em;
+    height: 4.6em;
     }
 
+
+.daily-info {
+    align-items: flex-start;
+    flex-direction: column;
+    display: flex;
+    height: 19em;
+    place-content: baseline;
+    padding: 3em 0 0 0;
+    align-self: flex-start;
+    margin-left: -3em;
+
+}
+
+
+.daily-info * {
+    padding: 0.2em;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.2em;
+}
+.daily-info h3 {
+    font-size: 1.5em;
+}
 
 
 

@@ -72,18 +72,18 @@
                       <li class="day-wrapper" th:each="day : ${daysInMonth}">
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) > 80}">
 
-                              <a th:if="${date==day}" class="current-date fully-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
-                              <a th:unless="${date==day}"class="fully-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:if="${currentDate==day}" class="current-date fully-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:unless="${currentDate==day}"class="fully-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
                           </th:block>
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) <= 80 && calendar.calculateDegreeOfBookedDay(day, username) >= 1}">
-                              <a  th:if="${date==day}" class="current-date semi-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
-                              <a  th:unless="${date==day} "class="semi-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a  th:if="${currentDate==day}" class="current-date semi-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a  th:unless="${currentDate==day} "class="semi-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
                           </th:block>
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) == 0}">
-                              <a th:if="${date==day}" class="current-date open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
-                              <a th:unless="${date==day}"class="open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:if="${currentDate==day}" class="current-date open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:unless="${currentDate==day}"class="open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
                           </th:block>
                       </li>
 
@@ -95,9 +95,18 @@
 
                 </div>
             </div>
-
     </article>
 </section>
+
+    <!--Day info-->
+    <article class="daily-info">
+        <h3>Today:</h3>
+    <span th:each="booking : ${bookingsToday}">
+    <h4 th:text="${booking.getStartTimeSlot() + ' - ' + booking.getEndTimeSlot() +
+     ': '+ booking.getClient().getFirstName() + ' ' + booking.getClient().getFirstName() +', ' }"></h4>
+        <p th:text="' '+ ${booking.getProjectTitle()}"></p>
+    </span>
+    </article>
     <!--footer  -->
     <footer th:block th:include="home/footer :: footer"></footer>
 </main>

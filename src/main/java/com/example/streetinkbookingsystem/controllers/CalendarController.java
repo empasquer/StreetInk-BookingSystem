@@ -1,5 +1,6 @@
 package com.example.streetinkbookingsystem.controllers;
 
+import com.example.streetinkbookingsystem.models.Booking;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.CalendarService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CalendarController {
@@ -44,9 +46,10 @@ public class CalendarController {
 
         //Initialize the calendar. If client gets to the calendar from another view
         //then show the current month. If they push the "next" or "previous" buttons then show that month.
+        LocalDate currentDate = LocalDate.now();
         LocalDate date;
         if (year == null && month == null) {
-             date = calendarService.getCurrentDate();
+             date = currentDate;
         } else
              date= LocalDate.of(year, month, 1); // start day is always the first in the month
 
@@ -57,8 +60,10 @@ public class CalendarController {
         int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
         int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
-        LocalDate currentDate = LocalDate.now();
+        List<Booking> bookingsToday = bookingService.getBookingsForDay(currentDate,username);
         //Ad to model
+        model.addAttribute("currentDate", currentDate);
+        model.addAttribute("bookingsToday", bookingsToday);
         model.addAttribute("startFillers", startFillers);
         model.addAttribute("endFillers", endFillers);
         model.addAttribute("daysInMonth", daysInMonth);
