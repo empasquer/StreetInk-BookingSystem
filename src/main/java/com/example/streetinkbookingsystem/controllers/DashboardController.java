@@ -3,6 +3,7 @@ package com.example.streetinkbookingsystem.controllers;
 import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.DashboardService;
+import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,16 @@ public class DashboardController {
     @Autowired
     DashboardService dashboardService;
 
+    @Autowired
+    LoginService loginService;
+
     @GetMapping("/dashboard")
     public String seeDashboard(Model model, HttpSession session) {
-
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        model.addAttribute("loggedIn", loggedIn);
         String username = (String) session.getAttribute("username");
         System.out.println(username);
+
 
         // ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
 
@@ -39,7 +45,6 @@ public class DashboardController {
 
         int bookingPercentageOfMonth = dashboardService.calculateBookingPercentageOfMonth(profile.getUsername());
         int monthProgressPercentage = dashboardService.calculateMonthProgressPercentage();
-
 
         model.addAttribute("profile", profile);
         model.addAttribute("bookingsADay", bookingsADay);

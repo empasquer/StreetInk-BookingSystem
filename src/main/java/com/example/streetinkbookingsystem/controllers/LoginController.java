@@ -1,6 +1,7 @@
 package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.services.LoginService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +17,12 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-
         return "home/login";
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password,
                         RedirectAttributes redirectAttributes) {
-
-
 
         if (loginService.authenticateUser(username, password)){
             return "redirect:/dashboard";

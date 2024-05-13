@@ -1,6 +1,8 @@
 package com.example.streetinkbookingsystem.controllers;
 
+import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,13 @@ public class HomeController {
     @Autowired
     private TattooArtistService tattooArtistService;
 
+    @Autowired
+    LoginService loginService;
+
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, HttpSession session){
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("tattooArtists", tattooArtistService.showTattooArtist());
         return "home/index";
     }

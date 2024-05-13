@@ -37,7 +37,7 @@ public class LoginService {
 
     //Basically just checks if the info matches the database with the hashed password this time
     public boolean authenticateUser(String username, String password) {
-        TattooArtist tattooArtist = tattooArtistRepository.getTattooArtistFromUsername(username);
+        TattooArtist tattooArtist = tattooArtistRepository.getTattooArtistByUsername(username);
         if (tattooArtist != null) {
             String storedPassword = tattooArtist.getPassword();
             if (verifyPassword(password, storedPassword)) {

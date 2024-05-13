@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="calendar.css">
 </head>
 <body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
 <main>
 
 
@@ -96,8 +98,7 @@
 
     </article>
 </section>
-    <!--footer  -->
-    <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>
