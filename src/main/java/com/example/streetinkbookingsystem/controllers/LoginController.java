@@ -16,6 +16,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
+
         return "home/login";
     }
 
@@ -23,7 +24,7 @@ public class LoginController {
     public String login(@RequestParam String username, @RequestParam String password,
                         RedirectAttributes redirectAttributes) {
 
-        loginService.hashExistingPasswords();
+
 
         if (loginService.authenticateUser(username, password)){
             return "redirect:/dashboard";

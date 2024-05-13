@@ -4,6 +4,7 @@ import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.DashboardService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +22,17 @@ public class DashboardController {
     DashboardService dashboardService;
 
     @GetMapping("/dashboard")
-    public String seeDashboard(Model model) {
+    public String seeDashboard(Model model, HttpSession session) {
 
-        ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
+        String username = (String) session.getAttribute("username");
+        System.out.println(username);
+
+        // ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
 
         // temporary profile
-        TattooArtist profile = profiles.get(1);
+        // TattooArtist profile = profiles.get(1);
+
+        TattooArtist profile = tattooArtistService.getTattooArtistByUsername(username);
 
         int bookingsADay = dashboardService.calculateAmtBookingsADay(profile.getUsername());
         int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(profile.getUsername());
