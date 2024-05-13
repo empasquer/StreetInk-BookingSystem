@@ -1,27 +1,17 @@
 package com.example.streetinkbookingsystem.repositories;
 
 import com.example.streetinkbookingsystem.models.Booking;
-<<<<<<< HEAD
-=======
 import com.example.streetinkbookingsystem.models.Client;
-import com.example.streetinkbookingsystem.models.TattooArtist;
-
->>>>>>> db1b8f5d72bbfcb46789182717b6ed2dd6b52651
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
-import java.util.Arrays;
->>>>>>> db1b8f5d72bbfcb46789182717b6ed2dd6b52651
 import java.util.List;
 
 @Repository
@@ -41,8 +31,7 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper, bookingId, tattooUsername);
     }
 
-<<<<<<< HEAD
-=======
+
     // Gets all bookings for date, but only information needed to display the block
     public List<Booking> getBookingsForDay( LocalDate date, String username){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
@@ -104,7 +93,6 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
->>>>>>> db1b8f5d72bbfcb46789182717b6ed2dd6b52651
 
     public int getBookingCountForDate(LocalDate specificDate, String username) {
         String query = "SELECT COUNT(*) AS booking_count FROM booking WHERE date = ? AND username = ?";

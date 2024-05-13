@@ -17,6 +17,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
+       // loginService.hashExistingPasswords();
         return "home/login";
     }
 

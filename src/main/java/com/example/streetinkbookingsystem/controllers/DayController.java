@@ -31,8 +31,6 @@ public class DayController {
         List<Booking> bookingList = bookingService.getBookingsForDay(date,username);
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
-<<<<<<< HEAD
-=======
         model.addAttribute("username", username);
 
         // might move to service, this makes a list of quarter hours
@@ -43,7 +41,6 @@ public class DayController {
         model.addAttribute("hours", hours);
         model.addAttribute("bookingService",bookingService);
 
->>>>>>> db1b8f5d72bbfcb46789182717b6ed2dd6b52651
         return "home/day";
     }
 
