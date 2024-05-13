@@ -73,7 +73,18 @@ VALUES ('10:00:00', '13:00:00', '2024-05-16', 1, "smallDummy", "butterfly on for
 
 INSERT INTO booking (start_time_slot, end_time_slot, date, client_id, username, project_title, project_desc, personal_note, is_deposit_payed)
 VALUES
+<<<<<<< HEAD
     ('09:15:00', '12:45:00', '2024-05-17', 2, "smallDummy", "dragon sleeve", "full sleeve dragon tattoo", "Customer is very excited", 1),
     ('10:30:00', '15:30:00', '2024-05-17', 1, "bigDummy", "phoenix back tattoo", "large phoenix tattoo on back", "Requires multiple sessions", 0),
     ('09:45:00', '14:30:00', '2024-05-18', 1, "bigDummy", "skull forearm", "skull tattoo on forearm", "Customer wants it in grayscale", 1),
     ('15:00:00', '18:30:00', '2024-05-18', 2, "smallDummy", "floral half-sleeve", "intricate floral design", "Customer is bringing their own design", 1);
+=======
+    ('09:15:00', '12:45:00', '2024-05-11', 2, "smallDummy", "dragon sleeve", "full sleeve dragon tattoo", "Customer is very excited", 1),
+    ('10:30:00', '15:30:00', '2024-05-11', 1, "bigDummy", "phoenix back tattoo", "large phoenix tattoo on back", "Requires multiple sessions", 0),
+    ('09:45:00', '14:30:00', '2024-05-18', 1, "bigDummy", "skull forearm", "skull tattoo on forearm", "Customer wants it in grayscale", 1),
+    ('15:00:00', '18:30:00', '2024-05-11', 2, "smallDummy", "floral half-sleeve", "intricate floral design", "Customer is bringing their own design", 1);
+
+
+SELECT * FROM booking JOIN client ON booking.client_id =  client.id
+                      LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.id = 1;
+>>>>>>> db1b8f5d72bbfcb46789182717b6ed2dd6b52651

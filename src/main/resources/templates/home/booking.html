@@ -14,19 +14,19 @@
     <div class="booking-container">
       <div th:each="booking : ${booking}" class="booking-item">
         <div class="information-container">
-          <div th:text="${booking.client.firstname + ' ' + booking.client.lastname}"></div>
+          <div th:text="${booking.client.firstName + ' ' + booking.client.lastName}"></div>
           <div th:text="${booking.client.phoneNumber}"></div>
           <div th:text="${booking.client.email}"></div>
           <hr>
           <p>Tattoo Information</p>
           <p>Deposit payed:</p>
-          <div th:text="${booking.isDepositPayed}"></div>
+          <div th:text="${booking.depositPayed}"></div>
           <p>Project Title:</p>
           <div th:text="${booking.projectTitle}"></div>
           <p>Project Description:</p>
           <div th:text="${booking.projectDesc}"></div>
           <p>Private Note:</p>
-          <div th:text="${booking.privateNote}"></div>
+          <div th:text="${booking.personalNote}"></div>
           <p>Image:</p>
 
 
