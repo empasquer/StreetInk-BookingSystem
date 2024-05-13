@@ -147,6 +147,22 @@ h1 {
         border-radius: 1.6em;
 
     }
+.open-day:hover {
+    border: 0.2em solid white;
+
+}
+.semi-booked-day:hover {
+    border: 0.2em solid white;
+
+}
+.fully-booked-day:hover {
+    border: 0.2em solid white;
+
+}
+
+.current-date {
+        border:0.2em solid black;
+    }
 
 
 

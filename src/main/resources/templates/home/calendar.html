@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="calendar.css">
 </head>
 <body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
 <main>
 
 
@@ -80,7 +82,8 @@
                           </th:block>
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) == 0}">
-                              <a class="open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:if="${date==day}" class="current-date open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:unless="${date==day}"class="open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
                           </th:block>
                       </li>
 
@@ -95,8 +98,7 @@
 
     </article>
 </section>
-    <!--footer  -->
-    <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>

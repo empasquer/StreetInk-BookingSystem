@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/dashboard.css">
 </head>
 <body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
     <main>
         <h1 th:text="'Welcome ' + ${profile.username} + '!'"></h1>
         <section class="box-shadow">

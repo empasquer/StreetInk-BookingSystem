@@ -19,7 +19,8 @@ section {
 
 .red-button {
     padding: 3rem;
-text-decoration: none;
+    text-decoration: none;
+    font-size: 2rem;
 }
 
 
