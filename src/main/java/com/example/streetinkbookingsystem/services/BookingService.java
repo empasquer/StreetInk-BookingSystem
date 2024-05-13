@@ -1,9 +1,7 @@
 package com.example.streetinkbookingsystem.services;
 
 import com.example.streetinkbookingsystem.models.Booking;
-import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.repositories.BookingRepository;
-import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +18,25 @@ public class BookingService {
         return bookingRepository.showBooking(bookingId, tattooUsername);
     }
 
-    public List<Booking> showBookingList(){
-        return bookingRepository.showBookingList();
+    public int getBookingCountForDate(LocalDate specificDate, String username) {
+       return bookingRepository.getBookingCountForDate(specificDate, username);
     }
 
-    public int getBookingCountForDate(LocalDate specificDate) {
-       return bookingRepository.getBookingCountForDate(specificDate);
+    public int getBookingCountForWeek(int year, int month, int weekNumber, String username) {
+        return bookingRepository.getBookingCountForWeek(year, month, weekNumber, username);
+    }
+
+    public int getBookingCountForMonth(int year, int month, String username) {
+        return bookingRepository.getBookingCountForMonth(year, month, username);
+    }
+
+    public List<Booking> getBookingsForMonth(int year, int month, String username) {
+        return bookingRepository.getBookingsForMonth(year, month, username);
+    }
+
+    public List<Booking> getBookingsForDay(LocalDate date, String username){
+        return bookingRepository.getBookingsForDay(date,username);
+
     }
 
 }

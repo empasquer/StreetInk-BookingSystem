@@ -6,20 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
+
 
 @Controller
 public class DayController {
 
     @Autowired
-    private BookingService bookingService;
-
+    BookingService bookingService;
 
     @GetMapping("/day")
-    public String seeDay(Model model){
-        List<Booking> bookingList = bookingService.showBookingList();
+    public String seeDay(Model model, @RequestParam LocalDate date, @RequestParam(required = false) String username){
+        if (username == null){
+            //        HttpSession session = get session, if session is null then redirect to index.
+            // else set username to session.getAttribute(username);
+            return "redirect:/";}
+
+        List<Booking> bookingList = bookingService.getBookingsForDay(date,username);
         model.addAttribute("bookingList", bookingList);
+        model.addAttribute("date", date);
         return "home/day";
     }
 

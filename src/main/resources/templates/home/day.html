@@ -2,38 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DAY</title>
-    <link rel="stylesheet" href="/layout.css">
+    <title>Day</title>
 </head>
 <body>
-<main>
-    <h1>DAY</h1>
-
-    <section>
-
-        <div th:each="booking : ${bookingList}" class="bookingList">
-            <div class="bookingList-container">
-                <!-- bookingId skal måske være dato? så det står i URL også? -->
-                <a th:href="@{'/booking?bookingId=' + ${booking.id}}">
-                    <div th:text="${booking.projectTitle}"></div>
-                    <div th:text="${booking.id}"></div>
-                </a>
-            </div>
-        </div>
-
-        <!--<div th:each="booking : ${bookingList}" class="bookingList">
-            <div class="bookingList-container">
-                 bookingId skal måske være dato? så det står i URL også?
-                <a th:href="@{'/booking?bookingId=' + ${booking.bookingId}}">
-                    <div th:text="${booking.projectTitle}"></div>
-                    <div th:text="${booking.bookingId}"></div>
-                </a>
-            </div>
-        </div> -->
-
-    </section>
-
-</main>
-<footer th:block th:insert="~{home/footer :: footer}"></footer>
+<h1 th:text="${date}"></h1>
 </body>
 </html>
