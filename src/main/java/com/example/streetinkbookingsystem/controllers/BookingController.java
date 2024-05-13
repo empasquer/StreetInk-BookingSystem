@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BookingController {
@@ -18,11 +20,11 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/booking")
-    public String booking(Model model, @RequestParam int bookingId, @RequestParam String username/*, Principal principal*/){
-       // fjerner denne så man ikke skal bruge en godkendelse endnu.
-        //String tattooArtistId = principal.getName();
-        //Hardcodet artist username
-        String tattooArtistId = username;
+    public String booking(Model model, @RequestParam int bookingId, @RequestParam String username){
+        if (username == null){
+            // Redirect logic when username is null
+            return "redirect:/";
+        }
         model.addAttribute("booking", bookingService.getBookingDetail(bookingId));
         return "home/booking";
     }
