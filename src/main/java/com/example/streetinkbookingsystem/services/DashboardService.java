@@ -25,7 +25,7 @@ public class DashboardService {
     }
 
     public int calculateAmtBookingsAWeek(String username) {
-        return bookingService.getBookingCountForWeek(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), getWeekNumber(LocalDate.now()), username);
+        return bookingService.getBookingCountForThisWeek( username);
     }
 
     /**
