@@ -30,7 +30,7 @@ public class DayController {
 
 
     @GetMapping("/day")
-    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam(required = false) String username){
+    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date){
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
             model.addAttribute("loggedIn", loggedIn);
@@ -38,6 +38,7 @@ public class DayController {
             return "redirect:/";
         }
 
+        String username = (String) session.getAttribute("username");
         model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
@@ -66,15 +67,15 @@ public class DayController {
     }
 
     @PostMapping("/day/next")
-    public String seeNextDay( @RequestParam LocalDate date, @RequestParam String username) {
+    public String seeNextDay( @RequestParam LocalDate date) {
         LocalDate nextDate = date.plusDays(1);
-        return "redirect:/day?username=" + username + "&date=" + nextDate;
+        return "redirect:/day?date=" + nextDate;
     }
 
     @PostMapping("/day/previous")
-    public String seePreviousDay( @RequestParam LocalDate date,@RequestParam String username) {
+    public String seePreviousDay( @RequestParam LocalDate date) {
         LocalDate previousDate = date.minusDays(1);
-        return "redirect:/day?username=" + username + "&date=" + previousDate;
+        return "redirect:/day?date=" + previousDate;
     }
 
 

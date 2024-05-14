@@ -1,3 +1,7 @@
+body {
+    height: auto;
+}
+
 section {
     margin-bottom: 2em;
     padding-top: 4em;
@@ -61,7 +65,7 @@ section {
     content: "";
     position: absolute;
     top: 50%;
-    width: 26em;
+    width: 900%;
     background-color: white;
     left: 3em;
     border-bottom: none;
@@ -116,7 +120,7 @@ section {
 h1 {
     display: grid;
     place-content: center;
-    font-size: 0.9em;
+    font-size: 80%;
 }
 
 h2 {
@@ -134,4 +138,9 @@ h2 {
 }
 p {
     color: var(--white);
+}
+.red-button {
+    padding: 3rem;
+    text-decoration: none;
+    font-size: 2rem;
 }

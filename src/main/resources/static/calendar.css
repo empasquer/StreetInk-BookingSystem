@@ -1,9 +1,11 @@
-
+body {
+    height: auto;
+}
 section {
-    width: 55rem;
-    height: 72rem;
+    width: 115%;
+    height: 60%;
     padding: 1em;
-    margin:  0 0 0 -4em;
+    margin:  0 0 0 -9%;
 }
 h1 {
     display:grid;
@@ -179,7 +181,7 @@ h1 {
     align-items: flex-start;
     flex-direction: column;
     display: flex;
-    height: 19em;
+    height: auto;
     place-content: baseline;
     padding: 3em 0 0 0;
     align-self: flex-start;
@@ -198,5 +200,32 @@ h1 {
     font-size: 1.5em;
 }
 
+/* Media Query for Small Screens */
+@media screen and (max-width: 768px) {
+    section {
+        padding: 0.5em; /* Adjust padding */
+    }
+
+    h1 {
+        font-size: 2em; /* Adjust font size */
+    }
+
+    .calendar-navigation {
+        font-size: 2em; /* Adjust font size */
+    }
+
+    .calendar-information-bar {
+        font-size: 1em; /* Adjust font size */
+    }
+
+    .calendar-information-bar .weekdays {
+        font-size: 0.8em; /* Adjust font size */
+    }
+
+    .dates {
+        grid-row-gap: 0.5em; /* Adjust row gap */
+        grid-column-gap: 0.3em; /* Adjust column gap */
+    }
+}
 
 

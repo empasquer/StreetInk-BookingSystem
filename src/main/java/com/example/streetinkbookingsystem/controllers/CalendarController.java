@@ -34,7 +34,7 @@ public class CalendarController {
     // If there is passed date in the parameters then it display that month/year.
     // otherwise it will display the current month.
     @GetMapping("/calendar")
-    public String seeCurrentMonth(Model model, @RequestParam(required = false) String username, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month, HttpSession session) {
+    public String seeCurrentMonth(Model model, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month, HttpSession session) {
         //Check if user has a session, if not redirect to login.
 
         boolean loggedIn = loginService.isUserLoggedIn(session);
@@ -56,7 +56,7 @@ public class CalendarController {
         // Calculate the days in the month, get the weekNumbers, and calculate how many empty fills
         // there are needed before and after the dates of the months, so that the matrix is always
         // full, 6x7.
-        username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         List<Booking> bookingsToday = bookingService.getBookingsForDay(currentDate,username);
         ArrayList<LocalDate> daysInMonth = calendarService.getDaysInMonth(date.getYear(), date.getMonth());
         int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
@@ -85,17 +85,17 @@ public class CalendarController {
     //query parameters: passed along to the get mapping and displayed in the URL.
     // ? is the start of the query, & separates the parameters.
     @PostMapping("/calendar/next")
-    public String seeNextMonth( @RequestParam Integer year, @RequestParam Integer month, @RequestParam String username) {
+    public String seeNextMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate nextDate = LocalDate.of(year, month, 1).plusMonths(1);
 
-        return "redirect:/calendar?username=" + username+ "&year=" + nextDate.getYear() + "&month=" + nextDate.getMonthValue();
+        return "redirect:/calendar?username=" + "&year=" + nextDate.getYear() + "&month=" + nextDate.getMonthValue();
     }
 
 
     //finds the previous month based on the month and year given
     @PostMapping("/calendar/previous")
-    public String seePreviousMonth( @RequestParam Integer year, @RequestParam Integer month, @RequestParam String username) {
+    public String seePreviousMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate previousDate = LocalDate.of(year, month, 1).minusMonths(1);
-        return "redirect:/calendar?username=" + username+ "&year="  + previousDate.getYear() + "&month=" + previousDate.getMonthValue();
+        return "redirect:/calendar?username=" + "&year="  + previousDate.getYear() + "&month=" + previousDate.getMonthValue();
     }
 }
