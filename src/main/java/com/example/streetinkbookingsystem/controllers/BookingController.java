@@ -28,12 +28,7 @@ public class BookingController {
     TattooArtistService tattooArtistService;
 
     @GetMapping("/booking")
-    public String booking(Model model, @RequestParam int bookingId, @RequestParam String username){
-        if (username == null){
-            // Redirect logic when username is null
-            return "redirect:/";
-        }
-    public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username/*, Principal principal*/){
+     public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username){
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
             model.addAttribute("loggedIn", loggedIn);
@@ -45,8 +40,7 @@ public class BookingController {
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
         //fjerner denne så man ikke skal bruge en godkendelse endnu.
-        //String tattooArtistId = principal.getName();
-        //Hardcodet artist username
+
         String tattooArtistId = username;
         model.addAttribute("booking", bookingService.getBookingDetail(bookingId));
         return "home/booking";
