@@ -28,10 +28,13 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String seeDashboard(Model model, HttpSession session) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
-        model.addAttribute("loggedIn", loggedIn);
-        String username = (String) session.getAttribute("username");
-        System.out.println(username);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
 
+        String username = (String) session.getAttribute("username");
 
         // ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
 

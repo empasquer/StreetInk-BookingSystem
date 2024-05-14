@@ -1,8 +1,11 @@
 package com.example.streetinkbookingsystem.controllers;
 
+import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.CalendarService;
+import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,24 +26,41 @@ public class CalendarController {
     BookingService bookingService;
     @Autowired
     TattooArtistService tattooArtistService;
+    @Autowired
+    LoginService loginService;
 
     // If there is passed date in the parameters then it display that month/year.
     // otherwise it will display the current month.
     @GetMapping("/calendar")
-    public String seeCurrentMonth(Model model, @RequestParam(required = false) String username, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month) {
+    public String seeCurrentMonth(Model model, @RequestParam(required = false) String username, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month, HttpSession session) {
         //Min tanke er at man kan sende username videre fra login via requestParam, OG
         //så tjekke for om username er null, if so tjek om der er en session, if so få username
         //derfra, hvis ikke så redirect til index. Så kan man ikke komme ind på siden ved at taste
         // URL forkert, men man kan komme ind på siden hvis der er en session.
-        if (username == null){
-            //        HttpSession session = get session, if session is null then redirect to index.
-            // else set username to session.getAttribute(username);
+
+        //Det føles lidt som en omvej. Er det ikke bare bedre at tjekke for om LoggedIn er true eller false
+        //Så snart LoggedIn er false, så redirecter den, og så har den selvfølgelig heller ikke username
+        //Hvis ikke, så fortsætter den, og så har den selvfølgelig også en username
+        //Ved ikke om jeg tænker for simpelt though
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+            model.addAttribute("username", session.getAttribute(username));
+            TattooArtist profile = tattooArtistService.getTattooArtistByUsername(username);
+            model.addAttribute("profile", profile);
+        } else {
             return "redirect:/";
         }
+
+        //if (username == null){
+            //        HttpSession session = get session, if session is null then redirect to index.
+            // else set username to session.getAttribute(username);
+            //return "redirect:/";
+        //}
         // DUMMY USERNAME - skal ændres til den rigtig username
         //String username = "bigDummy";
 
-        model.addAttribute("username", username);
+
 
         //Initialize the calendar. If client gets to the calendar from another view
         //then show the current month. If they push the "next" or "previous" buttons then show that month.

@@ -20,7 +20,7 @@
       <div class="line"></div>
     </span>
     <div class="dropdown-content">
-      <a th:href="@{/calendar}">Calendar</a>
+      <a th:href="@{/calendar(username=${profile.getUsername()})}">Calendar</a>
       <a th:href="@{/dashboard}">Dashboard</a>
       <a th:href="@{/dashboard}">Client list</a>
       <a th:href="@{/logout}">Log out</a>
