@@ -28,25 +28,28 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String seeDashboard(Model model, HttpSession session) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
-        model.addAttribute("loggedIn", loggedIn);
-        String username = (String) session.getAttribute("username");
-        System.out.println(username);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
 
+        String username = (String) session.getAttribute("username");
 
         // ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
 
         // temporary profile
         // TattooArtist profile = profiles.get(1);
 
-        TattooArtist profile = tattooArtistService.getTattooArtistByUsername(username);
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        int bookingsADay = dashboardService.calculateAmtBookingsADay(profile.getUsername());
-        int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(profile.getUsername());
+        int bookingsADay = dashboardService.calculateAmtBookingsADay(tattooArtist.getUsername());
+        int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(tattooArtist.getUsername());
 
-        int bookingPercentageOfMonth = dashboardService.calculateBookingPercentageOfMonth(profile.getUsername());
+        int bookingPercentageOfMonth = dashboardService.calculateBookingPercentageOfMonth(tattooArtist.getUsername());
         int monthProgressPercentage = dashboardService.calculateMonthProgressPercentage();
 
-        model.addAttribute("profile", profile);
+        model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("bookingsADay", bookingsADay);
         model.addAttribute("bookingsAWeek", bookingsAWeek);
         model.addAttribute("bookingPercentageOfMonth", bookingPercentageOfMonth);

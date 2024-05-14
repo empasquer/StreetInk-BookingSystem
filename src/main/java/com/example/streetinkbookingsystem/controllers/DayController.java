@@ -1,7 +1,11 @@
 package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.models.Booking;
+import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.BookingService;
+import com.example.streetinkbookingsystem.services.LoginService;
+import com.example.streetinkbookingsystem.services.TattooArtistService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +23,31 @@ public class DayController {
 
     @Autowired
     BookingService bookingService;
+    @Autowired
+    LoginService loginService;
+    @Autowired
+    TattooArtistService tattooArtistService;
 
 
     @GetMapping("/day")
-    public String seeDay(Model model, @RequestParam LocalDate date, @RequestParam(required = false) String username){
+    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam(required = false) String username){
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
+
+        model.addAttribute("username", session.getAttribute(username));
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
         if (username == null){
             // Redirect logic when username is null
             return "redirect:/";
         }
+
+
 
         List<Booking> bookingList = bookingService.getBookingsForDay(date,username);
         model.addAttribute("bookingList", bookingList);
