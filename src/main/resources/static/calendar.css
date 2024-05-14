@@ -2,10 +2,10 @@ body {
     height: auto;
 }
 section {
-    width: 115%;
+    width: 105%;
     height: 60%;
     padding: 1em;
-    margin:  0 0 0 -9%;
+    margin: 0px 0 0 -4%;
 }
 h1 {
     display:grid;
@@ -21,6 +21,9 @@ h1 {
     align-items: end;
     font-size: 5em;
     margin-bottom: 0.5em;
+    margin-left: -4%;
+    /* align-self: center; */
+    width: 108%;
 }
 .previous {
     display: grid;
@@ -52,8 +55,9 @@ h1 {
 .calendar-information-bar .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-column-gap: 1em;
+    /* grid-column-gap: 1em; */
     margin-left: 0.5em;
+
 }
 
 
@@ -85,7 +89,7 @@ h1 {
         grid-template-rows: repeat(6, 1fr);
         grid-row-gap: 3em;
         margin-left: 2.5em;
-        grid-column-gap: 1.7em;
+        grid-column-gap: 1em;
 
 
 
@@ -185,7 +189,7 @@ h1 {
     place-content: baseline;
     padding: 3em 0 0 0;
     align-self: flex-start;
-    margin-left: -3em;
+    margin-left: -1em;
 
 }
 

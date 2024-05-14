@@ -52,7 +52,6 @@ public class CalendarService {
     // Method to find number of empty slots before first day in month
     public int getEmptyStartFills(LocalDate firstDateInMonth) {
         int firstDay = firstDateInMonth.getDayOfWeek().getValue();
-        System.out.println(firstDay);
         int fillers = firstDay - 1; // Subtract 1 because we want Monday to have 0 fillers
         return fillers;
     }
@@ -60,9 +59,7 @@ public class CalendarService {
 
     public int getEmptyEndFills(LocalDate firstDateInMonth, ArrayList daysInMonth) {
         int startFillers = getEmptyStartFills(firstDateInMonth);
-        System.out.println(startFillers);
         int endFillers = 42 - startFillers - daysInMonth.size();
-        System.out.println(endFillers);
         return endFillers;
 
     }

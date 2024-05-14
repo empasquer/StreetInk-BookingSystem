@@ -28,21 +28,17 @@ section {
     grid-column-gap: 0em;
     margin-left: 0.5em;
     position: relative;
-    grid-row-gap: 3em;
     margin-top: -0.7em;
-    /* padding-bottom: 0em;*/
 }
 
 
 .time-line-box .bookingslots {
     display: grid;
     grid-template-rows: repeat(44, 1fr);
-    /* grid-column-gap: 1em; */
     margin-left: 1.5em;
-    /* padding: 1em; */
     position: relative;
-    /* margin-bottom: -4.8em; */
-    height: 50.7em;
+    margin-bottom: 1.2em;
+    height: 44em;
 }
 
 
@@ -91,7 +87,7 @@ section {
     color: var(--white);
     /* padding: 0.7em 1em; */
     border-radius: 1em;
-    /* margin-top: -0.7em; */
+     margin-top: 0.2em;
     width: 18em;
     z-index: 2;
     display: flex;
