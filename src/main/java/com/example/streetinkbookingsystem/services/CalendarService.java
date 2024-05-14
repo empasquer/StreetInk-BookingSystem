@@ -1,7 +1,6 @@
 package com.example.streetinkbookingsystem.services;
 
 import com.example.streetinkbookingsystem.models.Booking;
-import com.example.streetinkbookingsystem.models.Calendar;
 import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,6 @@ public class CalendarService {
     TattooArtistService tattooArtistService;
     @Autowired
     BookingService bookingService;
-
-    public LocalDate getCurrentDate(){
-        Calendar calendar = new Calendar();
-        calendar.initializeWithCurrentDate();
-        return LocalDate.of(calendar.getYear(),calendar.getMonth(),calendar.getDay());
-    }
 
 
     // Method to get all days in a month

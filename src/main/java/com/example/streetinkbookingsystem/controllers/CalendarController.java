@@ -1,6 +1,7 @@
 package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.models.TattooArtist;
+import com.example.streetinkbookingsystem.models.Booking;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.CalendarService;
 import com.example.streetinkbookingsystem.services.LoginService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CalendarController {
@@ -33,59 +35,45 @@ public class CalendarController {
     // otherwise it will display the current month.
     @GetMapping("/calendar")
     public String seeCurrentMonth(Model model, @RequestParam(required = false) String username, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month, HttpSession session) {
-        //Min tanke er at man kan sende username videre fra login via requestParam, OG
-        //så tjekke for om username er null, if so tjek om der er en session, if so få username
-        //derfra, hvis ikke så redirect til index. Så kan man ikke komme ind på siden ved at taste
-        // URL forkert, men man kan komme ind på siden hvis der er en session.
+        //Check if user has a session, if not redirect to login.
 
-        //Det føles lidt som en omvej. Er det ikke bare bedre at tjekke for om LoggedIn er true eller false
-        //Så snart LoggedIn er false, så redirecter den, og så har den selvfølgelig heller ikke username
-        //Hvis ikke, så fortsætter den, og så har den selvfølgelig også en username
-        //Ved ikke om jeg tænker for simpelt though
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
+            model.addAttribute("loggedIn", loggedIn); // where do we use this?
         } else {
             return "redirect:/";
         }
 
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        //if (username == null){
-            //        HttpSession session = get session, if session is null then redirect to index.
-            // else set username to session.getAttribute(username);
-            //return "redirect:/";
-        //}
-        // DUMMY USERNAME - skal ændres til den rigtig username
-        //String username = "bigDummy";
-
-
-
         //Initialize the calendar. If client gets to the calendar from another view
         //then show the current month. If they push the "next" or "previous" buttons then show that month.
+        LocalDate currentDate = LocalDate.now();
         LocalDate date;
         if (year == null && month == null) {
-             date = calendarService.getCurrentDate();
+             date = currentDate;
         } else
              date= LocalDate.of(year, month, 1); // start day is always the first in the month
 
         // Calculate the days in the month, get the weekNumbers, and calculate how many empty fills
         // there are needed before and after the dates of the months, so that the matrix is always
         // full, 6x7.
+        username = (String) session.getAttribute("username");
+        List<Booking> bookingsToday = bookingService.getBookingsForDay(currentDate,username);
         ArrayList<LocalDate> daysInMonth = calendarService.getDaysInMonth(date.getYear(), date.getMonth());
         int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
         int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
-        LocalDate currentDate = LocalDate.now();
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
         //Ad to model
+        model.addAttribute("currentDate", currentDate);
+        model.addAttribute("bookingsToday", bookingsToday);
         model.addAttribute("startFillers", startFillers);
         model.addAttribute("endFillers", endFillers);
         model.addAttribute("daysInMonth", daysInMonth);
         model.addAttribute("date", date);
         model.addAttribute("calendar", calendarService); //used in view to calculate how booked the day is
         model.addAttribute("weekNumbers", weekNumbers);
+        model.addAttribute("tattooArtist", tattooArtist); //where is this used?
         model.addAttribute("username", username);
         return "home/calendar";
     }
