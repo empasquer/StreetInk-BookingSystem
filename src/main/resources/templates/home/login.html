@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/layout.css">
+    <link rel="stylesheet" type="text/css" href="/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+
+    <div class="back-arrow-container">
+        <a th:href="@{/}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <h1>Login</h1>
+
+    <section class="box-shadow">
+
+        <form th:action="@{/login}" method="post">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required th:value="${param.username}">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div th:if="${message}" class="error-message">
+                <p th:text="${message}"></p>
+            </div>
+
+            <div>
+                <button class ="red-button" type="submit">Login</button>
+            </div>
+        </form>
+
+        <a th:href="@{/}" class="forgot-password">Forgot password?</a>
+    </section>
+
+</main>
+
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+
+</body>
+</html>

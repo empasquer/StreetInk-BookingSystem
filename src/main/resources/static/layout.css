@@ -1,0 +1,250 @@
+:root {
+    --header-footer-color: hsla(0, 0%, 15%, 1); /* #272727 */
+    --background-color: hsla(0, 0%, 27%, 1); /* #464545 */
+    --section-background-color: hsla(0, 0%, 47%, 1); /* #787676 */
+    --button-gray: hsla(0, 0%, 57%, 1); /* #929292 */
+    --above-section-elements-gray: hsla(0, 0%, 70%, 1); /* #B3B3B3 */
+    --light-gray: hsla(0, 0%, 70%, 1); /* #B3B3B3 */
+    --h1-color: hsla(0, 0%, 82%, 1); /* #D2D1D1 */
+    --input-field-gray: hsla(0, 0%, 93%, 1); /* #EEEEEE */
+    --white: hsla(0, 0%, 100%, 1); /* #FFFFFF */
+
+    --accent-red: hsl(0, 38%, 37%); /* #813A3A */
+    --semi-booked-day: hsla(40, 80%, 40%, 1); /* #B16F6F */
+    --fully-booked-day: hsla(0, 50%, 41%, 1); /* #A85252 */
+    --booking-on-day: hsla(0, 50%, 37%, 0.8); /* #813A3A with 80% opacity */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}
+
+::selection {
+    color: var(--input-field-gray);
+    background: var(--booking-on-day);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+main {
+    color: var(--input-field-gray);
+    flex: 1;
+    padding: 2rem 10vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+a {
+    color: var(--input-field-gray);
+    text-decoration: underline;
+}
+
+a:visited {
+    color: var(--light-gray);
+}
+
+header, footer {
+    background-color: var(--header-footer-color);
+    color: var(--h1-color);
+}
+
+h1 {
+    color: var(--h1-color);
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+
+input {
+    border-radius: 5px;
+    background-color: var(--input-field-gray);
+    border:none;
+    color: var(--header-footer-color);
+    box-shadow: 0 14px 18px 5px rgba(0,0,0,0.26) inset;
+}
+
+
+section {
+    background-color: var(--section-background-color);
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+
+button {
+    cursor: pointer; /* ændrer curser til en pointer */
+    font-size: 1.25rem;
+}
+
+/* classes */
+
+.inset {
+    box-shadow: 0 4px 8px 5px rgba(0,0,0,0.26) inset;
+}
+
+.box-shadow {
+    box-shadow: 0px 5px 6px 5px rgba(0,0,0,0.37);
+}
+
+.gray-button {
+    cursor: pointer; /* ændrer curser til en pointer */
+    border-radius: 15px;
+    background-color: var(--button-gray);
+    color: var(--white);
+    border: none;
+    padding:1rem;
+}
+.gray-button:hover {
+    background-color: #C6C6C6; /* har ikke fundet den rigtige farve */
+}
+
+.red-button {
+    cursor: pointer; /* ændrer curser til en pointer */
+    border-radius: 15px;
+    background-color: var(--accent-red); /* denne er meget lydere end på prototyperne*/
+    color: var(--input-field-gray);
+    border:none;
+    padding:1rem;
+}
+.red-button:hover {
+    background-color: #713232; /* Mørkere farve når musen er over */
+
+}
+
+.back-arrow-container {
+    top: 2rem;
+    left: 2rem;
+    align-self: start;
+    background-color: var(--section-background-color);
+    padding: 5px 15px;
+    border-radius: 15px;
+}
+
+.back-arrow {
+    font-size: large;
+}
+
+
+/* header og footer styles */
+footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
+
+}
+
+footer img {
+    width: 200px;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo-container {
+    flex-grow: 1; /* Let the logo container fill available space */
+    text-align: center; /* Center the logo */
+}
+
+.logo {
+    width: 200px; /* Adjust width as needed */
+    margin: auto; /* Center the logo horizontally */
+}
+
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* laver billedet rundt */
+    cursor: pointer; /* ændrer curser til en pointer */
+    margin-bottom: 25px;
+    margin-top: 25px;
+    margin-left: 50px;
+}
+
+/* Actual Dropdown Menu */
+.dropdown {
+    position: relative;
+    margin-right: 50px;
+}
+
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.line {
+    width: 30px;
+    height: 4px;
+    background-color: var(--white);
+    margin: 5px 0; /* Adjust spacing between lines */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position below the button */
+    right: 0; /* Align to the right */
+    background-color: var(--background-color);
+    min-width: 100px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 80px;
+}
+
+.dropdown-content a {
+    color: var(--white);
+    padding: 40px 40px; /* Adjust padding as needed */
+    text-decoration: none;
+    display: block;
+    font-size: x-large;
+    border-bottom: 1px solid var(--white);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
