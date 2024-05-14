@@ -30,12 +30,13 @@ public class BookingController {
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
             model.addAttribute("loggedIn", loggedIn);
-            model.addAttribute("username", session.getAttribute(username));
-            TattooArtist profile = tattooArtistService.getTattooArtistByUsername(username);
-            model.addAttribute("profile", profile);
         } else {
             return "redirect:/";
         }
+
+        model.addAttribute("username", session.getAttribute(username));
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
        // fjerner denne så man ikke skal bruge en godkendelse endnu.
         //String tattooArtistId = principal.getName();
         //Hardcodet artist username

@@ -41,15 +41,15 @@ public class DashboardController {
         // temporary profile
         // TattooArtist profile = profiles.get(1);
 
-        TattooArtist profile = tattooArtistService.getTattooArtistByUsername(username);
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        int bookingsADay = dashboardService.calculateAmtBookingsADay(profile.getUsername());
-        int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(profile.getUsername());
+        int bookingsADay = dashboardService.calculateAmtBookingsADay(tattooArtist.getUsername());
+        int bookingsAWeek = dashboardService.calculateAmtBookingsAWeek(tattooArtist.getUsername());
 
-        int bookingPercentageOfMonth = dashboardService.calculateBookingPercentageOfMonth(profile.getUsername());
+        int bookingPercentageOfMonth = dashboardService.calculateBookingPercentageOfMonth(tattooArtist.getUsername());
         int monthProgressPercentage = dashboardService.calculateMonthProgressPercentage();
 
-        model.addAttribute("profile", profile);
+        model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("bookingsADay", bookingsADay);
         model.addAttribute("bookingsAWeek", bookingsAWeek);
         model.addAttribute("bookingPercentageOfMonth", bookingPercentageOfMonth);

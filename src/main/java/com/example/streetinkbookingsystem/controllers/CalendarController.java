@@ -45,12 +45,13 @@ public class CalendarController {
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
             model.addAttribute("loggedIn", loggedIn);
-            model.addAttribute("username", session.getAttribute(username));
-            TattooArtist profile = tattooArtistService.getTattooArtistByUsername(username);
-            model.addAttribute("profile", profile);
         } else {
             return "redirect:/";
         }
+
+        model.addAttribute("username", session.getAttribute(username));
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
 
         //if (username == null){
             //        HttpSession session = get session, if session is null then redirect to index.
