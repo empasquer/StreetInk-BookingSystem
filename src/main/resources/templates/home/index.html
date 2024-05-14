@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Artists</title>
     <link rel="stylesheet" href="/layout.css">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet"  href="index.css">
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -17,13 +18,17 @@
         <div class="username-container">
             <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
                 <div class="profile-container">
-                    <!-- i stedet for usynlig knap, linker jeg til Login. Chatmanden siger at det er lige så fint som en knap -->
                     <a th:href="@{'/login?username=' + ${tattooArtist.username}}">
-                        <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic">
-                        <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
+                        <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic-index">
+                        <i th:unless="${tattooArtist.profilePicture != null}" class="fas fa-user profile-pic-index"></i>
                     </a>
 
-                    <div th:text="${tattooArtist.username}"></div>
+                   <!-- <a th:href="@{'/login?username=' + ${tattooArtist.username}}">
+                        <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic">
+                        <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
+                    </a> -->
+
+                    <div class="username" th:text="${tattooArtist.username}"></div>
                 </div>
             </div>
         </div>
