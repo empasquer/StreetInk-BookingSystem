@@ -159,6 +159,7 @@ button {
 }
 
 
+
 /* header og footer styles */
 footer {
     width: 100%;
@@ -206,7 +207,7 @@ header {
     margin-left: 50px;
 }
 
-/* Actual Dropdown Menu */
+/* Dropdown Menu */
 .dropdown {
     position: relative;
     margin-right: 50px;
