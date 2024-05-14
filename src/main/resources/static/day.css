@@ -62,11 +62,8 @@ section {
     position: absolute;
     top: 50%;
     width: 26em;
-    /* height: 1px; */
     background-color: white;
     left: 3em;
-    /* transform: translateY(-50%); */
-    /* border-style: dashed; */
     border-bottom: none;
     border-right: none;
     border-left: none;
