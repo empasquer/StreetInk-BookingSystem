@@ -15,7 +15,7 @@
 
 <main>
     <div class="back-arrow-container">
-        <a th:href="@{/calendar(username=${tattooArtist.getUsername()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <a th:href="@{/calendar(username=${tattooArtist.getUsername()},year=${date.getYear()},month=${date.getMonthValue()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
 
     <!--prev and next buttons-->
