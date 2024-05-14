@@ -3,7 +3,6 @@ package com.example.streetinkbookingsystem.repositories;
 import com.example.streetinkbookingsystem.models.Booking;
 import com.example.streetinkbookingsystem.models.Client;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -99,12 +98,15 @@ public class BookingRepository {
         return jdbcTemplate.queryForObject(query, Integer.class, specificDate, username);
     }
 
-    public int getBookingCountForWeek(int year, int month, int weekNumber, String username) {
-        LocalDate startOfWeek = LocalDate.of(year, month, 1)
-                .with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY))
-                .plusWeeks(weekNumber - 1);
-        LocalDate endOfWeek = startOfWeek.plusDays(6); // Assuming a week ends on Sunday
+    public int getBookingCountForThisWeek(String username) {
+        // Calculate the start date of the week based on the provided year, month, and week number
 
+        LocalDate startOfWeek = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+        // Calculate the end date of the week by adding 6 days to the start date (assuming a week ends on Sunday)
+        LocalDate endOfWeek = startOfWeek.plusDays(6);
+
+        // Query the database to get the booking count for the specified week
         String query = "SELECT COUNT(*) AS booking_count FROM booking WHERE date BETWEEN ? AND ? AND username = ?";
         return jdbcTemplate.queryForObject(query, Integer.class, startOfWeek, endOfWeek, username);
     }

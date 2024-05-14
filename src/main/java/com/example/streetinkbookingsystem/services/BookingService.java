@@ -20,8 +20,8 @@ public class BookingService {
         return bookingRepository.getBookingCountForDate(specificDate, username);
     }
 
-    public int getBookingCountForWeek(int year, int month, int weekNumber, String username) {
-        return bookingRepository.getBookingCountForWeek(year, month, weekNumber, username);
+    public int getBookingCountForThisWeek(String username) {
+        return bookingRepository.getBookingCountForThisWeek(username);
     }
 
     public int getBookingCountForMonth(int year, int month, String username) {
