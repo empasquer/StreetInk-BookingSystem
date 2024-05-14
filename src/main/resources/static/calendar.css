@@ -151,14 +151,20 @@ h1 {
     }
 .open-day:hover {
     border: 0.2em solid white;
+    width: 3.1em;
+    height: 4.6em;
 
 }
 .semi-booked-day:hover {
     border: 0.2em solid white;
+    width: 3.1em;
+    height: 4.6em;
 
 }
 .fully-booked-day:hover {
     border: 0.2em solid white;
+    width: 3.1em;
+    height: 4.6em;
 
 }
 
