@@ -18,9 +18,7 @@ public class HomeController {
     LoginService loginService;
 
     @GetMapping("/")
-    public String index(Model model, HttpSession session){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        model.addAttribute("loggedIn", loggedIn);
+    public String index(Model model){
         model.addAttribute("tattooArtists", tattooArtistService.showTattooArtist());
         return "home/index";
     }
