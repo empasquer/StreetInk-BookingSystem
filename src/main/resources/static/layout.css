@@ -144,22 +144,6 @@ button {
 
 }
 
-.back-arrow-container {
-    align-self: flex-start;
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-}
-
-.back-arrow {
-    color: #0e3e54;
-}
-
-.back-arrow:hover {
-    color: #FEFF86;
-}
-
-
 
 /* header og footer styles */
 footer {
