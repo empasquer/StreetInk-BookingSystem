@@ -144,6 +144,19 @@ button {
 
 }
 
+.back-arrow-container {
+    top: 2rem;
+    left: 2rem;
+    align-self: start;
+    background-color: var(--section-background-color);
+    padding: 5px 15px;
+    border-radius: 15px;
+}
+
+.back-arrow {
+    font-size: large;
+}
+
 
 /* header og footer styles */
 footer {
@@ -191,7 +204,7 @@ header {
     margin-left: 50px;
 }
 
-/* Dropdown Menu */
+/* Actual Dropdown Menu */
 .dropdown {
     position: relative;
     margin-right: 50px;

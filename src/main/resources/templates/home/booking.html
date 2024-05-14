@@ -4,11 +4,17 @@
   <meta charset="UTF-8">
   <title>Booking</title>
   <link rel="stylesheet" href="/layout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
 
 <main>
+  <div class="back-arrow-container">
+    <a th:href="@{/day(username=${tattooArtist.username},date=${booking.getDate()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+  </div>
+
   <h1>EKS: 3 Jun 10:00</h1>
 
   <section>

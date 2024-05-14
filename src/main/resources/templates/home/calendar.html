@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <title>Calendar</title>
     <link rel="stylesheet" href="/layout.css">
-    <link rel="stylesheet" type="text/css" href="calendar.css">
+    <link rel="stylesheet" type="text/css" href="/calendar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
 
 <main>
+
+    <div class="back-arrow-container">
+        <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
 
 
 <!--header  -->
