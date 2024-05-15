@@ -43,9 +43,11 @@ public class BookingService {
     }
 
     //tror ikke denne skal være liste og skal justeres til visning af specifik booking
-    public List<Booking> showBooking(int bookingId, String tattooUsername){
+    /*public List<Booking> showBooking(int bookingId, String tattooUsername){
         return bookingRepository.showBooking(bookingId, tattooUsername);
     }
+
+     */
 
     public List<Booking> showBookingList(){
         return bookingRepository.showBookingList();
