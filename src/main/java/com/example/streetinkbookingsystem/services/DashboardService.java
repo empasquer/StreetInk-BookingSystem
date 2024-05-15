@@ -81,7 +81,7 @@ public class DashboardService {
         return (int) Math.round(progressPercentage);
     }
 
-    private int calculateWeekdaysInMonth(LocalDate date) {
+    public int calculateWeekdaysInMonth(LocalDate date) {
         int weekdaysInMonth = 0;
         for (int day = 1; day <= date.lengthOfMonth(); day++) {
             LocalDate currentDate = LocalDate.of(date.getYear(), date.getMonthValue(), day);

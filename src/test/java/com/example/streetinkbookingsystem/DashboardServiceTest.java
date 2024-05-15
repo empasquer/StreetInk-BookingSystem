@@ -5,6 +5,7 @@ import com.example.streetinkbookingsystem.services.DashboardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -29,4 +30,18 @@ public class DashboardServiceTest {
         int expectedOutput = 5;
         assertEquals(actualOutput,expectedOutput);
     }
+
+
+   @Test
+   public void givenDate_returnWeekDaysInMonth(){
+
+        int actualResult = dashboardService.calculateWeekdaysInMonth(LocalDate.now());
+        int expectedResult = 23;
+        assertEquals(actualResult, expectedResult);
+
+   }
+
+
+
+
 }
