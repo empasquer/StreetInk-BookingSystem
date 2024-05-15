@@ -25,7 +25,7 @@ public class DashboardService {
     }
 
     public int calculateAmtBookingsAWeek(String username) {
-        return bookingService.getBookingCountForThisWeek( username);
+        return bookingService.getBookingCountForThisWeek(username);
     }
 
     /**
