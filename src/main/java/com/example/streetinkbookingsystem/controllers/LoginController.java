@@ -33,5 +33,20 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/forgotten-password")
+    public String forgottenPassword() {
+        return "home/forgotten-password";
+    }
+
+    @PostMapping("/forgotten-password")
+    public String forgottenPassword(@RequestParam String email) {
+        
+        return "redirect:/login";
+    }
+
+
+
+
+
 }
 
