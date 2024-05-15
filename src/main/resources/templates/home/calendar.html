@@ -115,7 +115,7 @@
         <h3>Today:</h3>
     <span th:each="booking : ${bookingsToday}">
     <h4 th:text="${booking.getStartTimeSlot() + ' - ' + booking.getEndTimeSlot() +
-     ': '+ booking.getClient().getFirstName() + ' ' + booking.getClient().getFirstName() +', ' }"></h4>
+     ': '+ booking.getClient().getFirstName() + ' ' + booking.getClient().getLastName() +', ' }"></h4>
         <p th:text="' '+ ${booking.getProjectTitle()}"></p>
     </span>
     </article>
