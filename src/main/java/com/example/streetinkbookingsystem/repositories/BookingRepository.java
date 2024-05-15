@@ -19,7 +19,7 @@ public class BookingRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Booking> showBooking(int bookingId, String tattooUsername){
+   /* public List<Booking> showBooking(int bookingId, String tattooUsername){
         String query = "SELECT c.first_name, c.last_name, c.phone_number, c.email, " +
                 "b.date, b.start_time_slot, b.end_time_slot, b.is_deposit_payed, " +
                 "b.project_title, b.project_desc, b.personal_note" +
@@ -29,6 +29,8 @@ public class BookingRepository {
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
         return jdbcTemplate.query(query, rowMapper, bookingId, tattooUsername);
     }
+
+    */
 
 
     // Gets all bookings for date, but only information needed to display the block
