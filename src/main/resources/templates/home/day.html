@@ -51,7 +51,7 @@
                         <!-- Calculate the duration of the booking -->
                         <th:block th:with="bookingDuration=${bookingService.calculateTotalDurationOfBooking(booking)}">
                         <!-- Calculate the height of the booking box based on the duration -->
-                        <th:block th:with="bookingHeight=${(bookingDuration / 60)*4.7}">
+                        <th:block th:with="bookingHeight=${(bookingDuration / 60)*4}">
                         <!-- Apply the height dynamically to the booking box -->
                         <div class="booking-block" th:style="'height:' + ${bookingHeight}  + 'em;'">
                             <a class="booking-info" th:href="@{/booking(bookingId=${booking.id},username=${username})}">

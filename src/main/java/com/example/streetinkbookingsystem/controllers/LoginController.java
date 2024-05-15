@@ -24,6 +24,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password,
                         RedirectAttributes redirectAttributes) {
+
         if (loginService.authenticateUser(username, password)){
             return "redirect:/dashboard";
         } else {

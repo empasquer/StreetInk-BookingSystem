@@ -25,7 +25,7 @@
     <!--prev and next buttons-->
     <div class="calendar-navigation">
 
-        <form  class="previous" th:action="@{/calendar/previous(username=${username})}" method="post">
+        <form  class="previous" th:action="@{/calendar/previous}" method="post">
             <input type="hidden" name="year" th:value="${date.year}" />
             <input type="hidden" name="month" th:value="${date.monthValue}" />
             <button class="gray-button" type="submit">Previous</button>
@@ -34,7 +34,7 @@
 
         <h2 class="year" th:text="${date.getYear()}"></h2>
 
-        <form class="next" th:action="@{/calendar/next(username=${username})}" method="post">
+        <form class="next" th:action="@{/calendar/next}" method="post">
             <input type="hidden" name="year" th:value="${date.year}" />
             <input type="hidden" name="month" th:value="${date.monthValue}" />
             <button class="gray-button"  type="submit">Next</button>
@@ -83,19 +83,19 @@
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) > 80}">
 
-                              <a th:if="${currentDate==day}" class="current-date fully-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
-                              <a th:unless="${currentDate==day}"class="fully-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:if="${currentDate==day}" class="current-date fully-booked-day" th:href="@{/day(date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:unless="${currentDate==day}"class="fully-booked-day" th:href="@{/day(date=${day})}" th:text="${day.getDayOfMonth()}"></a>
                           </th:block>
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) <= 80 && calendar.calculateDegreeOfBookedDay(day, username) >= 1}">
-                              <a  th:if="${currentDate==day}" class="current-date semi-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
-                              <a  th:unless="${currentDate==day} "class="semi-booked-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a  th:if="${currentDate==day}" class="current-date semi-booked-day" th:href="@{/day(date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a  th:unless="${currentDate==day} "class="semi-booked-day" th:href="@{/day(date=${day})}" th:text="${day.getDayOfMonth()}"></a>
 
                           </th:block>
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) == 0}">
-                              <a th:if="${currentDate==day}" class="current-date open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
-                              <a th:unless="${currentDate==day}"class="open-day" th:href="@{/day(username=${username}, date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:if="${currentDate==day}" class="current-date open-day" th:href="@{/day(date=${day})}" th:text="${day.getDayOfMonth()}"></a>
+                              <a th:unless="${currentDate==day}"class="open-day" th:href="@{/day(date=${day})}" th:text="${day.getDayOfMonth()}"></a>
                           </th:block>
                       </li>
 
@@ -115,14 +115,13 @@
         <h3>Today:</h3>
     <span th:each="booking : ${bookingsToday}">
     <h4 th:text="${booking.getStartTimeSlot() + ' - ' + booking.getEndTimeSlot() +
-     ': '+ booking.getClient().getFirstName() + ' ' + booking.getClient().getFirstName() +', ' }"></h4>
+     ': '+ booking.getClient().getFirstName() + ' ' + booking.getClient().getLastName() +', ' }"></h4>
         <p th:text="' '+ ${booking.getProjectTitle()}"></p>
     </span>
     </article>
 
-    <!--footer  -->
-    <footer th:block th:insert="~{home/footer :: footer}"></footer>
 
 </main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>

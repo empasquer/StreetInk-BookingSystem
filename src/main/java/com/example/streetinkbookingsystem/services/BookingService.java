@@ -64,7 +64,7 @@ public class BookingService {
 
         // Add total hours to total booked hours
         double totalMinutes = minutes;
-        System.out.println(totalMinutes);
+
 
         return totalMinutes;
     }
