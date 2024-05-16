@@ -35,7 +35,6 @@ public class BookingController {
         } else {
             return "redirect:/";
         }
-
         model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
