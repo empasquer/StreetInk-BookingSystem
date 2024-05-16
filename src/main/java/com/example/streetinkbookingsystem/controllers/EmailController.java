@@ -29,6 +29,14 @@ public class EmailController {
     @Autowired
     TattooArtistRepository tattooArtistService;
 
+    /**
+     * @author Nanna
+     * @param bookingId used to find the booking, its client and the artist associated with
+     *                  the booking, that is needed for the information in the email
+     * @param session used to determine if the user is logged in
+     * @return redirects back to the booking view after having sent the email for now,
+     * will be changed.
+     */
     @PostMapping("/send-confirmation-mail")
     public String sendConfirmationEmail(@RequestParam int bookingId, HttpSession session) {
         boolean loggedIn = loginService.isUserLoggedIn(session);

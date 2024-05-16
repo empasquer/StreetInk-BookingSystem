@@ -22,7 +22,11 @@ public class ProfileController {
         return "home/create-new-profile";
     }
 
-
+    /**
+     * @author Nanna
+     * @param session used to check if user is logged in
+     * @return manage-profiles view with a list of all the profiles
+     */
     @GetMapping("/manage-profiles")
         public String manageProfiles(Model model, HttpSession session){
         String username = (String) session.getAttribute("username");
