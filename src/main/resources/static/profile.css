@@ -9,6 +9,11 @@ section img {
     border-radius: 50%;
 }
 
+h2 {
+    padding-bottom: 1.5rem;
+}
+
+
 
 section, .container {
     padding-top: 4rem;

@@ -132,6 +132,12 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper, startDate, endDate, username);
     }
 
+    public List<Booking> getBookingsByClientId(int clientId) {
+        String query = "SELECT * FROM booking WHERE client_id = ?";
+        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
+        return jdbcTemplate.query(query, rowMapper, clientId);
+    }
+
     /**
     public List<Booking> getBookingsForDay(LocalDate date, String username) {
         String query = "SELECT * FROM booking WHERE date = ? AND username = ?";
