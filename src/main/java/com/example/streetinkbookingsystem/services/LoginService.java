@@ -26,7 +26,7 @@ public class LoginService {
     //Method that hashes and saves the passwords that are already in the database
     //Should be deleted when everyone have hashed the passwords on local database
     public void hashExistingPasswords() {
-        List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtist();
+        List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtists();
         for (TattooArtist tattooArtist : tattooArtists) {
             String plainPassword = tattooArtist.getPassword();
             String hashedPassword = hashPassword(plainPassword);

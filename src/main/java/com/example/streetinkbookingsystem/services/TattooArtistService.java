@@ -14,10 +14,11 @@ public class TattooArtistService {
     private TattooArtistRepository tattooArtistRepository;
 
     public List<TattooArtist> showTattooArtist(){
-        return tattooArtistRepository.showTattooArtist();
+        return tattooArtistRepository.showTattooArtists();
     }
 
     public TattooArtist getTattooArtistByUsername(String username) {
         return tattooArtistRepository.getTattooArtistByUsername(username);
     }
+
 }
