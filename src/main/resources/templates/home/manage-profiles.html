@@ -4,12 +4,35 @@
     <meta charset="UTF-8">
     <title>Manage Profiles</title>
     <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/manage-profiles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
+<header th:block th:insert="~{home/header :: header}"></header>
+<main>
+    <div class="back-arrow-container">
+        <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
 
 <h1>Manage Profiles</h1>
+<section>
+    <div class="tabel">
+        <h3>User</h3>
+        <h3>Admin</h3>
+        <p></p>
+        <p></p>
+    </div>
 
-
-
+<ul class="profiles">
+    <li class="profile" th:each="profile : ${profiles}">
+        <p th:text="${profile.getUsername()}"></p>
+        <p th:text="${profile.isAdmin()}"></p>
+    </li>
+</ul>
+</section>
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>

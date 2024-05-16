@@ -30,10 +30,10 @@ public class ProfileController {
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
-        if (username == null || !tattooArtist.isAdmin()){
+        /*if (username == null || !tattooArtist.isAdmin()){
             // Redirect logic when username is null or if not admin.
             return "redirect:/";
-        }
+        }*/
         List<TattooArtist> profiles = tattooArtistService.showTattooArtist();
         model.addAttribute("profiles", profiles);
         model.addAttribute("user", tattooArtist);
