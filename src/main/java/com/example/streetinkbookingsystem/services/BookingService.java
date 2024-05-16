@@ -15,6 +15,13 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    public void createNewBooking(LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
+                                 String username, String projectTitle, String projectDesc, String personalNote,
+                                 boolean isDepositPayed){
+        bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc,
+                personalNote, isDepositPayed);
+    }
+
 
     public int getBookingCountForDate(LocalDate specificDate, String username) {
         return bookingRepository.getBookingCountForDate(specificDate, username);

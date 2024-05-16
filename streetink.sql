@@ -55,6 +55,7 @@ CREATE TABLE project_picture (
 
 INSERT INTO client (first_name, last_name, email, phone_number, description)
 VALUES
+    ("Unknown", "Customer", "UnknownCustomer@unknown.com", "00000000", "There's no good description for an unknown customer. Either it got deleted, or this booking, never got a customer assigned. "),
     ("Hella", "Nice", "hellanice@dummy.com", "11111111", "They're hella nice"),
     ("Seeu", "Later", "aligator@dummy.com", "22222222", "Always f*cking late");
 
@@ -77,7 +78,3 @@ VALUES
     ('10:30:00', '15:30:00', '2024-05-11', 1, "bigDummy", "phoenix back tattoo", "large phoenix tattoo on back", "Requires multiple sessions", 0),
     ('09:45:00', '14:30:00', '2024-05-18', 1, "bigDummy", "skull forearm", "skull tattoo on forearm", "Customer wants it in grayscale", 1),
     ('15:00:00', '18:30:00', '2024-05-11', 2, "smallDummy", "floral half-sleeve", "intricate floral design", "Customer is bringing their own design", 1);
-
-
-SELECT * FROM booking JOIN client ON booking.client_id =  client.id
-                      LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.id = 1;

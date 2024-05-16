@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,17 +43,47 @@ public class BookingController {
         model.addAttribute("tattooArtist", tattooArtist);
         //fjerner denne så man ikke skal bruge en godkendelse endnu.
 
-        String tattooArtistId = username;
+        String tattooArtistId = username; //Denne overflødig? var vel kun til før der var oprettet sessions?
         model.addAttribute("booking", bookingService.getBookingDetail(bookingId));
         return "home/booking";
     }
 
 
     @GetMapping("/create-new-booking")
-        public String createNewBooking(Model model, @RequestParam LocalDate date){
-            model.addAttribute("date",date);
-            return "home/create-new-booking";
+    public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn){
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
         }
 
+        String username = (String) session.getAttribute("username");
+
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("username", username);
+
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+        model.addAttribute("date", date);
+            return "home/create-new-booking";
+    }
+
+
+    /*@PostMapping("/create-new-booking")
+    public String createNewBooking(@RequestParam LocalTime startTimeSlot, @RequestParam LocalTime endTimeSlot,
+                                   @RequestParam LocalDate date, @RequestParam String username,
+                                   @RequestParam String projectTitle, @RequestParam String projectDesc,
+                                   @RequestParam String personalNote, @RequestParam boolean isDepositPayed) {
+
+        bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
+                projectDesc, personalNote, isDepositPayed);
+        return "home/add-client";
+    }
+
+     */
 
 }
+
+
+
