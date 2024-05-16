@@ -3,7 +3,7 @@ figure {
     place-content: center;
 }
 
-img {
+section img {
     width: 300px;
     aspect-ratio: 1/1;
     border-radius: 50%;
@@ -48,10 +48,8 @@ p {
 h2 {
     font-size: 3rem;
 }
-
-a {
+.container a {
     font-size: 2rem;
-
 }
 
 .contact {
