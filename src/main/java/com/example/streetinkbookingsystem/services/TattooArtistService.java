@@ -20,4 +20,8 @@ public class TattooArtistService {
     public TattooArtist getTattooArtistByUsername(String username) {
         return tattooArtistRepository.getTattooArtistByUsername(username);
     }
+
+    public String getPassword(String username) {
+        return tattooArtistRepository.getPassword(username);
+    }
 }

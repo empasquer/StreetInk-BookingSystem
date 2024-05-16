@@ -37,6 +37,17 @@ public class TattooArtistRepository {
         jdbcTemplate.update(query, password, username);
     }
 
+    public String getPassword(String username) {
+        String query = "SELECT password FROM tattoo_artist WHERE username=?";
+        try {
+            return jdbcTemplate.queryForObject(query, String.class, username);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+
+
 
 
 
