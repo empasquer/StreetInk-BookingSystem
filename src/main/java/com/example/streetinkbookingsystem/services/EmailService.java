@@ -28,6 +28,13 @@ public class EmailService {
     @Autowired
     private TemplateEngine templateEngine;
 
+    /**
+     * @author Nanna
+     * @summary Sends a confirmation mail to the client with the relevant booking details.
+     * @param clientEmail used to send the email to this address
+     * @param context used to set variables in the email template
+     *
+     */
     public void sendConfirmationMail(String clientEmail, Context context) {
       String processedHTMLTemplate =  templateEngine.process("home/confirmation-mail", context);
         // Start preparing the email
