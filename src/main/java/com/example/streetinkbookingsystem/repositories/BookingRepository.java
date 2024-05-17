@@ -33,7 +33,13 @@ public class BookingRepository {
     */
 
 
-    // Gets all bookings for date, but only information needed to display the block
+    /**
+     * @author Nanna
+     * @param date used to get all bookings for the date
+     * @param username used to get bookings for the artist
+     * @return a list of bookings for the date with limited information,
+     * creating a Client and adding it as an attribute to the booking
+     */
     public List<Booking> getBookingsForDay( LocalDate date, String username){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
                 "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =?;";
@@ -55,7 +61,11 @@ public class BookingRepository {
         return jdbcTemplate.query(query,rowMapper,username,date);
     }
 
-    //Gets a specific booking with all information
+    /**
+     * @author Nanna
+     * @param bookingId used to find the booking
+     * @return all details about a booking, creating a Client and adding it as an attribute to the booking,
+     */
     public Booking getBookingDetails(int bookingId){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
                 "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.id = ?;";
@@ -94,7 +104,12 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
-
+    /**
+     * @author Nanna
+     * @param specificDate used to the total number of bookings for date
+     * @param username used to find bookings related to the artist
+     * @return
+     */
     public int getBookingCountForDate(LocalDate specificDate, String username) {
         String query = "SELECT COUNT(*) AS booking_count FROM booking WHERE date = ? AND username = ?";
         return jdbcTemplate.queryForObject(query, Integer.class, specificDate, username);

@@ -28,7 +28,12 @@ public class DayController {
     @Autowired
     TattooArtistService tattooArtistService;
 
-
+    /**
+     * @author Nanna
+     * @param session used to determine if the user is logged in, if not then redirect to index page
+     * @param date used to display details about the current day and get bookings associated with the date
+     * @return day view with a list of booking for that day
+     */
     @GetMapping("/day")
     public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date){
         boolean loggedIn = loginService.isUserLoggedIn(session);
@@ -66,12 +71,21 @@ public class DayController {
         return "home/day";
     }
 
+    /**
+     * @author Nanna
+     * @param date used to determine the next day by adding a day
+     * @return day view for the next day
+     */
     @PostMapping("/day/next")
     public String seeNextDay( @RequestParam LocalDate date) {
         LocalDate nextDate = date.plusDays(1);
         return "redirect:/day?date=" + nextDate;
     }
-
+    /**
+     * @author Nanna
+     * @param date used to determine the previous day by subtracting a day
+     * @return day view for the previous day
+     */
     @PostMapping("/day/previous")
     public String seePreviousDay( @RequestParam LocalDate date) {
         LocalDate previousDate = date.minusDays(1);

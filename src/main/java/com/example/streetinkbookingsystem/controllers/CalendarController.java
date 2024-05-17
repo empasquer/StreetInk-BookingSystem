@@ -31,8 +31,14 @@ public class CalendarController {
     @Autowired
     LoginService loginService;
 
-    // If there is passed date in the parameters then it display that month/year.
-    // otherwise it will display the current month.
+    /**
+     * @author Nanna
+     * @param year not required. If exist then used to build the month
+     * @param month not required. If exist then used to build the month
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *               to index page if not logged in.
+     * @return calendar view: displays the calendar. If no year or month is passed then display the current month.
+     */
     @GetMapping("/calendar")
     public String seeCurrentMonth(Model model, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month, HttpSession session) {
         //Check if user has a session, if not redirect to login.
@@ -64,7 +70,7 @@ public class CalendarController {
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        //Ad to model
+        //Add to model
         model.addAttribute("currentDate", currentDate);
         model.addAttribute("bookingsToday", bookingsToday);
         model.addAttribute("startFillers", startFillers);
@@ -79,11 +85,12 @@ public class CalendarController {
     }
 
 
-
-
-    //finds the next month based on the month and year given
-    //query parameters: passed along to the get mapping and displayed in the URL.
-    // ? is the start of the query, & separates the parameters.
+    /**
+     * @author Nanna
+     * @param year used so make a LocalDate
+     * @param month used to make a LocalDate then added 1 month to show the next month
+     * @return calendar view for the next month
+     */
     @PostMapping("/calendar/next")
     public String seeNextMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate nextDate = LocalDate.of(year, month, 1).plusMonths(1);
@@ -92,7 +99,12 @@ public class CalendarController {
     }
 
 
-    //finds the previous month based on the month and year given
+    /**
+     * @author Nanna
+     * @param year used so make a LocalDate
+     * @param month used to make a LocalDate then subtracted 1 month to show the previous month
+     * @return calendar view for the previous  month
+     */
     @PostMapping("/calendar/previous")
     public String seePreviousMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate previousDate = LocalDate.of(year, month, 1).minusMonths(1);
