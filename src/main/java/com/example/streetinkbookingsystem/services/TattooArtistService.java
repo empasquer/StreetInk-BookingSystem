@@ -30,18 +30,20 @@ public class TattooArtistService {
 
     public String changeAdminStatus(TattooArtist artist) {
         boolean isAdmin = artist.getIsAdmin();
+        List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
+        int adminCount = 0;
+
+        for (TattooArtist currentArtist : artists) {
+            if (currentArtist.getIsAdmin()) {
+                adminCount++;
+            }
+        }
+
         if (!isAdmin) {
             tattooArtistRepository.changeAdminStatus(artist.getUsername(), true);
             return "Admin status granted";
         } else {
-            List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
-            boolean existingAdmin = false;
-            for(TattooArtist currentArtist: artists){
-                if (artist.getIsAdmin()){
-                    existingAdmin = true;
-                }
-            }
-            if (existingAdmin) {
+            if (adminCount > 1) {
                 tattooArtistRepository.changeAdminStatus(artist.getUsername(), false);
                 return "Admin status revoked";
             } else {
