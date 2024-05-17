@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +19,6 @@ public class BookingRepository {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-
-   /* public List<Booking> showBooking(int bookingId, String tattooUsername){
-        String query = "SELECT c.first_name, c.last_name, c.phone_number, c.email, " +
-                "b.date, b.start_time_slot, b.end_time_slot, b.is_deposit_payed, " +
-                "b.project_title, b.project_desc, b.personal_note" +
-        " FROM client c" +
-        " JOIN booking b ON b.client_id = c.id " +
-        " WHERE b.id = ? AND b.username = ?;";
-        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
-        return jdbcTemplate.query(query, rowMapper, bookingId, tattooUsername);
-    }
-
-    */
-
 
     // Gets all bookings for date, but only information needed to display the block
     public List<Booking> getBookingsForDay( LocalDate date, String username){
@@ -88,16 +75,39 @@ public class BookingRepository {
         };
         return  jdbcTemplate.queryForObject(query,rowMapper, bookingId);
     }
+
+    /**
+     * @author Tara
+     * @return list af bookinger
+     */
     public List<Booking> showBookingList(){
         String query = "SELECT * FROM booking";
         RowMapper rowMapper = new BeanPropertyRowMapper(Booking.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
+    public void createNewBooking (LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
+                                  String username, String projectTitle, String projectDesc, String personalNote,
+                                  boolean isDepositPayed){
+        String query = "INSERT INTO booking (start_time_slot, end_time_slot, date, client_id, username, " +
+                "project_title, project_desc, personal_note, is_deposit_payed)" +
+                "values(?, ?, ?, 1, ?, ?, ?, ?, ?);";
+        // givet client_id 1, så den pr. default har "Unknown Client",
+        // indtil client view, hvor vi opdaterer til ny eller eksisterende client
+        jdbcTemplate.update(query, startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc,
+                personalNote, isDepositPayed);
+    }
 
+    //Retunerer antallet af booking for en bestemt dato og username
     public int getBookingCountForDate(LocalDate specificDate, String username) {
+        // Denne SQL-forespørgsel tæller antallet af rækker i tabellen booking,
+        // der matcher den givne dato (specificDate) og brugernavn (username).
         String query = "SELECT COUNT(*) AS booking_count FROM booking WHERE date = ? AND username = ?";
+        //queryForObject er en metode, der udfører en forespørgsel og returnerer et enkelt resultat.
+        //Integer.class, angiver at resultatet skal mappes til en Integer.
         return jdbcTemplate.queryForObject(query, Integer.class, specificDate, username);
+        //Selvom COUNT(*) altid retunerer en int, så skal man stadig bruge Integer.class, da queryForObject
+        // kan retunere forskellige værdier, og har brug for specificering
     }
 
     public int getBookingCountForThisWeek(String username) {
@@ -132,11 +142,5 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper, startDate, endDate, username);
     }
 
-    /**
-    public List<Booking> getBookingsForDay(LocalDate date, String username) {
-        String query = "SELECT * FROM booking WHERE date = ? AND username = ?";
-        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
-        return jdbcTemplate.query(query, rowMapper, date, username);
-    }
-     **/
+
 }

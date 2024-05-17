@@ -1,10 +1,119 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Booking - Tattoo Info</title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/create-new-booking.css">
+
+
+</head>
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+    <div class="back-arrow-container">
+        <a th:href="@{/day(username=${tattooArtist.username},date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <h1>Create New Booking for <span th:text="${date}"></span></h1>
+
+    <section>
+        <form action="/save-tattoo-info" method="post">
+            <div class="booking-container">
+                <div class="information-container">
+                    <h2>Tattoo Information</h2>
+
+                    <label for="depositPayed">Deposit Payed:</label>
+                    <input type="checkbox" id="depositPayed" name="depositPayed">
+
+                    <label for="projectTitle">Project Title:</label>
+                    <input type="text" id="projectTitle" name="projectTitle" required>
+
+                    <label for="projectDesc">Project Description:</label>
+                    <textarea id="projectDesc" name="projectDesc" rows="4" required></textarea>
+
+                    <label for="personalNote">Private Note:</label>
+                    <textarea id="personalNote" name="personalNote" rows="4"></textarea>
+
+                    <label for="image">Image:</label>
+                    <input type="file" id="image" name="image">
+
+                    <div class="button-container">
+                        <button type="button" class="red-button" onclick="navigateToClient('new')">New Client</button>
+                        <button type="button" class="red-button" onclick="navigateToClient('existing')">Existing Client</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create-New-Booking</title>
+    <title>Create New Booking - Tattoo Info</title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/create-new-booking.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-<p th:text="${date}"></p>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+    <div class="back-arrow-container">
+        <a th:href="@{/day(username=${tattooArtist.username},date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <h1>New Booking<span th:text="${date}"></span></h1>
+
+    <section>
+        <form action="/save-tattoo-info" method="post">
+            <div class="booking-container">
+                <div class="information-container">
+                    <h2>Tattoo Information</h2>
+
+                    <div class="form-group">
+                        <label for="depositPayed">Deposit Payed:</label>
+                        <input type="checkbox" id="depositPayed" name="depositPayed">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectTitle">Project Title:</label>
+                        <input type="text" id="projectTitle" name="projectTitle" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDesc">Project Description:</label>
+                        <textarea id="projectDesc" name="projectDesc" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalNote">Private Note:</label>
+                        <textarea id="personalNote" name="personalNote" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Image:</label>
+                        <input type="file" id="image" name="image">
+                    </div>
+
+                    <div class="button-container">
+                        <button type="button" class="red-button" onclick="navigateToClient('new')">New Client</button>
+                        <button type="button" class="red-button" onclick="navigateToClient('existing')">Existing Client</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>
+
