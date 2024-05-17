@@ -21,4 +21,6 @@ public class TattooArtistService {
         return tattooArtistRepository.getTattooArtistByUsername(username);
     }
 
+    public void deleteProfileByUsername(String profileToDelete) {
+    }
 }
