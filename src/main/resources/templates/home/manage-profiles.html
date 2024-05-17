@@ -39,7 +39,7 @@
                         <form th:action="@{/manage-profiles}" method="get">
                             <button class="gray-button">Cancel</button>
                         </form>
-                        <form th:action="@{/delete-profile(profileToDelete=${profileToDelete})}" method="get">
+                        <form th:action="@{/delete-profile(profileToDelete=${profileToDelete})}" method="post">
                             <button class="red-button">Delete</button>
                         </form>
                     </div>

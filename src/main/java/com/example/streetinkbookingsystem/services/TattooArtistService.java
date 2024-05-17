@@ -5,13 +5,17 @@ import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TattooArtistService {
 
     @Autowired
     private TattooArtistRepository tattooArtistRepository;
+    @Autowired
+    private LoginService loginService;
 
     /**
      * @author Tara
@@ -59,4 +63,8 @@ public class TattooArtistService {
     }
 
 
+    public void createProfile(String username, String firstname, String lastName, String password, String facebookUrl,  String instagramUrl, int phone, String email, int avgWorkHours, boolean isAdmin, Optional<byte[]> pictureData){
+        String hashedPassword = loginService.hashPassword(password);
+        tattooArtistRepository.createProfile(username,firstname,lastName,hashedPassword,facebookUrl,instagramUrl,phone, email, avgWorkHours, isAdmin,pictureData);
+    }
 }

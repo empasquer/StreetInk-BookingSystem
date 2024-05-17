@@ -23,6 +23,7 @@
       <a th:href="@{/calendar(username=${tattooArtist.getUsername()})}">Calendar</a>
       <a th:href="@{/dashboard}">Dashboard</a>
       <a th:href="@{/dashboard}">Client list</a>
+      <a th:if="${tattooArtist.getIsAdmin()}" th:href="@{/manage-profiles}">Manage profiles</a>
       <a th:href="@{/logout}">Log out</a>
     </div>
   </div>

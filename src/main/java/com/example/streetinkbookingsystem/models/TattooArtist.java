@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class TattooArtist extends Person {
     private String username;
     private String password;
-    private Byte[] profilePicture; // ændret til byte array.
+    private byte[] profilePicture; // ændret til byte array.
     // alm. byte kan åbenbart ikke bruge Java's Base64-klasse til dette formål,
     //hvis den skal kunne samarbejde med database og thymeleaf.
     // private Byte profilePicture; ** gamle attribute
@@ -33,11 +33,11 @@ public class TattooArtist extends Person {
         this.password = password;
     }
 
-    public Byte[] getProfilePicture() {
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(Byte[] profilePicture) {
+    public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 

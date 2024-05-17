@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TattooArtistRepository {
@@ -48,4 +49,13 @@ public class TattooArtistRepository {
         String query = "DELETE FROM tattoo_artist WHERE username =?";
         jdbcTemplate.update(query,profileToDelete);
     }
+
+
+
+    public void createProfile(String username, String firstname, String lastName, String password, String facebookUrl,  String instagramUrl, int phone, String email, int avgWorkHours, boolean isAdmin, Optional<byte[]> pictureData) {
+        String query = "INSERT INTO tattoo_artist(username, first_name, last_name, password, email, phone_number, facebook, instagram, avg_work_hours, is_admin, profile_picture) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        // Unwrap the Optional and set to null if not present
+        byte[] picture = pictureData.orElse(null);
+            jdbcTemplate.update(query, username, firstname, lastName, password, email, phone, facebookUrl, instagramUrl, avgWorkHours, isAdmin,picture);
+        }
 }

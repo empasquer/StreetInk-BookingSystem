@@ -5,7 +5,6 @@
     <title>New Profile</title>
     <link rel="stylesheet" href="/layout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -18,11 +17,76 @@
     <h1>Create new Profile</h1>
 
     <section>
+        <form th:action="@{/create-new-profile}" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstname">First name:</label> <br>
+                    <input type="text" id="firstname" name="profileFirstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last name:</label> <br>
+                    <input type="text" id="lastname" name="profileLastName" required>
+                </div>
+            </div>
 
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username">Username:</label> <br>
+                    <input type="text" id="username" name="profileUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label> <br>
+                    <input type="password" id="password" name="profilePassword" required>
+                </div>
+            </div>
 
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone:</label> <br>
+                    <input type="number" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label> <br>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
 
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="facebookUrl">Facebook URL:</label> <br>
+                    <input type="url" id="facebookUrl" name="facebookUrl" required>
+                </div>
+                <div class="form-group">
+                    <label for="instagramUrl">Instagram URL:</label> <br>
+                    <input type="url" id="instagramUrl" name="instagramUrl" required>
+                </div>
+            </div>
+
+            <div th:if="${message}" class="error-message">
+                <p th:text="${message}"></p>
+            </div>
+
+            <div class="upload">
+                <p>Upload your profile picture:</p>
+                <label for="profilePicture" class="custom-file-upload">Upload</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="avgWorkHours">Average weekly work hours:</label>
+                <input type="number" id="avgWorkHours" name="avgWorkHours" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="isAdmin">Admin:</label>
+                    <input type="checkbox" id="isAdmin" name="isAdmin">
+                </div>
+            </div>
+
+            <button class="submit-button" type="submit">Submit</button>
+        </form>
     </section>
-
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
