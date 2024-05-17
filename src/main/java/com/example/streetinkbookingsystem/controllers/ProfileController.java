@@ -25,7 +25,7 @@ public class ProfileController {
 
 
     @GetMapping("/manage-profiles")
-        public String manageProfiles(Model model, HttpSession session, @RequestParam(required = false) String profileToDelete){
+        public String manageProfiles(Model model, HttpSession session, @RequestParam(required = false) String profileToDelete, @RequestParam(required = false) String adminStatus){
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
@@ -38,9 +38,15 @@ public class ProfileController {
         if (profileToDelete != null) {
             model.addAttribute("profileToDelete", profileToDelete);
         }
+
+        if (adminStatus != null) {
+            model.addAttribute("adminStatus", adminStatus);
+        }
         List<TattooArtist> profiles = tattooArtistService.showTattooArtist();
         model.addAttribute("profiles", profiles);
         model.addAttribute("user", tattooArtist);
+
+
         return "home/manage-profiles";
         }
 
@@ -50,10 +56,19 @@ public class ProfileController {
         return "redirect:/manage-profiles";
     }
 
-    // Add a method to handle profile deletion
-    @GetMapping("/delete-profile")
+
+    @PostMapping("/delete-profile")
     public String deleteProfile(@RequestParam String profileToDelete) {
         tattooArtistService.deleteProfileByUsername(profileToDelete);
+        return "redirect:/manage-profiles";
+    }
+
+
+    @PostMapping("/change-admin")
+    public String changeAdmin(@RequestParam String profileToChange, RedirectAttributes redirectAttributes) {
+        TattooArtist artist = tattooArtistService.getTattooArtistByUsername(profileToChange);
+        String adminStatus = tattooArtistService.changeAdminStatus(artist);
+        redirectAttributes.addAttribute("adminStatus", adminStatus);
         return "redirect:/manage-profiles";
     }
 }

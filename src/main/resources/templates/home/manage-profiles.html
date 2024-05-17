@@ -57,7 +57,11 @@
                 <ul class="profiles">
                     <li class="profile" th:each="profile : ${profiles}">
                         <p th:text="${profile.getUsername()}"></p>
-                        <input type="checkbox" th:checked="${profile.getIsAdmin()}" class="checkboxes" disabled>
+                        <form th:action="@{/change-admin(profileToChange=${profile.username})}" method="post">
+                            <label>
+                                <input type="checkbox" th:checked="${profile.getIsAdmin()}" class="checkboxes" onchange="this.form.submit()">
+                            </label>
+                        </form>
                         <form th:action="@{/manage-profiles(profileToDelete=${profile.username})}" method="post" >
                             <button type="submit" class="icon-button">
                                 <i class="fa fa-trash" aria-hidden="true"> </i>
@@ -67,6 +71,12 @@
                 </ul>
             </article>
         </div>
+
+        <article >
+            <th:block  th:if="${adminStatus!=null}" >
+                <p th:text="${adminStatus}"></p>
+            </th:block>
+        </article>
     </section>
     <a class="red-button box-shadow" th:href="@{/create-new-profile}">Create Profile</a>
 </main>

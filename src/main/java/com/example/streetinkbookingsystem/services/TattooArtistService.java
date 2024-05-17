@@ -27,4 +27,28 @@ public class TattooArtistService {
 
     public void deleteProfileByUsername(String profileToDelete) {
     }
+
+    public String changeAdminStatus(TattooArtist artist) {
+        boolean isAdmin = artist.getIsAdmin();
+        if (!isAdmin) {
+            tattooArtistRepository.changeAdminStatus(artist.getUsername(), true);
+            return "Admin status granted";
+        } else {
+            List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
+            boolean existingAdmin = false;
+            for(TattooArtist currentArtist: artists){
+                if (artist.getIsAdmin()){
+                    existingAdmin = true;
+                }
+            }
+            if (existingAdmin) {
+                tattooArtistRepository.changeAdminStatus(artist.getUsername(), false);
+                return "Admin status revoked";
+            } else {
+                return "At least 1 admin required";
+            }
+        }
+    }
+
+
 }

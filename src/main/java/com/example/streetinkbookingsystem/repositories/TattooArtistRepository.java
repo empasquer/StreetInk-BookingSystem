@@ -39,13 +39,8 @@ public class TattooArtistRepository {
     }
 
 
-
-
-
-
-
-
-
-
-
+    public void changeAdminStatus(String username, boolean status) {
+        String query = "UPDATE tattoo_artist SET is_admin=? WHERE username=?";
+        jdbcTemplate.update(query, status, username);
+    }
 }
