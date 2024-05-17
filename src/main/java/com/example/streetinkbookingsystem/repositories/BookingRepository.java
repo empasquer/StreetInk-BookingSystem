@@ -133,7 +133,7 @@ public class BookingRepository {
     }
 
     public List<Booking> getBookingsByClientId(int clientId) {
-        String query = "SELECT * FROM booking WHERE client_id = ?";
+        String query = "SELECT * FROM booking WHERE client_id = ? ORDER BY date DESC";
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
         return jdbcTemplate.query(query, rowMapper, clientId);
     }

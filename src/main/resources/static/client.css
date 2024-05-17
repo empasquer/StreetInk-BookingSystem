@@ -26,12 +26,23 @@ section {
     flex-direction: column;
     place-content: center;
     align-items: center;
+    position: relative;
 }
 
 .container {
     text-align: left;
     width: 45vw;
     padding-top: 2rem;
+}
+
+.edit-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
+
+.contact {
+    padding-bottom : 1.5rem;
 }
 
 

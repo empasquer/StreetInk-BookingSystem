@@ -17,11 +17,14 @@
     <h1 th:text="${client.firstName + '´s info'}"></h1>
 
     <section>
+        <a class="edit-btn" th:href="@{/edit-client(clientId=${client.id})}"><i class="fa fa-edit fa-3x"></i></a>
         <div class="container">
             <h2 th:if="${client.lastName !=null}" th:text="${client.firstName + ' '  + client.lastName}"></h2>
             <h2 th:unless="${client.lastName !=null}" th:text="${client.firstName}"></h2>
             <div class="contact"><i class="fas fa-phone fa-2x"></i> <a th:href="${'tel:' + client.phoneNumber}" th:text="${client.phoneNumber}"></a></div>
             <div class="contact"><i class="fas fa-envelope fa-2x"></i> <a th:href="${'mailto:' + client.email}" th:text="${client.email}"></a></div>
+
+
         </div>
         <div class="container">
             <p th:text="${client.description}"></p>

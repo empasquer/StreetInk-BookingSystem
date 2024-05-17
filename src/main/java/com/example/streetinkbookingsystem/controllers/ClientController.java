@@ -27,34 +27,48 @@ public class ClientController {
     @Autowired
     BookingService bookingService;
 
+
+    /* EXTRA method to avoid repeating myself over and over -- adds loggedIn, username and tattooArtist*/
+    /* If returns false then not loggedIn and don't have info -- can use in getmappings */
+    private void addLoggedInUserInfo(Model model, HttpSession session) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            String username = (String) session.getAttribute("username");
+            model.addAttribute("loggedIn", true);
+            model.addAttribute("username", username);
+            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+            model.addAttribute("tattooArtist", tattooArtist);
+        } else {
+            model.addAttribute("loggedIn", false);
+        }
+    }
+
     @GetMapping("/client")
     public String seeClient(HttpSession session, Model model, @RequestParam("clientId") int clientId) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-
-        if (!loggedIn) {
+        addLoggedInUserInfo(model, session);
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
 
-        String username = (String) session.getAttribute("username");
-        model.addAttribute("username", username);
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
         Client client = clientService.getClientFromClientId(clientId);
+        model.addAttribute("client", client);
 
         List<Booking> clientBookings = bookingService.getBookingsByClientId(clientId);
         model.addAttribute("clientBookings", clientBookings);
 
-        /*
-            WHAT TO DO IF NO CLIENT/WRONG CLIENT ID
-            if (client == null) {
-                return "/home/client-list";
-        }*/
-
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("client", client);
-
         return "home/client";
     }
 
+    @GetMapping("/edit-client")
+    public String editClient(Model model, HttpSession session, @RequestParam("clientId") int clientId) {
+        addLoggedInUserInfo(model, session);
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+
+        Client client = clientService.getClientFromClientId(clientId);
+        model.addAttribute("client", client);
+
+        return "home/edit-client";
+    }
 }

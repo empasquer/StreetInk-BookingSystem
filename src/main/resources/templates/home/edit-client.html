@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'Edit ' + client.firstName}"></title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/client.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+    <div class="back-arrow-container">
+            <a th:href="@{/client(clientId=${client.id})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        </div>
+
+    <h1 th:text="${'Edit ' + client.firstName}"></h1>
+
+    <section>
+        <div class="container">
+
+        </div>
+    </section>
+
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>
