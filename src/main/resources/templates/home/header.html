@@ -1,5 +1,5 @@
 <header>
-  <a th:if="${loggedIn}" th:href="@{/logout}">
+  <a th:if="${loggedIn}" th:href="@{/profile}">
     <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic">
     <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
   </a>
