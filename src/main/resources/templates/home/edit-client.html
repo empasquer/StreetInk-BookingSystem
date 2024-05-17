@@ -19,7 +19,7 @@
 
     <section>
         <div class="form-container">
-            <form action="/update-client" method="post">
+            <form th:action="@{/edit-client}" method="post">
                 <input type="hidden" name="clientId" th:value="${client.id}">
                 <div class="input-group">
                     <div>

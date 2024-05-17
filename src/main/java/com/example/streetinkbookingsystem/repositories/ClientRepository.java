@@ -23,4 +23,20 @@ public class ClientRepository {
             return null;
         }
     }
+
+    public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description, int clientId) {
+        String query = "UPDATE client SET first_name = ?, last_name = ?, email = ?, phone_number = ?, description = ? WHERE id = ?";
+        try {
+            jdbcTemplate.update(query,
+                    firstName,
+                  lastName,
+                 email,
+                    phoneNumber,
+                    description,
+                   clientId);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("something went wrong");
+        }
+    }
+
 }

@@ -15,4 +15,9 @@ public class ClientService {
     public Client getClientFromClientId(int clientId) {
         return clientRepository.getClientFromClientId(clientId);
     }
+
+    public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description,
+                             int clientId ) {
+        clientRepository.updateClient(firstName, lastName,email, phoneNumber, description, clientId);
+    }
 }

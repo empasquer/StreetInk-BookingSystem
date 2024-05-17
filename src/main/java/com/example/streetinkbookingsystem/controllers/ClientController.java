@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -70,5 +72,17 @@ public class ClientController {
         model.addAttribute("client", client);
 
         return "home/edit-client";
+    }
+
+    @PostMapping("/edit-client")
+    public String updateClient(@RequestParam String firstName, @RequestParam String lastName,
+                               @RequestParam String email, @RequestParam int phoneNumber,
+                               @RequestParam String description, @RequestParam int clientId,
+                               Model model, HttpSession session) {
+        addLoggedInUserInfo(model, session);
+
+
+        clientService.updateClient(firstName, lastName, email, phoneNumber, description, clientId);
+        return "redirect:/client?clientId=" + clientId;
     }
 }
