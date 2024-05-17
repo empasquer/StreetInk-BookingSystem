@@ -12,7 +12,7 @@ public class TattooArtist extends Person {
     private String facebookUrl;
     private String instragramUrl;
     private int avgWorkHours;
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     public TattooArtist() {
     }
@@ -65,11 +65,11 @@ public class TattooArtist extends Person {
         this.avgWorkHours = avgWorkHours;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public Boolean getIsAdmin() {
+        return isAdmin.booleanValue();
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

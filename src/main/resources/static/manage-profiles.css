@@ -44,9 +44,8 @@ section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     text-align: center;
-    margin-right: 3em;
-padding-left: 4em;'
-
+    margin-right: 2em;
+    padding-left: 4.2em;
 }
 .profile-container{
     margin-top: -2em;
@@ -62,12 +61,14 @@ li {
     flex-direction: column;
     align-items: center;
     padding-left: 4.2em;
+
 }
 .profile {
     grid-template-columns: repeat(3, 1fr);
     display: grid;
     padding: 1em;
     align-self: baseline;
+    width: 100%;
 
 }
 
@@ -96,4 +97,10 @@ a {
     position: sticky;
     top: 87%;
     font-size: 2em;
+}
+
+.checkboxes {
+    width: 50px; /* Juster bredden efter behov */
+    height: 50px; /* Juster højden efter behov */
+   color: var(--accent-red);
 }

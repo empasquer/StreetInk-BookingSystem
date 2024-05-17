@@ -13,6 +13,7 @@
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
 <main>
+
     <div class="back-arrow-container">
         <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
@@ -56,7 +57,7 @@
                 <ul class="profiles">
                     <li class="profile" th:each="profile : ${profiles}">
                         <p th:text="${profile.getUsername()}"></p>
-                        <p th:text="${profile.isAdmin()}"></p>
+                        <input type="checkbox" th:checked="${profile.getIsAdmin()}" class="checkboxes" disabled>
                         <form th:action="@{/manage-profiles(profileToDelete=${profile.username})}" method="post" >
                             <button type="submit" class="icon-button">
                                 <i class="fa fa-trash" aria-hidden="true"> </i>

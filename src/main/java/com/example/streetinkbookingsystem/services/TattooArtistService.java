@@ -13,6 +13,10 @@ public class TattooArtistService {
     @Autowired
     private TattooArtistRepository tattooArtistRepository;
 
+    /**
+     * @author Tara
+     * @return viser en liste med alle tatovørene
+     */
     public List<TattooArtist> showTattooArtist(){
         return tattooArtistRepository.showTattooArtists();
     }

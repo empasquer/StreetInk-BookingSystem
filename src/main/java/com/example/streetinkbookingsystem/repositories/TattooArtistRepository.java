@@ -16,6 +16,7 @@ public class TattooArtistRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+
     public List<TattooArtist> showTattooArtists(){
         String query = "SELECT * FROM tattoo_artist;";
         RowMapper rowMapper = new BeanPropertyRowMapper(TattooArtist.class);
