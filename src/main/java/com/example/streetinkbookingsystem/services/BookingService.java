@@ -15,6 +15,17 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    /**
+     * @author Tara
+     * @param startTimeSlot
+     * @param endTimeSlot
+     * @param date
+     * @param username
+     * @param projectTitle
+     * @param projectDesc
+     * @param personalNote
+     * @param isDepositPayed
+     */
     public void createNewBooking(LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
                                  String username, String projectTitle, String projectDesc, String personalNote,
                                  boolean isDepositPayed){
@@ -49,12 +60,6 @@ public class BookingService {
 
     }
 
-    //tror ikke denne skal være liste og skal justeres til visning af specifik booking
-    /*public List<Booking> showBooking(int bookingId, String tattooUsername){
-        return bookingRepository.showBooking(bookingId, tattooUsername);
-    }
-
-     */
 
     public List<Booking> showBookingList(){
         return bookingRepository.showBookingList();

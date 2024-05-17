@@ -48,7 +48,14 @@ public class BookingController {
         return "home/booking";
     }
 
-
+    /**
+     *
+     * @param model
+     * @param session
+     * @param date
+     * @return home/create-new-booking
+     * @author Tara
+     */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
         boolean loggedIn = loginService.isUserLoggedIn(session);
