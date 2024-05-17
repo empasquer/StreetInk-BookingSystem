@@ -1,0 +1,27 @@
+a {
+    text-decoration: none;
+}
+
+li {
+    text-decoration: none;
+    background-color: var(--above-section-elements-gray);
+    color: var(--white);
+}
+
+.letter-header {
+    color: var(--white);
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+.client-list {
+    list-style-type: none;
+}
+
+.client-item {
+    align-items: flex-start;
+    font-size: large;
+    margin-left: 20px;
+}

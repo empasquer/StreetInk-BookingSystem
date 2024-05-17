@@ -22,6 +22,11 @@ public class TattooArtistRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
+    /**
+     * @author Munazzah
+     * @param profileUsername
+     * @return TattooArtist
+     */
     public TattooArtist getTattooArtistByUsername(String profileUsername) {
         String query = "SELECT * FROM tattoo_artist WHERE username = ?";
         RowMapper<TattooArtist> rowMapper = new BeanPropertyRowMapper<>(TattooArtist.class);
@@ -32,11 +37,21 @@ public class TattooArtistRepository {
         }
     }
 
+    /**
+     * @author Munazzah
+     * @param username
+     * @param password
+     */
     public void updatePassword(String username, String password) {
         String query = "UPDATE tattoo_artist SET password=? WHERE username=?";
         jdbcTemplate.update(query, password, username);
     }
 
+    /**
+     * @author Munazzah
+     * @param username
+     * @return String
+     */
     public String getPassword(String username) {
         String query = "SELECT password FROM tattoo_artist WHERE username=?";
         try {

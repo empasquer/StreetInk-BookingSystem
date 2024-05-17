@@ -24,8 +24,11 @@ public class LoginService {
     @Autowired
     private HttpSession session;
 
-    //Method that hashes and saves the passwords that are already in the database
-    //Should be deleted when everyone have hashed the passwords on local database
+    /**
+     * @author Munazzah
+     * @summary Hashes and saves the passwords that are already in the database
+     * should be deleted when everyone have hashed the passwords on local database
+     */
     public void hashExistingPasswords() {
         List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtist();
         for (TattooArtist tattooArtist : tattooArtists) {
@@ -36,7 +39,13 @@ public class LoginService {
         }
     }
 
-    //Basically just checks if the info matches the database with the hashed password this time
+    /**
+     * @author Munazzah
+     * @param username
+     * @param password
+     * @return boolean
+     * @summary Checks if the given password matches the hashed password in database
+     */
     public boolean authenticateUser(String username, String password) {
         TattooArtist tattooArtist = tattooArtistRepository.getTattooArtistByUsername(username);
         if (tattooArtist != null) {
@@ -53,14 +62,24 @@ public class LoginService {
         }
     }
 
-    //Returns true if session attribute loggedIn is not null and loggedIn == true, else false
-    //We cast loggedIn as boolean because session can return attributes as Objects.
-    //Might need it in the header for the burgermenu
+    /**
+     * @author Nanna and Munazzah
+     * @param session
+     * @return boolean
+     * @summary Returns true if session attribute LoggedIn is true.
+     * LoggedIn is casted as a boolean because session can return attributes as objects
+     */
     public boolean isUserLoggedIn(HttpSession session) {
         return session.getAttribute("loggedIn") != null && (boolean) session.getAttribute("loggedIn");
     }
 
-    //Salts and the hashes the password and the adds the salt again s it is stored with the salted and hashed password
+    /**
+     * @author Munazzah
+     * @param password
+     * @return String
+     * @summary Salts and hashes the password first, and the adds the salt to the salted and and hashed
+     * password, so we can extract the salt afterwards for verification
+     */
     public String hashPassword(String password) {
         try {
             //Generates random characters - the salt part
@@ -84,7 +103,13 @@ public class LoginService {
         }
     }
 
-    //Method to verify the given password with the stored hashed password
+    /**
+     * @author Munazzah
+     * @param password
+     * @param hashedPassword
+     * @return boolean
+     * @summary Method to verify the given password with the hashed password
+     */
     public boolean verifyPassword(String password, String hashedPassword) {
         try {
             //Decodes and extracts the original salt, so we know what the salt is
@@ -108,6 +133,14 @@ public class LoginService {
         }
     }
 
+    /**
+     * @author Munazzah
+     * @param hashedPasswordToCompare
+     * @param storedHash
+     * @return int
+     * @summary Compares the bytes of the storedHash in database with the given password
+     * that we have added the original salt to, and also hashed, to see if the bytes match
+     */
     //Compares the storedHash password with the one made with the given password and the salt
     private static int getDiff(byte[] hashedPasswordToCompare, byte[] storedHash) {
         //First line compares the bitwise length. If they are different, the byte by byte comparison won't happen
@@ -124,23 +157,36 @@ public class LoginService {
         return diff;
     }
 
+    /**
+     * @author Munazzah
+     * @param password
+     * @param salt
+     * @return byte[]
+     * @throws NoSuchAlgorithmException
+     * @summary Creates a byte array with the length of the salt and password, adds the salt and password
+     * and hashes the whole thing using an algorithm
+     */
     //Method that uses the combined salt and password and hashes it
     private byte[] saltAndHash(String password, byte[] salt) throws NoSuchAlgorithmException {
-        //Combines the salt san password together
+        //Combines the salt and password length together to create a new byte array
         byte[] saltedPassword = new byte[salt.length + password.getBytes().length];
 
         //Basically converts the salt and password to a single byte array before hashing
         //First line copies the bytes of the salt in the beginning in saltedPassword
-        //Second line copies the bytes of the password and places it just after the salt
+        //Second line copies the bytes of the password and places it just after the salt in the new byte
         System.arraycopy(salt, 0, saltedPassword, 0, salt.length);
         System.arraycopy(password.getBytes(), 0, saltedPassword, salt.length, password.getBytes().length);
 
-        //Hashes the byte array using the chosen algorithm and digest (hashes) the whole thing
+        //Hashes the whole byte array using the chosen algorithm
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         return md.digest(saltedPassword);
     }
 
-    //Generates an 8 char random password for forgotten password
+    /**
+     * @author Munazzah
+     * @return String
+     * @summary Generates a random 8 char password where all the validChars can be added
+     */
     public String randomPassword() {
         String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=";
         StringBuilder password = new StringBuilder();
@@ -153,6 +199,11 @@ public class LoginService {
         return password.toString();
     }
 
+    /**
+     * @author Munazzah
+     * @param password
+     * @param username
+     */
     public void updatePassword(String password, String username) {
         String hashedPassword = hashPassword(password);
         tattooArtistRepository.updatePassword(username, hashedPassword);

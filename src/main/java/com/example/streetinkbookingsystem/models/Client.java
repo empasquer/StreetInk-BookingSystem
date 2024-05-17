@@ -1,6 +1,6 @@
 package com.example.streetinkbookingsystem.models;
 
-public class Client extends Person {
+public class Client extends Person implements Comparable<Client>{
     private int id;
     private String description;
 
@@ -22,5 +22,15 @@ public class Client extends Person {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @author Munazzah
+     * @param o the object to be compared.
+     * @return int
+     */
+    @Override
+    public int compareTo(Client o) {
+        return this.getFirstName().compareTo(o.getFirstName());
     }
 }

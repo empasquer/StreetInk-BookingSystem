@@ -21,6 +21,11 @@ public class TattooArtistService {
         return tattooArtistRepository.getTattooArtistByUsername(username);
     }
 
+    /**
+     * @author Munazzah
+     * @param username
+     * @return String
+     */
     public String getPassword(String username) {
         return tattooArtistRepository.getPassword(username);
     }

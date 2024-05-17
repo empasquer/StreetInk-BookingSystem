@@ -14,6 +14,12 @@ public class EmailService {
     @Autowired
     JavaMailSender javaMailSender;
 
+    /**
+     * @author Nanna og Munazzah
+     * @param recipient
+     * @param subject
+     * @param content
+     */
     public void sendEmail(String recipient, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -23,7 +29,12 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    //Used regex to verify that the email format is correct
+    /**
+     * @author Munazzah
+     * @param email
+     * @return boolean
+     * @summary Uses regex to check if the structure of the mail is valid fx xxxx@yyy.mmm
+     */
     public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);

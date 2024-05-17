@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Client List</title>
     <link rel="stylesheet" type="text/css" href="/layout.css">
-    <link rel="stylesheet" href="/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/login.css">
+    <link rel="stylesheet" type="text/css" href="/client-list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -19,20 +21,31 @@
 
     <section class="box-shadow">
 
-        <form th:action="@{/clientList}" method="post">
+        <form th:action="@{/search}" method="post">
             <div>
-                <label>
-                    <input type="text" placeholder="Search by phone number..." name="search">
-                </label>
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <label for="search">Search by number or first name:</label>
+                <input type="text" id="search" name="search">
             </div>
 
             <div th:if="${message}" class="error-message">
                 <p th:text="${message}"></p>
             </div>
 
+            <div>
+                <button class="red-button" type="submit">Search</button>
+            </div>
         </form>
 
+        <div th:each="entry : ${groupedClients}">
+            <div th:if="${entry.value.size() > 0}">
+                <div class="letter-header" th:text="${entry.key}">Letter</div>
+                <ul class="client-list">
+                    <li th:each="client : ${entry.value}" class="client-item">
+                        <a th:href="@{/client/{id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
     </section>
 

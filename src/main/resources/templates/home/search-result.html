@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" type="text/css" href="/layout.css">
+    <link rel="stylesheet" type="text/css" href="/client-list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+<main>
+
+    <div class="back-arrow-container">
+        <a th:href="@{/client-list}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <h1>Search Results</h1>
+
+    <section class="box-shadow">
+        <div th:if="${results}">
+            <ul>
+                <li th:each="client : ${results}">
+                    <a th:href="@{/client/{id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${#lists.isEmpty(results)}">
+            <p>No results found</p>
+        </div>
+    </section>
+
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>
