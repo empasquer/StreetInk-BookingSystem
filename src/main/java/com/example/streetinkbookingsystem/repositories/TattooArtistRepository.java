@@ -43,13 +43,4 @@ public class TattooArtistRepository {
     }
 
 
-
-
-
-
-
-
-
-
-
 }
