@@ -17,6 +17,12 @@ public class HomeController {
     @Autowired
     LoginService loginService;
 
+    /**
+     *
+     * @param model
+     * @return home/index
+     * @author Tara
+     */
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("tattooArtists", tattooArtistService.showTattooArtist());

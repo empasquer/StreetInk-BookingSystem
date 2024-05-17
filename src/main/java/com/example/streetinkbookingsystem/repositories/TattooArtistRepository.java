@@ -16,7 +16,12 @@ public class TattooArtistRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<TattooArtist> showTattooArtists(){
+
+    /**
+     * @author Tara
+     * @return liste af alle tatovørerne
+     */
+        public List<TattooArtist> showTattooArtists(){
         String query = "SELECT * FROM tattoo_artist;";
         RowMapper rowMapper = new BeanPropertyRowMapper(TattooArtist.class);
         return jdbcTemplate.query(query, rowMapper);
@@ -36,15 +41,6 @@ public class TattooArtistRepository {
         String query = "UPDATE tattoo_artist SET password=? WHERE username=?";
         jdbcTemplate.update(query, password, username);
     }
-
-
-
-
-
-
-
-
-
 
 
 }
