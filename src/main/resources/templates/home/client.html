@@ -18,15 +18,16 @@
 
     <section th:if="${client.firstName != 'Unknown'}">
 
+
         <th:block  th:if="${clientToDelete!=null}" >
             <div class="confirmation-container">
-                <h4>Are you sure you want to delete <span th:text="${clientToDelete}"></span>?</h4>
-                <p>Be aware that the profile will be deleted permanently</p>
+                <h4>Are you sure you want to delete <span th:text="${client.firstName}"></span>?</h4>
+                <p>This action is permanent.</p>
 
                 <div class="buttons">
-                    <form th:action="@{/client?clientId=${client.getId()}}" method="get">
+<!--                    <form th:action="@{/client?clientId=${client.id}}" method="get">
                         <button class="gray-button">Cancel</button>
-                    </form>
+                    </form>-->
                     <form class="edit-btn" th:action="@{/delete-client}" method="post">
                         <input type="hidden" name="clientId" th:value="${client.id}" />
                         <button class="red-button">Delete</button>
@@ -37,16 +38,18 @@
 
         <div class="button-container">
 
+
             <form class="edit-btn" th:action="@{/edit-client}" method="get">
                 <input type="hidden" name="clientId" th:value="${client.id}" />
                 <button type="submit"><i class="fa fa-edit fa-2x"></i></button>
             </form>
-            <form class="edit-btn" th:action="@{/delete-client(clientToDelete=${client.getId()})}" method="post">
+            <th:block  th:if="${clientToDelete == null}" >
+            <form class="edit-btn" th:action="@{/client(clientToDelete=${client.id})}" method="post">
                 <input type="hidden" name="clientId" th:value="${client.id}" />
                 <button type="submit"><i class="fa fa-trash fa-2x"></i></button>
             </form>
 
-
+            </th:block>
         </div>
 
         <div class="container">

@@ -69,3 +69,9 @@ button {
     color: var(--white);
     border:none;
 }
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
