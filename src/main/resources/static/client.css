@@ -35,11 +35,6 @@ section {
     padding-top: 2rem;
 }
 
-.edit-btn {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-}
 
 .contact {
     padding-bottom : 1.5rem;
@@ -56,4 +51,21 @@ h2 {
 
 button {
     margin-top: 3rem;
+}
+
+.button-container {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+}
+
+.edit-btn, .delete-btn {
+    margin-right: 1rem;
+}
+
+.button-container form button {
+    background-color: transparent;
+    color: var(--white);
+    border:none;
 }

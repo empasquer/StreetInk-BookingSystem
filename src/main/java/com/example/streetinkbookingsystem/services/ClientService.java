@@ -20,4 +20,9 @@ public class ClientService {
                              int clientId ) {
         clientRepository.updateClient(firstName, lastName,email, phoneNumber, description, clientId);
     }
+
+    public void deleteClientInfoByClientId(int clientId) {
+        clientRepository.updateClient("Unknown", null, "unknown",
+                0, null, clientId);
+    }
 }

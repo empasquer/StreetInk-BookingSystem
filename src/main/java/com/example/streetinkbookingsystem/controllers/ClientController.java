@@ -85,4 +85,12 @@ public class ClientController {
         clientService.updateClient(firstName, lastName, email, phoneNumber, description, clientId);
         return "redirect:/client?clientId=" + clientId;
     }
+
+    @PostMapping("/delete-client")
+    public String deleteClient(Model model, HttpSession session, @RequestParam("clientId") int clientId) {
+        addLoggedInUserInfo(model, session);
+
+        clientService.deleteClientInfoByClientId(clientId);
+        return "redirect:/client?clientId=" + clientId;
+    }
 }
