@@ -43,4 +43,9 @@ public class TattooArtistRepository {
         String query = "UPDATE tattoo_artist SET is_admin=? WHERE username=?";
         jdbcTemplate.update(query, status, username);
     }
+
+    public void deleteProfileByUsername(String profileToDelete) {
+        String query = "DELETE FROM tattoo_artist WHERE username =?";
+        jdbcTemplate.update(query,profileToDelete);
+    }
 }

@@ -25,7 +25,13 @@ public class TattooArtistService {
         return tattooArtistRepository.getTattooArtistByUsername(username);
     }
 
-    public void deleteProfileByUsername(String profileToDelete) {
+    public String deleteProfileByUsername(String profileToDelete) {
+        TattooArtist artist = tattooArtistRepository.getTattooArtistByUsername(profileToDelete);
+        if(artist.getIsAdmin()) {
+            return "Cannot delete an admin profile";
+        }
+        else tattooArtistRepository.deleteProfileByUsername(profileToDelete);
+        return artist.getUsername() + "deleted";
     }
 
     public String changeAdminStatus(TattooArtist artist) {
