@@ -21,7 +21,7 @@
         <div th:if="${results}">
             <ul>
                 <li class="client-list" th:each="client : ${results}">
-                    <a class="client-item" th:href="@{/client/{id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                    <a class="client-item" th:href="@{'/client?clientId=' + {id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
                 </li>
             </ul>
         </div>

@@ -45,7 +45,7 @@
                 <div class="letter-header" th:text="${entry.key}">Letter</div>
                 <ul class="client-list">
                     <li th:each="client : ${entry.value}" class="client-item">
-                        <a th:href="@{/client/{id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                        <a th:href="@{'/client?clientId=' + {id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
                     </li>
                 </ul>
             </div>
