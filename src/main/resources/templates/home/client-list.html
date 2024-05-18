@@ -36,6 +36,10 @@
             </div>
         </form>
 
+        <!-- Iterates over each entry in the map, looking for the Key (the letter) and
+        the value (all the clients by that letter), and for every value, the client
+        is clickable -->
+
         <div th:each="entry : ${groupedClients}">
             <div th:if="${entry.value.size() > 0}">
                 <div class="letter-header" th:text="${entry.key}">Letter</div>

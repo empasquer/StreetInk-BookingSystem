@@ -32,6 +32,14 @@ public class ClientController {
     TattooArtistService tattooArtistService;
 
 
+    /**
+     * @author Munazzah
+     * @param model
+     * @param session
+     * @return String - View of the client-list page
+     * @summary Gets the sorted list og Clients from the service layer, and then uses Map to
+     * group the Clients based on the first letter in name
+     */
     @GetMapping("/client-list")
     public String clientList(Model model, HttpSession session) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
@@ -46,19 +54,39 @@ public class ClientController {
         model.addAttribute("tattooArtist", tattooArtist);
 
         List<Client> sortedClients = clientService.getSortedListOfClients();
-        // Use TreeMap to maintain the natural order of the keys
+        //ADT Map is the result, where the key is a character (first letter) and value is List<Client>
+        //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
+        //Uses stream to handle everything simulationaly
+        //Uses collect (Collectors.groupingBy) to group the elements of teh stream based on first letter in first name
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
-                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0), TreeMap::new, Collectors.toList()));
+                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
+                        TreeMap::new, Collectors.toList()));
 
         model.addAttribute("groupedClients", groupedClients);
         return "home/client-list";
     }
 
-
+    /**
+     * @author Muanzzah
+     * @param searchQuery
+     * @param model
+     * @param redirectAttributes
+     * @param session
+     * @return String - View of search-results
+     * @summary Search for a Client based on phone number or first name. The if-statement
+     * checks if it is a number or name and acts accordingly
+     */
     @PostMapping("/search")
     public String search(@RequestParam("search") String searchQuery, Model model,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes, HttpSession session) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
 
+        model.addAttribute("searchQuery", searchQuery);
         //Checks (via regex) if there are only numbers, letters or a mix of both and acts accordingly
         if (searchQuery.matches("[0-9]+")) {
             model.addAttribute("searchType", "phoneNumber");

@@ -6,14 +6,18 @@ li {
     text-decoration: none;
     background-color: var(--above-section-elements-gray);
     color: var(--white);
+    border-radius: 15px;
+    margin: 10px 20px;
 }
 
 .letter-header {
     color: var(--white);
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    align-self: flex-start;
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 40px;
 }
 
 .client-list {
@@ -21,7 +25,7 @@ li {
 }
 
 .client-item {
-    align-items: flex-start;
-    font-size: large;
-    margin-left: 20px;
+    text-align: left;
+    font-size: 2rem;
+    padding-left: 20px;
 }
