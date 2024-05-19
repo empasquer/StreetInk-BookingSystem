@@ -1,0 +1,55 @@
+
+.upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust the height as needed */
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+    border-radius: 50%;
+    background-color: var(--input-field-gray);
+    color: white;
+    text-align: center;
+    line-height: 100px; /* Make the line height the same as the width/height for centering */
+    font-size: 2em;
+    cursor: pointer;
+    position: relative;
+}
+.upload-label-with-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px; /* Make the line height the same as the width/height for centering */
+    font-size: 2em;
+    cursor: pointer;
+    position: relative;
+}
+.upload-label-with-picture input[type="file"] {
+    display: none;
+}
+.upload-label input[type="file"] {
+    display: none;
+}
+
+
+.upload-label-with-picture .fa-plus {
+    vertical-align: middle;
+    font-size: 48px;
+    color: black;
+    opacity: 0.5;
+    z-index: 2;
+}

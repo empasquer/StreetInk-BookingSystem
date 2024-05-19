@@ -11,8 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class ProfileController {
@@ -24,9 +29,49 @@ public class ProfileController {
      * @return get client to create-new-profile view
      */
     @GetMapping("/create-new-profile")
-    public String newProfile(){
+    public String newProfile( Model model, HttpSession session) {
+        if (session.getAttribute("imageData") != null) {
+            String base64Image = (String) session.getAttribute("imageData");
+            if (base64Image != null && !base64Image.isEmpty()) {
+                model.addAttribute("image", base64Image);
+            }
+        }
         return "home/create-new-profile";
     }
+    @PostMapping("upload-profile-picture")
+    public String uploadProfilePicture(@RequestParam MultipartFile profilePicture,HttpSession session) throws IOException {
+        if (!profilePicture.isEmpty()) {
+            byte[] imageData = profilePicture.getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageData);
+            session.setAttribute("imageData", base64Image);
+        }
+        return "redirect:/create-new-profile";
+    }
+/*
+    @PostMapping("upload-profile-picture")
+    public String uploadProfilePicture(@RequestParam MultipartFile profilePicture, Model model, RedirectAttributes redirectAttributes) {
+        String uploadDir = "src/main/resources/static/assets/";
+        String fileName = "Temporary_Profile_Picture.png";
+        Path path = Paths.get(uploadDir + fileName);
+        System.out.println(path);
+        redirectAttributes.addAttribute("fileName", fileName);
+
+
+        try {
+            // Save the file to the upload directory
+            byte[] bytes = profilePicture.getBytes();
+            Files.write(path, bytes);
+            // Add the fileName as a query parameter in the redirect URL
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Failed to upload file");
+            return "home/create-new-profile"; // Return to the create-new-profile page
+        }
+        return "redirect:/create-new-profile";
+    }
+    */
+
 
     /**
      * @author Nanna
@@ -194,6 +239,38 @@ public class ProfileController {
         redirectAttributes.addAttribute("message", message);
         return "redirect:/manage-profiles";
     }
+
+
+  /*
+    @PostMapping("/upload-profile-picture")
+    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file, Model model) {
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file to upload");
+            return "home/create-new-profile"; // Return to the create-new-profile page
+        }
+
+
+        try {
+            // Generate a unique file name
+            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            // Save the file to the upload directory
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOAD_DIR + fileName);
+            Files.write(path, bytes);
+
+            // Pass the file path to the view for preview
+            model.addAttribute("imageUrl", "/uploads/" + fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Failed to upload file");
+            return "home/create-new-profile"; // Return to the create-new-profile page
+        }
+
+        // Redirect back to the create-new-profile page
+        return "redirect:/create-new-profile";
+        }
+   */
+
 }
 
 
