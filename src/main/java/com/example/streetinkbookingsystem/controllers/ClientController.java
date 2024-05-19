@@ -54,7 +54,7 @@ public class ClientController {
         model.addAttribute("tattooArtist", tattooArtist);
 
         List<Client> sortedClients = clientService.getSortedListOfClients();
-        //ADT Map is the result, where the key is a character (first letter) and value is List<Client>
+        //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
         //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
         //Uses stream to handle everything simulationaly
         //Uses collect (Collectors.groupingBy) to group the elements of teh stream based on first letter in first name
@@ -85,6 +85,10 @@ public class ClientController {
         } else {
             return "redirect:/";
         }
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
 
         model.addAttribute("searchQuery", searchQuery);
         //Checks (via regex) if there are only numbers, letters or a mix of both and acts accordingly

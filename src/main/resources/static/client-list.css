@@ -1,13 +1,15 @@
+
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 li {
-    text-decoration: none;
     background-color: var(--above-section-elements-gray);
     color: var(--white);
     border-radius: 15px;
     margin: 10px 20px;
+    padding: 10px 20px;
 }
 
 .letter-header {
@@ -22,10 +24,22 @@ li {
 
 .client-list {
     list-style-type: none;
+    padding: 0;
 }
 
 .client-item {
     text-align: left;
     font-size: 2rem;
     padding-left: 20px;
+}
+
+/* Ensures that the link styling is consistent within client-item */
+.client-item a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--white);
+    background-color: var(--above-section-elements-gray);
+    border-radius: 15px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
