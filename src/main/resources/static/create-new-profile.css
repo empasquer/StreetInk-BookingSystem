@@ -37,6 +37,7 @@
     font-size: 2em;
     cursor: pointer;
     position: relative;
+    background-size: cover;
 }
 .upload-label-with-picture input[type="file"] {
     display: none;

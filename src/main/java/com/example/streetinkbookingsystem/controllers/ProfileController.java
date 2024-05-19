@@ -30,47 +30,23 @@ public class ProfileController {
      */
     @GetMapping("/create-new-profile")
     public String newProfile( Model model, HttpSession session) {
-        if (session.getAttribute("imageData") != null) {
-            String base64Image = (String) session.getAttribute("imageData");
-            if (base64Image != null && !base64Image.isEmpty()) {
-                model.addAttribute("image", base64Image);
-            }
+        byte[] imageData = (byte[]) session.getAttribute("imageData");
+        if (imageData != null) {
+            String base64Image = Base64.getEncoder().encodeToString(imageData);
+            model.addAttribute("base64Image", base64Image);
+            System.out.println("here");
         }
         return "home/create-new-profile";
     }
     @PostMapping("upload-profile-picture")
-    public String uploadProfilePicture(@RequestParam MultipartFile profilePicture,HttpSession session) throws IOException {
+    public String uploadProfilePicture(@RequestParam MultipartFile profilePicture,Model model, HttpSession session) throws IOException {
         if (!profilePicture.isEmpty()) {
             byte[] imageData = profilePicture.getBytes();
-            String base64Image = Base64.getEncoder().encodeToString(imageData);
-            session.setAttribute("imageData", base64Image);
+            session.setAttribute("imageData", imageData);
+            System.out.println("now here");
         }
         return "redirect:/create-new-profile";
     }
-/*
-    @PostMapping("upload-profile-picture")
-    public String uploadProfilePicture(@RequestParam MultipartFile profilePicture, Model model, RedirectAttributes redirectAttributes) {
-        String uploadDir = "src/main/resources/static/assets/";
-        String fileName = "Temporary_Profile_Picture.png";
-        Path path = Paths.get(uploadDir + fileName);
-        System.out.println(path);
-        redirectAttributes.addAttribute("fileName", fileName);
-
-
-        try {
-            // Save the file to the upload directory
-            byte[] bytes = profilePicture.getBytes();
-            Files.write(path, bytes);
-            // Add the fileName as a query parameter in the redirect URL
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            model.addAttribute("message", "Failed to upload file");
-            return "home/create-new-profile"; // Return to the create-new-profile page
-        }
-        return "redirect:/create-new-profile";
-    }
-    */
 
 
     /**
@@ -85,7 +61,6 @@ public class ProfileController {
      * @param instagramUrl
      * @param avgWorkHours
      * @param isAdmin
-     * @param profilePicture
      * @param session used to check if the user is logged in, and check that the user is an admin
      * @return sends information to service to create a profile and returns to manage-profiles page
      */
@@ -99,8 +74,8 @@ public class ProfileController {
                                 @RequestParam String facebookUrl,
                                 @RequestParam String instagramUrl,
                                 @RequestParam int avgWorkHours,
-                                @RequestParam(value = "isAdmin", required = false) Boolean isAdmin,
-                                @RequestParam("profilePicture") MultipartFile profilePicture, HttpSession session) {
+                                @RequestParam(value = "isAdmin", required = false) Boolean isAdmin
+                               /* @RequestParam(value = "imageFile",required = false) byte[] imageData,*/, HttpSession session) {
         TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
 
 
@@ -108,6 +83,9 @@ public class ProfileController {
         model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
+
+
+        byte[] imageData = (byte[]) session.getAttribute("imageData");
 
         if (username == null || !tattooArtist.getIsAdmin()){
             // Redirect logic when username is null or if not admin.
@@ -118,20 +96,13 @@ public class ProfileController {
             model.addAttribute("message", "This username is taken");
             return "home/create-new-profile"; // Returns the same page with the message
         } else {
-            byte[] pictureData = null;
-            if (!profilePicture.isEmpty()) {
-                try {
-                    pictureData = profilePicture.getBytes();
-                } catch (IOException e) {
-                    return "redirect:/error";
-                }
-            }
 
             boolean adminStatus = isAdmin != null && isAdmin;
-            tattooArtistService.createProfile(profileUsername, profileFirstname, profileLastName, profilePassword, facebookUrl, instagramUrl, phone, email, avgWorkHours, adminStatus, Optional.ofNullable(pictureData));
+            tattooArtistService.createProfile(profileUsername, profileFirstname, profileLastName, profilePassword, facebookUrl, instagramUrl, phone, email, avgWorkHours, adminStatus, Optional.ofNullable(imageData));
             return "redirect:/manage-profiles";
         }
     }
+
 
     /**
      * @author Nanna

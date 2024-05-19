@@ -20,13 +20,13 @@
     <section>
         <form class="upload-container" th:action="@{/upload-profile-picture}" method="post" enctype="multipart/form-data">
             <div class="upload-container">
-                <th:block th:if="${image}">
-                    <label th:style="'background-image: url(data:image/jpeg;base64,' + ${image} + ');'"class="upload-label-with-picture">
+                <th:block th:if="${base64Image}">
+                    <label th:style="'background-image:url(data:image/jpeg;base64,' + ${base64Image} + ');'"class="upload-label-with-picture">
                     <i class="fas fa-plus"></i>
                     <input type="file"  name="profilePicture" accept="image/*" onchange="this.form.submit()">
                 </label>
                 </th:block>
-                <th:block th:unless="${image}">
+                <th:block th:unless="${base64Image}">
                     <label   class="upload-label" >
                         <i class="fas fa-plus"></i>
                         <input type="file"name="profilePicture" accept="image/*" onchange="this.form.submit()">
