@@ -2,11 +2,19 @@ package com.example.streetinkbookingsystem.repositories;
 
 import com.example.streetinkbookingsystem.models.Booking;
 import com.example.streetinkbookingsystem.models.Client;
+import com.example.streetinkbookingsystem.models.ProjectPicture;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.metrics.buffering.StartupTimeline;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import java.sql.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,8 +50,70 @@ public class BookingRepository {
         return jdbcTemplate.query(query,rowMapper,username,date);
     }
 
+
+    //laver ny, som kan tackle flere billeder. har Gemt den gamle, hvis jeg har fucket med noget andet.
+    public Booking getBookingDetails(int bookingId) {
+        String query = "SELECT booking.*, client.*, project_picture.id, project_picture.picture_data " +
+                "FROM booking " +
+                "JOIN client ON booking.client_id =  client.id " +
+                "LEFT JOIN project_picture On booking.id = project_picture.booking_id " +
+                "WHERE booking.id = ?;";
+
+        return jdbcTemplate.query(query, new Object[]{bookingId}, new ResultSetExtractor<Booking>() {
+            @Override
+            public Booking extractData(ResultSet rs) throws SQLException, DataAccessException {
+                    Booking booking = null;
+                    Client client = null; // hvorfor dette?
+                    List<ProjectPicture> projectPictures = new ArrayList<>();
+
+                    while (rs.next()) {
+                        if (booking == null) {
+                            booking = new Booking();
+                            booking.setId(rs.getInt("booking.id"));
+                            booking.setStartTimeSlot(rs.getTime("start_time_slot").toLocalTime());
+                            booking.setEndTimeSlot(rs.getTime("end_time_slot").toLocalTime());
+                            booking.setDate(rs.getDate("date").toLocalDate());
+                            booking.setProjectTitle(rs.getString("project_title"));
+                            booking.setProjectDesc(rs.getString("project_desc"));
+                            booking.setPersonalNote(rs.getString("personal_note"));
+                            booking.setIsDepositPayed(rs.getBoolean("is_deposit_payed"));
+
+                            client = new Client();
+                            client.setId(rs.getInt("client.id"));
+                            client.setFirstName(rs.getString("first_name"));
+                            client.setLastName(rs.getString("last_name"));
+                            client.setEmail(rs.getString("email"));
+                            client.setPhoneNumber(rs.getInt("phone_number"));
+                            client.setDescription(rs.getString("description"));
+
+                            booking.setClient(client);
+                        }
+
+                        int pictureId = rs.getInt("project_picture.id");
+                        if (pictureId != 0){
+                            ProjectPicture projectPicture = new ProjectPicture();
+                            projectPicture.setId(pictureId);
+                            projectPicture.setBookingId(booking.getId());
+                            projectPicture.setPictureData(rs.getBytes("picture_data"));
+                            projectPictures.add(projectPicture);
+                        }
+                    }
+
+                    if (booking != null) {
+                        booking.setProjectPictures(projectPictures);
+                    }
+
+                    return booking;
+            }
+        });
+
+    }
+
+
+
+
     //Gets a specific booking with all information
-    public Booking getBookingDetails(int bookingId){
+    /*public Booking getBookingDetails(int bookingId){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
                 "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.id = ?;";
         RowMapper<Booking> rowMapper = (rs, rowNum) -> {
@@ -58,7 +128,9 @@ public class BookingRepository {
             booking.setDepositPayed(rs.getBoolean("is_deposit_payed"));
             Byte picture = rs.getByte("picture_data");
             if (picture != null) {
-                ArrayList<Byte[]> projectPictures = new ArrayList<>(picture);
+
+                //ArrayList<Byte[]> projectPictures = new ArrayList<>(picture);
+                List<ProjectPicture> projectPictures = new ArrayList<>(picture);
                 booking.setProjectPictures(projectPictures);
             }
 
@@ -76,6 +148,8 @@ public class BookingRepository {
         return  jdbcTemplate.queryForObject(query,rowMapper, bookingId);
     }
 
+     */
+
     /**
      * @author Tara
      * @return list af bookinger
@@ -86,17 +160,94 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void createNewBooking (LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
+    /**
+     * @Author Tara
+     * @param startTimeSlot
+     * @param endTimeSlot
+     * @param date
+     * @param username
+     * @param projectTitle
+     * @param projectDesc
+     * @param personalNote
+     * @param isDepositPayed
+     */
+    public Booking createNewBooking (LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
                                   String username, String projectTitle, String projectDesc, String personalNote,
                                   boolean isDepositPayed){
+
+        // Skal se hvad den bringer med sig over.
+        System.out.println("Start Time Slot: " + startTimeSlot);
+        System.out.println("End Time Slot: " + endTimeSlot);
+        System.out.println("Date: " + date);
+        System.out.println("Client ID: 1");
+        System.out.println("Username: " + username);
+        System.out.println("Project Title: " + projectTitle);
+        System.out.println("Project Description: " + projectDesc);
+        System.out.println("Personal Note: " + personalNote);
+        System.out.println("Is Deposit Payed: " + isDepositPayed);
+
+        // Check if username exists in tattoo_artist table
+        String checkUsernameQuery = "SELECT COUNT(*) FROM tattoo_artist WHERE username = ?";
+        Integer count = jdbcTemplate.queryForObject(checkUsernameQuery, new Object[]{username}, Integer.class);
+        if (count == null || count == 0) {
+            throw new IllegalArgumentException("Username does not exist in tattoo_artist table: " + username);
+        }
+
+
         String query = "INSERT INTO booking (start_time_slot, end_time_slot, date, client_id, username, " +
                 "project_title, project_desc, personal_note, is_deposit_payed)" +
                 "values(?, ?, ?, 1, ?, ?, ?, ?, ?);";
         // givet client_id 1, så den pr. default har "Unknown Client",
         // indtil client view, hvor vi opdaterer til ny eller eksisterende client
-        jdbcTemplate.update(query, startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc,
+
+
+        //Gemmer den generede primærnøgleværdi, efter indsættelse, så vi kan bruge den videre i
+        //metoden, til f.eks at gemme projectpictures.
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement pS = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pS.setTime(1, Time.valueOf(startTimeSlot));
+            pS.setTime(2, Time.valueOf(endTimeSlot));
+            pS.setDate(3, Date.valueOf(date));
+           // pS.setInt(4, 1); // client_id is hardcoded to 1
+            pS.setString(4, username);
+            pS.setString(5, projectTitle);
+            pS.setString(6, projectDesc);
+            pS.setString(7, personalNote);
+            pS.setBoolean(8, isDepositPayed);
+            return pS;
+
+        }, keyHolder);
+
+        int bookingId = keyHolder.getKey().intValue();
+
+        return findById(bookingId);
+
+        /*jdbcTemplate.update(query, startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc,
                 personalNote, isDepositPayed);
+        Booking booking = new Booking();
+        booking.setStartTimeSlot(startTimeSlot);
+        booking.setEndTimeSlot(endTimeSlot);
+        booking.setDate(date);
+        booking.setUsername(username);
+        booking.setProjectTitle(projectTitle);
+        booking.setProjectDesc(projectDesc);
+        booking.setPersonalNote(personalNote);
+        booking.setDepositPayed(isDepositPayed);
+
+        return booking;
+
+         */
     }
+
+    public Booking findById(int bookingId){
+        String query = "SELECT * FROM booking WHERE id = ?";
+        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
+        Booking booking = jdbcTemplate.queryForObject(query, rowMapper, bookingId);
+        return booking;
+    }
+
 
     //Retunerer antallet af booking for en bestemt dato og username
     public int getBookingCountForDate(LocalDate specificDate, String username) {

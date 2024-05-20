@@ -36,18 +36,25 @@
 
           <hr>
           <p class="tattoo-info">Tattoo Information</p>
-          <p>Deposit payed: <input type="checkbox" th:checked="${booking.depositPayed}" class="checkboxes"></p>
+          <p>Deposit payed: <span th:text="${booking.isDepositPayed ? 'Yes' : 'No'}"></span></p>
+         <!-- <p>Deposit payed: <input type="checkbox" th:checked="${booking.depositPayed}" class="checkboxes"></p> -->
 
           <p>Project Title:</p>
           <div th:text="${booking.projectTitle}"></div>
           <p>Project Description:</p>
           <div th:text="${booking.projectDesc}"></div>
-          <p>Private Note:</p>
+          <p>Personal Note:</p>
           <div th:text="${booking.personalNote}"></div>
           <p>Image:</p>
-
-
-
+          <div th:if="${#lists.isEmpty(booking.projectPictures)}">
+            <p>No pictures have been uploaded</p>
+          </div>
+          <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
+            <div th:each="picture : ${booking.projectPictures}">
+              <img th:src="'data:image/jpeg;base64,' + ${T(java.util.Base64).getEncoder().encodeToString(picture)}" alt="Project Picture" style="max-width: 100px; max-height: 100px;">
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>

@@ -1,19 +1,25 @@
 package com.example.streetinkbookingsystem.services;
 
 import com.example.streetinkbookingsystem.models.Booking;
+import com.example.streetinkbookingsystem.models.ProjectPicture;
 import com.example.streetinkbookingsystem.repositories.BookingRepository;
+import com.example.streetinkbookingsystem.repositories.ProjectPictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private ProjectPictureRepository projectPictureRepository;
 
     /**
      * @author Tara
@@ -26,11 +32,22 @@ public class BookingService {
      * @param personalNote
      * @param isDepositPayed
      */
-    public void createNewBooking(LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
+    @Transactional //Håndtere database transaktioner automatisk, når metoden lykkedes
+    public Booking createNewBooking(LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
                                  String username, String projectTitle, String projectDesc, String personalNote,
-                                 boolean isDepositPayed){
-        bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc,
-                personalNote, isDepositPayed);
+                                 boolean isDepositPayed, List<byte[]> pictureList){
+
+        Booking savedBooking = bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date,
+                username, projectTitle, projectDesc, personalNote, isDepositPayed);
+
+        for(byte[] pictureData : pictureList){
+            ProjectPicture picture = new ProjectPicture();
+            picture.setPictureData(pictureData);
+            picture.setBookingId(savedBooking.getId());
+            projectPictureRepository.saveProjectPicture(picture);
+        }
+
+        return savedBooking;
     }
 
 
@@ -55,12 +72,15 @@ public class BookingService {
         return bookingRepository.getBookingsForDay(date, username);
 
     }
+
     public Booking getBookingDetail(int bookingId) {
         return bookingRepository.getBookingDetails(bookingId);
-
     }
 
-
+    /**
+     * @Author Tara
+     * @return
+     */
     public List<Booking> showBookingList(){
         return bookingRepository.showBookingList();
     }
