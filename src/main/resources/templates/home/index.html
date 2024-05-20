@@ -20,8 +20,8 @@
             <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
                 <div class="profile-container">
                     <a th:href="@{'/login?username=' + ${tattooArtist.username}}">
-                        <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic-index">
-                        <i th:unless="${tattooArtist.profilePicture != null}" class="fas fa-user profile-pic-index"></i>
+                        <img th:if="${tattooArtist.base64ProfilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.base64ProfilePicture}}" alt="Profilbillede" class="profile-pic-index">
+                        <i th:unless="${tattooArtist.base64ProfilePicture != null}" class="fas fa-user profile-pic-index"></i>
                     </a>
 
                    <!-- <a th:href="@{'/login?username=' + ${tattooArtist.username}}">

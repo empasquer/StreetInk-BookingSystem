@@ -18,24 +18,35 @@
     <h1>Create new Profile</h1>
 
     <section>
+
+        <!--Upload picture and display preview-->
         <form class="upload-container" th:action="@{/upload-profile-picture}" method="post" enctype="multipart/form-data">
-            <div class="upload-container">
+
+
+                <!--If there is chosen a picture then see preview-->
                 <th:block th:if="${base64Image}">
                     <label th:style="'background-image:url(data:image/jpeg;base64,' + ${base64Image} + ');'"class="upload-label-with-picture">
                     <i class="fas fa-plus"></i>
                     <input type="file"  name="profilePicture" accept="image/*" onchange="this.form.submit()">
+
                 </label>
                 </th:block>
+
+                <!--If no picture is chosen display default-->
                 <th:block th:unless="${base64Image}">
                     <label   class="upload-label" >
                         <i class="fas fa-plus"></i>
                         <input type="file"name="profilePicture" accept="image/*" onchange="this.form.submit()">
                     </label>
-                </th:block>
-            </div>
-        </form>
 
+                </th:block>
+        </form>
+        <p>Upload Picture:</p>
+
+        <!--Rest of information for creating profile-->
         <form th:action="@{/create-new-profile}" method="post" enctype="multipart/form-data">
+
+            <!--Name-->
             <div class="form-row">
                 <div class="form-group">
                     <label for="firstname">First name:</label> <br>
@@ -47,6 +58,11 @@
                 </div>
             </div>
 
+            <!--username and password-->
+            <!--Display error if username is taken-->
+            <div th:if="${message}" class="error-message">
+                <p th:text="${message}"></p>
+            </div>
             <div class="form-row">
                 <div class="form-group">
                     <label for="username">Username:</label> <br>
@@ -58,6 +74,7 @@
                 </div>
             </div>
 
+            <!--Contacts-->
             <div class="form-row">
                 <div class="form-group">
                     <label for="phone">Phone:</label> <br>
@@ -69,6 +86,7 @@
                 </div>
             </div>
 
+            <!--Social media-->
             <div class="form-row">
                 <div class="form-group">
                     <label for="facebookUrl">Facebook URL:</label> <br>
@@ -80,22 +98,54 @@
                 </div>
             </div>
 
-            <div th:if="${message}" class="error-message">
-                <p th:text="${message}"></p>
+
+            <!--Work hours and admin-->
+            <div class="form-row-box">
+                <div class="form-box">
+                <label for="avgWorkHours">Work hours:</label>
+                <input list="hours" id="avgWorkHours" name="avgWorkHours" required>
+                <datalist id="hours">
+                    <option value="1">
+                    <option value="2">
+                    <option value="3">
+                    <option value="4">
+                    <option value="5">
+                    <option value="7">
+                    <option value="8">
+                    <option value="9">
+                    <option value="10">
+                    <option value="11">
+                    <option value="12">
+                </datalist>
             </div>
+                <!-- Hidden checkbox to manage state -->
+                <input type="checkbox" id="workHoursCheckbox" class="info-checkbox">
 
+                <!-- Label styled as a button -->
+                <label for="workHoursCheckbox" class="info-label"><i class="fas fa-question"></i></label>
 
+                <!-- Message to display when clicked -->
+                <span class="info-message">
+                    <p>Please enter the work hours for an average day. This will be used to
+                    calculate how booked your day is</p>
+                </span>
 
-            <div class="form-group">
-                <label for="avgWorkHours">Average weekly work hours:</label>
-                <input type="number" id="avgWorkHours" name="avgWorkHours" required>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
+                <div class="form-box">
                     <label for="isAdmin">Admin:</label>
-                    <input type="checkbox" id="isAdmin" name="isAdmin">
+                    <input class="custom-checkbox" type="checkbox"  id="isAdmin" name="isAdmin">
                 </div>
+
+                <!-- Hidden checkbox to manage state -->
+                <input type="checkbox" id="adminCheckbox" class="info-checkbox">
+
+                <!-- Label styled as a button -->
+                <label for="adminCheckbox" class="info-label"><i class="fas fa-question"></i></label>
+
+                <!-- Message to display when clicked -->
+                <span class="info-message">
+                    <p>Only admins can create or delete other profiles. Admin status can only
+                    be changed by other admins</p>
+                </span>
             </div>
 
             <button class="submit-button" type="submit">Submit</button>

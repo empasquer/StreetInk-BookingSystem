@@ -81,3 +81,4 @@ VALUES
     ('09:45:00', '14:30:00', '2024-05-18', 1, "bigDummy", "skull forearm", "skull tattoo on forearm", "Customer wants it in grayscale", 1),
     ('15:00:00', '18:30:00', '2024-05-11', 2, "smallDummy", "floral half-sleeve", "intricate floral design", "Customer is bringing their own design", 1);
 
+SELECT * FROM tattoo_artist;
