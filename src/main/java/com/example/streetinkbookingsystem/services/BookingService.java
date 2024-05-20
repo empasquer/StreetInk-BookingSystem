@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
@@ -33,11 +34,38 @@ public class BookingService {
      * @param isDepositPayed
      */
     @Transactional //Håndtere database transaktioner automatisk, når metoden lykkedes
-    public Booking createNewBooking(LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
-                                 String username, String projectTitle, String projectDesc, String personalNote,
-                                 boolean isDepositPayed, List<byte[]> pictureList){
+    public Booking createNewBooking(LocalTime startTimeSlot,
+                                    LocalTime endTimeSlot,
+                                    LocalDate date,
+                                    String username,
+                                    String projectTitle,
+                                    String projectDesc,
+                                    String personalNote,
+                                    boolean isDepositPayed,
+                                    List<byte[]> pictureList){
 
-        Booking savedBooking = bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date,
+        Booking booking = new Booking();
+        booking.setStartTimeSlot(startTimeSlot);
+        booking.setEndTimeSlot(endTimeSlot);
+        booking.setDate(date);
+        booking.setUsername(username);
+        booking.setProjectTitle(projectTitle);
+        booking.setProjectDesc(projectDesc);
+        booking.setPersonalNote(personalNote);
+        booking.setIsDepositPayed(isDepositPayed);
+        booking.setProjectPictures(pictureList.stream().map(picture -> {
+            ProjectPicture projectPicture = new ProjectPicture();
+            projectPicture.setPictureData(picture);
+            return projectPicture;
+                })
+                        .collect(Collectors.toList()));
+
+             /*return bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date, username,
+                projectTitle, projectDesc, personalNote, isDepositPayed);
+
+                 */
+
+       Booking savedBooking = bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date,
                 username, projectTitle, projectDesc, personalNote, isDepositPayed);
 
         for(byte[] pictureData : pictureList){
@@ -48,6 +76,8 @@ public class BookingService {
         }
 
         return savedBooking;
+
+
     }
 
 

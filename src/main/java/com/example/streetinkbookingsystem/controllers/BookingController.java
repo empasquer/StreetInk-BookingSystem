@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class BookingController {
@@ -46,19 +49,26 @@ public class BookingController {
     @GetMapping("/booking")
      public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username){
         boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        if (!loggedIn) {
             return "redirect:/";
         }
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
         //Tjekker booking id
-        System.out.println("BookingId: " + bookingId);
+        //System.out.println("BookingId: " + bookingId);
 
-        model.addAttribute("booking", bookingService.getBookingDetail(bookingId));
+        Booking booking = bookingService.getBookingDetail(bookingId);
+        model.addAttribute("booking", booking);
+
+        // Henter billeder fra den specifikke booking
+        List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
+        model.addAttribute("base64Images", base64Images);
+
+
 
         return "home/booking";
     }
@@ -113,19 +123,33 @@ public class BookingController {
                 return "redirect:/";
             }
 
-            List<byte[]> pictureList = new ArrayList<>();
+            List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
+                    .map(file -> {
+                        try { //læs op på dette
+                            return file.getBytes();
+                        } catch (IOException e){
+                            e.printStackTrace(); //læs op på dette
+                            return null;
+                        }
+                    })
+                    .collect(Collectors.toList());
+
             //Gemmer projektbilleder
             //villederne bliver midlertidigt gemt i denne liste, til de bliver gemt i database.
-            for (MultipartFile file : projectPictures){
+            /*for (MultipartFile file : projectPictures){
                 if (!file.isEmpty()) {
                     byte[] pictureData = file.getBytes();
                     // konverterer uploadede fil(er) til en sekvens af bytes.
                     pictureList.add(pictureData);
                 }
             }
+
+             */
             // Gemmer booking og henter den gemte entitet
            Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
                     projectDesc, personalNote, isDepositPayed, pictureList);
+
+           projectPictureService.saveProjectPictures(newBooking.getId(), pictureList);
 
             //Her bliver de gemt til deres table i databasen med bookingIdet
             //projectPictureService.saveProjectPictures(newBooking.getId(), (ArrayList<byte[]>) pictureList);
