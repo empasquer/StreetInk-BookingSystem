@@ -12,13 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Controller
 public class ProfileController {
@@ -218,7 +215,7 @@ public class ProfileController {
 
 
     /**
-     * @author
+     * @author Nanna
      * @param profileToChange used to find the profile that should change status in the database
      * @param redirectAttributes sends message to the user to inform them of
      *                           the outcome of the change in status.
@@ -243,35 +240,6 @@ public class ProfileController {
     }
 
 
-  /*
-    @PostMapping("/upload-profile-picture")
-    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file, Model model) {
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a file to upload");
-            return "home/create-new-profile"; // Return to the create-new-profile page
-        }
-
-
-        try {
-            // Generate a unique file name
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            // Save the file to the upload directory
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOAD_DIR + fileName);
-            Files.write(path, bytes);
-
-            // Pass the file path to the view for preview
-            model.addAttribute("imageUrl", "/uploads/" + fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            model.addAttribute("message", "Failed to upload file");
-            return "home/create-new-profile"; // Return to the create-new-profile page
-        }
-
-        // Redirect back to the create-new-profile page
-        return "redirect:/create-new-profile";
-        }
-   */
 
 }
 

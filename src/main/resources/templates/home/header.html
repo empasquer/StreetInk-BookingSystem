@@ -25,11 +25,15 @@
         <li class="nav-item">
           <a th:href="@{/dashboard}" class="nav-link">Client list</a>
         </li>
+        <li th:if="${tattooArtist.getIsAdmin()}" class="nav-item">
+          <a th:href="@{/manage-profiles}" class="nav-link">Manage Profiles</a>
+        </li>
         <li class="nav-item">
           <a th:href="@{/logout}" class="nav-link">Log out</a>
         </li>
       </ul>
       <div class="hamburger">
+        <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
