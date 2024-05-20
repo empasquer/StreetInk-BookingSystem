@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${tattooArtist.username} + '´s profile'"></title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+<!--    <div class="back-arrow-container">
+        <a th:href="@{/}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>-->
+
+    <h1 th:text="${tattooArtist.username}"></h1>
+
+    <section>
+        <figure>
+            <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede">
+            <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede">
+        </figure>
+        <p th:text="${tattooArtist.username}"></p>
+        <div class="container">
+                    <h2 th:text="${tattooArtist.firstName + ' ' + tattooArtist.lastName}"></h2>
+
+                    <div class="contact"><i class="fas fa-phone fa-2x"></i> <a th:href="${'tel:' + tattooArtist.phoneNumber}" th:text="${tattooArtist.phoneNumber}"></a></div>
+                    <div class="contact"><i class="fas fa-envelope fa-2x"></i> <a th:href="${'mailto:' + tattooArtist.email}" th:text="${tattooArtist.email}"></a></div>
+        </div>
+        <div class="container some">
+            <a th:href="${tattooArtist.instragramUrl}" target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
+            <a th:href="${tattooArtist.facebookUrl}" target="_blank"><i class="fab fa-facebook-square fa-3x"></i></a>
+        </div>
+    </section>
+
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>

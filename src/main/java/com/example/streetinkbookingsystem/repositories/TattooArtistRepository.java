@@ -18,6 +18,12 @@ public class TattooArtistRepository {
     JdbcTemplate jdbcTemplate;
 
 
+    /**
+     * @author Tara
+     * @return liste af alle tatovørerne
+     */
+        public List<TattooArtist> showTattooArtists(){
+
     public List<TattooArtist> showTattooArtists(){
         String query = "SELECT * FROM tattoo_artist;";
         RowMapper rowMapper = new BeanPropertyRowMapper(TattooArtist.class);
