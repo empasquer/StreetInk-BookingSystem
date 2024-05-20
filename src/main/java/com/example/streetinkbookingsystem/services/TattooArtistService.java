@@ -67,4 +67,8 @@ public class TattooArtistService {
         String hashedPassword = loginService.hashPassword(password);
         tattooArtistRepository.createProfile(username,firstname,lastName,hashedPassword,facebookUrl,instagramUrl,phone, email, avgWorkHours, isAdmin,pictureData);
     }
+
+    public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String newUsername, String currentUsername, Optional<byte[]> pictureData) {
+    tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,firstName,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
+}
 }

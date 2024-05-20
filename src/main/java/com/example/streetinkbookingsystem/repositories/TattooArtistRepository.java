@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,4 +64,38 @@ public class TattooArtistRepository {
         byte[] picture = pictureData.orElse(null);
             jdbcTemplate.update(query, username, firstname, lastName, password, email, phone, facebookUrl, instagramUrl, avgWorkHours, isAdmin,picture);
         }
+
+    public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String currentUsername, String newUsername, Optional<byte[]> pictureData) {
+        StringBuilder query = new StringBuilder("UPDATE tattoo_artist SET first_name = ?, email = ?, phone_number = ?, avg_work_hours = ?, username = ?");
+        List<Object> params = new ArrayList<>(Arrays.asList(firstName, email, phoneNumber, avgWorkHours, newUsername));
+
+        if (lastName != null) {
+            query.append(", last_name = ?");
+            params.add(lastName);
+        }
+
+        if (facebook != null) {
+            query.append(", facebook = ?");
+            params.add(facebook);
+        }
+
+        if (instagram != null) {
+            query.append(", instagram = ?");
+            params.add(instagram);
+        }
+
+        if (pictureData.isPresent()) {
+            query.append(", profile_picture = ?");
+            params.add(pictureData.get());
+        }
+
+        query.append(" WHERE username = ?");
+        params.add(currentUsername);
+
+        try {
+            jdbcTemplate.update(query.toString(), params.toArray());
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("Something went wrong");
+        }
+    }
 }

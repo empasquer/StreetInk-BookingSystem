@@ -21,7 +21,7 @@
 
         <!--Upload picture and display preview-->
         <form class="upload-container" th:action="@{/upload-profile-picture}" method="post" enctype="multipart/form-data">
-
+            <input type="hidden"  name="action" value="create">
 
                 <!--If there is chosen a picture then see preview-->
                 <th:block th:if="${base64Image}">
