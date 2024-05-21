@@ -74,9 +74,9 @@ public class ClientRepository {
      * then adds them to the list
      */
     public List<Client> findInactivateClients() {
-        String query = "SELECT c.* FROM Client c LEFT JOIN Booking b ON c.id = b.client.id " +
+        String query = "SELECT c.* FROM Client c LEFT JOIN Booking b ON c.id = b.client_id " +
                 "GROUP BY c.id " +
-                "HAVING MAX(b.date) < CURRENT_DATE - INTERVAL '5 YEAR'";
+                "HAVING MAX(b.date) < (CURRENT_DATE - INTERVAL 5 YEAR)";
 
         RowMapper<Client> rowMapper = new BeanPropertyRowMapper(Client.class);
 

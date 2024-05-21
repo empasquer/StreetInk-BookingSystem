@@ -66,6 +66,7 @@ public class ClientService {
      * @summary Is a scheduled method that runs every day at midnight, where it finds clients
      * that havent had any booking in the past 5 years, adds them to a list, and then inactivates
      * the clients, do their information are overwritten with the default client
+     * The cron is in sec, minutes, hours, day, month, day of week
      */
     @Scheduled(cron = "0 0 0 * * ?") //Runs every day at midnight
     public void cleanupInactiveClients() {
