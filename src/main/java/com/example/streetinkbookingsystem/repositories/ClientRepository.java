@@ -17,6 +17,11 @@ public class ClientRepository {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    public Client getClientFromClientId(int clientId) {
+        String query = "SELECT * FROM client WHERE id = ?";
+        RowMapper<Client> rowMapper = new BeanPropertyRowMapper<>(Client.class);
+        try {
+            return jdbcTemplate.queryForObject(query, rowMapper, clientId);
 
 
     /**
@@ -46,6 +51,21 @@ public class ClientRepository {
             return jdbcTemplate.query(query, rowMapper, "%" + firstname + "%");
         } catch (EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description, int clientId) {
+        String query = "UPDATE client SET first_name = ?, last_name = ?, email = ?, phone_number = ?, description = ? WHERE id = ?";
+        try {
+            jdbcTemplate.update(query,
+                    firstName,
+                  lastName,
+                 email,
+                    phoneNumber,
+                    description,
+                   clientId);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("something went wrong");
         }
     }
 

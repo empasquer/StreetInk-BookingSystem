@@ -1,5 +1,5 @@
 <header>
-  <a th:if="${loggedIn}" th:href="@{/logout}">
+  <a th:if="${loggedIn}" th:href="@{/profile}">
     <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic">
     <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
   </a>
@@ -13,6 +13,58 @@
     </a>
   </div>
 
+  <div th:if="${loggedIn}">
+    <nav class="navbar">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a th:href="@{/calendar(username=${tattooArtist.getUsername()})}" class="nav-link">Calendar</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/dashboard}" class="nav-link">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/dashboard}" class="nav-link">Client list</a>
+        </li>
+        <li th:if="${tattooArtist.getIsAdmin()}" class="nav-item">
+          <a th:href="@{/manage-profiles}" class="nav-link">Manage Profiles</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/logout}" class="nav-link">Log out</a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    hamburger.addEventListener("click", mobileMenu);
+
+    function mobileMenu() {
+      hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+    }
+
+    //Stores the links in a NodeList, which is much like a List (java) but Document Object Model (DOM) with nodes
+    const navLink = document.querySelectorAll(".nav-link");
+
+    //For each link, the menu should close, when a link is clicked on
+    navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+    function closeMenu() {
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+    }
+  </script>
+
+  <!-- The old dropdown Menu:
   <div th:if="${loggedIn}" class="dropdown">
     <span>
       <div class="line"></div>
@@ -23,8 +75,10 @@
       <a th:href="@{/calendar(username=${tattooArtist.getUsername()})}">Calendar</a>
       <a th:href="@{/dashboard}">Dashboard</a>
       <a th:href="@{/client-list}">Client list</a>
+      <a th:href="@{/dashboard}">Client list</a>
+      <a th:if="${tattooArtist.getIsAdmin()}" th:href="@{/manage-profiles}">Manage profiles</a>
       <a th:href="@{/logout}">Log out</a>
     </div>
-  </div>
+  </div> -->
 
 </header>

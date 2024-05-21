@@ -44,5 +44,20 @@ public class ClientService {
      */
     public List<Client> getClientsByFistName(String firstname) {
         return clientRepository.getClientsByFirstName(firstname);
+    @Autowired
+    ClientRepository clientRepository;
+
+    public Client getClientFromClientId(int clientId) {
+        return clientRepository.getClientFromClientId(clientId);
+    }
+
+    public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description,
+                             int clientId ) {
+        clientRepository.updateClient(firstName, lastName,email, phoneNumber, description, clientId);
+    }
+
+    public void deleteClientInfoByClientId(int clientId) {
+        clientRepository.updateClient("Unknown", null, "unknown",
+                0, null, clientId);
     }
 }

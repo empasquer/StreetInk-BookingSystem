@@ -2,9 +2,173 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create-New-Booking</title>
+    <title>Create New Booking - Tattoo Info</title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/create-new-booking.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-<p th:text="${date}"></p>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+    <div class="back-arrow-container">
+        <a th:href="@{/day(username=${tattooArtist.username},date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <h1>New Booking<span th:text="${date}"></span></h1>
+
+    <section>
+        <form action="/save-tattoo-info" method="post" enctype="multipart/form-data">
+            <div class="booking-container">
+                <div class="information-container">
+                    <h2>Tattoo Information</h2>
+
+                    <div th:if="${errorMessage}" class="error-message">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isDepositPayed">Deposit Payed:</label>
+                        <input type="checkbox" id="isDepositPayed" name="isDepositPayed">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startTimeSlot">Start Time:</label>
+                        <select id="startTimeSlot" name="startTimeSlot">
+                            <option value="09:00">09:00</option>
+                            <option value="09:15">09:15</option>
+                            <option value="09:30">09:30</option>
+                            <option value="09:45">09:45</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:15">10:15</option>
+                            <option value="10:30">10:30</option>
+                            <option value="10:45">10:45</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:15">11:15</option>
+                            <option value="11:30">11:30</option>
+                            <option value="11:45">11:45</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:15">12:15</option>
+                            <option value="12:30">12:30</option>
+                            <option value="12:45">12:45</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:15">13:15</option>
+                            <option value="13:30">13:30</option>
+                            <option value="13:45">13:45</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:15">14:15</option>
+                            <option value="14:30">14:30</option>
+                            <option value="14:45">14:45</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:15">15:15</option>
+                            <option value="15:30">15:30</option>
+                            <option value="15:45">15:45</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:15">16:15</option>
+                            <option value="16:30">16:30</option>
+                            <option value="16:45">16:45</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:15">17:15</option>
+                            <option value="17:30">17:30</option>
+                            <option value="17:45">17:45</option>
+                            <option value="18:00">18:00</option>
+                            <option value="18:15">18:15</option>
+                            <option value="18:30">18:30</option>
+                            <option value="18:45">18:45</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:15">19:15</option>
+                            <option value="19:30">19:30</option>
+                            <option value="19:45">19:45</option>
+                            <option value="20:00">20:00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endTimeSlot">End Time:</label>
+                        <select id="endTimeSlot" name="endTimeSlot">
+                            <option value="09:00">09:00</option>
+                            <option value="09:15">09:15</option>
+                            <option value="09:30">09:30</option>
+                            <option value="09:45">09:45</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:15">10:15</option>
+                            <option value="10:30">10:30</option>
+                            <option value="10:45">10:45</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:15">11:15</option>
+                            <option value="11:30">11:30</option>
+                            <option value="11:45">11:45</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:15">12:15</option>
+                            <option value="12:30">12:30</option>
+                            <option value="12:45">12:45</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:15">13:15</option>
+                            <option value="13:30">13:30</option>
+                            <option value="13:45">13:45</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:15">14:15</option>
+                            <option value="14:30">14:30</option>
+                            <option value="14:45">14:45</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:15">15:15</option>
+                            <option value="15:30">15:30</option>
+                            <option value="15:45">15:45</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:15">16:15</option>
+                            <option value="16:30">16:30</option>
+                            <option value="16:45">16:45</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:15">17:15</option>
+                            <option value="17:30">17:30</option>
+                            <option value="17:45">17:45</option>
+                            <option value="18:00">18:00</option>
+                            <option value="18:15">18:15</option>
+                            <option value="18:30">18:30</option>
+                            <option value="18:45">18:45</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:15">19:15</option>
+                            <option value="19:30">19:30</option>
+                            <option value="19:45">19:45</option>
+                            <option value="20:00">20:00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectTitle">Project Title:</label>
+                        <input type="text" id="projectTitle" name="projectTitle" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDesc">Project Description:</label>
+                        <textarea id="projectDesc" name="projectDesc" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalNote">Private Note:</label>
+                        <textarea id="personalNote" name="personalNote" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Image:</label>
+                        <input type="file" id="image" name="projectPictures">
+                    </div>
+
+                    <!-- Skjulte inputs, som bliver sendt med i formularen -->
+                    <input type="hidden" name="bookingId" id="bookingId">
+                    <input type="hidden" name="username" value="${tattooArtist.username}">
+                    <input type="hidden" name="date" th:value="${date}" />
+
+                    <div class="button-container">
+                        <button type="submit" name="action" value="new-client" class="red-button box-shadow">New Client</button>
+                        <button type="submit" name="action" value="show-booking" class="red-button box-shadow">Show Booking</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>

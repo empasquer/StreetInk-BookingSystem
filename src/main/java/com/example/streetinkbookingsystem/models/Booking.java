@@ -3,18 +3,21 @@ package com.example.streetinkbookingsystem.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Booking {
-    private int id; //ved endnu ikke om denne skal bruges.
+    private int id;
     private LocalTime startTimeSlot;
     private LocalTime endTimeSlot;
     private LocalDate date;
+    private String username; // Tara tilføjet denne.
     private Client client;
     private String projectTitle;
     private String projectDesc;
     private String personalNote;
     private Boolean isDepositPayed;
-    private ArrayList<Byte[]> projectPictures;
+    private List<ProjectPicture> projectPictures; // Tara tilføjet denne
+   // private ArrayList<Byte[]> projectPictures; Ovenover har overtaget
     //Overvej senere om denne skal ændres til string, med billedestier.
 
 
@@ -53,6 +56,14 @@ public class Booking {
         this.date = date;
     }
 
+    public String getUsername() { // Tara tilføjet denne.
+        return username;
+    }
+
+    public void setUsername(String username) { // Tara tilføjet denne.
+        this.username = username;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -77,7 +88,6 @@ public class Booking {
         this.projectDesc = projectDesc;
     }
 
-
     public String getPersonalNote() {
         return personalNote;
     }
@@ -85,21 +95,20 @@ public class Booking {
     public void setPersonalNote(String personalNote) {
         this.personalNote = personalNote;
     }
-
-    public Boolean getDepositPayed() {
+    // ændret disse. Forvirrede mig med navneskiftet, håber det er ok?
+    public Boolean getIsDepositPayed() {
         return isDepositPayed;
     }
-
-    public void setDepositPayed(Boolean depositPayed) {
-        isDepositPayed = depositPayed;
+    // ændret disse. Forvirrede mig med navneskiftet, håber det er ok?
+    public void setIsDepositPayed(Boolean isDepositPayed) {
+        this.isDepositPayed = isDepositPayed;
     }
 
-    public ArrayList<Byte[]> getProjectPictures() {
+    public List<ProjectPicture> getProjectPictures() {
         return projectPictures;
     }
 
-    public void setProjectPictures(ArrayList<Byte[]> projectPictures) {
+    public void setProjectPictures(List<ProjectPicture> projectPictures) {
         this.projectPictures = projectPictures;
     }
-
 }

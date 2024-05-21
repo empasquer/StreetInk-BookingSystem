@@ -30,7 +30,7 @@ public class LoginService {
      * should be deleted when everyone have hashed the passwords on local database
      */
     public void hashExistingPasswords() {
-        List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtist();
+        List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtists();
         for (TattooArtist tattooArtist : tattooArtists) {
             String plainPassword = tattooArtist.getPassword();
             String hashedPassword = hashPassword(plainPassword);
@@ -208,7 +208,6 @@ public class LoginService {
         String hashedPassword = hashPassword(password);
         tattooArtistRepository.updatePassword(username, hashedPassword);
     }
-
 
 
 }
