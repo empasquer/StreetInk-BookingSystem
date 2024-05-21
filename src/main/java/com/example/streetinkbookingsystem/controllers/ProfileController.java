@@ -58,26 +58,18 @@ public class ProfileController {
             return "redirect:/";
         }
         model.addAttribute("loggedIn", loggedIn);
-
-
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
         model.addAttribute("username", tattooArtist.getUsername());
         model.addAttribute("tattooArtist", tattooArtist);
 
-    @Autowired
-    LoginService loginService;
-
-    @Autowired
-    TattooArtistService tattooArtistService;
 
         //to display profile pic:
         if (tattooArtist.getProfilePicture() != null) {
             String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
             tattooArtist.setBase64ProfilePicture(base64Image);
         }
-
 
         if (username == null) {
             // Redirect logic when username is null or if not admin.
@@ -102,42 +94,9 @@ public class ProfileController {
         return "home/create-new-profile";
     }
 
-    @GetMapping("/reset-password")
-    public String resetPassword() {
-        return "home/reset-password";
-    }
-
-    @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam String currentPassword, @RequestParam String newPassword,
-                                @RequestParam String repeatedPassword, HttpSession session, Model model,
-                                RedirectAttributes redirectAttributes) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
-            return "redirect:/";
-        }
-
-        String username = (String) session.getAttribute("username");
-        String hashedPassword = tattooArtistService.getPassword(username);
-
-        if (loginService.verifyPassword(currentPassword, hashedPassword)) {
-            if (newPassword.equals(repeatedPassword)) {
-                loginService.updatePassword(newPassword, username);
-            } else {
-                redirectAttributes.addFlashAttribute("message", "The two passwords don't match");
-                return "redirect:/reset-password";
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Incorrect current password");
-            return "redirect:/reset-password";
-        }
-
-        return "redirect:/login";
-    }
 
 
-}
+
 
     @PostMapping("upload-profile-picture")
     public String uploadProfilePicture(@RequestParam MultipartFile profilePicture,
@@ -365,12 +324,11 @@ public class ProfileController {
         session.setAttribute("username", newUsername);
         return "redirect:/profile";
     }
-
-    @GetMapping("/reset-password")
-    public String resetPassword() {
+@GetMapping("/reset-password")
+    public String resetPassword () {
         return "home/reset-password";
-    }
 
+}
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam String currentPassword, @RequestParam String newPassword,
                                 @RequestParam String repeatedPassword, HttpSession session, Model model,
@@ -399,6 +357,7 @@ public class ProfileController {
 
         return "redirect:/login";
     }
+
 
 }
 

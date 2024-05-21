@@ -30,6 +30,8 @@ public class ClientController {
 
     @Autowired
     LoginService loginService;
+    @Autowired
+    BookingService bookingService;
 
     @Autowired
     TattooArtistService tattooArtistService;
@@ -109,18 +111,6 @@ public class ClientController {
         }
         return "home/search-result";
     }
-
-
-@Controller
-public class ClientController {
-    @Autowired
-    TattooArtistService tattooArtistService;
-    @Autowired
-    LoginService loginService;
-    @Autowired
-    ClientService clientService;
-    @Autowired
-    BookingService bookingService;
 
 
     /* EXTRA method to avoid repeating myself over and over -- adds loggedIn, username and tattooArtist*/

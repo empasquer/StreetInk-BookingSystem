@@ -20,10 +20,8 @@ public class ClientRepository {
     public Client getClientFromClientId(int clientId) {
         String query = "SELECT * FROM client WHERE id = ?";
         RowMapper<Client> rowMapper = new BeanPropertyRowMapper<>(Client.class);
-        try {
             return jdbcTemplate.queryForObject(query, rowMapper, clientId);
-
-
+    }
     /**
      * @author Munazzah
      * @param phoneNumber

@@ -44,8 +44,7 @@ public class ClientService {
      */
     public List<Client> getClientsByFistName(String firstname) {
         return clientRepository.getClientsByFirstName(firstname);
-    @Autowired
-    ClientRepository clientRepository;
+    }
 
     public Client getClientFromClientId(int clientId) {
         return clientRepository.getClientFromClientId(clientId);
