@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>New Profile</title>
     <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/create-new-profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -19,10 +19,138 @@
 
     <section>
 
+        <!--Upload picture and display preview-->
+        <form class="upload-container" th:action="@{/upload-profile-picture}" method="post" enctype="multipart/form-data">
+            <input type="hidden"  name="action" value="create">
+
+                <!--If there is chosen a picture then see preview-->
+                <th:block th:if="${base64Image}">
+                    <label th:style="'background-image:url(data:image/jpeg;base64,' + ${base64Image} + ');'"class="upload-label-with-picture">
+                    <i class="fas fa-plus"></i>
+                    <input type="file"  name="profilePicture" accept="image/*" onchange="this.form.submit()">
+
+                </label>
+                </th:block>
+
+                <!--If no picture is chosen display default-->
+                <th:block th:unless="${base64Image}">
+                    <label   class="upload-label" >
+                        <i class="fas fa-plus"></i>
+                        <input type="file"name="profilePicture" accept="image/*" onchange="this.form.submit()">
+                    </label>
+
+                </th:block>
+        </form>
+        <p>Upload Picture:</p>
+
+        <!--Rest of information for creating profile-->
+        <form th:action="@{/create-new-profile}" method="post" enctype="multipart/form-data">
+
+            <!--Name-->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstname">First name:</label> <br>
+                    <input type="text" id="firstname" name="profileFirstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last name:</label> <br>
+                    <input type="text" id="lastname" name="profileLastName" required>
+                </div>
+            </div>
+
+            <!--username and password-->
+            <!--Display error if username is taken-->
+            <div th:if="${message}" class="error-message">
+                <p th:text="${message}"></p>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username">Username:</label> <br>
+                    <input type="text" id="username" name="profileUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label> <br>
+                    <input type="password" id="password" name="profilePassword" required>
+                </div>
+            </div>
+
+            <!--Contacts-->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone:</label> <br>
+                    <input type="number" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label> <br>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+
+            <!--Social media-->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="facebookUrl">Facebook URL:</label> <br>
+                    <input type="url" id="facebookUrl" name="facebookUrl" >
+                </div>
+                <div class="form-group">
+                    <label for="instagramUrl">Instagram URL:</label> <br>
+                    <input type="url" id="instagramUrl" name="instagramUrl" >
+                </div>
+            </div>
 
 
+            <!--Work hours and admin-->
+            <div class="form-row-box">
+                <div class="form-box">
+                <label for="avgWorkHours">Work hours:</label>
+                <input list="hours" id="avgWorkHours" name="avgWorkHours" required>
+                <datalist id="hours">
+                    <option value="1">
+                    <option value="2">
+                    <option value="3">
+                    <option value="4">
+                    <option value="5">
+                    <option value="7">
+                    <option value="8">
+                    <option value="9">
+                    <option value="10">
+                    <option value="11">
+                    <option value="12">
+                </datalist>
+            </div>
+                <!-- Hidden checkbox to manage state -->
+                <input type="checkbox" id="workHoursCheckbox" class="info-checkbox">
+
+                <!-- Label styled as a button -->
+                <label for="workHoursCheckbox" class="info-label"><i class="fas fa-question"></i></label>
+
+                <!-- Message to display when clicked -->
+                <span class="info-message">
+                    <p>Please enter the work hours for an average day. This will be used to
+                    calculate how booked your day is</p>
+                </span>
+
+                <div class="form-box">
+                    <label for="isAdmin">Admin:</label>
+                    <input class="custom-checkbox" type="checkbox"  id="isAdmin" name="isAdmin">
+                </div>
+
+                <!-- Hidden checkbox to manage state -->
+                <input type="checkbox" id="adminCheckbox" class="info-checkbox">
+
+                <!-- Label styled as a button -->
+                <label for="adminCheckbox" class="info-label"><i class="fas fa-question"></i></label>
+
+                <!-- Message to display when clicked -->
+                <span class="info-message">
+                    <p>Only admins can create or delete other profiles. Admin status can only
+                    be changed by other admins</p>
+                </span>
+            </div>
+
+            <button class="submit-button" type="submit">Submit</button>
+        </form>
     </section>
-
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>

@@ -60,3 +60,25 @@ h2 {
 .contact {
     padding-bottom: 1.5rem;
 }
+.button-container {
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    place-self: flex-end;
+}
+
+.edit-btn {
+    margin-right: 1rem;
+}
+
+.button-container form button {
+    background-color: transparent;
+    color: var(--white);
+    border:none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}

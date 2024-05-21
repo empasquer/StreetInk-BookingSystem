@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="/layout.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/booking.css">
-
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
@@ -61,6 +59,10 @@
 
   </section>
 
+<!--this is just for testing -->
+<form th:action="@{/send-confirmation-mail(bookingId = ${booking.getId()})}" method="post">
+  <button class="gray-button" type="submit">sendmail</button>
+</form>
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>

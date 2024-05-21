@@ -47,6 +47,7 @@ public class BookingController {
         model.addAttribute("booking", bookingService.getBookingDetail(bookingId));
         return "home/booking";
     }
+    
 
     /**
      *
