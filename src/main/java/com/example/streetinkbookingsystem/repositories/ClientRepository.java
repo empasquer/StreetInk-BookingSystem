@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ClientRepository {
 
@@ -36,6 +38,21 @@ public class ClientRepository {
                    clientId);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("something went wrong");
+        }
+    }
+
+    //Checks if clients booking date was over 5 years ago
+    public List<Client> findInactivateClients() {
+        String query = "SELECT c.* FROM Client c LEFT JOIN Booking b ON c.id = b.client.id " +
+                "GROUP BY c.id " +
+                "HAVING MAX(b.date) < CURRENT_DATE - INTERVAL '5 YEAR'";
+
+        RowMapper<Client> rowMapper = new BeanPropertyRowMapper(Client.class);
+
+        try {
+            return jdbcTemplate.query(query, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 
