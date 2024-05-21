@@ -51,7 +51,7 @@ public class LoginController {
         }
 
         if(!emailService.isValidEmail(email, username)) {
-            redirectAttributes.addFlashAttribute("message", "Invalid email");
+            redirectAttributes.addFlashAttribute("message", "Invalid email. Use the one saved in your profile");
             return "redirect:/forgotten-password";
         }
 
