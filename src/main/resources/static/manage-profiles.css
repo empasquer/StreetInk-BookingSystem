@@ -1,34 +1,23 @@
+section {
+    position: relative;
+    margin-top: 3em;
 
+}
+.section-divider{
+    display: grid;
+    grid-template-rows: 1fr 0.7fr 1fr;
+    grid-row-gap: 2em;
+    place-content: center;
+    justify-items: center;
 
-.content-section {
-    flex: 1;
-    overflow-y: auto;
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
 }
-.section-divider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-.warning-container, .confirmation-container, .profiles-container {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 1em;
-    padding:  1em;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
-
 .warning-container{
-    border: solid red;
+    border: solid red 4px;
     display: flex;
     flex-direction: column;
-
+    border-radius: 1em;
+    padding: 2em;
 }
-
 .warning {
     color: red;
 
@@ -37,106 +26,171 @@
     display: flex;
     flex-direction: column;
 }
+
+.confirmation-wrapper {
+    align-content: center;
+    height: 100%;
+    width: auto;
+}
 .confirmation-container {
     display: flex;
     flex-direction: column;
     background-color: var(--light-gray);
     border-radius: 1em;
-    padding: 1em;
-    width: 26em;
+    padding: 1.5em;
+    width: auto;
 }
 .buttons {
     display:  flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 1em;
+    margin-top: 1em;
 }
 
 .tabel {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-    padding-left: 1.2em;
-    justify-items: flex-start;
-
-}
-.tabel * {
-    margin-right: 12.3em;
+    padding-bottom: 2em;
+    width: 50em;
 }
 
-.profile-container{
-    margin-top: -2em;
-
-}
 
 li {
     list-style: none;
 }
-
-/*
-.profiles {
+.content-section {
+    text-align: -webkit-center;
+}
+.profiles-container {
+    max-height: 17em;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* For WebKit-based browsers */
+    scrollbar-width: none;
+}
+    /*
+    .profiles {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-left: 4.2em;
 
 }*/
+
 .profiles {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    list-style: none; /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+.profile {
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    padding-bottom: 2em;
+    /* align-self: baseline; */
+    /* margin-right: 2em; */
+    width: 37em;
+
 }
 /*
 .profile {
-    grid-template-columns: repeat(3, 1fr);
-    display: grid;
-    padding: 1em;
-    align-self: baseline;
-    width: 100%;
-
-}*/
-.profile {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: baseline;
-    padding: 1em;
-    border-radius: 1em;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
+*/
 .profile * {
-    margin-right: 3em;
-    align-content: normal;
-    width: 0%;
+
+align-content: normal;
+    /* width: 0px; */
     place-self: center;
 }
+.profile p {
+    justify-self: start; /* Aligns to the left */
+    font-size: 1.5em;
+    justify-self: start; /* Aligns to the left */
+    font-size: 1.5em;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis for overflow */
+    white-space: nowrap; /* Prevent wrapping */
+    max-width: 10em; /* Adjust the width as needed */
+}
 
+.profile form:nth-of-type(1) {
+    justify-self: center; /* Aligns to the center */
+}
+
+.profile form:nth-of-type(2) {
+    justify-self: end; /* Aligns to the right */
+}
 .icon-button {
-    width: 1.9em;
-    height: 1.8em;
+    /* width: 1.9em; */
+    /* height: 1.8em; */
     border-radius: 0.4em;
-    background-color: var(--light-gray);
-    cursor: pointer;
+    background-color: transparent;
+    color: black;
     border: none;
-}
-
-.icon-button * {
-    margin-left: 0.5em;
 
 }
+
 a {
     text-decoration: none;
-    position: sticky;
-    top: 87%;
     font-size: 2em;
 }
-
-.checkboxes {
-    width: 50px; /* Juster bredden efter behov */
-    height: 50px; /* Juster højden efter behov */
-   color: var(--accent-red);
+.create-button {
+    position: relative;
+    bottom: -3em;
+    height: 3em;
+    width: 24em;
+    align-content: center;
+    align-self: center;
 }
+/* Ensure the form containing the checkbox has a fixed size */
+form {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Tilpasser størrelsen på checkbox */
+.checkboxes {
+    webkit-appearance: none; /* Remove default checkbox styling */
+    -moz-appearance: none;
+    appearance: none;
+    width: 50px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 8px; /* Rounded corners */
+    background-color: var(--input-field-gray); /* Background color */
+    outline: none; /* Remove blue focus outline */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex;
+    justify-content: center;
+    align-items: center;}
 
-.red-button {
-    position: fixed;
-    text-decoration: none;
 
+.checkboxes:checked::after {
+    content: '\2713';
+    font-size: 40px;
+    color: black;
+    /* text-align: center; */
+    /* position: relative; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+h3 {
+    font-size: 2em;
+    font-weight: bold;
+}
+h4 {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+p {
+    font-size: 1em;
+    font-weight: bold;
 }
