@@ -14,8 +14,10 @@ CREATE TABLE tattoo_artist(
                               email VARCHAR(255) NOT NULL,
                               phone_number INT NOT NULL,
                               profile_picture LONGBLOB,
+                              facebook VARCHAR(255),
+                              instagram VARCHAR(255),
                               avg_work_hours INT NOT NULL,
-                              isAdmin BOOLEAN DEFAULT 0
+                              is_admin BOOLEAN DEFAULT 0
 );
 
 DROP TABLE IF EXISTS client;
@@ -59,7 +61,7 @@ VALUES
     ("Hella", "Nice", "hellanice@dummy.com", "11111111", "They're hella nice"),
     ("Seeu", "Later", "aligator@dummy.com", "22222222", "Always f*cking late");
 
-INSERT INTO tattoo_artist (username, password, first_name, last_name, email, phone_number, avg_work_hours, isAdmin)
+INSERT INTO tattoo_artist (username, password, first_name, last_name, email, phone_number, avg_work_hours, is_admin)
 VALUES
     ("smallDummy", 123, "Small", "Dummy", "smalldummy@dummy.com", "12345678", 8,0),
     ("bigDummy", 321, "Big", "Dummy", "bigdummy@dummy.com", "87654321", 4,1);
@@ -78,3 +80,5 @@ VALUES
     ('10:30:00', '15:30:00', '2024-05-11', 1, "bigDummy", "phoenix back tattoo", "large phoenix tattoo on back", "Requires multiple sessions", 0),
     ('09:45:00', '14:30:00', '2024-05-18', 1, "bigDummy", "skull forearm", "skull tattoo on forearm", "Customer wants it in grayscale", 1),
     ('15:00:00', '18:30:00', '2024-05-11', 2, "smallDummy", "floral half-sleeve", "intricate floral design", "Customer is bringing their own design", 1);
+
+SELECT * FROM tattoo_artist;

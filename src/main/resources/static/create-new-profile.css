@@ -1,0 +1,185 @@
+section {
+    height:83em;
+}
+.upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust the height as needed */
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    flex-direction: column;
+    margin: 2em;
+}
+
+.upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    background-color: var(--input-field-gray);
+    color: var(--section-background-color);
+    text-align: center;
+    line-height: 100px; /* Make the line height the same as the width/height for centering */
+    font-size: 3em;
+    position: relative;
+}
+.upload-label-with-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px; /* Make the line height the same as the width/height for centering */
+    font-size: 3em;
+    cursor: pointer;
+    position: relative;
+    background-size: cover;
+}
+.upload-label-with-picture input[type="file"] {
+    display: none;
+}
+.upload-label input[type="file"] {
+    display: none;
+}
+
+
+.upload-label-with-picture .fa-plus {
+    vertical-align: middle;
+    font-size: 48px;
+    color: black;
+    opacity: 0.5;
+    z-index: 2;
+}
+
+.form-group label {
+    display: flex;
+    margin-left: 0.5em;
+    font-size: large;
+    margin-bottom: -0.5em;
+}
+
+.form-group input {
+    background-color: var(--input-field-gray);
+    border-radius: 15px;
+    height: 50px;
+    width: 290px;
+    padding: 1rem;
+    border-style: none;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.form-group {
+    align-items: center;
+    padding: 1rem;
+    border-radius: 15px;
+    border-style: none;
+}
+.form-row-box {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    align-items: center;
+    place-items: baseline;
+}
+.form-box {
+    align-items: center;
+    padding: 1rem;
+    border-radius: 15px;
+    border-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 7em;
+    place-self: center;
+}
+.form-box input {
+    background-color: var(--input-field-gray);
+    border-radius: 1em;
+    height: 5em;
+    width: 5em;
+    border-style: none;
+}
+
+/* Specifically target checkbox to ensure proper styling */
+
+
+/* Create the custom checkbox */
+.custom-checkbox {
+  /*  -webkit-appearance: none; /* Fjerner browserens standard checkbox-styling */
+ /*   -moz-appearance: none;*/
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: var(--input-field-gray);
+    border: 2px solid var(--button-gray);
+    border-radius: 1em; /* Adjust the border-radius here */
+    position: relative;
+    cursor: pointer;
+    background-color: transparent; /* Gennemsigtig baggrund */
+/*appearance: none;*/
+}
+.checkboxes:checked {
+    background-color: var(--accent-red); /* Ændrer baggrundsfarven når markeret */
+}
+/* Checkmark (hidden by default) */
+.custom-checkbox:after {
+   /* content: '\2713'; */
+    width: 5em;
+    height: 5em;
+    border-radius: 1em;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    position: relative;
+}
+
+/* Show the checkmark when the checkbox is checked */
+input[type="checkbox"]:checked + .custom-checkbox:after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Hide the checkbox */
+.info-checkbox {
+    display: none;
+}
+
+/* Style the label as a button */
+.info-label {
+    display: inline-block;
+    background-color: var(--background-color);
+    color: white;
+    font-size: small;
+    padding: 0.5em;
+    width: 1.5em;
+    border-radius: 2em;
+    cursor: pointer;
+}
+
+/* Hidden message box */
+.info-message {
+    display: none;
+    background-color: lightgrey;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    max-width: 200px;
+}
+
+/* Show the message when the checkbox is checked */
+.info-checkbox:checked + .info-label + .info-message {
+    display: block;
+}

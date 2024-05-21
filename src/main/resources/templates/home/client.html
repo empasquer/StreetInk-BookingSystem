@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${client.firstName + ' '  + client.lastName}"></title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/client.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+    <!--    <div class="back-arrow-container">
+            <a th:href="@{/}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        </div>-->
+
+    <h1 th:text="${client.firstName + '´s info'}"></h1>
+
+    <section th:if="${client.firstName != 'Unknown'}">
+
+
+        <th:block  th:if="${clientToDelete!=null}" >
+            <div class="confirmation-container">
+                <h4>Are you sure you want to delete <span th:text="${client.firstName}"></span>?</h4>
+                <p>This action is permanent.</p>
+
+                <div class="buttons">
+<!--                    <form th:action="@{/client?clientId=${client.id}}" method="get">
+                        <button class="gray-button">Cancel</button>
+                    </form>-->
+                    <form class="edit-btn" th:action="@{/delete-client}" method="post">
+                        <input type="hidden" name="clientId" th:value="${client.id}" />
+                        <button class="red-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </th:block>
+
+        <div class="button-container">
+
+
+            <form class="edit-btn" th:action="@{/edit-client}" method="get">
+                <input type="hidden" name="clientId" th:value="${client.id}" />
+                <button type="submit"><i class="fa fa-edit fa-2x"></i></button>
+            </form>
+            <th:block  th:if="${clientToDelete == null}" >
+            <form class="edit-btn" th:action="@{/client(clientToDelete=${client.id})}" method="post">
+                <input type="hidden" name="clientId" th:value="${client.id}" />
+                <button type="submit"><i class="fa fa-trash fa-2x"></i></button>
+            </form>
+
+            </th:block>
+        </div>
+
+        <div class="container">
+            <h2 th:text="${client.firstName + ' ' + client.lastName}"></h2>
+            <div class="contact"><i class="fas fa-phone fa-2x"></i> <a th:href="${'tel:' + client.phoneNumber}" th:text="${client.phoneNumber}"></a></div>
+            <div class="contact"><i class="fas fa-envelope fa-2x"></i> <a th:href="${'mailto:' + client.email}" th:text="${client.email}"></a></div>
+        </div>
+        <div class="container">
+            <p th:text="${client.description}"></p>
+        </div>
+
+        <div class="container">
+            <ul>
+                <li th:each="booking : ${clientBookings}"><a th:href="@{/booking(bookingId=${booking.id},username=${username})}" class="booking gray-button box-shadow">
+                    <span th:text="${booking.date}"></span>
+                    <span th:text="${booking.projectTitle}"></span>
+                </a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- IF name is unknown - means that client info have been deleted-->
+    <!-- display soemthig else -->
+
+    <section th:if="${client.firstName == 'Unknown'}">
+        <div class="container">
+            <h2 th:text="${client.firstName}"></h2>
+        </div>
+        <div class="container">
+            <ul>
+                <li th:each="booking : ${clientBookings}"><a th:href="@{/booking(bookingId=${booking.id},username=${username})}" class="booking gray-button box-shadow">
+                    <span th:text="${booking.date}"></span>
+                    <span th:text="${booking.projectTitle}"></span>
+                </a></li>
+            </ul>
+        </div>
+    </section>
+
+
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>

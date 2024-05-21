@@ -131,4 +131,7 @@ public class BookingService {
         return totalMinutes;
     }
 
+    public List<Booking> getBookingsByClientId(int clientId) {
+        return bookingRepository.getBookingsByClientId(clientId);
+    }
 }

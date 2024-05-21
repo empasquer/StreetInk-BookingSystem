@@ -1,18 +1,17 @@
 package com.example.streetinkbookingsystem.models;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
 public class TattooArtist extends Person {
     private String username;
     private String password;
-    private Byte[] profilePicture; // ændret til byte array.
+    private byte[] profilePicture; // ændret til byte array.
     // alm. byte kan åbenbart ikke bruge Java's Base64-klasse til dette formål,
     //hvis den skal kunne samarbejde med database og thymeleaf.
     // private Byte profilePicture; ** gamle attribute
-    private String facebookUrl;
-    private String instragramUrl;
+    private String base64ProfilePicture; // Add this field
+    private String facebook;
+    private String instagram;
     private int avgWorkHours;
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     public TattooArtist() {
     }
@@ -33,28 +32,28 @@ public class TattooArtist extends Person {
         this.password = password;
     }
 
-    public Byte[] getProfilePicture() {
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(Byte[] profilePicture) {
+    public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 
-    public String getFacebookUrl() {
-        return facebookUrl;
+    public String getFacebook() {
+        return facebook;
     }
 
-    public void setFacebookUrl(String facebookUrl) {
-        this.facebookUrl = facebookUrl;
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
     }
 
-    public String getInstragramUrl() {
-        return instragramUrl;
+    public String getInstagram() {
+        return instagram;
     }
 
-    public void setInstragramUrl(String instragramUrl) {
-        this.instragramUrl = instragramUrl;
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
     }
 
     public int getAvgWorkHours() {
@@ -65,11 +64,21 @@ public class TattooArtist extends Person {
         this.avgWorkHours = avgWorkHours;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public Boolean getIsAdmin() {
+        return isAdmin.booleanValue();
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+
+    // Getters and setters for new field
+    public String getBase64ProfilePicture() {
+        return base64ProfilePicture;
+    }
+
+    public void setBase64ProfilePicture(String base64ProfilePicture) {
+        this.base64ProfilePicture = base64ProfilePicture;
     }
 }

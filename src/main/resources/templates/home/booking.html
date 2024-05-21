@@ -25,7 +25,7 @@
     <div class="booking-container">
       <div th:each="booking : ${booking}" class="booking-item">
         <div class="information-container">
-          <h2 th:text="${booking.client.firstName + ' ' + booking.client.lastName}" class="client-name"></h2>
+          <h2 class="client-name"><a th:href="${'/client?clientId=' + booking.client.id}"  th:text="${booking.client.firstName + ' ' + booking.client.lastName}"></a></h2>
 
             <div class="contact-item"><i class="fas fa-phone"></i> <span th:text="${booking.client.phoneNumber}" class="underline"></span></div>
             <div class="contact-item"><i class="fas fa-envelope"></i> <span th:text="${booking.client.email}" class="underline"></span></div>
@@ -67,6 +67,10 @@
 
   </section>
 
+<!--this is just for testing -->
+<form th:action="@{/send-confirmation-mail(bookingId = ${booking.getId()})}" method="post">
+  <button class="gray-button" type="submit">sendmail</button>
+</form>
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>

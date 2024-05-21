@@ -72,6 +72,7 @@ public class BookingController {
 
         return "home/booking";
     }
+    
 
     /**
      *

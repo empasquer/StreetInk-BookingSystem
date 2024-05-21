@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation-mail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        article {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        .client-name {
+            margin-top: 20px;
+        }
+
+        .booking-details {
+            margin-top: 20px;
+        }
+
+        .booking-time-details {
+            margin-bottom: 10px;
+        }
+
+        .tattoo-warnings {
+            margin-top: 20px;
+        }
+
+        ul {
+            margin-bottom: 10px;
+        }
+
+        li {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .artist-information {
+            margin-top: 20px;
+            padding-left: 0;
+            list-style-type: none;
+        }
+
+        .artist-information li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<article>
+    <h1>Your Booking has been confirmed!</h1>
+
+    <div class="client-name">
+        <p>Dear <span th:text="${ClientFirstName}"></span>,</p>
+    </div>
+
+    <div class="Booking-details">
+        <div class="booking-time-details">
+            <p>You have booked a time with me on <span th:text="${BookingDate}"></span>
+                between <span th:text="${BookingStart + ' - ' + BookingEnd}" ></span>.</p>
+        </div>
+        <div class="Booking-project-details">
+            <p>I have registered the following details about your booking:</p>
+            <p>Tattoo: <span th:text="${BookingTitle}"></span></p>
+            <p th:if="${BookingDescription != null and BookingDescription != ''}">Notes: <span th:text="${BookingDescription}"></span></p>
+        </div>
+    </div>
+
+    <div class="tattoo-warnings">
+        <h2>Dos and Don'ts:</h2>
+        <p>
+            When you get a tattoo, you need to take care of yourself before and after leaving the shop. Please read through the following steps.
+        </p>
+
+        <h5>Before:</h5>
+        <ul>
+
+            <li>Eat before - note that eating inside the shop is not permitted</li>
+            <li>Get some sleep before</li>
+        </ul>
+        <h5>After:</h5>
+        <ul>
+            <li>Avoid too much sunlight</li>
+            <li>Avoid chlorine, such as swimming pools</li>
+        </ul>
+        <h5>Shop rules:</h5>
+        <ul>
+            <li>Please take off your shoes when entering the shop - we try to keep a clean shop</li>
+        </ul>
+    </div>
+
+    <h4>Contact me:</h4>
+    <ul class="artist-information">
+        <li>Phone: <span th:text="${ArtistPhone}"></span></li>
+        <li>Email: <span th:text="${ArtistEmail}"></span></li>
+        <!-- should be icons-->
+        <li>Instagram: <span th:text="${ArtistInstagram}"></span></li>
+        <li>Facebook: <span th:text="${ArtistFacebook}"></span></li>
+    </ul>
+    <p>
+        Note that this is an automated mail and cannot be replied to.
+    </p>
+</article>
+
+</body>
+</html>

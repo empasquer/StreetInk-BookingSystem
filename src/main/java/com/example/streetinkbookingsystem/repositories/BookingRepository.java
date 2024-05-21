@@ -29,6 +29,27 @@ public class BookingRepository {
     JdbcTemplate jdbcTemplate;
 
     // Gets all bookings for date, but only information needed to display the block
+   /* public List<Booking> showBooking(int bookingId, String tattooUsername){
+        String query = "SELECT c.first_name, c.last_name, c.phone_number, c.email, " +
+                "b.date, b.start_time_slot, b.end_time_slot, b.is_deposit_payed, " +
+                "b.project_title, b.project_desc, b.personal_note" +
+        " FROM client c" +
+        " JOIN booking b ON b.client_id = c.id " +
+        " WHERE b.id = ? AND b.username = ?;";
+        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
+        return jdbcTemplate.query(query, rowMapper, bookingId, tattooUsername);
+    }
+
+    */
+
+
+    /**
+     * @author Nanna
+     * @param date used to get all bookings for the date
+     * @param username used to get bookings for the artist
+     * @return a list of bookings for the date with limited information,
+     * creating a Client and adding it as an attribute to the booking
+     */
     public List<Booking> getBookingsForDay( LocalDate date, String username){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
                 "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =?;";
@@ -50,7 +71,11 @@ public class BookingRepository {
         return jdbcTemplate.query(query,rowMapper,username,date);
     }
 
-
+    /**
+     * @author Nanna
+     * @param bookingId used to find the booking
+     * @return all details about a booking, creating a Client and adding it as an attribute to the booking,
+     */
     //laver ny, som kan tackle flere billeder. har Gemt den gamle, hvis jeg har fucket med noget andet.
     public Booking getBookingDetails(int bookingId) {
         String query = "SELECT booking.*, client.*, project_picture.id, project_picture.picture_data " +
@@ -250,6 +275,12 @@ public class BookingRepository {
 
 
     //Retunerer antallet af booking for en bestemt dato og username
+    /**
+     * @author Nanna
+     * @param specificDate used to the total number of bookings for date
+     * @param username used to find bookings related to the artist
+     * @return
+     */
     public int getBookingCountForDate(LocalDate specificDate, String username) {
         // Denne SQL-forespørgsel tæller antallet af rækker i tabellen booking,
         // der matcher den givne dato (specificDate) og brugernavn (username).
@@ -292,6 +323,26 @@ public class BookingRepository {
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
         return jdbcTemplate.query(query, rowMapper, startDate, endDate, username);
     }
+
+
+    public List<Booking> getBookingsByClientId(int clientId) {
+        String query = "SELECT * FROM booking WHERE client_id = ? ORDER BY date DESC";
+        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
+        return jdbcTemplate.query(query, rowMapper, clientId);
+    }
+
+    /**
+
+    public List<Booking> getBookingsForDay(LocalDate date, String username) {
+        String query = "SELECT * FROM booking WHERE date = ? AND username = ?";
+        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
+        return jdbcTemplate.query(query, rowMapper, date, username);
+    }
+
+
+
+     **/
+
 
 
 }

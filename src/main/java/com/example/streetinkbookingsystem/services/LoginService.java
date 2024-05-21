@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class LoginService {
@@ -138,5 +139,24 @@ public class LoginService {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         return md.digest(saltedPassword);
     }
+
+    //Generates an 8 char random password for forgotten password
+    public String randomPassword() {
+        String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=";
+        StringBuilder password = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(validChars.length());
+            password.append(validChars.charAt(index));
+        }
+        return password.toString();
+    }
+
+    public void updatePassword(String password, String username) {
+        String hashedPassword = hashPassword(password);
+        tattooArtistRepository.updatePassword(username, hashedPassword);
+    }
+
 
 }

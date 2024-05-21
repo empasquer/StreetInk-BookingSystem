@@ -1,0 +1,84 @@
+figure {
+    display: flex;
+    place-content: center;
+}
+
+section img {
+    width: 300px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+
+h2 {
+    padding-bottom: 1.5rem;
+}
+
+
+
+section, .container {
+    padding-top: 4rem;
+    padding-bottom: 2em; /* Juster denne værdi efter behov */
+
+}
+
+section {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: left;
+    width: 45vw;
+}
+
+.fab {
+    color: var(--white);
+}
+
+.some {
+    display: flex;
+    gap: 2rem;
+    place-content: center;
+    align-items: center;
+}
+
+
+p {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 3rem;
+}
+.container a {
+    font-size: 2rem;
+}
+
+.contact {
+    padding-bottom: 1.5rem;
+}
+.button-container {
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    place-self: flex-end;
+}
+
+.edit-btn {
+    margin-right: 1rem;
+}
+
+.button-container form button {
+    background-color: transparent;
+    color: var(--white);
+    border:none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
