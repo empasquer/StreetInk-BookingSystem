@@ -19,7 +19,7 @@ public class ClientService {
     /**
      * @author Munazzah
      * @return ArrayList of Clients
-     * @summary Takes the Arraylist for the repository, sorts it using Collections.sort() and
+     * @summary Takes the Arraylist from the repository, sorts it using Collections.sort() and
      * returns the sorted list
      */
     public ArrayList<Client> getSortedListOfClients() {
@@ -61,7 +61,13 @@ public class ClientService {
                 0, null, clientId);
     }
 
-    @Scheduled(cron = "0 0 0 * * ?") //Runs every day at midnight, checks for inactive clients and update to unknown
+    /**
+     * @author Munazzah
+     * @summary Is a scheduled method that runs every day at midnight, where it finds clients
+     * that havent had any booking in the past 5 years, adds them to a list, and then inactivates
+     * the clients, do their information are overwritten with the default client
+     */
+    @Scheduled(cron = "0 0 0 * * ?") //Runs every day at midnight
     public void cleanupInactiveClients() {
         List<Client> inactiveClientIds = clientRepository.findInactivateClients();
         if (inactiveClientIds != null) {

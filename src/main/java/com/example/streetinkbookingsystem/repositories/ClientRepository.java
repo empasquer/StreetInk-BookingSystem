@@ -67,7 +67,12 @@ public class ClientRepository {
         }
     }
 
-    //Checks if clients booking date was over 5 years ago
+    /**
+     * @author Munazzah
+     * @return list of clients
+     * @summary Checks if any clients' booking date was over 5 years ago, if yes,
+     * then adds them to the list
+     */
     public List<Client> findInactivateClients() {
         String query = "SELECT c.* FROM Client c LEFT JOIN Booking b ON c.id = b.client.id " +
                 "GROUP BY c.id " +
