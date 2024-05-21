@@ -314,6 +314,40 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
+    @GetMapping("/reset-password")
+    public String resetPassword() {
+        return "home/reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam String currentPassword, @RequestParam String newPassword,
+                                @RequestParam String repeatedPassword, HttpSession session, Model model,
+                                RedirectAttributes redirectAttributes) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
+
+        String username = (String) session.getAttribute("username");
+        String hashedPassword = tattooArtistService.getPassword(username);
+
+        if (loginService.verifyPassword(currentPassword, hashedPassword)) {
+            if (newPassword.equals(repeatedPassword)) {
+                loginService.updatePassword(newPassword, username);
+            } else {
+                redirectAttributes.addFlashAttribute("message", "The two passwords don't match");
+                return "redirect:/reset-password";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Incorrect current password");
+            return "redirect:/reset-password";
+        }
+
+        return "redirect:/login";
+    }
+
 }
 
 

@@ -153,8 +153,10 @@ public class LoginService {
         return password.toString();
     }
 
-
-
+    public void updatePassword(String password, String username) {
+        String hashedPassword = hashPassword(password);
+        tattooArtistRepository.updatePassword(username, hashedPassword);
+    }
 
 
 }

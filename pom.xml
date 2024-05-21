@@ -54,6 +54,7 @@
             <artifactId>jakarta.mail</artifactId>
             <version>1.6.7</version>
         </dependency>
+
     </dependencies>
 
     <build>
