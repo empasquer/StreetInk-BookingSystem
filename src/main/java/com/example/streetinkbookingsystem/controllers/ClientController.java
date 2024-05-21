@@ -100,23 +100,6 @@ public class ClientController {
         return "home/search-result";
     }
 
-
-    /* EXTRA method to avoid repeating myself over and over -- adds loggedIn, username and tattooArtist*/
-    /* If returns false then not loggedIn and don't have info -- can use in getmappings */
-    /* Addet in loginService, so we can use it from there */
-    /*private void addLoggedInUserInfo(Model model, HttpSession session) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            String username = (String) session.getAttribute("username");
-            model.addAttribute("loggedIn", true);
-            model.addAttribute("username", username);
-            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-            model.addAttribute("tattooArtist", tattooArtist);
-        } else {
-            model.addAttribute("loggedIn", false);
-        }
-    }*/
-
     @GetMapping("/client")
     public String seeClient(HttpSession session, Model model, @RequestParam("clientId") int clientId,
                             @RequestParam(required = false) Integer clientToDelete) {

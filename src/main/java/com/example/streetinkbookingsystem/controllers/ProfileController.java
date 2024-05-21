@@ -26,23 +26,6 @@ public class ProfileController {
     @Autowired
     LoginService loginService;
 
-    // Taken from Emma's Client controller. We need to find a way to implement it everywhere
-    // So true. I thought of the same! Har added den til loginService i første omgang og addet
-    // den alle andre steder. Tænkte at du lige kan tjekke op på det
-    // specielt her over
-    private void addLoggedInUserInfo(Model model, HttpSession session) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            String username = (String) session.getAttribute("username");
-            model.addAttribute("loggedIn", true);
-            model.addAttribute("username", username);
-            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-            model.addAttribute("tattooArtist", tattooArtist);
-        } else {
-            model.addAttribute("loggedIn", false);
-        }
-    }
-
     @GetMapping("/profile")
     public String seeProfile(HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -304,7 +287,7 @@ public class ProfileController {
                                 @RequestParam int avgWorkHours, @RequestParam String newUsername,
                                 @RequestParam String currentUsername,
                                 Model model, HttpSession session) {
-        addLoggedInUserInfo(model, session);
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         byte[] imageData = (byte[]) session.getAttribute("imageData");
 
         tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername,  Optional.ofNullable(imageData));
