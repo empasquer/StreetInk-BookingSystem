@@ -41,9 +41,11 @@ public class ClientRepository {
      * @author Munazzah
      * @param firstname
      * @return List of clients
+     * @summary Uses LOWER so it isnt case sensitive, and also uses '%' for partial searching with
+     * LIKE operator
      */
     public List<Client> getClientsByFirstName(String firstname) {
-        String query = "SELECT * FROM client WHERE first_name LIKE ?";
+        String query = "SELECT * FROM client WHERE LOWER(first_name) LIKE LOWER(?)";
         RowMapper<Client> rowMapper = new BeanPropertyRowMapper<>(Client.class);
         try {
             return jdbcTemplate.query(query, rowMapper, "%" + firstname + "%");

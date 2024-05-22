@@ -68,7 +68,7 @@ public class ClientService {
      * the clients, do their information are overwritten with the default client
      * The cron is in sec, minutes, hours, day, month, day of week
      */
-    @Scheduled(cron = "0 0 0 * * ?") //Runs every day at midnight
+    @Scheduled(cron = "0 04 21 * * ?") //Runs every day at midnight
     public void cleanupInactiveClients() {
         List<Client> inactiveClientIds = clientRepository.findInactivateClients();
         if (inactiveClientIds != null) {
