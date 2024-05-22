@@ -287,16 +287,7 @@ public class ClientController {
         return "home/choose-client";
     }
 
-    /**
-     * @Author Munazzah
-     * @param searchQuery
-     * @param model
-     * @param redirectAttributes
-     * @param session
-     * @return String - View of search-results
-     * @summary Search for a Client based on phone number or first name. The if-statement
-     * checks if it is a number or name and acts accordingly
-     */
+
     @PostMapping("/search-for-existing-client")
     public String searchForExistingClient(@RequestParam("search") String searchQuery, Model model,
                          RedirectAttributes redirectAttributes, HttpSession session) {
@@ -323,7 +314,7 @@ public class ClientController {
             model.addAttribute("results", clientByName);
         } else {
             redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
-            return "redirect:/client-list";
+            return "redirect:/choose-client";
         }
         return "home/search-result2";
     }
