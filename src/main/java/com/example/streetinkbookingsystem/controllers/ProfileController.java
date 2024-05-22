@@ -57,10 +57,11 @@ public class ProfileController {
      */
     @GetMapping("/create-new-profile")
     public String newProfile(Model model, HttpSession session) {
-        addLoggedInUserInfo(model, session);
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
@@ -131,11 +132,11 @@ public class ProfileController {
           , HttpSession session) {
         TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
 
-
-        addLoggedInUserInfo(model, session);
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
