@@ -59,4 +59,14 @@ public class ClientService {
         clientRepository.updateClient("Unknown", null, "unknown",
                 0, null, clientId);
     }
+
+    public Client saveClient(Client client){
+        return clientRepository.saveClient(client);
+    }
+
+    public void updateClientOnBooking(int bookingId, int clientId) {
+        clientRepository.updateClientOnBooking(bookingId, clientId);
+    }
+
+
 }

@@ -28,21 +28,6 @@ public class BookingRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    // Gets all bookings for date, but only information needed to display the block
-   /* public List<Booking> showBooking(int bookingId, String tattooUsername){
-        String query = "SELECT c.first_name, c.last_name, c.phone_number, c.email, " +
-                "b.date, b.start_time_slot, b.end_time_slot, b.is_deposit_payed, " +
-                "b.project_title, b.project_desc, b.personal_note" +
-        " FROM client c" +
-        " JOIN booking b ON b.client_id = c.id " +
-        " WHERE b.id = ? AND b.username = ?;";
-        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
-        return jdbcTemplate.query(query, rowMapper, bookingId, tattooUsername);
-    }
-
-    */
-
-
     /**
      * @author Nanna
      * @param date used to get all bookings for the date
@@ -72,7 +57,7 @@ public class BookingRepository {
     }
 
     /**
-     * @author Nanna
+     * @author Nanna & Tara
      * @param bookingId used to find the booking
      * @return all details about a booking, creating a Client and adding it as an attribute to the booking,
      */
@@ -135,46 +120,6 @@ public class BookingRepository {
     }
 
 
-
-
-    //Gets a specific booking with all information
-    /*public Booking getBookingDetails(int bookingId){
-        String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
-                "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.id = ?;";
-        RowMapper<Booking> rowMapper = (rs, rowNum) -> {
-            Booking booking = new Booking();
-            booking.setId(rs.getInt("booking.id"));
-            booking.setStartTimeSlot(rs.getTime("start_time_slot").toLocalTime());
-            booking.setEndTimeSlot(rs.getTime("end_time_slot").toLocalTime());
-            booking.setDate(rs.getDate("date").toLocalDate());
-            booking.setProjectTitle(rs.getString("project_title"));
-            booking.setProjectDesc(rs.getString("project_desc"));
-            booking.setPersonalNote(rs.getString("personal_note"));
-            booking.setDepositPayed(rs.getBoolean("is_deposit_payed"));
-            Byte picture = rs.getByte("picture_data");
-            if (picture != null) {
-
-                //ArrayList<Byte[]> projectPictures = new ArrayList<>(picture);
-                List<ProjectPicture> projectPictures = new ArrayList<>(picture);
-                booking.setProjectPictures(projectPictures);
-            }
-
-            Client client = new Client();
-            client.setId(rs.getInt("client.id"));
-            client.setFirstName(rs.getString("first_name"));
-            client.setLastName(rs.getString("last_name"));
-            client.setEmail(rs.getString("email"));
-            client.setPhoneNumber(rs.getInt("phone_number"));
-            client.setDescription(rs.getString("description"));
-
-            booking.setClient(client);
-            return booking;
-        };
-        return  jdbcTemplate.queryForObject(query,rowMapper, bookingId);
-    }
-
-     */
-
     /**
      * @author Tara
      * @return list af bookinger
@@ -211,7 +156,7 @@ public class BookingRepository {
         System.out.println("Personal Note: " + personalNote);
         System.out.println("Is Deposit Payed: " + isDepositPayed);
 
-        // Check if username exists in tattoo_artist table
+        // tjjer om username eksisterer i tattoo_artist table
         String checkUsernameQuery = "SELECT COUNT(*) FROM tattoo_artist WHERE username = ?";
         Integer count = jdbcTemplate.queryForObject(checkUsernameQuery, new Object[]{username}, Integer.class);
         if (count == null || count == 0) {
@@ -235,7 +180,6 @@ public class BookingRepository {
             pS.setTime(1, Time.valueOf(startTimeSlot));
             pS.setTime(2, Time.valueOf(endTimeSlot));
             pS.setDate(3, Date.valueOf(date));
-           // pS.setInt(4, 1); // client_id is hardcoded to 1
             pS.setString(4, username);
             pS.setString(5, projectTitle);
             pS.setString(6, projectDesc);
@@ -249,21 +193,6 @@ public class BookingRepository {
 
         return findById(bookingId);
 
-        /*jdbcTemplate.update(query, startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc,
-                personalNote, isDepositPayed);
-        Booking booking = new Booking();
-        booking.setStartTimeSlot(startTimeSlot);
-        booking.setEndTimeSlot(endTimeSlot);
-        booking.setDate(date);
-        booking.setUsername(username);
-        booking.setProjectTitle(projectTitle);
-        booking.setProjectDesc(projectDesc);
-        booking.setPersonalNote(personalNote);
-        booking.setDepositPayed(isDepositPayed);
-
-        return booking;
-
-         */
     }
 
     public Booking findById(int bookingId){
