@@ -5,6 +5,8 @@ import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -62,16 +64,6 @@ public class LoginService {
         }
     }
 
-    /**
-     * @author Nanna and Munazzah
-     * @param session
-     * @return boolean
-     * @summary Returns true if session attribute LoggedIn is true.
-     * LoggedIn is casted as a boolean because session can return attributes as objects
-     */
-    public boolean isUserLoggedIn(HttpSession session) {
-        return session.getAttribute("loggedIn") != null && (boolean) session.getAttribute("loggedIn");
-    }
 
     /**
      * @author Munazzah
@@ -188,7 +180,7 @@ public class LoginService {
      * @summary Generates a random 8 char password where all the validChars can be added
      */
     public String randomPassword() {
-        String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=";
+        String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#&_+-=";
         StringBuilder password = new StringBuilder();
         Random random = new Random();
 
@@ -209,5 +201,33 @@ public class LoginService {
         tattooArtistRepository.updatePassword(username, hashedPassword);
     }
 
+    /**
+     * @author Nanna and Munazzah
+     * @param session
+     * @return boolean
+     * @summary Returns true if session attribute LoggedIn is true.
+     * LoggedIn is casted as a boolean because session can return attributes as objects
+     */
+    public boolean isUserLoggedIn(HttpSession session) {
+        return session.getAttribute("loggedIn") != null && (boolean) session.getAttribute("loggedIn");
+    }
+
+    /**
+     * @author Emma og Munazzah
+     * @param model
+     * @param session
+     * @summary Method to add all the attributes if user is logged in, or else return false if not logged in
+     */
+    public void addLoggedInUserInfo(Model model, HttpSession session, TattooArtistService tattooArtistService) {
+        boolean loggedIn = isUserLoggedIn(session);
+        model.addAttribute("loggedIn", loggedIn);
+
+        if (loggedIn) {
+            String username = (String) session.getAttribute("username");
+            model.addAttribute("username", username);
+            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+            model.addAttribute("tattooArtist", tattooArtist);
+        }
+    }
 
 }

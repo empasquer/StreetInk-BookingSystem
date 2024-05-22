@@ -3,6 +3,7 @@ package com.example.streetinkbookingsystem.services;
 import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ClientService {
     /**
      * @author Munazzah
      * @return ArrayList of Clients
-     * @summary Takes the Arraylist for the repository, sorts it using Collections.sort() and
+     * @summary Takes the Arraylist from the repository, sorts it using Collections.sort() and
      * returns the sorted list
      */
     public ArrayList<Client> getSortedListOfClients() {
@@ -69,4 +70,21 @@ public class ClientService {
     }
 
 
+
+    /**
+     * @author Munazzah
+     * @summary Is a scheduled method that runs every day at midnight, where it finds clients
+     * that havent had any booking in the past 5 years, adds them to a list, and then inactivates
+     * the clients, do their information are overwritten with the default client
+     * The cron is in sec, minutes, hours, day, month, day of week
+     */
+    @Scheduled(cron = "0 04 21 * * ?") //Runs every day at midnight
+    public void cleanupInactiveClients() {
+        List<Client> inactiveClientIds = clientRepository.findInactivateClients();
+        if (inactiveClientIds != null) {
+            for (Client client : inactiveClientIds) {
+                updateClient("Unknown", null, "unknown", 0, null, client.getId());
+            }
+        }
+    }
 }

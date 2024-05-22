@@ -22,23 +22,11 @@ public class LoginController {
     TattooArtistService tattooArtistService;
 
 
-    /**
-     * @Author Munazzah
-     * @return String
-     */
     @GetMapping("/login")
     public String login() {
-       // loginService.hashExistingPasswords();
+        // loginService.hashExistingPasswords();
         return "home/login";
     }
-
-    /**
-     * @author Munazzah
-     * @param username
-     * @param password
-     * @param redirectAttributes
-     * @return String
-     */
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password,
                         RedirectAttributes redirectAttributes) {
@@ -50,25 +38,11 @@ public class LoginController {
         }
     }
 
-    /**
-     * @author Munazzah
-     * @return String
-     */
     @GetMapping("/forgotten-password")
     public String forgottenPassword() {
         return "home/forgotten-password";
     }
 
-
-    /**
-     * @author Munazzah
-     * @param email
-     * @param username
-     * @param redirectAttributes
-     * @return String
-     * @summary Checks if it is a valid username, and if the email structure is valid
-     * before sending random password
-     */
     @PostMapping("/forgotten-password")
     public String forgottenPassword(@RequestParam String email, @RequestParam String username, RedirectAttributes redirectAttributes) {
         if (tattooArtistService.getTattooArtistByUsername(username) == null) {
@@ -76,8 +50,8 @@ public class LoginController {
             return "redirect:/forgotten-password";
         }
 
-        if(!emailService.isValidEmail(email)) {
-            redirectAttributes.addFlashAttribute("message", "Invalid email");
+        if(!emailService.isValidEmail(email, username)) {
+            redirectAttributes.addFlashAttribute("message", "Invalid email. Use the one saved in your profile");
             return "redirect:/forgotten-password";
         }
 
@@ -88,11 +62,5 @@ public class LoginController {
 
         return "redirect:/login";
     }
-
-
-
-
-
-
 
 }
