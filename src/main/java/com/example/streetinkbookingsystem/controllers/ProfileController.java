@@ -31,6 +31,7 @@ public class ProfileController {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        session.removeAttribute("imageData");
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         String username = (String) session.getAttribute("username");
@@ -57,6 +58,16 @@ public class ProfileController {
      */
     @GetMapping("/create-new-profile")
     public String newProfile(Model model, HttpSession session) {
+        //to display the preview if a picture is chosen
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String base64Image = Base64.getEncoder().encodeToString(imageData);
@@ -120,12 +131,15 @@ public class ProfileController {
                                 @RequestParam String instagramUrl,
                                 @RequestParam int avgWorkHours,
                                 @RequestParam(value = "isAdmin", required = false) Boolean isAdmin
-            /* @RequestParam(value = "imageFile",required = false) byte[] imageData,*/, HttpSession session) {
+          , HttpSession session) {
         TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
 
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -144,6 +158,7 @@ public class ProfileController {
 
             boolean adminStatus = isAdmin != null && isAdmin;
             tattooArtistService.createProfile(profileUsername, profileFirstname, profileLastName, profilePassword, facebookUrl, instagramUrl, phone, email, avgWorkHours, adminStatus, Optional.ofNullable(imageData));
+            session.removeAttribute("imageData");
             return "redirect:/manage-profiles";
         }
     }
@@ -158,8 +173,12 @@ public class ProfileController {
      */
     @GetMapping("/manage-profiles")
     public String manageProfiles(Model model, HttpSession session, @RequestParam(required = false) String profileToDelete, @RequestParam(required = false) String message) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -176,8 +195,10 @@ public class ProfileController {
         }
         List<TattooArtist> profiles = tattooArtistService.showTattooArtist();
         model.addAttribute("profiles", profiles);
-        model.addAttribute("user", tattooArtist);
 
+
+        //Remove imageData so it doesn't reapear when creating a new profile
+        session.removeAttribute("imageData");
 
         return "home/manage-profiles";
     }
@@ -264,16 +285,11 @@ public class ProfileController {
 
         TattooArtist artist = tattooArtistService.getTattooArtistByUsername((String) session.getAttribute("username"));
 
-        // To display profile picture
+        // To display preview if picture is chosen
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String newBase64Image = Base64.getEncoder().encodeToString(imageData);
             model.addAttribute("newBase64Image", newBase64Image);
-        }
-
-        if (artist.getProfilePicture() != null) {
-            String base64Image = Base64.getEncoder().encodeToString(artist.getProfilePicture());
-            artist.setBase64ProfilePicture(base64Image);
         }
 
 
@@ -292,6 +308,7 @@ public class ProfileController {
 
         tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername,  Optional.ofNullable(imageData));
         session.setAttribute("username", newUsername);
+        session.removeAttribute("imageData");
         return "redirect:/profile";
     }
 

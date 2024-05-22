@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -61,6 +60,7 @@ public class ClientController {
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
                 .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
                         TreeMap::new, Collectors.toList()));
+
 
         model.addAttribute("groupedClients", groupedClients);
         return "home/client-list";

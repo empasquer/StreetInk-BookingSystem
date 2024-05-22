@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -64,6 +65,7 @@ public class CalendarController {
         int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
         int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
+
 
         //Add to model
         model.addAttribute("currentDate", currentDate);
