@@ -1,5 +1,6 @@
 package com.example.streetinkbookingsystem.services;
 
+import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import java.util.regex.Pattern;
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    TattooArtistRepository tattooArtistRepository;
 
     /**
      * @param clientEmail used to send the email to this address
@@ -65,12 +69,14 @@ import java.util.regex.Pattern;
      * @param email
      * @return boolean
      * @summary Uses regex to check if the structure of the mail is valid fx xxxx@yyy.mmm
+     * and if the email is the same that is written in the database
      */
-    public boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email, String username) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+
+        return matcher.matches() && tattooArtistRepository.getEmail(username).equals(email);
     }
 
 }

@@ -7,8 +7,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +45,11 @@ public class ClientRepository {
      * @author Munazzah
      * @param firstname
      * @return List of clients
+     * @summary Uses LOWER so it isnt case sensitive, and also uses '%' for partial searching with
+     * LIKE operator
      */
     public List<Client> getClientsByFirstName(String firstname) {
-        String query = "SELECT * FROM client WHERE first_name LIKE ?";
+        String query = "SELECT * FROM client WHERE LOWER(first_name) LIKE LOWER(?)";
         RowMapper<Client> rowMapper = new BeanPropertyRowMapper<>(Client.class);
         try {
             return jdbcTemplate.query(query, rowMapper, "%" + firstname + "%");
@@ -64,6 +70,26 @@ public class ClientRepository {
                    clientId);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("something went wrong");
+        }
+    }
+
+    /**
+     * @author Munazzah
+     * @return list of clients
+     * @summary Checks if any clients' booking date was over 5 years ago, if yes,
+     * then adds them to the list
+     */
+    public List<Client> findInactivateClients() {
+        String query = "SELECT c.* FROM Client c LEFT JOIN Booking b ON c.id = b.client_id " +
+                "GROUP BY c.id " +
+                "HAVING MAX(b.date) < (CURRENT_DATE - INTERVAL 5 YEAR)";
+
+        RowMapper<Client> rowMapper = new BeanPropertyRowMapper(Client.class);
+
+        try {
+            return jdbcTemplate.query(query, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 
@@ -97,6 +123,32 @@ public class ClientRepository {
             return new ArrayList<>(); //Empty list if no clients are found
         }
     }
+
+    public Client saveClient(Client client){
+        String query = "INSERT INTO client (first_name, last_name, email, phone_number, description) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection ->{
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, client.getFirstName());
+            ps.setString(2, client.getLastName());
+            ps.setString(3, client.getEmail());
+            ps.setInt(4, client.getPhoneNumber());
+            ps.setString(5, client.getDescription());
+            return ps;
+        }, keyHolder);
+
+        client.setId(keyHolder.getKey().intValue());
+        return client;
+    }
+
+    public void updateClientOnBooking(int bookingId, int clientId){
+        String query = "UPDATE booking SET client_id = ? WHERE id = ?";
+        jdbcTemplate.update(query, clientId, bookingId);
+    }
+
+
 
 
 
