@@ -29,33 +29,20 @@ public class ProfileController {
     @GetMapping("/profile")
     public String seeProfile(HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
-        //Remove image saved in session if returning from edit-profile
-        session.removeAttribute("imageData");
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
-            return "redirect:/";
-        }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+            //Remove image saved in session if returning from edit-profile
+            session.removeAttribute("imageData");
+            loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+            String username = (String) session.getAttribute("username");
+            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        //to display profile pic:
-        if (tattooArtist.getProfilePicture() != null) {
-            String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
-            tattooArtist.setBase64ProfilePicture(base64Image);
-        }
-
-        if (username == null) {
-            // Redirect logic when username is null or if not admin.
-            return "redirect:/";
-        } else {
-            return "home/profile";
-        }
-
-
+            if (username == null) {
+                // Redirect logic when username is null or if not admin.
+                return "redirect:/";
+            } else {
+                return "home/profile";
+            }
+        }return "redirect:/";
     }
 
     /**
