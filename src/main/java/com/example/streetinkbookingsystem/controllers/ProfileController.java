@@ -50,7 +50,8 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String seeProfile(HttpSession session, Model model) {
-
+        //Remove image saved in session if returning from edit-profile
+        session.removeAttribute("imageData");
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
             model.addAttribute("loggedIn", loggedIn);
@@ -77,6 +78,7 @@ public class ProfileController {
         } else {
             return "home/profile";
         }
+
 
     }
 
@@ -322,6 +324,7 @@ public class ProfileController {
 
         tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername,  Optional.ofNullable(imageData));
         session.setAttribute("username", newUsername);
+        session.removeAttribute("imageData");
         return "redirect:/profile";
     }
 @GetMapping("/reset-password")
