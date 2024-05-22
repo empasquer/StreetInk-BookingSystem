@@ -29,13 +29,20 @@ public class ProfileController {
     @GetMapping("/profile")
     public String seeProfile(HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
-            return "redirect:/";
-        }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+            //Remove image saved in session if returning from edit-profile
+            session.removeAttribute("imageData");
+            loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+            String username = (String) session.getAttribute("username");
+            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
+            if (username == null) {
+                // Redirect logic when username is null or if not admin.
+                return "redirect:/";
+            } else {
+                return "home/profile";
+            }
+        }return "redirect:/";
         model.addAttribute("username", tattooArtist.getUsername());
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -306,6 +313,7 @@ public class ProfileController {
 
         tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername,  Optional.ofNullable(imageData));
         session.setAttribute("username", newUsername);
+        session.removeAttribute("imageData");
         return "redirect:/profile";
     }
 
