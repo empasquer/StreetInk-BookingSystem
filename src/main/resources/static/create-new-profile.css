@@ -1,5 +1,10 @@
 section {
-    height:83em;
+    padding-bottom: 3em;
+    margin-top: 2em;
+}
+
+.upload-wrapper {
+    padding-bottom: 3em;
 }
 .upload-container {
     display: flex;
@@ -11,7 +16,7 @@ section {
     background-size: cover;
     background-position: center;
     flex-direction: column;
-    margin: 2em;
+    margin: 1em;
 }
 
 .upload-label {
@@ -80,76 +85,81 @@ section {
     margin-bottom: 30px;
     align-items: center;
 }
-
-.form-group {
-    align-items: center;
-    padding: 1rem;
-    border-radius: 15px;
-    border-style: none;
-}
-.form-row-box {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 30px;
-    align-items: center;
-    place-items: baseline;
-}
 .form-box {
-    align-items: center;
-    padding: 1rem;
-    border-radius: 15px;
-    border-style: none;
     display: flex;
     flex-direction: column;
-    width: 7em;
-    place-self: center;
+
 }
-.form-box input {
-    background-color: var(--input-field-gray);
-    border-radius: 1em;
-    height: 5em;
-    width: 5em;
-    border-style: none;
-}
-
-/* Specifically target checkbox to ensure proper styling */
-
-
-/* Create the custom checkbox */
-.custom-checkbox {
-  /*  -webkit-appearance: none; /* Fjerner browserens standard checkbox-styling */
- /*   -moz-appearance: none;*/
-    display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
-    background-color: var(--input-field-gray);
-    border: 2px solid var(--button-gray);
-    border-radius: 1em; /* Adjust the border-radius here */
+.form-box-label {
+    display: flex;
+    flex-direction: row;
+    z-index: 4;
     position: relative;
-    cursor: pointer;
-    background-color: transparent; /* Gennemsigtig baggrund */
-/*appearance: none;*/
+    /* margin-right: 7em; */
+    width: 24em;
+    /* margin-bottom: 10em; */
+
 }
-.checkboxes:checked {
-    background-color: var(--accent-red); /* Ændrer baggrundsfarven når markeret */
+
+.form-row-grid {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: flex-start; */
+    margin-bottom: 30px;
+    width: 48.5em;
+    justify-content: space-between;
+    padding: 0.5em;
+
 }
-/* Checkmark (hidden by default) */
-.custom-checkbox:after {
-   /* content: '\2713'; */
-    width: 5em;
-    height: 5em;
-    border-radius: 1em;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.2s;
-    color: white;
-    text-align: center;
-    line-height: 50px;
-    position: relative;
+.info-box {
+    margin-left: 1em;
+
+}
+
+/* Tilpasser størrelsen på checkbox */
+.checkboxes {
+    -webkit-appearance: none; /* Fjerner browserens standard checkbox-styling */
+    -moz-appearance: none;
+    appearance: none;
+    width: 4.5em; /* Juster bredden efter behov */
+    height: 4.5em; /* Juster højden efter behov */
+    border-radius: 8px; /* Runder hjørnerne */
+    background-color: var(--input-field-gray); /* Gennemsigtig baggrund */
+    outline: none; /* Fjerner den blå fokusramme */
+    cursor: pointer; /* Viser en markør ved hover */
+}
+
+/* Tilføjer et tilpasset udseende for den indre checkmark */
+.checkboxes:checked::after {
+    content: '\2713'; /* Tilføjer en checkmark (unicode-tegn) */
+    font-size: 50px; /* Juster størrelsen efter behov */
+    color: black; /* Farve på checkmark */
+    text-align: center; /* Justerer placering */
+    line-height: 50px; /* Justerer linjehøjde */
+    position: relative; /* Positionering relativ til parent */
+    width: 100%; /* Fylder hele checkboxen */
+    height: 100%; /* Fylder hele checkboxen */
 }
 
 /* Show the checkmark when the checkbox is checked */
 input[type="checkbox"]:checked + .custom-checkbox:after {
     transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* Show the message when the checkbox is checked */
+.info-checkbox:checked + .info-label + .info-message {
+    display: block;
+}
+
+/* Basic styling for form */
+.form-group, .form-grid-cell {
+    position: relative;
+    margin-bottom: 1.5em;
+}
+
+.form-group label, .form-grid-cell label {
+    margin-right: 0.5em;
 }
 
 /* Hide the checkbox */
@@ -162,24 +172,51 @@ input[type="checkbox"]:checked + .custom-checkbox:after {
     display: inline-block;
     background-color: var(--background-color);
     color: white;
-    font-size: small;
+    font-size: 0.7em;
     padding: 0.5em;
     width: 1.5em;
-    border-radius: 2em;
+    border-radius: 50%;
     cursor: pointer;
+    /* margin-left: 0.5em; */
+    vertical-align: middle;
 }
 
 /* Hidden message box */
 .info-message {
     display: none;
-    background-color: lightgrey;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    max-width: 200px;
+    background-color: var(--accent-red);
+    opacity: 0.9;
+    padding: 1em;
+    margin-top: -1.9em;
+    border-radius: 0.5em;
+    position: absolute;
+    /* top: 100%; */
+    left: 0;
+    z-index: 10;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 9em;
+}
+.info-message-right {
+    margin-left: 6em;
 }
 
-/* Show the message when the checkbox is checked */
-.info-checkbox:checked + .info-label + .info-message {
-    display: block;
+
+select {
+    background: lightgray;
+    border-radius: 1em;
+    height: 4.5em;
+    width: 4.5em;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    background: radial-gradient(lightgray, darkgray);
+    text-align: center;
+/* margin-left: -0.5em; */
+}
+
+.red-button {
+    font-size: 1.5em;
+    height: 4em;
+    width: 100%;
+    margin-top: 2em;
+    font-weight: bold;
 }
