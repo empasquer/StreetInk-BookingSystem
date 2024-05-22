@@ -58,9 +58,6 @@ public class BookingController {
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
-        //Tjekker booking id
-        //System.out.println("BookingId: " + bookingId);
-
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
 
@@ -72,15 +69,14 @@ public class BookingController {
 
         return "home/booking";
     }
-    
+
 
     /**
-     *
+     * @Author Tara
      * @param model
      * @param session
      * @param date
-     * @return home/create-new-booking
-     * @author Tara
+     * @return "home/create-new-booking"
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
@@ -102,7 +98,21 @@ public class BookingController {
         return "home/create-new-booking";
     }
 
-
+    /**
+     * @Author Tara
+     * @param startTimeSlot
+     * @param endTimeSlot
+     * @param date
+     * @param session
+     * @param projectTitle
+     * @param projectDesc
+     * @param personalNote
+     * @param isDepositPayed
+     * @param projectPictures
+     * @param action
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/save-tattoo-info")
     public String saveNewBooking(@RequestParam LocalTime startTimeSlot,
                                  @RequestParam LocalTime endTimeSlot,
@@ -135,32 +145,18 @@ public class BookingController {
                     })
                     .collect(Collectors.toList());
 
-            //Gemmer projektbilleder
-            //villederne bliver midlertidigt gemt i denne liste, til de bliver gemt i database.
-            /*for (MultipartFile file : projectPictures){
-                if (!file.isEmpty()) {
-                    byte[] pictureData = file.getBytes();
-                    // konverterer uploadede fil(er) til en sekvens af bytes.
-                    pictureList.add(pictureData);
-                }
-            }
-
-             */
             // Gemmer booking og henter den gemte entitet
            Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
                     projectDesc, personalNote, isDepositPayed, pictureList);
 
            projectPictureService.saveProjectPictures(newBooking.getId(), pictureList);
 
-            //Her bliver de gemt til deres table i databasen med bookingIdet
-            //projectPictureService.saveProjectPictures(newBooking.getId(), (ArrayList<byte[]>) pictureList);
-
            //henter bookingId fra den gemte entitet
             int bookingId = newBooking.getId() ;
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
-                return "redirect:/add-client?bookingId=" + bookingId;
+                return "redirect:/add-client?bookingId=" + bookingId + "&clientId=1&username=" + username;
             } else if ("show-booking".equals(action)) {
                 return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
             } else {

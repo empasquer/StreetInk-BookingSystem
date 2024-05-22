@@ -15,7 +15,7 @@
         <a th:href="@{/day(username=${tattooArtist.username},date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
 
-    <h1>New Booking<span th:text="${date}"></span></h1>
+    <h1>New Booking - Tattoo Info<span th:text="${date}"></span></h1>
 
     <section>
         <form action="/save-tattoo-info" method="post" enctype="multipart/form-data">
@@ -155,9 +155,10 @@
                     </div>
 
                     <!-- Skjulte inputs, som bliver sendt med i formularen -->
-                    <input type="hidden" name="bookingId" id="bookingId">
+                    <input type="hidden" name="bookingId" id="bookingId" value="${bookingId}">
                     <input type="hidden" name="username" value="${tattooArtist.username}">
                     <input type="hidden" name="date" th:value="${date}" />
+                    <input type="hidden" name="clientId" value="1">
 
                     <div class="button-container">
                         <button type="submit" name="action" value="new-client" class="red-button box-shadow">New Client</button>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -38,10 +39,10 @@ public class ClientController {
 
 
     /**
-     * @author Munazzah
      * @param model
      * @param session
      * @return String - View of the client-list page
+     * @author Munazzah
      * @summary Gets the sorted list og Clients from the service layer, and then uses Map to
      * group the Clients based on the first letter in name
      */
@@ -72,12 +73,12 @@ public class ClientController {
     }
 
     /**
-     * @author Muanzzah
      * @param searchQuery
      * @param model
      * @param redirectAttributes
      * @param session
      * @return String - View of search-results
+     * @author Muanzzah
      * @summary Search for a Client based on phone number or first name. The if-statement
      * checks if it is a number or name and acts accordingly
      */
@@ -196,5 +197,66 @@ public class ClientController {
 
         clientService.deleteClientInfoByClientId(clientId);
         return "redirect:/client?clientId=" + clientId;
+    }
+
+    @GetMapping("/add-client")
+    public String addClient(@RequestParam int bookingId,
+                            @RequestParam int clientId,
+                            Model model,
+                            HttpSession session) {
+
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn) {
+            return "redirect:/";
+        }
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
+        Client client = clientService.getClientFromClientId(clientId);
+
+        if (client.getId() == 1){
+            client = new Client();
+        }
+
+        model.addAttribute("tattooArtist", tattooArtist);
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("username", username);
+        model.addAttribute("bookingId", bookingId);
+        model.addAttribute("client", client);
+        return "home/add-client";
+
+    }
+
+    @PostMapping("/save-client")
+    public String saveClient(@RequestParam int bookingId,
+                             @RequestParam(required = false, defaultValue = "1") int clientId,
+                             @RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String email,
+                             @RequestParam int phoneNumber,
+                             @RequestParam String description,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes){
+
+        String username = (String) session.getAttribute("username");
+
+        if (username == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Your session ran out, log in again.");
+            return "redirect:/";
+        }
+
+        Client client = new Client();
+        client.setId(clientId);
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setEmail(email);
+        client.setPhoneNumber(phoneNumber);
+        client.setDescription(description);
+        client = clientService.saveClient(client);
+
+        clientService.updateClientOnBooking(bookingId, client.getId());
+
+        return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
     }
 }

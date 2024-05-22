@@ -7,8 +7,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +101,32 @@ public class ClientRepository {
             return new ArrayList<>(); //Empty list if no clients are found
         }
     }
+
+    public Client saveClient(Client client){
+        String query = "INSERT INTO client (first_name, last_name, email, phone_number, description) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection ->{
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, client.getFirstName());
+            ps.setString(2, client.getLastName());
+            ps.setString(3, client.getEmail());
+            ps.setInt(4, client.getPhoneNumber());
+            ps.setString(5, client.getDescription());
+            return ps;
+        }, keyHolder);
+
+        client.setId(keyHolder.getKey().intValue());
+        return client;
+    }
+
+    public void updateClientOnBooking(int bookingId, int clientId){
+        String query = "UPDATE booking SET client_id = ? WHERE id = ?";
+        jdbcTemplate.update(query, clientId, bookingId);
+    }
+
+
 
 
 
