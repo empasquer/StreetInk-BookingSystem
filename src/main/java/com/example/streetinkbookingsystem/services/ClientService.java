@@ -61,6 +61,16 @@ public class ClientService {
                 0, null, clientId);
     }
 
+    public Client saveClient(Client client){
+        return clientRepository.saveClient(client);
+    }
+
+    public void updateClientOnBooking(int bookingId, int clientId) {
+        clientRepository.updateClientOnBooking(bookingId, clientId);
+    }
+
+
+
     /**
      * @author Munazzah
      * @summary Is a scheduled method that runs every day at midnight, where it finds clients

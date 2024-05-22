@@ -6,7 +6,6 @@ public class TattooArtist extends Person {
     private byte[] profilePicture; // ændret til byte array.
     // alm. byte kan åbenbart ikke bruge Java's Base64-klasse til dette formål,
     //hvis den skal kunne samarbejde med database og thymeleaf.
-    // private Byte profilePicture; ** gamle attribute
     private String base64ProfilePicture; // Add this field
     private String facebook;
     private String instagram;

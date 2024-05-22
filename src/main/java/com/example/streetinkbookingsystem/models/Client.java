@@ -5,7 +5,7 @@ public class Client extends Person implements Comparable<Client>{
     private String description;
 
     public Client (){
-        super();
+        //super();
     }
 
     public int getId() {

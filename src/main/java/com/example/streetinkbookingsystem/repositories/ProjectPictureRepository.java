@@ -18,11 +18,5 @@ public class ProjectPictureRepository {
         jdbcTemplate.update(query, projectPicture.getBookingId(), projectPicture.getPictureData());
     }
 
-   /* public List<ProjectPicture> findBookingId(int bookingId){
-        String query = "SELECT * FROM project_picture WHERE booking_id = ?";
-        return jdbcTemplate.query(query, new Object[]{bookingId}, new ProjectPictureRowMapper());
-    }
-
-    */
 
 }

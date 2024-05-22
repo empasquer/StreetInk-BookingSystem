@@ -4,7 +4,6 @@ public class ProjectPicture {
     private int id;
     private byte[] pictureData;
     private int bookingId;
-   // private Booking booking;
 
     public ProjectPicture(){
 
@@ -25,16 +24,6 @@ public class ProjectPicture {
     public void setPictureData(byte[] pictureData) {
         this.pictureData = pictureData;
     }
-
-   /* public Booking getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
-
-    */
 
     public int getBookingId() {
         return bookingId;
