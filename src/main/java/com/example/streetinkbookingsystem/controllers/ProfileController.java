@@ -36,11 +36,6 @@ public class ProfileController {
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        //to display profile pic:
-        if (tattooArtist.getProfilePicture() != null) {
-            String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
-            tattooArtist.setBase64ProfilePicture(base64Image);
-        }
         model.addAttribute("username", tattooArtist.getUsername());
         model.addAttribute("tattooArtist", tattooArtist);
 
