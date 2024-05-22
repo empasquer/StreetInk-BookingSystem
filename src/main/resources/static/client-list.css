@@ -34,7 +34,7 @@ li {
 }
 
 /* Ensures that the link styling is consistent within client-item */
-.client-item a {
+a.client-item {
     display: block;
     padding: 10px 20px;
     color: var(--white);

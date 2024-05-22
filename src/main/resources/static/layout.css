@@ -59,10 +59,6 @@ a {
     text-decoration: underline;
 }
 
-a:visited {
-    color: var(--light-gray);
-}
-
 header, footer {
     background-color: var(--header-footer-color);
     color: var(--h1-color);

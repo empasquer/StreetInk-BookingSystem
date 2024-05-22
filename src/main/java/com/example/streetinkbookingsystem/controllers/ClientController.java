@@ -57,7 +57,7 @@ public class ClientController {
         //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
         //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
         //Uses stream to handle everything simulationaly
-        //Uses collect (Collectors.groupingBy) to group the elements of teh stream based on first letter in first name
+        //Uses collect (Collectors.groupingBy) to group the elements of the stream based on first letter in first name
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
                 .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
                         TreeMap::new, Collectors.toList()));
@@ -67,16 +67,44 @@ public class ClientController {
     }
 
     /**
+     * @author Munazzah
+     * @param searchQuery
+     * @param model
+     * @return the actual view
+     */
+    @GetMapping("/search-result")
+    public String searchResult(@RequestParam("searchQuery") String searchQuery, Model model, HttpSession session) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        //Checks (via regex) if there are only numbers or only letters and acts accordingly
+        if (searchQuery.matches("[0-9]+")) {
+            model.addAttribute("searchType", "phoneNumber");
+            List<Client> clientByNumber = clientService.getClientsByPhoneNumber(Integer.parseInt(searchQuery));
+            model.addAttribute("results", clientByNumber);
+        } else {
+            model.addAttribute("searchType", "firstName");
+            List<Client> clientByName = clientService.getClientsByFistName(searchQuery);
+            model.addAttribute("results", clientByName);
+        }
+        model.addAttribute("searchQuery", searchQuery);
+        return "home/search-result";
+    }
+
+
+    /**
      * @author Muanzzah
      * @param searchQuery to get what there has been searched for
      * @param model to add attributes to the controller
      * @param redirectAttributes to add redirect message
      * @param session to check if logged in
      * @return String - View of search-results
-     * @summary Search for a Client based on phone number or first name. The if-statement
-     * checks if it is a number or name and acts accordingly
+     * @summary Search for a Client based on first name or phone number. The if statement
+     * validates that is either one or the other
      */
-    @PostMapping("/search")
+    @PostMapping("/search-result")
     public String search(@RequestParam("search") String searchQuery, Model model,
                          RedirectAttributes redirectAttributes, HttpSession session) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -85,20 +113,13 @@ public class ClientController {
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         model.addAttribute("searchQuery", searchQuery);
-        //Checks (via regex) if there are only numbers, letters or a mix of both and acts accordingly
-        if (searchQuery.matches("[0-9]+")) {
-            model.addAttribute("searchType", "phoneNumber");
-            List<Client> clientByNumber = clientService.getClientsByPhoneNumber(Integer.parseInt(searchQuery));
-            model.addAttribute("results", clientByNumber);
-        } else if (searchQuery.matches("[A-Za-z]+")) {
-            model.addAttribute("searchType", "firstName");
-            List<Client> clientByName = clientService.getClientsByFistName(searchQuery);
-            model.addAttribute("results", clientByName);
-        } else {
+        //Checks (via regex) if there is a mix of numbers and letters. If yes, it redirects with error message
+        if (searchQuery.matches(".*[A-Za-z].*") && searchQuery.matches(".*[0-9].*")) {
             redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
             return "redirect:/client-list";
         }
-        return "home/search-result";
+        redirectAttributes.addAttribute("searchQuery", searchQuery);
+        return "redirect:/search-result";
     }
 
     @GetMapping("/client")
