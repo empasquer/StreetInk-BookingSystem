@@ -86,6 +86,14 @@ public class ProfileController {
      */
     @GetMapping("/create-new-profile")
     public String newProfile(Model model, HttpSession session) {
+        addLoggedInUserInfo(model, session);
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String base64Image = Base64.getEncoder().encodeToString(imageData);
@@ -149,12 +157,15 @@ public class ProfileController {
                                 @RequestParam String instagramUrl,
                                 @RequestParam int avgWorkHours,
                                 @RequestParam(value = "isAdmin", required = false) Boolean isAdmin
-            /* @RequestParam(value = "imageFile",required = false) byte[] imageData,*/, HttpSession session) {
+          , HttpSession session) {
         TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
 
 
+        addLoggedInUserInfo(model, session);
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -173,6 +184,7 @@ public class ProfileController {
 
             boolean adminStatus = isAdmin != null && isAdmin;
             tattooArtistService.createProfile(profileUsername, profileFirstname, profileLastName, profilePassword, facebookUrl, instagramUrl, phone, email, avgWorkHours, adminStatus, Optional.ofNullable(imageData));
+            session.removeAttribute("imageData");
             return "redirect:/manage-profiles";
         }
     }
@@ -207,6 +219,8 @@ public class ProfileController {
         model.addAttribute("profiles", profiles);
         model.addAttribute("user", tattooArtist);
 
+        //Remove imageData so it doesn't reapear when creating a new profile
+        session.removeAttribute("imageData");
 
         return "home/manage-profiles";
     }
