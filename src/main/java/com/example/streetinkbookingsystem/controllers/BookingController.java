@@ -2,10 +2,7 @@ package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.models.Booking;
 import com.example.streetinkbookingsystem.models.TattooArtist;
-import com.example.streetinkbookingsystem.services.BookingService;
-import com.example.streetinkbookingsystem.services.LoginService;
-import com.example.streetinkbookingsystem.services.ProjectPictureService;
-import com.example.streetinkbookingsystem.services.TattooArtistService;
+import com.example.streetinkbookingsystem.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +34,8 @@ public class BookingController {
     TattooArtistService tattooArtistService;
     @Autowired
     ProjectPictureService projectPictureService;
+    @Autowired
+    ClientService clientService;
 
     /**
      * @Author Nanna
@@ -156,7 +155,7 @@ public class BookingController {
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
-                return "redirect:/add-client?bookingId=" + bookingId + "&clientId=1&username=" + username;
+                return "redirect:/add-client?bookingId=" + bookingId + "&username=" + username;
             } else if ("existing-client".equals(action)) {
                 return "redirect:/choose-client?bookingId=" + bookingId + "&username=" + username;
             } else {
@@ -171,6 +170,41 @@ public class BookingController {
 
         }
 
+    }
+
+    @GetMapping("/booking-preview")
+    public String bookingPreview (Model model, HttpSession session, @RequestParam int bookingId,
+                                  @RequestParam String username,
+                                  @RequestParam int clientId){
+        System.out.println("Booking ID: " + bookingId);
+        System.out.println("Username: " + username);
+        System.out.println("Client ID: " + clientId);
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn) {
+            return "redirect:/";
+        }
+
+        System.out.println("Booking ID: " + bookingId);
+        System.out.println("Username: " + username);
+        System.out.println("Client ID: " + clientId);
+
+        clientService.updateClientOnBooking(bookingId, clientId);
+
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("username", session.getAttribute(username));
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
+        Booking booking = bookingService.getBookingDetail(bookingId);
+        model.addAttribute("booking", booking);
+
+        // Henter billeder fra den specifikke booking
+        List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
+        model.addAttribute("base64Images", base64Images);
+
+
+
+        return "home/booking-preview";
     }
 
 }

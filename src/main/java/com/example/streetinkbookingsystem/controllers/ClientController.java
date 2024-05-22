@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -262,7 +259,8 @@ public class ClientController {
     }
 
     @GetMapping("/choose-client")
-    public String chooseClient(Model model, HttpSession session) {
+    public String chooseClient(Model model, HttpSession session,
+                               @RequestParam int bookingId) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
             model.addAttribute("loggedIn", loggedIn);
@@ -273,6 +271,16 @@ public class ClientController {
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
+
+        //Værdier som skal videre til view
+        //Integer bookingId = (Integer) session.getAttribute("bookingId");
+        model.addAttribute("bookingId", bookingId);
+
+        System.out.println("choose client controller");
+        System.out.println("booking ID: " + bookingId);
+        System.out.println("Username: " + username);
+
+
 
         List<Client> sortedClients = clientService.getSortedListOfClients();
         //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
@@ -289,18 +297,29 @@ public class ClientController {
 
 
     @PostMapping("/search-for-existing-client")
-    public String searchForExistingClient(@RequestParam("search") String searchQuery, Model model,
-                         RedirectAttributes redirectAttributes, HttpSession session) {
+    public String searchForExistingClient(HttpSession session,
+                                          @RequestParam("search") String searchQuery,
+                                          @RequestParam int bookingId,
+                                          @RequestParam(required = false) int clientId, //clientId er ikke et must
+                                          Model model,
+                         RedirectAttributes redirectAttributes) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        if (!loggedIn) {
             return "redirect:/";
         }
 
+
         String username = (String) session.getAttribute("username");
+
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
+        model.addAttribute("bookingId", bookingId);
+        model.addAttribute("clientId", clientId );
+        model.addAttribute("loggedIn", loggedIn);
+
+        System.out.println("search for existing client controller");
+        System.out.println("booking ID: " + bookingId);
+        System.out.println("Username: " + username);
 
         model.addAttribute("searchQuery", searchQuery);
         //Checks (via regex) if there are only numbers, letters or a mix of both and acts accordingly
@@ -316,8 +335,68 @@ public class ClientController {
             redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
             return "redirect:/choose-client";
         }
-        return "home/search-result2";
+        return "redirect:/search-result2/" + clientId + "?bookingId" + bookingId +  "&username=" + username;
+
+
     }
 
+    @GetMapping("/search-result2/{clientId}")
+    public String showSearchResult2(HttpSession session,
+                                    Model model,
+                                    @RequestParam int bookingId,
+                                    @PathVariable("clientId") int clientId) {
+
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn) {
+            return "redirect:/";
+        }
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
+        model.addAttribute("tattooArtist", tattooArtist);
+        model.addAttribute("bookingId", bookingId);
+        model.addAttribute("clientId", clientId);
+        model.addAttribute("loggedIn", loggedIn);
+
+        Client client = clientService.getClientFromClientId(clientId);
+        model.addAttribute("client", client);
+
+        return "home/search-result2";
+
+    }
+
+    @PostMapping("/search-result2")
+    public String saveExistingClient(@RequestParam int bookingId,
+                             @RequestParam int clientId,
+                             @RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String email,
+                             @RequestParam int phoneNumber,
+                             @RequestParam String description,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes){
+
+        String username = (String) session.getAttribute("username");
+
+        if (username == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Your session ran out, log in again.");
+            return "redirect:/";
+        }
+
+        Client client = clientService.getClientFromClientId(clientId);
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setEmail(email);
+        client.setPhoneNumber(phoneNumber);
+        client.setDescription(description);
+
+        clientService.updateExistingClient(client);
+        //client = clientService.updateClient(firstName, lastName, email, phoneNumber, description, clientId);
+
+        clientService.updateClientOnBooking(bookingId, client.getId());
+
+        return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
+    }
 
 }

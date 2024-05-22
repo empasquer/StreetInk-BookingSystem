@@ -14,7 +14,9 @@
 <main>
 
   <div class="back-arrow-container">
+    <!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE -->
     <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    <!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE -->
   </div>
 
   <h1>Client List</h1>
@@ -22,6 +24,10 @@
   <section class="box-shadow">
 
     <form th:action="@{/search-for-existing-client}" method="post">
+      <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
+      <input type="hidden" name="username" th:value="${tattooArtist.username}">
+      <input type="hidden" name="date" th:value="${date}" />
+      <input type="hidden" name="clientId" th:value="${clientId}">
       <div>
         <label for="search">Search by number or first name:</label>
         <input type="text" id="search" name="search">
@@ -45,7 +51,8 @@
         <div class="letter-header" th:text="${entry.key}">Letter</div>
         <ul class="client-list">
           <li th:each="client : ${entry.value}" class="client-item">
-            <a th:href="@{'/client?clientId=' + {id}(id=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+            <a th:href="@{'/search-for-existing-client/booking-preview(bookingId=' + ${bookingId} + ',clientId=' + ${client.id} + ',username=' + ${tattooArtist.username} + ')'}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+          </li>
           </li>
         </ul>
       </div>

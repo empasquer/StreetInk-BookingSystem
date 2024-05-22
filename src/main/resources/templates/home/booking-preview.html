@@ -12,6 +12,10 @@
 <header th:block th:insert="~{home/header :: header}"></header>
 
 <main>
+    <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
+    <input type="hidden" name="username" th:value="${tattooArtist.username}">
+    <input type="hidden" name="date" th:value="${date}" />
+    <input type="hidden" name="clientId" th:value="${clientId}">
     <div class="back-arrow-container">
         <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
         <a th:href="@{/day(username=${tattooArtist.username},date=${booking.getDate()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
