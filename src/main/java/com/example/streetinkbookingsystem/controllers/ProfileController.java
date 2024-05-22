@@ -158,8 +158,11 @@ public class ProfileController {
      */
     @GetMapping("/manage-profiles")
     public String manageProfiles(Model model, HttpSession session, @RequestParam(required = false) String profileToDelete, @RequestParam(required = false) String message) {
+        addLoggedInUserInfo(model, session);
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -176,7 +179,7 @@ public class ProfileController {
         }
         List<TattooArtist> profiles = tattooArtistService.showTattooArtist();
         model.addAttribute("profiles", profiles);
-        model.addAttribute("user", tattooArtist);
+
 
 
         return "home/manage-profiles";
