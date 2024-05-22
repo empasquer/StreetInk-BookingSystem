@@ -21,7 +21,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -94,6 +94,7 @@ public class BookingController {
         model.addAttribute("username", username);
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
+
 
         return "home/create-new-booking";
     }

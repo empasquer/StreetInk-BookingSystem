@@ -1,5 +1,7 @@
 package com.example.streetinkbookingsystem.models;
 
+import java.util.Base64;
+
 public class TattooArtist extends Person {
     private String username;
     private String password;
@@ -37,6 +39,11 @@ public class TattooArtist extends Person {
 
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
+        if (profilePicture != null) {
+            setBase64ProfilePicture(Base64.getEncoder().encodeToString(profilePicture));
+        } else {
+            setBase64ProfilePicture(null);
+        }
     }
 
     public String getFacebook() {

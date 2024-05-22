@@ -65,11 +65,6 @@ public class ProfileController {
         model.addAttribute("tattooArtist", tattooArtist);
 
 
-        //to display profile pic:
-        if (tattooArtist.getProfilePicture() != null) {
-            String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
-            tattooArtist.setBase64ProfilePicture(base64Image);
-        }
 
         if (username == null) {
             // Redirect logic when username is null or if not admin.
@@ -86,6 +81,7 @@ public class ProfileController {
      */
     @GetMapping("/create-new-profile")
     public String newProfile(Model model, HttpSession session) {
+        //to display the preview if a picture is chosen
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String base64Image = Base64.getEncoder().encodeToString(imageData);
@@ -294,16 +290,11 @@ public class ProfileController {
         TattooArtist artist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", artist);
 
-        // To display profile picture
+        // To display preview if picture is chosen
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String newBase64Image = Base64.getEncoder().encodeToString(imageData);
             model.addAttribute("newBase64Image", newBase64Image);
-        }
-
-        if (artist.getProfilePicture() != null) {
-            String base64Image = Base64.getEncoder().encodeToString(artist.getProfilePicture());
-            artist.setBase64ProfilePicture(base64Image);
         }
 
 

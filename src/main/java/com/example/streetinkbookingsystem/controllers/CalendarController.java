@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -69,6 +70,7 @@ public class CalendarController {
         int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
 
         //Add to model
         model.addAttribute("currentDate", currentDate);
