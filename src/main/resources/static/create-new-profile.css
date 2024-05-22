@@ -1,5 +1,10 @@
 section {
-    height:83em;
+    padding-bottom: 3em;
+    margin-top: 2em;
+}
+
+.upload-wrapper {
+    padding-bottom: 3em;
 }
 .upload-container {
     display: flex;
@@ -116,8 +121,8 @@ section {
     -webkit-appearance: none; /* Fjerner browserens standard checkbox-styling */
     -moz-appearance: none;
     appearance: none;
-    width: 50px; /* Juster bredden efter behov */
-    height: 50px; /* Juster højden efter behov */
+    width: 4.5em; /* Juster bredden efter behov */
+    height: 4.5em; /* Juster højden efter behov */
     border-radius: 8px; /* Runder hjørnerne */
     background-color: var(--input-field-gray); /* Gennemsigtig baggrund */
     outline: none; /* Fjerner den blå fokusramme */

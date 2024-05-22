@@ -12,7 +12,7 @@
 
 <main>
     <div class="back-arrow-container">
-        <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <a th:href="@{/manage-profiles}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
 
     <h1>Create new Profile</h1>
@@ -20,6 +20,7 @@
     <section>
 
         <!--Upload picture and display preview-->
+        <div class=upload-wrapper>
         <form class="upload-container" th:action="@{/upload-profile-picture}" method="post"
               enctype="multipart/form-data">
             <input type="hidden" name="action" value="create">
@@ -44,7 +45,7 @@
             </th:block>
         </form>
         <p>Upload Picture</p>
-
+        </div>
         <!--Rest of information for creating profile-->
         <form th:action="@{/create-new-profile}" method="post" enctype="multipart/form-data">
 
