@@ -204,8 +204,6 @@ public class ClientController {
                             @RequestParam int clientId,
                             Model model,
                             HttpSession session) {
-        System.out.println("Received bookingId: " + bookingId);
-        System.out.println("Received clientId: " + clientId);
 
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn) {
