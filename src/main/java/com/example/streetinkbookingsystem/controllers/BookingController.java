@@ -157,7 +157,7 @@ public class BookingController {
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
                 return "redirect:/add-client?bookingId=" + bookingId + "&clientId=1&username=" + username;
-            } else if ("show-booking".equals(action)) {
+            } else if ("client-list".equals(action)) {
                 return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Invalid actions.");

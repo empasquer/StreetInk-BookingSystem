@@ -39,6 +39,7 @@ public class ClientController {
 
 
     /**
+     * @Author Munazzah
      * @param model
      * @param session
      * @return String - View of the client-list page
@@ -73,12 +74,12 @@ public class ClientController {
     }
 
     /**
+     * @Author Munazzah
      * @param searchQuery
      * @param model
      * @param redirectAttributes
      * @param session
      * @return String - View of search-results
-     * @author Muanzzah
      * @summary Search for a Client based on phone number or first name. The if-statement
      * checks if it is a number or name and acts accordingly
      */
@@ -259,4 +260,73 @@ public class ClientController {
 
         return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
     }
+
+    @GetMapping("/choose-client")
+    public String chooseClient(Model model, HttpSession session) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
+        List<Client> sortedClients = clientService.getSortedListOfClients();
+        //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
+        //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
+        //Uses stream to handle everything simulationaly
+        //Uses collect (Collectors.groupingBy) to group the elements of teh stream based on first letter in first name
+        Map<Character, List<Client>> groupedClients = sortedClients.stream()
+                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
+                        TreeMap::new, Collectors.toList()));
+
+        model.addAttribute("groupedClients", groupedClients);
+        return "home/choose-client";
+    }
+
+    /**
+     * @Author Munazzah
+     * @param searchQuery
+     * @param model
+     * @param redirectAttributes
+     * @param session
+     * @return String - View of search-results
+     * @summary Search for a Client based on phone number or first name. The if-statement
+     * checks if it is a number or name and acts accordingly
+     */
+    @PostMapping("/search-for-existing-client")
+    public String searchForExistingClient(@RequestParam("search") String searchQuery, Model model,
+                         RedirectAttributes redirectAttributes, HttpSession session) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
+        model.addAttribute("searchQuery", searchQuery);
+        //Checks (via regex) if there are only numbers, letters or a mix of both and acts accordingly
+        if (searchQuery.matches("[0-9]+")) {
+            model.addAttribute("searchType", "phoneNumber");
+            List<Client> clientByNumber = clientService.getClientsByPhoneNumber(Integer.parseInt(searchQuery));
+            model.addAttribute("results", clientByNumber);
+        } else if (searchQuery.matches("[A-Za-z]+")) {
+            model.addAttribute("searchType", "firstName");
+            List<Client> clientByName = clientService.getClientsByFistName(searchQuery);
+            model.addAttribute("results", clientByName);
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
+            return "redirect:/client-list";
+        }
+        return "home/search-result2";
+    }
+
+
 }
