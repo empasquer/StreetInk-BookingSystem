@@ -48,15 +48,10 @@ public class BookingController {
      */
     @GetMapping("/booking")
      public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
@@ -64,8 +59,6 @@ public class BookingController {
         // Henter billeder fra den specifikke booking
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
         model.addAttribute("base64Images", base64Images);
-
-
 
         return "home/booking";
     }
@@ -80,19 +73,11 @@ public class BookingController {
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn){
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("username", username);
-        model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
 
         return "home/create-new-booking";
