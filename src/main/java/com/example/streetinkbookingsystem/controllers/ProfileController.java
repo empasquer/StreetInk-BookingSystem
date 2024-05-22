@@ -31,6 +31,7 @@ public class ProfileController {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        session.removeAttribute("imageData");
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         String username = (String) session.getAttribute("username");

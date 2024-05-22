@@ -45,7 +45,7 @@ public class TattooArtistService {
             return "Cannot delete an admin profile";
         }
         else tattooArtistRepository.deleteProfileByUsername(profileToDelete);
-        return artist.getUsername() + "deleted";
+        return artist.getUsername() + " deleted";
     }
 
     /**
