@@ -79,7 +79,7 @@ public class TattooArtistRepository {
 
     public void deleteProfileByUsername(String profileToDelete) {
         String query = "DELETE FROM tattoo_artist WHERE username =?";
-        jdbcTemplate.update(query,profileToDelete);
+         jdbcTemplate.update(query,profileToDelete);
     }
 
 

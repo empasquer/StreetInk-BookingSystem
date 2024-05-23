@@ -81,4 +81,15 @@ h2 {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    padding: 1em;
+}
+
+.confirmation-container {
+    position: absolute;
+    z-index: 4;
+    background: lightgrey;
+    padding: 2em;
+    border-radius: 1em;
+    color: white;
+    width: 20em;
 }

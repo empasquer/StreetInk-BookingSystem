@@ -1,5 +1,6 @@
 package com.example.streetinkbookingsystem.controllers;
 
+import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
@@ -49,7 +50,7 @@ public class ProfileController {
     }
 
     @GetMapping("/profile")
-    public String seeProfile(HttpSession session, Model model) {
+    public String seeProfile(HttpSession session, Model model,  @RequestParam(required = false) String profileToDelete) {
 
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (loggedIn) {
@@ -65,6 +66,10 @@ public class ProfileController {
         model.addAttribute("tattooArtist", tattooArtist);
 
 
+        if (profileToDelete != null) {
+            model.addAttribute("profileToDelete", profileToDelete);
+        }
+
         //to display profile pic:
         if (tattooArtist.getProfilePicture() != null) {
             String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
@@ -79,6 +84,7 @@ public class ProfileController {
         }
 
     }
+
 
     /**
      * @return get client to create-new-profile view
@@ -255,7 +261,9 @@ public class ProfileController {
         }
         String message = tattooArtistService.deleteProfileByUsername(profileToDelete);
         redirectAttributes.addFlashAttribute("message", message);
-        return "redirect:/manage-profiles";
+        if(username==profileToDelete) {
+            return "redirect:/index";
+        }else return "home/manage-profiles";
     }
 
 

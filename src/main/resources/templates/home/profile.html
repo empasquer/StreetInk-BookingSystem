@@ -20,11 +20,31 @@
     <h1 th:text="${tattooArtist.username}"></h1>
 
     <section>
+        <th:block  th:if="${profileToDelete!=null}" >
+            <div class="confirmation-container">
+                <h4>Are you sure you want to delete <span th:text="${profileToDelete}"></span>?</h4>
+                <p>This action is permanent.</p>
+                <div class="buttons">
+                    <form class="edit-btn" th:action="@{/delete-profile}" method="post">
+                        <input type="hidden" name="profileToDelete" th:value="${profileToDelete}" />
+                        <button class="red-button">Delete</button>
+                    </form>
+                    <form class="edit-btn" th:action="@{/profile}" method="get">
+                        <button class="gray-button">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </th:block>
+
 
         <div class="button-container">
             <form class="edit-btn" th:action="@{/edit-profile}" method="get">
                 <input type="hidden" name="username" th:value="${tattooArtist.username}" />
                 <button type="submit"><i class="fa fa-edit fa-2x"></i></button>
+            </form>
+            <form th:unless="${tattooArtist.isAdmin}" class="edit-btn" th:action="@{/profile(profileToDelete=${tattooArtist.username})}" method="get">
+                <input type="hidden" name="profileToDelete" th:value="${tattooArtist.username}" />
+                <button type="submit"><i class="fa fa-trash fa-2x"></i></button>
             </form>
         </div>
 

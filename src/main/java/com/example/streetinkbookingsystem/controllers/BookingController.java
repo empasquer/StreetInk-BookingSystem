@@ -38,27 +38,29 @@ public class BookingController {
     ClientService clientService;
 
     /**
-     * @Author Nanna
+     * @Author
      * @param model
      * @param session
      * @param bookingId
-     * @param username
      * @return
      */
     @GetMapping("/booking")
-     public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username){
+     public String booking(Model model, HttpSession session, @RequestParam int bookingId){
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn) {
             return "redirect:/";
         }
 
         model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("username", session.getAttribute(username));
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
+        System.out.println(booking.getId());
+        System.out.println(bookingId);
 
         // Henter billeder fra den specifikke booking
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
@@ -128,7 +130,7 @@ public class BookingController {
                                  @RequestParam("projectPictures") MultipartFile[] projectPictures,
                                  @RequestParam String action, // Tilføjet parameter for handling af knap handlinger
                                  RedirectAttributes redirectAttributes) {
-        try {
+      /*  try {*/
             String username = (String) session.getAttribute("username");
 
             if (username == null){
@@ -155,24 +157,25 @@ public class BookingController {
 
            //henter bookingId fra den gemte entitet
             int bookingId = newBooking.getId() ;
-            int clientId = newBooking.getClient().getId();
+           // int clientId = newBooking.getClient().getId();
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
                 return "redirect:/add-client?bookingId=" + bookingId + "&username=" + username;
             } else if ("existing-client".equals(action)) {
+                System.out.println("here");
                 return "redirect:/choose-client?bookingId=" + bookingId + "&username=" + username;
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Invalid actions.");
                 return "redirect:/create-new-booking?date=" + date;
             }
-
+/*
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong, try again.");
             return "redirect:/create-new-booking?date=" + date;
 
-        }
+        }*/
 
     }
 
@@ -205,6 +208,8 @@ public class BookingController {
 
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
+        System.out.println(bookingId);
+        System.out.println(booking.getId());
 
         // Henter billeder fra den specifikke booking
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
@@ -212,6 +217,15 @@ public class BookingController {
 
         return "home/booking-preview";
     }
+
+    @PostMapping("/regret-booking")
+    public String regretBooking(@RequestParam int bookingId, @RequestParam String date, Model model) {
+
+           // bookingService.cancelBooking(bookingId);
+
+        return "redirect:/day?date=" + date;
+    }
+
 
 }
 

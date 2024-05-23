@@ -313,11 +313,13 @@
                         <input type="file" id="image" name="projectPictures">
                     </div>
 
-                    <!-- Skjulte inputs, som bliver sendt med i formularen -->
+                    <!-- Skjulte inputs, som bliver sendt med i formularen --> <!--
                     <input type="hidden" name="bookingId" id="bookingId" value="${bookingId}">
                     <input type="hidden" name="username" value="${tattooArtist.username}">
                     <input type="hidden" name="date" th:value="${date}" />
                     <input type="hidden" name="clientId" value="1">
+                    -->
+                    <input type="hidden" name="date" th:value="${date}" />
 
                     <div class="button-container">
                         <button type="submit" name="action" value="new-client" class="red-button box-shadow">New Client</button>

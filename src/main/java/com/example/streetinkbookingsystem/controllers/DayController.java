@@ -35,30 +35,25 @@ public class DayController {
      * @return day view with a list of booking for that day
      */
     @GetMapping("/day")
-    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date){
+    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        if (!loggedIn) {
             return "redirect:/";
         }
 
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        if (username == null){
-            // Redirect logic when username is null
+        if (username == null) {
             return "redirect:/";
         }
 
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("username", username);
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
 
-
-        List<Booking> bookingList = bookingService.getBookingsForDay(date,username);
+        List<Booking> bookingList = bookingService.getBookingsForDay(date, username);
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
-        model.addAttribute("username", username);
 
         // might move to service, this makes a list of quarter hours
         List<Double> hours = new ArrayList<>();
@@ -66,7 +61,7 @@ public class DayController {
             hours.add(hour);
         }
         model.addAttribute("hours", hours);
-        model.addAttribute("bookingService",bookingService);
+        model.addAttribute("bookingService", bookingService);
 
         return "home/day";
     }
