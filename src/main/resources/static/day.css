@@ -37,7 +37,7 @@ section {
     grid-template-rows: repeat(44, 1fr);
     margin-left: 1.5em;
     position: relative;
-    margin-bottom: 1.2em;
+    margin-bottom: 0.9em;
     height: 44em;
 }
 
@@ -122,16 +122,32 @@ h1 {
 h2 {
     color: var(--white);
 }
-.booking-info {
+.booking-info-long {
     text-decoration: none;
     display: flex;
     justify-content: flex-start;
     color: var(--white);
     flex-direction: column;
     padding: 1em;
+}
 
+.booking-info-short {
+        text-decoration: none;
+        display: flex;
+        justify-content: flex-start;
+        color: var(--white);
+        flex-direction: column;
+        padding: 1em;
+    font-size: 0.7em;
+    align-self: center;
+    margin-top: 1em;
 
 }
+
+.booking-info-short h2 {
+    font-size: 1em;
+}
+
 p {
     color: var(--white);
 }

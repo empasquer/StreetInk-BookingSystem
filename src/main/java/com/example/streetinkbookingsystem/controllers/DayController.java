@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,8 @@ public class DayController {
         List<Booking> bookingList = bookingService.getBookingsForDay(date,(String) session.getAttribute("username"));
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
-
+        String day = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        model.addAttribute("day", day);
         // might move to service, this makes a list of quarter hours
         List<Double> hours = new ArrayList<>();
         for (double hour = 9; hour <= 20; hour += 0.25) {
