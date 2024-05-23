@@ -23,14 +23,14 @@
 
   <section class="box-shadow">
 
-    <form th:action="@{/search-for-existing-client}" method="post">
-      <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
-      <input type="hidden" name="username" th:value="${tattooArtist.username}">
+    <form th:action="@{/search-for-existing-client(bookingId=${bookingId})}" method="post">
+      <!-- <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
+     <input type="hidden" name="username" th:value="${tattooArtist.username}">
       <input type="hidden" name="date" th:value="${date}" />
-      <input type="hidden" name="clientId" th:value="${clientId}">
+      <input type="hidden" name="clientId" th:value="${clientId}">-->
       <div>
-        <label for="search">Search by number or first name:</label>
-        <input type="text" id="search" name="search">
+        <label for="searchQuery">Search by number or first name:</label>
+        <input type="text" id="searchQuery" name="searchQuery">
       </div>
 
       <div th:if="${message}" class="error-message">
@@ -51,7 +51,7 @@
         <div class="letter-header" th:text="${entry.key}">Letter</div>
         <ul class="client-list">
           <li th:each="client : ${entry.value}" class="client-item">
-            <a th:href="@{'/search-for-existing-client/booking-preview(bookingId=' + ${bookingId} + ',clientId=' + ${client.id} + ',username=' + ${tattooArtist.username} + ')'}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+            <a th:href="@{/booking-preview(bookingId=${bookingId},clientId= ${client.id},username=${tattooArtist.username})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
           </li>
           </li>
         </ul>

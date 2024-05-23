@@ -19,14 +19,13 @@
 
     <section class="box-shadow">
         <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
-        <input type="hidden" name="username" th:value="${tattooArtist.username}">
+       <!-- <input type="hidden" name="username" th:value="${tattooArtist.username}">
         <input type="hidden" name="date" th:value="${date}" />
-        <input type="hidden" name="clientId" th:value="${clientId}">
+        <input type="hidden" name="clientId" th:value="${clientId}">-->
         <div th:if="${results}">
             <ul>
                 <li class="client-list" th:each="client : ${results}">
-                    <a class="client-item" th:href="@{'/booking-preview(bookingId=' + ${bookingId} + ',clientId='
-                    + ${client.id} + ',username=' + ${username} + ')'}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                    <a class="client-item" th:href="@{/booking-preview(bookingId=${bookingId},clientId=${client.getId()}, username=${tattooArtist.username})}" th:text="${client.getFirstName() + ' ' + client.lastName}"></a>
                 </li>
             </ul>
         </div>
@@ -34,7 +33,7 @@
             <p>No results found</p>
         </div>
         <p>Booking ID: <span th:text="${bookingId}"></span></p>
-        <p>Username: <span th:text="${username}"></span></p>
+        <p>Username: <span th:text="${tattooArtist.username}"></span></p>
 
 
     </section>

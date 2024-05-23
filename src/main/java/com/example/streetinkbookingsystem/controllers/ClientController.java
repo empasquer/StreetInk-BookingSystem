@@ -25,7 +25,6 @@ public class ClientController {
 
     @Autowired
     ClientService clientService;
-
     @Autowired
     LoginService loginService;
     @Autowired
@@ -298,9 +297,9 @@ public class ClientController {
 
     @PostMapping("/search-for-existing-client")
     public String searchForExistingClient(HttpSession session,
-                                          @RequestParam("search") String searchQuery,
+                                          @RequestParam String searchQuery,
                                           @RequestParam int bookingId,
-                                          @RequestParam(required = false) int clientId, //clientId er ikke et must
+                                        /*  @RequestParam(required = false) int clientId, //clientId er ikke et must*/
                                           Model model,
                          RedirectAttributes redirectAttributes) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
@@ -314,7 +313,6 @@ public class ClientController {
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("bookingId", bookingId);
-        model.addAttribute("clientId", clientId );
         model.addAttribute("loggedIn", loggedIn);
 
         System.out.println("search for existing client controller");
@@ -335,16 +333,14 @@ public class ClientController {
             redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
             return "redirect:/choose-client";
         }
-        return "redirect:/search-result2/" + clientId + "?bookingId" + bookingId +  "&username=" + username;
-
-
+        // return "redirect:/search-result2/" + clientId + "?bookingId" + bookingId +  "&username=" + username;
+        return "home/search-result2";
     }
-
-    @GetMapping("/search-result2/{clientId}")
+/*
+    @GetMapping("/search-result2")
     public String showSearchResult2(HttpSession session,
                                     Model model,
-                                    @RequestParam int bookingId,
-                                    @PathVariable("clientId") int clientId) {
+                                    @RequestParam int bookingId) {
 
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn) {
@@ -356,16 +352,16 @@ public class ClientController {
 
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("bookingId", bookingId);
-        model.addAttribute("clientId", clientId);
         model.addAttribute("loggedIn", loggedIn);
 
-        Client client = clientService.getClientFromClientId(clientId);
-        model.addAttribute("client", client);
+       // Client client = clientService.getClientFromClientId(clientId);
+       //  model.addAttribute("client", client);
 
         return "home/search-result2";
 
     }
-
+*/
+    /*
     @PostMapping("/search-result2")
     public String saveExistingClient(@RequestParam int bookingId,
                              @RequestParam int clientId,
@@ -398,5 +394,5 @@ public class ClientController {
 
         return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
     }
-
+*/
 }
