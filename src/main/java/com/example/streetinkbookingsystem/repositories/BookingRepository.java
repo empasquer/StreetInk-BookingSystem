@@ -145,16 +145,6 @@ public class BookingRepository {
                                   String username, String projectTitle, String projectDesc, String personalNote,
                                   boolean isDepositPayed){
 
-        // Skal se hvad den bringer med sig over.
-        System.out.println("Start Time Slot: " + startTimeSlot);
-        System.out.println("End Time Slot: " + endTimeSlot);
-        System.out.println("Date: " + date);
-        System.out.println("Client ID: 1");
-        System.out.println("Username: " + username);
-        System.out.println("Project Title: " + projectTitle);
-        System.out.println("Project Description: " + projectDesc);
-        System.out.println("Personal Note: " + personalNote);
-        System.out.println("Is Deposit Payed: " + isDepositPayed);
 
         // tjjer om username eksisterer i tattoo_artist table
         String checkUsernameQuery = "SELECT COUNT(*) FROM tattoo_artist WHERE username = ?";

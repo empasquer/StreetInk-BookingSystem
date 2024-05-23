@@ -219,6 +219,7 @@ public class ClientController {
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
+        //int clientId = bookingService.getBookingDetail(bookingId).getClient().getId();
         Client client = clientService.getClientFromClientId(clientId);
 
         if (client.getId() == 1){

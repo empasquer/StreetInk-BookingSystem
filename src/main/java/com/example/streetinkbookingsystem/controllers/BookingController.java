@@ -78,7 +78,7 @@ public class BookingController {
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
-        /*boolean loggedIn = loginService.isUserLoggedIn(session);
+        boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn){
             return "redirect:/";
         }
@@ -87,13 +87,13 @@ public class BookingController {
 
         String username = (String) session.getAttribute("username");
 
-         */
-        String username;
-       // TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        //model.addAttribute("loggedIn", loggedIn);
-        //model.addAttribute("username", username);
-       // model.addAttribute("tattooArtist", tattooArtist);
+        //String username;
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("username", username);
+        model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
 
 
@@ -155,6 +155,7 @@ public class BookingController {
 
            //henter bookingId fra den gemte entitet
             int bookingId = newBooking.getId() ;
+            int clientId = newBooking.getClient().getId();
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
