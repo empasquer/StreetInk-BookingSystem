@@ -71,15 +71,27 @@ public class DashboardService {
         return (int) Math.round(bookingPercentage);
     }
 
-
-    public int calculateMonthProgressPercentage() {
+    // Calculates month progress in percentage only for week days
+/*    public int calculateMonthProgressPercentage() {
         LocalDate currentDate = LocalDate.now();
         int totalWeekdaysInMonth = calculateWeekdaysInMonth(currentDate);
         int currentDayOfMonth = currentDate.getDayOfMonth();
 
         double progressPercentage = ((double) currentDayOfMonth / totalWeekdaysInMonth) * 100;
         return (int) Math.round(progressPercentage);
+    }*/
+
+    // we now want to calculate the whole month's progress in percentage, with weekends
+
+    public int calculateMonthProgressPercentage() {
+        LocalDate currentDate = LocalDate.now();
+        int currentDayOfMonth = currentDate.getDayOfMonth();
+        int totalDaysInMonth = currentDate.lengthOfMonth();
+
+        double progressPercentage = ((double) currentDayOfMonth / totalDaysInMonth) * 100;
+        return (int) Math.round(progressPercentage);
     }
+
 
     public int calculateWeekdaysInMonth(LocalDate date) {
         int weekdaysInMonth = 0;
