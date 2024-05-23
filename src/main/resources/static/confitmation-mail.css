@@ -1,0 +1,65 @@
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+article {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+.client-name {
+    margin-top: 20px;
+}
+
+.booking-details {
+    margin-top: 20px;
+}
+
+.booking-time-details {
+    margin-bottom: 10px;
+}
+
+.tattoo-warnings {
+    margin-top: 20px;
+}
+
+ul {
+    margin-bottom: 10px;
+}
+
+li {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+p {
+    margin: 0;
+}
+
+.artist-information {
+    margin-top: 20px;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.artist-information li {
+    margin-bottom: 5px;
+}
+
+.divider:after {
+    content: "";
+}
