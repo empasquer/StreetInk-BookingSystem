@@ -2,6 +2,7 @@
 h2 {
     font-size: 1.5em; /* Juster størrelsen efter behov */
     font-weight: bold;
+    margin-bottom: 50px;
 }
 
 body {
@@ -20,9 +21,9 @@ body {
 }
 
 .process-picture {
-    max-width: 80px; /* Juster størrelsen efter ønske */
-    display: block; /* Gør billedet til et blokelement for at kunne justere margener */
-    margin: 0 auto 20px; /* Centrer billedet vandret og tilføj en margin nedenunder */
+    max-width: 80px;
+    display: block;
+    margin: 0 auto 20px;
 }
 
 .booking-container {
@@ -49,16 +50,13 @@ body {
 }
 
 .form-group-dep label {
-    margin-right: 30px; /* Tilføj en margin til højre for label */
+    margin-right: 30px;
 }
 
 .form-group-dep input[type="checkbox"] {
-    flex: 0 0 auto; /* Sæt checkbox til at beholde sin standardbredde */
-}
-
-.form-group-dep input[type="checkbox"] {
+    flex: 0 0 auto;
     transform: scale(3);
-    margin-right: 30px; /* ved ikke hvad denne ændrer*/
+    margin-right: 30px;
     border-radius: 10px;
 }
 
@@ -73,30 +71,26 @@ body {
     align-items: center;
 }
 
-.form-group-time .time-label {
-    margin-right: 20px; /* Tilføj en margin til højre for hver label */
-
-    flex: 0 0 auto;
-}
+.form-group-time .time-label,
 .form-group-time-end .time-label {
-    margin-right: 20px; /* Tilføj en margin til højre for hver label */
-
+    margin-right: 20px;
     flex: 0 0 auto;
 }
 
-.form-group-time .time-select {
+.form-group-time .time-select,
+.form-group-time-end .time-select {
     flex: 1;
 }
 
-.form-group-time select {
-    width: 20%; /* Sørg for, at select-feltet fylder hele containerens bredde */
+.form-group-time select,
+.form-group-time-end select {
+    width: 20%; /* bredden på drop-down-menuen.*/
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 0.8em;
     box-sizing: border-box;
 }
-
 
 .form-group label {
     display: block;
@@ -106,8 +100,7 @@ body {
 }
 
 .form-group input[type="text"],
-.form-group textarea,
-.form-group input[type="file"] {
+.form-group textarea{
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -115,8 +108,17 @@ body {
     box-sizing: border-box;
 }
 
+/* ændrer tekst i drop-down menuen. */
+input[type="file"],
+select, option,
+textarea {
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 12px;
+}
 
-/* ændrer i tids-dropdownen*/
+
+/* ændrer tekst i indputfelterne */
 input[type="text"],
 input[type="checkbox"],
 select,
@@ -128,28 +130,53 @@ textarea {
 
 input[type="file"] {
     border: none;
-    background: transparent;
-    color: #bbbbbb; /* Dette vil skjule teksten*/
+    background: none;
+    background-color: transparent;
+    color: #e3e3e3; /* Tekst ved siden af "gennemse"-knappen*/
     outline: none;
     box-shadow: none;
+    font-size: 20px;
+    position: relative;
+    left: -12px;
 }
+
 
 /* ændrer "gennemse" knappen*/
 input[type="file"]::file-selector-button {
     border: none;
     color: #333333; /* textfarve */
+    content: "Upload Images";
     padding: 8px;
     cursor: pointer;
     border-radius: 10px;
     padding: 10px;
     font-size: 20px;
     background: #f0f0f0;
+    margin-right: 10px; /* Tilføj mellemrum mellem knap og tekst */
 }
+
+input[type="file"]::after {
+    content: "No uploaded Image"; /* Ændrer standardteksten */
+    color: #333;
+    margin-left: 10px;
+}
+
 
 .button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 60px;
+}
+
+button {
+    padding: 40px 70px; /* Gør knapperne større */
+    font-size: 1em;
+    margin: 10px; /* Mindsk afstanden mellem knapperne */
+    width: 230px; /* Fast bredde for alle knapper */
+    height: 100px; /* Fast højde for alle knapper */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 

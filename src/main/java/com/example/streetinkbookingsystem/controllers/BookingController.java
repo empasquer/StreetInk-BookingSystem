@@ -83,19 +83,13 @@ public class BookingController {
             return "redirect:/";
         }
 
-
-
         String username = (String) session.getAttribute("username");
-
-
-        //String username;
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
         model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("username", username);
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
-
 
         return "home/create-new-booking";
     }
@@ -155,7 +149,7 @@ public class BookingController {
 
            //henter bookingId fra den gemte entitet
             int bookingId = newBooking.getId() ;
-            int clientId = newBooking.getClient().getId();
+            //int clientId = newBooking.getClient().getId();
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
