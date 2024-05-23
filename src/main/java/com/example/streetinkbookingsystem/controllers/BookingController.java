@@ -218,8 +218,8 @@ public class BookingController {
         return "home/booking-preview";
     }
 
-    @PostMapping("/regret-booking")
-    public String regretBooking(@RequestParam int bookingId, @RequestParam String date, Model model) {
+    @PostMapping("/cancel-booking")
+    public String cancelBooking(@RequestParam int bookingId, @RequestParam String date, Model model) {
 
            // bookingService.cancelBooking(bookingId);
 

@@ -73,7 +73,7 @@
 
     </section>
     <div class="button-container">
-        <form th:action="@{/regret-booking}" method="post">
+        <form th:action="@{/cancel-booking}" method="post">
             <input type="hidden" name="date" th:value="${booking.date}">
             <input type="hidden" name="bookingId" th:value="${booking.id}">
             <button class="gray-button" type="submit">Cancel</button>
