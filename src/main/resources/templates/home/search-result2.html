@@ -19,9 +19,6 @@
 
     <section class="box-shadow">
         <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
-       <!-- <input type="hidden" name="username" th:value="${tattooArtist.username}">
-        <input type="hidden" name="date" th:value="${date}" />
-        <input type="hidden" name="clientId" th:value="${clientId}">-->
         <div th:if="${results}">
             <ul>
                 <li class="client-list" th:each="client : ${results}">
@@ -32,9 +29,6 @@
         <div th:if="${#lists.isEmpty(results)}">
             <p>No results found</p>
         </div>
-        <p>Booking ID: <span th:text="${bookingId}"></span></p>
-        <p>Username: <span th:text="${tattooArtist.username}"></span></p>
-
 
     </section>
 

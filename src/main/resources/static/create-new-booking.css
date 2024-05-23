@@ -1,4 +1,13 @@
 
+h2 {
+    font-size: 1.5em; /* Juster størrelsen efter behov */
+    font-weight: bold;
+}
+
+body {
+    font-size: 1.2em; /* Juster størrelsen efter behov */
+    font-weight: bold;
+}
 
 .back-arrow-container {
     margin-bottom: 20px;
@@ -10,6 +19,11 @@
     font-size: 20px;
 }
 
+.process-picture {
+    max-width: 80px; /* Juster størrelsen efter ønske */
+    display: block; /* Gør billedet til et blokelement for at kunne justere margener */
+    margin: 0 auto 20px; /* Centrer billedet vandret og tilføj en margin nedenunder */
+}
 
 .booking-container {
     display: flex;
@@ -21,16 +35,74 @@
     padding: 20px;
     border-radius: 8px;
     text-align: left;
+    font-size: 25px;
 }
 
 .form-group {
     margin-bottom: 15px;
+
 }
+.form-group-dep {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.form-group-dep label {
+    margin-right: 30px; /* Tilføj en margin til højre for label */
+}
+
+.form-group-dep input[type="checkbox"] {
+    flex: 0 0 auto; /* Sæt checkbox til at beholde sin standardbredde */
+}
+
+.form-group-dep input[type="checkbox"] {
+    transform: scale(3);
+    margin-right: 30px; /* ved ikke hvad denne ændrer*/
+    border-radius: 10px;
+}
+
+.form-group-time {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.form-group-time-end {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.form-group-time .time-label {
+    margin-right: 20px; /* Tilføj en margin til højre for hver label */
+
+    flex: 0 0 auto;
+}
+.form-group-time-end .time-label {
+    margin-right: 20px; /* Tilføj en margin til højre for hver label */
+
+    flex: 0 0 auto;
+}
+
+.form-group-time .time-select {
+    flex: 1;
+}
+
+.form-group-time select {
+    width: 20%; /* Sørg for, at select-feltet fylder hele containerens bredde */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+
 }
 
 .form-group input[type="text"],
@@ -39,13 +111,39 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     box-sizing: border-box;
 }
 
-.form-group input[type="checkbox"] {
-    transform: scale(1.2);
-    margin-right: 5px;
+
+/* ændrer i tids-dropdownen*/
+input[type="text"],
+input[type="checkbox"],
+select,
+textarea {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+input[type="file"] {
+    border: none;
+    background: transparent;
+    color: #bbbbbb; /* Dette vil skjule teksten*/
+    outline: none;
+    box-shadow: none;
+}
+
+/* ændrer "gennemse" knappen*/
+input[type="file"]::file-selector-button {
+    border: none;
+    color: #333333; /* textfarve */
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    background: #f0f0f0;
 }
 
 .button-container {
@@ -53,4 +151,5 @@
     justify-content: space-between;
     margin-top: 20px;
 }
+
 

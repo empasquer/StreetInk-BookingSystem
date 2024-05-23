@@ -64,8 +64,6 @@ public class BookingController {
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
         model.addAttribute("base64Images", base64Images);
 
-
-
         return "home/booking";
     }
 
@@ -73,26 +71,31 @@ public class BookingController {
     /**
      * @Author Tara
      * @param model
-     * @param session
-     * @param date
-     * @return "home/create-new-booking"
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *                to index page if not logged in.
+     * @param date Is used, sp that we create af booking on the specific date.
+     * @return den gemte booking.
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn){
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        /*boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn){
             return "redirect:/";
         }
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("username", username);
-        model.addAttribute("tattooArtist", tattooArtist);
+
+        String username = (String) session.getAttribute("username");
+
+         */
+        String username;
+       // TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
+        //model.addAttribute("loggedIn", loggedIn);
+        //model.addAttribute("username", username);
+       // model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
+
 
         return "home/create-new-booking";
     }
@@ -110,7 +113,7 @@ public class BookingController {
      * @param projectPictures
      * @param action
      * @param redirectAttributes
-     * @return
+     * @return add-client eller existing-client
      */
     @PostMapping("/save-tattoo-info")
     public String saveNewBooking(@RequestParam LocalTime startTimeSlot,
@@ -121,7 +124,7 @@ public class BookingController {
                                  @RequestParam String projectDesc,
                                  @RequestParam String personalNote,
                                  @RequestParam(name = "isDepositPayed", defaultValue = "false") boolean isDepositPayed,
-                                 //Multipartfile er en datatypen. Disse objekter repræsenterer filer, som er blevet uploadet via en html-formular. Der kanvære flere filer som er uploadet.
+                                 //Multipartfile er en datatypen. Disse objekter repræsenterer filer, som er blevet uploadet via en html-formular. Der kan være flere filer som er uploadet.
                                  @RequestParam("projectPictures") MultipartFile[] projectPictures,
                                  @RequestParam String action, // Tilføjet parameter for handling af knap handlinger
                                  RedirectAttributes redirectAttributes) {
@@ -144,7 +147,7 @@ public class BookingController {
                     })
                     .collect(Collectors.toList());
 
-            // Gemmer booking og henter den gemte entitet
+            // Gemmer booking
            Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
                     projectDesc, personalNote, isDepositPayed, pictureList);
 
@@ -172,22 +175,26 @@ public class BookingController {
 
     }
 
+    /**
+     * @Author Tara
+     * @param model
+     * @param session
+     * @param bookingId
+     * @param username
+     * @param clientId
+     * @return booking-preview
+     */
     @GetMapping("/booking-preview")
     public String bookingPreview (Model model, HttpSession session, @RequestParam int bookingId,
                                   @RequestParam String username,
                                   @RequestParam int clientId){
-        System.out.println("Booking ID: " + bookingId);
-        System.out.println("Username: " + username);
-        System.out.println("Client ID: " + clientId);
+
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn) {
             return "redirect:/";
         }
 
-        System.out.println("Booking ID: " + bookingId);
-        System.out.println("Username: " + username);
-        System.out.println("Client ID: " + clientId);
-
+        //tilføjer den "nye" ClientId til bookingen
         clientService.updateClientOnBooking(bookingId, clientId);
 
         model.addAttribute("loggedIn", loggedIn);
@@ -201,8 +208,6 @@ public class BookingController {
         // Henter billeder fra den specifikke booking
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
         model.addAttribute("base64Images", base64Images);
-
-
 
         return "home/booking-preview";
     }

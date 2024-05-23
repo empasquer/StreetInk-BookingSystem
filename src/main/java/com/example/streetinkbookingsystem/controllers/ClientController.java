@@ -39,7 +39,6 @@ public class ClientController {
      * @param model
      * @param session
      * @return String - View of the client-list page
-     * @author Munazzah
      * @summary Gets the sorted list og Clients from the service layer, and then uses Map to
      * group the Clients based on the first letter in name
      */
@@ -196,6 +195,16 @@ public class ClientController {
         return "redirect:/client?clientId=" + clientId;
     }
 
+    /**
+     * @Author Tara
+     * @param bookingId
+     * @param clientId
+     * @param model
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *                to index page if not logged in.
+     * @return String - add-client view
+     * @Summary Creates the new client, that the user wants to add to the booking that the user is creating
+     */
     @GetMapping("/add-client")
     public String addClient(@RequestParam int bookingId,
                             @RequestParam int clientId,
@@ -225,6 +234,21 @@ public class ClientController {
 
     }
 
+    /**
+     * @Author Tara
+     * @param bookingId
+     * @param clientId
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param description
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *                to index page if not logged in.
+     * @param redirectAttributes
+     * @return
+     * @Summary Saves the new client to the booking that the user is creating
+     */
     @PostMapping("/save-client")
     public String saveClient(@RequestParam int bookingId,
                              @RequestParam(required = false, defaultValue = "1") int clientId,
@@ -254,9 +278,17 @@ public class ClientController {
 
         clientService.updateClientOnBooking(bookingId, client.getId());
 
-        return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
+        return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
+        //return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username;
     }
 
+    /**
+     * @Author Tara
+     * @param model
+     * @param session
+     * @param bookingId
+     * @return
+     */
     @GetMapping("/choose-client")
     public String chooseClient(Model model, HttpSession session,
                                @RequestParam int bookingId) {
@@ -294,7 +326,15 @@ public class ClientController {
         return "home/choose-client";
     }
 
-
+    /**
+     * @Author Tara
+     * @param session
+     * @param searchQuery
+     * @param bookingId
+     * @param model
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/search-for-existing-client")
     public String searchForExistingClient(HttpSession session,
                                           @RequestParam String searchQuery,
@@ -336,63 +376,5 @@ public class ClientController {
         // return "redirect:/search-result2/" + clientId + "?bookingId" + bookingId +  "&username=" + username;
         return "home/search-result2";
     }
-/*
-    @GetMapping("/search-result2")
-    public String showSearchResult2(HttpSession session,
-                                    Model model,
-                                    @RequestParam int bookingId) {
 
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
-            return "redirect:/";
-        }
-
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-
-        model.addAttribute("tattooArtist", tattooArtist);
-        model.addAttribute("bookingId", bookingId);
-        model.addAttribute("loggedIn", loggedIn);
-
-       // Client client = clientService.getClientFromClientId(clientId);
-       //  model.addAttribute("client", client);
-
-        return "home/search-result2";
-
-    }
-*/
-    /*
-    @PostMapping("/search-result2")
-    public String saveExistingClient(@RequestParam int bookingId,
-                             @RequestParam int clientId,
-                             @RequestParam String firstName,
-                             @RequestParam String lastName,
-                             @RequestParam String email,
-                             @RequestParam int phoneNumber,
-                             @RequestParam String description,
-                             HttpSession session,
-                             RedirectAttributes redirectAttributes){
-
-        String username = (String) session.getAttribute("username");
-
-        if (username == null){
-            redirectAttributes.addFlashAttribute("errorMessage", "Your session ran out, log in again.");
-            return "redirect:/";
-        }
-
-        Client client = clientService.getClientFromClientId(clientId);
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
-        client.setEmail(email);
-        client.setPhoneNumber(phoneNumber);
-        client.setDescription(description);
-
-        clientService.updateExistingClient(client);
-        //client = clientService.updateClient(firstName, lastName, email, phoneNumber, description, clientId);
-
-        clientService.updateClientOnBooking(bookingId, client.getId());
-
-        return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
-    }
-*/
 }
