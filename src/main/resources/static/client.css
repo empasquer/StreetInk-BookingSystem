@@ -87,4 +87,5 @@ button {
     flex-direction: column;
     text-align: left;
     gap: .3rem;
+    width: 100%;
 }
