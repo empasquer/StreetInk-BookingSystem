@@ -29,6 +29,8 @@
 
         .client-name {
             margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.5em;
         }
 
         .booking-details {
@@ -66,8 +68,20 @@
             margin-bottom: 5px;
         }
 
-        .divider:after {
+        divider {
+            position: relative; /* Ensure the pseudo-element is positioned relative to the divider */
+            height: 1px; /* Optional: Set the height of the divider */
+        }
+
+        .divider::after {
             content: "";
+            display: block;
+            width: 100%; /* Full width */
+            height: 1px; /* Height of the line */
+            background-color: black; /* Color of the line */
+            position: absolute;
+            top: 50%; /* Vertically center the line if height is not zero */
+            left: 0;
         }
         header, footer {
             background-color: hsla(0, 0%, 15%, 1);
@@ -96,129 +110,173 @@
 <body>
 
 <article>
+    <p>English version below</p>
     <h1>Din booking er bekræftet!</h1>
+    <p style="font-weight: bold">***OBS: Denne email kan ikke besvares. Hvis du vil kontakte StreetInk står kontaktoplysninger længere nede </p>
 
     <div class="client-name">
-        <p>Kære <span th:text="${ClientFirstName}"></span>,</p>
+        <h2>Kære <span th:text="${ClientFirstName}"></span>,</h2>
     </div>
 
     <div class="Booking-details">
         <div class="booking-time-details">
-            <p>Du har booket en tid hos mig d. <span th:text="${BookingDate}"></span>
-                i tidsrummet <span th:text="${BookingStart + ' - ' + BookingEnd}" ></span>.</p>
-        </div>
+            <p>Tak fordi du har booket en tid hos Street Ink. Vi ser frem til at hjælpe dig med at realiserer din tatoveringsidé!</p>
+            <br>
+            <br>
+            <p>Her er detaljerne for din aftale: </p>
+           </div>
         <div class="Booking-project-details">
-            <p>Jeg har registreret følgende information om din booking:</p>
-            <p>Tatovering: <span th:text="${BookingTitle}"></span></p>
-            <p th:if="${BookingDescription != null and BookingDescription != ''}">Noter: <span th:text="${BookingDescription}"></span></p>
-        </div>
+            <p style="font-weight: bold">Dato: <span style="font-weight: normal" th:text="${BookingDate}"></span></p>
+            <p style="font-weight: bold">Tid: <span style="font-weight: normal"th:text="${BookingStart + ' - ' + BookingEnd}"></span></p>
+            <p style="font-weight: bold">Tatovør: <span style="font-weight: normal"th:text="${ArtistFirstName + ' ' + ArtistLastName}"></span></p>
+            <p style="font-weight: bold">Adresse: <p style="font-weight: normal">Mortzartsvej 13, 2450 kbh SV</p></p>
+            <br>
+            <p style="font-weight: bold">Tatovering beskrivelse: <span style="font-weight: normal"th:text="${BookingTitle}"></span></p>
+            <p th:text="${BookingDescription}"></p>
+                  </div>
     </div>
+
+    <div class="divider"></div>
 
     <div class="tattoo-warnings">
-        <h2>Regler og Retningslinjer</h2>
-        <p>Når du får en tatovering skal du huske at passe på dig selv før og efter du kommer til shoppen. Læs venligst de understående regler og guidelines:
-            </p>
-
-        <h5>Før:</h5>
+        <h3>Vigtigt Information:</h3>
+        <h5>FØR:</h5>
         <ul>
-
-            <li>Spis før du kommer - vær opmærksom på at der ikke på spises i shoppen</li>
-            <li>Få en god mængde søvn så din krop er udhvilet. </li>
+            <li>Sørg for at spise godt og holde dig hydreret inden din aftale. Medbragt mad må kun spises i forlokalet/ventelokalet i pauserne</li>
+            <li>Sørg for at have været i bad samme dag som din booking. Det er vigtigt, at din personlige hygiejne er i top. Hvis vi vurderer, at hygiejnen ikke er tilstrækkelig, kan vi være nødsaget til at aftale en ny tid. </li>
+            <li>Sørg for at iføre dig rent og behageligt tøj, som godt kan tåle at få tatoveringsfarve på sig og som ikke generer de steder hvor du bliver tatoveret.  </li>
         </ul>
-        <h5>Efter:</h5>
+        <h5>EFTER:</h5>
         <ul>
-            <li>Undgå at få for meget direkte sollys på tatoveringen</li>
-            <li>Undgå kontakt med chlor, som for eksempel pools</li>
+            <li>Behold indpakningen på så længe som muligt, dog max 24 timer, for at beskytte din nye tatovering mod bakterier/li>
+            <li>De næste 14 dage skal du smøre din nye tatovering 2-3 gange dagligt med den anbefalede creme, samt vaske den ca. 1 gang dagligt og lad den lufttørre. Det er vigtigt at have rene hænder når du rører ved den.</li>
         </ul>
-        <h5>Shop regler:</h5>
+        <h5>De næste 14 dage må du IKKE:</h5>
         <ul>
-            <li>Tag venligst skoene af når du kommer - vi prøver at holde et rent space</li>
+            <li>Bade i havet, søer eller pools </li>
+            <li>Du skal undgå direkte sollys så meget som muligt </li>
+            <li>Du skal undgå direkte at kradse, kløe eller pille i den. Rør så lidt som muligt ved den, medmindre du smører eller vasker den </li>
+        </ul>
+        <h5>BETALING:</h5>
+        <ul>
+            <li>Vi accepterer kontanter, mobilepay og tager imod de fleste kreditkort</li>
+            <li>Depositum skal betales via mobilpay til <span th:text="${ArtistFirstName + ' ' + ArtistLastName}"></span>, minimum 3 dage før din booking. Først når depositum er overført er din aftale gældende. Depositummet vil blive fratrukket den endelige tatoveringspris. (Tatovørens kontaktoplysninger står nederst i mailen)</li>
         </ul>
     </div>
-
-    <h4>Kontakt mig:</h4>
-
-    <ul class="artist-information">
-        <li>
-            <strong>Tlf:</strong>
-            <span th:text="${ArtistPhone}"></span>
-        </li>
-        <li>
-            <strong>Email:</strong>
-            <span th:text="${ArtistEmail}"></span>
-        </li>
-
-        <li th:if="${ArtistInstagram}">
-            <strong>Instagram:</strong>
-            <a th:href="${ArtistInstagram}" target="_blank">Find mig på Instagram</a>
-        </li>
-        <li th:if="${ArtistFacebook}">
-            <strong>Facebook:</strong>
-            <a th:href="${ArtistFacebook}" target="_blank">Find mig på Facebook</a>
-        </li>
+    <h5>ÆNDRING/AFLYSNING:</h5>
+    <ul>
+        <li>Hvis du har brug for at ændre eller aflyse din tid, bedes du kontakte os mindst 48 timer i forvejen for at undgå gebyrer. (Tatovørens kontaktoplysninger står nederst i mailen)</li>
+        <li>VÆR OPMÆRKSOM PÅ: Hvis ikke du kontakter os mindst 48 timer inden den aftalte tid, vil vi beholde dit depositum, som tabt arbejdsfortjeneste.</li>
     </ul>
-    <p>
-       Dette er en autogenerated mail og kan ikke besvares.
+    </div>
+    <p>Hvis du har yderligere spørgsmål er du velkommen til at kontakte os.
     </p>
+    <br>
+    <p>Vi ser frem til at se dig snart!</p>
+    <br>
+    <p>Med venlig hilsen,</p>
+    <br>
+
+    <div class="artist-information">
+        <p style="font-weight: bold">Tatovør: <span style="font-weight: normal" th:text="${ArtistFirstName + ' ' + ArtistLastName}"></span></p>
+        <p style="font-weight: bold">Telefon: <span style="font-weight: normal"th:text="${ArtistPhone}"></span></p>
+        <p style="font-weight: bold">Email: <span style="font-weight: normal"th:text="${ArtistEmail}"></span></p>
+        <p th:if="${ArtistInstagram}" style="font-weight: bold">Instagram: <span style="font-weight: normal"th:text="${ArtistInstagram}"></span></p>
+        <p th:if="${ArtistFacebook}" style="font-weight: bold">Facebook: <span style="font-weight: normal"th:text="${ArtistFacebook}"></span></p>
+    </div>
+
+    <p style="font-weight: bold">**OBS: Denne email kan ikke besvares.</p>
+   <br>
+    <h6>Privatlivspolitik:</h6>
+    <p>Vi respekterer dit privatliv og overholder GDPR-lovgivningen. Hvis du ønsker at få dine gemte oplysninger slettet, kan du til enhver tid kontakte os, så sørger vi for at slette dine data fra vores system.</p>
 
 </article>
+    <div class="divider"></div>
 
-<div class="divider"></div>
 <article>
-    <h1>Your Booking has been confirmed!</h1>
+    <h1>Your booking has been confirmed!</h1>
+    <p style="font-weight: bold">***NOTE:This email cannot be replied to. If you wish to contact StreetInk, the contact details are listed below. </p>
 
     <div class="client-name">
-        <p>Dear <span th:text="${ClientFirstName}"></span>,</p>
+        <h2>Dear <span th:text="${ClientFirstName}"></span>,</h2>
     </div>
 
     <div class="Booking-details">
         <div class="booking-time-details">
-            <p>You have booked a time with me on <span th:text="${BookingDate}"></span>
-                between <span th:text="${BookingStart + ' - ' + BookingEnd}" ></span>.</p>
+            <p>Thank you for booking an appointment with Street Ink. We look forward to helping you realize your tattoo idea! </p>
+            <br>
+            <br>
+            <p>Here are the details of your appointment:  </p>
         </div>
         <div class="Booking-project-details">
-            <p>I have registered the following details about your booking:</p>
-            <p>Tattoo: <span th:text="${BookingTitle}"></span></p>
-            <p th:if="${BookingDescription != null and BookingDescription != ''}">Notes: <span th:text="${BookingDescription}"></span></p>
+            <p style="font-weight: bold">Date: <span style="font-weight: normal" th:text="${BookingDate}"></span></p>
+            <p style="font-weight: bold">Time: <span style="font-weight: normal"th:text="${BookingStart + ' - ' + BookingEnd}"></span></p>
+            <p style="font-weight: bold">Tattoo Artist: <span style="font-weight: normal"th:text="${ArtistFirstName + ' ' + ArtistLastName}"></span></p>
+            <p style="font-weight: bold">Address: <p style="font-weight: normal">Mortzartsvej 13, 2450 kbh SV</p></p>
+            <br>
+            <p style="font-weight: bold">Tattoo description: <span style="font-weight: normal"th:text="${BookingTitle}"></span></p>
+            <p th:text="${BookingDescription}"></p>
         </div>
     </div>
 
+    <div class="divider"></div>
+
     <div class="tattoo-warnings">
-        <h2>Dos and Don'ts:</h2>
-        <p>
-            When you get a tattoo, you need to take care of yourself before and after leaving the shop. Please read through the following steps.
-        </p>
-
-        <h5>Before:</h5>
+        <h3>Important Information:</h3>
+        <h5>BEFORE:</h5>
         <ul>
-
-            <li>Eat before - note that eating inside the shop is not permitted</li>
-            <li>Get some sleep before</li>
+            <li>Make sure to eat well and stay hydrated before your appointment. Brought food can only be eaten in the front room/waiting room during breaks.</li>
+            <li>Make sure to take a shower on the day of your appointment. It is important that your personal hygiene is top-notch. If we determine that hygiene is insufficient, we may need to reschedule. </li>
+            <li>Make sure to wear clean and comfortable clothes, that can handle tattoo ink and do not interfere with the area to be tattooed.</li>
         </ul>
-        <h5>After:</h5>
+        <h5>AFTER:</h5>
         <ul>
-            <li>Avoid too much sunlight</li>
-            <li>Avoid chlorine, such as swimming pools</li>
+            <li>Keep the wrapping on for as long as possible, but no more than 24 hours, to protect your new tattoo from bacteria.</li>
+            <li>For the next 14 days, apply the recommended cream to your new tattoo 2-3 times daily, and wash it about once daily, allowing it to air dry. It is important to have clean hands when touching it.</li>
         </ul>
-        <h5>Shop rules:</h5>
+        <h5>For the next 14 days, you MUST NOT: </h5>
         <ul>
-            <li>Please take off your shoes when entering the shop - we try to keep a clean shop</li>
+            <li>Bathe in the sea, lakes, or pools. </li>
+            <li>Avoid direct sunlight as much as possible. </li>
+            <li>Avoid scratching, itching, or picking at it. Touch it as little as possible unless applying cream or washing it. </li>
+        </ul>
+
+        <h5>PAYMENT:</h5>
+        <ul>
+            <li>We accept cash, MobilePay, and most major credit cards.</li>
+            <li>The deposit must be paid  <span th:text="${ArtistFirstName + ' ' + ArtistLastName}"></span>,to XXX XXXX, or via MobilePay to the tattoo artist's phone number, at least 3 days before your appointment. Your appointment is only confirmed once the deposit is transferred. The deposit will be deducted from the final tattoo price. (The tattoo artist's contact details are listed at the bottom of the email)</li>
         </ul>
     </div>
-
-    <h4>Contact me:</h4>
-    <ul class="artist-information">
-        <li> <i class="fab fa-phone fa-3x">Phone number: </i><span th:text="${ArtistPhone}"></span></li>
-        <li> <i class="fab fa-email fa-3x">Email: </i><span th:text="${ArtistEmail}"></span></li>
-
-        <li th:if="${ArtistInstagram}"> Instagram : <span th:text="${ArtistInstagram}"></span><i class="fab fa-instagram fa-3x"></i></a></li>
-        <li th:if="${ArtistInstagram}"> Facebook : <span th:text="${ArtistFacebook}"></span><i class="fab fa-instagram fa-3x"></i></a></li>
-
+    <h5>CHANGES/CANCELLATIONS: </h5>
+    <ul>
+        <li>If you need to change or cancel your appointment, please contact us at least 48 hours in advance to avoid fees. (The tattoo artist's contact details are listed at the bottom of the email)</li>
+        <li>PLEASE NOTE: If you do not contact us at least 48 hours before the scheduled time, we will retain your deposit as lost work compensation.</li>
     </ul>
-    <p>
-        Note that this is an automated mail and cannot be replied to.
+    </div>
+    <p>If you have any further questions, please feel free to contact us.
     </p>
+    <br>
+    <p>We look forward to seeing you soon! </p>
+    <br>
+    <p>Best regards, </p>
+    <br>
+
+    <div class="artist-information">
+        <p style="font-weight: bold">Tattoo Artist: <span style="font-weight: normal" th:text="${ArtistFirstName + ' ' + ArtistLastName}"></span></p>
+        <p style="font-weight: bold">Phone: <span style="font-weight: normal"th:text="${ArtistPhone}"></span></p>
+        <p style="font-weight: bold">Email: <span style="font-weight: normal"th:text="${ArtistEmail}"></span></p>
+        <p th:if="${ArtistInstagram}" style="font-weight: bold">Instagram: <span style="font-weight: normal"th:text="${ArtistInstagram}"></span></p>
+        <p th:if="${ArtistFacebook}" style="font-weight: bold">Facebook: <span style="font-weight: normal"th:text="${ArtistFacebook}"></span></p>
+    </div>
+
+    <p style="font-weight: bold">**NOTE: This email cannot be replied to</p>
+    <br>
+    <h6>Privacy Policy:</h6>
+    <p> We respect your privacy and comply with GDPR regulations. If you wish to have your stored information deleted, please contact us</p>
+
 </article>
+
+
 
 
 </body>
