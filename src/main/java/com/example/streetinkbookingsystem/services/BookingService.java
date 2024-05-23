@@ -134,4 +134,8 @@ public class BookingService {
     public List<Booking> getBookingsByClientId(int clientId) {
         return bookingRepository.getBookingsByClientId(clientId);
     }
+
+    public void deleteBooking(int bookingId) {
+        bookingRepository.deleteBooking(bookingId);
+    }
 }

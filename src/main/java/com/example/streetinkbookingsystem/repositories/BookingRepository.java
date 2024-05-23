@@ -195,12 +195,38 @@ public class BookingRepository {
 
     }
 
-    public Booking findById(int bookingId){
+    /**
+     * @author Munazzah
+     * @param bookingId
+     */
+    public void deleteBooking(int bookingId) {
+        validateBookingExistence(bookingId);
+
+        String deleteQuery = "DELETE FROM booking WHERE id = ?";
+        jdbcTemplate.update(deleteQuery, bookingId);
+    }
+
+    /**
+     * @author Munazzah
+     * @param bookingId
+     * @summary Checks if the booking exist
+     */
+    private void validateBookingExistence(int bookingId) {
+        String checkBookingQuery = "SELECT COUNT(*) FROM booking WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(checkBookingQuery, new Object[]{bookingId}, Integer.class);
+        if (count == null || count == 0) {
+            throw new IllegalArgumentException("This booking does not exist: " + bookingId);
+        }
+    }
+
+    public Booking findById(int bookingId) {
+        validateBookingExistence(bookingId);
+
         String query = "SELECT * FROM booking WHERE id = ?";
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
-        Booking booking = jdbcTemplate.queryForObject(query, rowMapper, bookingId);
-        return booking;
+        return jdbcTemplate.queryForObject(query, rowMapper, bookingId);
     }
+
 
 
     //Retunerer antallet af booking for en bestemt dato og username

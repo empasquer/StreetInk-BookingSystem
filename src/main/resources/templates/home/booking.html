@@ -68,8 +68,9 @@
   </section>
 
 <!--this is just for testing -->
-<form th:action="@{/send-confirmation-mail(bookingId = ${booking.getId()})}" method="post">
-  <button class="gray-button" type="submit">sendmail</button>
+<form th:action="@{/confirm-delete-booking}" method="get">
+  <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
+  <button class="gray-button" type="submit">delete</button>
 </form>
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>

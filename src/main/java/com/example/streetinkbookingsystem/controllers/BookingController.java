@@ -159,6 +159,43 @@ public class BookingController {
 
     }
 
+    @GetMapping("/confirm-delete-booking")
+    public String confirmDeleteBooking(Model model, HttpSession session, @RequestParam int bookingIdToDelete) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        Booking booking = bookingService.getBookingDetail(bookingIdToDelete);
+        model.addAttribute("booking", booking);
+        model.addAttribute("bookingIdToDelete", bookingIdToDelete);
+
+        return "home/confirm-delete-booking";
+    }
+
+    @PostMapping("/confirm-delete-booking")
+    public String deleteBookingWithWarning(@RequestParam int bookingIdToDelete, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        redirectAttributes.addAttribute("bookingIdToDelete", bookingIdToDelete);
+        redirectAttributes.addAttribute("showConfirmation", true);
+        return "redirect:/delete-booking";
+    }
+
+    @PostMapping("/delete-booking")
+    public String deleteBooking(@RequestParam int bookingIdToDelete, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+        bookingService.deleteBooking(bookingIdToDelete);
+        return "redirect:/calendar";
+    }
+
+
 }
 
 

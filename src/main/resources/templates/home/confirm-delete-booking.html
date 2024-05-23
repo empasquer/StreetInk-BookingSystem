@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Booking</title>
+    <link rel="stylesheet" type="text/css" href="/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+<main>
+
+    <h1>Confirm Deletion of Booking</h1>
+    <section class="box-shadow">
+        <div class="confirmation-container">
+            <h4>Are you sure you want to delete booking:
+                <span th:text="${booking.getDate()} + ' at ' + ${booking.getStartTimeSlot()}"></span>?
+            </h4>
+            <p>Be aware that the booking will be deleted permanently.</p>
+            <div class="buttons">
+                <form th:action="@{/calendar}" method="get">
+                    <button class="gray-button">Cancel</button>
+                </form>
+                <form th:action="@{/delete-booking}" method="post">
+                    <input type="hidden" name="bookingIdToDelete" th:value="${bookingIdToDelete}"/>
+                    <button class="red-button" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<footer th:block th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>
