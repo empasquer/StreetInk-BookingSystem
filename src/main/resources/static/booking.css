@@ -1,12 +1,12 @@
 .booking-container {
     margin-bottom: 2em;
     margin-left: 2em;
+    margin-right: 2em;
 }
 
 section {
     padding-bottom: 2em;
 }
-
 
 .booking-item div {
     text-align: left;
@@ -82,4 +82,10 @@ hr {
     width: 100%;
     height: auto;
     object-fit: cover;
+}
+
+.process-picture {
+    max-width: 80px;
+    display: block;
+    margin: 0 auto 20px;
 }

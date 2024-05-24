@@ -22,7 +22,7 @@
         <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
     </div>
 
-    <!--<h1 th:text="${date.getDayOfMonth() + ' ' + date.getMonth().toString().substring(0,3)}"></h1> -->
+    <img src="/assets/proBar-3.png" alt="Process Picture3/3" class="process-picture">
     <h1 th:text="${booking.date.dayOfMonth} + ' ' + ${booking.date.month.toString().substring(0,3)} + ' ' + ${booking.startTimeSlot}"></h1>
     <h2 th:text="${booking.startTimeSlot} + ' - ' + ${booking.endTimeSlot}"></h2>
 
@@ -33,8 +33,8 @@
                 <div class="information-container">
                     <h2 class="client-name"><a th:href="${'/client?clientId=' + booking.client.id}"  th:text="${booking.client.firstName + ' ' + booking.client.lastName}"></a></h2>
 
-                    <div class="contact-item"><i class="fas fa-phone"></i> <span th:text="${booking.client.phoneNumber}" class="underline"></span></div>
-                    <div class="contact-item"><i class="fas fa-envelope"></i> <span th:text="${booking.client.email}" class="underline"></span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:" th:href="'tel:' + ${booking.client.phoneNumber}" class="underline" th:text="${booking.client.phoneNumber}"></a></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:" th:href="'mailto:' + ${booking.client.email}" class="underline" th:text="${booking.client.email}"></a></div>
 
                     <hr>
                     <p class="tattoo-info">Tattoo Information</p>
@@ -54,7 +54,7 @@
                     </div>
                     <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
                         <div th:each="picture, index : ${booking.projectPictures}">
-                            <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture" style="max-width: 200px; max-height: 200px;">
+                            <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture" class="project-picture">
                         </div>
                     </div>
 
@@ -63,13 +63,6 @@
             </div>
         </div>
         </div>
-        <!-- Knap til ny profil, skal væk -->
-
-        <!--<div style="text-align: center;">
-            <form action="/create-new-profile" method="get">
-                <button type="submit" class="red-button">Create new profile</button>
-            </form>
-        </div> -->
 
     </section>
 
