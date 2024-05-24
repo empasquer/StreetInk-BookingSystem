@@ -208,24 +208,3 @@ h1 {
     font-size: 1.5em;
 
 }
-.weekend  {
-
-}
-.weekend a {
-    opacity: 0.7;
-    background-color: hsl(0, 0%, 90%); /* Lighter background color for weekends */
-}
-
-.weekend a.fully-booked-day {
-
-    background-color: hsl(0, 50%, 30%); /* Slightly darker background color for fully booked days on weekends */
-}
-
-.weekend a.semi-booked-day {
-    background-color: hsl(40, 80%, 35%);
-}
-
-.weekend a.open-day {
-
-    background-color: hsl(0, 0%, 60%);
-}
