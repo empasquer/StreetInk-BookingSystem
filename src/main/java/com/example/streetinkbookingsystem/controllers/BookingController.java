@@ -225,28 +225,8 @@ public class BookingController {
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         String username = (String) session.getAttribute("username");
-        Booking booking =  bookingService.getBookingDetail(bookingId);
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        Client client =booking.getClient();
-        String bookingEnd =booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
-        String bookingStart =booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
-        String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        //Send to mail template
-        Context context = new Context();
-        context.setVariable("ClientFirstName", client.getFirstName());
-        context.setVariable("ArtistFirstName", tattooArtist.getFirstName());
-        context.setVariable("ArtistLastName", tattooArtist.getLastName());
-        context.setVariable("ArtistPhone", tattooArtist.getPhoneNumber());
-        context.setVariable("ArtistEmail", tattooArtist.getEmail());
-        context.setVariable("ArtistFacebook", tattooArtist.getFacebook());
-        context.setVariable("ArtistInstagram", tattooArtist.getInstagram());
-        context.setVariable("BookingStart", bookingStart);
-        context.setVariable("BookingEnd", bookingEnd);
-        context.setVariable("BookingDate", bookingDate);
-        context.setVariable("BookingTitle", booking.getProjectTitle());
-        context.setVariable("BookingDescription", booking.getProjectDesc());
-        emailService.sendConfirmationMail(client.getEmail(), context);
-        return "redirect:/booking?bookingId="+bookingId + "&username=" + tattooArtist.getUsername();
+        emailService.sendConfirmationMail(bookingId, username);
+        return "redirect:/booking?bookingId="+bookingId + "&username=" + username;
     }
 
     @GetMapping("/edit-booking")
