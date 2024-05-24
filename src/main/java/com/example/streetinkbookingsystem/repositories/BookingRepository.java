@@ -145,7 +145,8 @@ public class BookingRepository {
                                   String username, String projectTitle, String projectDesc, String personalNote,
                                   boolean isDepositPayed){
 
-        // tjjer om username eksisterer i tattoo_artist table
+
+        // tjekker om username eksisterer i tattoo_artist table
         String checkUsernameQuery = "SELECT COUNT(*) FROM tattoo_artist WHERE username = ?";
         Integer count = jdbcTemplate.queryForObject(checkUsernameQuery, new Object[]{username}, Integer.class);
         if (count == null || count == 0) {
@@ -201,7 +202,6 @@ public class BookingRepository {
      */
     public void deleteBooking(int bookingId) {
         validateBookingExistence(bookingId);
-
         String deleteQuery = "DELETE FROM booking WHERE id = ?";
         jdbcTemplate.update(deleteQuery, bookingId);
     }

@@ -43,3 +43,9 @@ a.client-item {
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
+/* Denne bliver kun brugt i choose-client og search-result2*/
+.process-picture {
+    max-width: 80px;
+    display: block;
+    margin: 0 auto 20px;
+}

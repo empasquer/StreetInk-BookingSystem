@@ -111,7 +111,7 @@ public class TattooArtistService {
      * @param pictureData
      */
     public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String newUsername, String currentUsername, Optional<byte[]> pictureData) {
-    tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,firstName,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
+    tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,facebook,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
 }
 
 

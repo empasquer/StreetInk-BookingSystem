@@ -56,6 +56,14 @@ public class ClientService {
         clientRepository.updateClient(firstName, lastName,email, phoneNumber, description, clientId);
     }
 
+    // TODO OBS Lidt dobbeltmetode. ved ikke om vi kan lave der til at det kun er én vi bruger?
+
+    public void updateExistingClient(Client client) {
+        clientRepository.updateClient(client.getFirstName(), client.getLastName(),
+                client.getEmail(), client.getPhoneNumber(),
+                client.getDescription(), client.getId());
+    }
+
     public void deleteClientInfoByClientId(int clientId) {
         clientRepository.updateClient("Unknown", null, "unknown",
                 0, null, clientId);

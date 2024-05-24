@@ -11,12 +11,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -65,10 +63,14 @@ public class ClientController {
     }
 
     /**
-     * @author Munazzah
+
+     * @Author Munazzah
      * @param searchQuery
      * @param model
-     * @return the actual view
+     * @param session
+     * @return String - View of search-results
+     * @summary Search for a Client based on phone number or first name. The if-statement
+     * checks if it is a number or name and acts accordingly
      */
     @GetMapping("/search-result")
     public String searchResult(@RequestParam("searchQuery") String searchQuery, Model model, HttpSession session) {
@@ -239,18 +241,18 @@ public class ClientController {
     }
 
     /**
-     * Displays the add client page for a specific booking.
-     *
-     * @param bookingId the ID of the booking to add the client to
-     * @param clientId  the ID of the client to add (if existing)
-     * @param model     the model to add attributes to for rendering view
-     * @param session   the current HTTP session to check if logged in
-     * @return the view name of the add client page
-     * @author Nanna
+     * @Author Tara
+     * @param bookingId
+    // * @param clientId
+     * @param model
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *                to index page if not logged in.
+     * @return String - add-client view
+     * @Summary Creates the new client, that the user wants to add to the booking that the user is creating
      */
     @GetMapping("/add-client")
-    public String addClient(@RequestParam int bookingId,
-                            @RequestParam int clientId,
+    public String addClient(@RequestParam int bookingId, @RequestParam LocalDate date,
+                           // @RequestParam(required = false) int clientId,
                             Model model,
                             HttpSession session) {
 
@@ -258,28 +260,37 @@ public class ClientController {
         if (!loggedIn) {
             return "redirect:/";
         }
-
+        model.addAttribute("date",date);
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
-        Client client = clientService.getClientFromClientId(clientId);
-
-        if (client.getId() == 1) {
-            client = new Client();
-        }
 
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("username", username);
         model.addAttribute("bookingId", bookingId);
-        model.addAttribute("client", client);
+        //model.addAttribute("client", client);
         return "home/add-client";
     }
 
-
+    /**
+     * @Author Tara
+     * @param bookingId
+     //* @param clientId
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param description
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *                to index page if not logged in.
+     * @param redirectAttributes
+     * @return
+     * @Summary Saves the new client to the booking that the user is creating
+     */
     @PostMapping("/save-client")
     public String saveClient(@RequestParam int bookingId,
-                             @RequestParam(required = false, defaultValue = "1") int clientId,
+                            /* @RequestParam(required = false, defaultValue = "1") int clientId,*/
                              @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam String email,
@@ -296,7 +307,7 @@ public class ClientController {
         }
 
         Client client = new Client();
-        client.setId(clientId);
+        //client.setId(clientId);
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setEmail(email);
@@ -304,8 +315,103 @@ public class ClientController {
         client.setDescription(description);
         client = clientService.saveClient(client);
 
+        int clientId = client.getId();
         clientService.updateClientOnBooking(bookingId, client.getId());
 
-        return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
+        return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
+        //return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username;
     }
+
+    /**
+     * @Author Tara
+     * @param model
+     * @param session
+     * @param bookingId
+     * @return
+     */
+    @GetMapping("/choose-client")
+    public String chooseClient(Model model, HttpSession session,
+                               @RequestParam int bookingId, @RequestParam LocalDate date) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (loggedIn) {
+            model.addAttribute("loggedIn", loggedIn);
+        } else {
+            return "redirect:/";
+        }
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+        model.addAttribute("date", date);
+        //Værdier som skal videre til view
+        //Integer bookingId = (Integer) session.getAttribute("bookingId");
+        model.addAttribute("bookingId", bookingId);
+
+
+        List<Client> sortedClients = clientService.getSortedListOfClients();
+        //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
+        //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
+        //Uses stream to handle everything simulationaly
+        //Uses collect (Collectors.groupingBy) to group the elements of teh stream based on first letter in first name
+        Map<Character, List<Client>> groupedClients = sortedClients.stream()
+                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
+                        TreeMap::new, Collectors.toList()));
+
+        model.addAttribute("groupedClients", groupedClients);
+        return "home/choose-client";
+    }
+
+    /**
+     * @Author Tara
+     * @param session
+     * @param searchQuery
+     * @param bookingId
+     * @param model
+     * @param redirectAttributes
+     * @return
+     */
+    @PostMapping("/search-for-existing-client")
+    public String searchForExistingClient(HttpSession session,
+                                          @RequestParam String searchQuery,
+                                          @RequestParam int bookingId,
+                                        @RequestParam LocalDate date,
+                                        /*  @RequestParam(required = false) int clientId, //clientId er ikke et must*/
+                                          Model model,
+                         RedirectAttributes redirectAttributes) {
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn) {
+            return "redirect:/";
+        }
+
+
+        String username = (String) session.getAttribute("username");
+
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+        model.addAttribute("bookingId", bookingId);
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("date", date);
+
+        System.out.println("search for existing client controller");
+        System.out.println("booking ID: " + bookingId);
+        System.out.println("Username: " + username);
+
+        model.addAttribute("searchQuery", searchQuery);
+        //Checks (via regex) if there are only numbers, letters or a mix of both and acts accordingly
+        if (searchQuery.matches("[0-9]+")) {
+            model.addAttribute("searchType", "phoneNumber");
+            List<Client> clientByNumber = clientService.getClientsByPhoneNumber(Integer.parseInt(searchQuery));
+            model.addAttribute("results", clientByNumber);
+        } else if (searchQuery.matches("[A-Za-z]+")) {
+            model.addAttribute("searchType", "firstName");
+            List<Client> clientByName = clientService.getClientsByFistName(searchQuery);
+            model.addAttribute("results", clientByName);
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
+            return "redirect:/choose-client";
+        }
+        // return "redirect:/search-result2/" + clientId + "?bookingId" + bookingId +  "&username=" + username;
+        return "home/search-result2";
+    }
+
 }

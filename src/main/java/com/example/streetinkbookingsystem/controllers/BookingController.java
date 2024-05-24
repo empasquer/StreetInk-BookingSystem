@@ -4,10 +4,7 @@ import com.example.streetinkbookingsystem.models.Booking;
 import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.models.ProjectPicture;
 import com.example.streetinkbookingsystem.models.TattooArtist;
-import com.example.streetinkbookingsystem.services.BookingService;
-import com.example.streetinkbookingsystem.services.LoginService;
-import com.example.streetinkbookingsystem.services.ProjectPictureService;
-import com.example.streetinkbookingsystem.services.TattooArtistService;
+import com.example.streetinkbookingsystem.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.context.Context;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -24,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,6 +38,10 @@ public class BookingController {
     TattooArtistService tattooArtistService;
     @Autowired
     ProjectPictureService projectPictureService;
+    @Autowired
+    ClientService clientService;
+    @Autowired
+    EmailService emailService;
 
     /**
      * @Author Nanna
@@ -69,19 +72,23 @@ public class BookingController {
     /**
      * @Author Tara
      * @param model
-     * @param session
-     * @param date
-     * @return "home/create-new-booking"
+     * @param session Used to determine if the user is logged in or not. User will be redirected
+     *                to index page if not logged in.
+     * @param date Is used, sp that we create af booking on the specific date.
+     * @return den gemte booking.
      */
     @GetMapping("/create-new-booking")
-    public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
+    public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam (required = false) Integer bookingId ){
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
+        model.addAttribute("bookingId", bookingId);
+        if (bookingId != null) {
+            Booking booking =bookingService.getBookingDetail(bookingId);
+            model.addAttribute("booking",booking);
+        }
         model.addAttribute("date", date);
-
 
         return "home/create-new-booking";
     }
@@ -99,7 +106,7 @@ public class BookingController {
      * @param projectPictures
      * @param action
      * @param redirectAttributes
-     * @return
+     * @return add-client eller existing-client
      */
     @PostMapping("/save-tattoo-info")
     public String saveNewBooking(@RequestParam LocalTime startTimeSlot,
@@ -110,55 +117,132 @@ public class BookingController {
                                  @RequestParam String projectDesc,
                                  @RequestParam String personalNote,
                                  @RequestParam(name = "isDepositPayed", defaultValue = "false") boolean isDepositPayed,
-                                 //Multipartfile er en datatypen. Disse objekter repræsenterer filer, som er blevet uploadet via en html-formular. Der kanvære flere filer som er uploadet.
+                                 //Multipartfile er en datatypen. Disse objekter repræsenterer filer, som er blevet uploadet via en html-formular. Der kan være flere filer som er uploadet.
                                  @RequestParam("projectPictures") MultipartFile[] projectPictures,
-                                 @RequestParam String action, // Tilføjet parameter for handling af knap handlinger
-                                 RedirectAttributes redirectAttributes) {
-        try {
-            String username = (String) session.getAttribute("username");
+                                 @RequestParam String action, // Button action parameter
+                                 @RequestParam(required = false) Integer bookingId,
+                                 RedirectAttributes redirectAttributes, Model model) {
+        String username = (String) session.getAttribute("username");
 
-            if (username == null){
-                redirectAttributes.addFlashAttribute("errorMessge", "You session ran out, log in again.");
-                return "redirect:/";
-            }
+        if (username == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your session has expired. Please log in again.");
+            return "redirect:/";
+        }
 
             List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
                     .map(file -> {
-                        try { //læs op på dette
+                        try {
                             return file.getBytes();
                         } catch (IOException e){
-                            e.printStackTrace(); //læs op på dette
+                            e.printStackTrace();
                             return null;
                         }
                     })
                     .collect(Collectors.toList());
 
-            // Gemmer booking og henter den gemte entitet
-           Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
-                    projectDesc, personalNote, isDepositPayed, pictureList);
-
-           projectPictureService.saveProjectPictures(newBooking.getId(), pictureList);
-
-           //henter bookingId fra den gemte entitet
-            int bookingId = newBooking.getId() ;
-
-            if ("new-client".equals(action)) {
-                //Omdirigerer til add-client med det gemte bookingId
-                return "redirect:/add-client?bookingId=" + bookingId + "&clientId=1&username=" + username;
-            } else if ("show-booking".equals(action)) {
-                return "redirect:/booking?bookingId=" + bookingId + "&username=" + username;
-            } else {
-                redirectAttributes.addFlashAttribute("errorMessage", "Invalid actions.");
-                return "redirect:/create-new-booking?date=" + date;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong, try again.");
-            return "redirect:/create-new-booking?date=" + date;
-
+        if (endTimeSlot.isBefore(startTimeSlot)) {
+            model.addAttribute("errorMessage", "End time cannot be before start time.");
+            model.addAttribute("date", date);
+            return "home/create-new-booking";
         }
 
+
+        Booking booking;
+        if (bookingId != null) {
+            // Update existing booking
+            System.out.println("Updating booking with ID: " + bookingId);
+            bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+            booking = bookingService.getBookingDetail(bookingId);
+            projectPictureService.updateProjectPictures(bookingId, pictureList);
+        } else {
+            // Create new booking
+            System.out.println("Creating new booking");
+            booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+            projectPictureService.saveProjectPictures(booking.getId(), pictureList);
+        }
+        int savedBookingId = booking.getId();
+        if ("new-client".equals(action)) {
+            return "redirect:/add-client?bookingId=" + savedBookingId + "&username=" + username + "&date=" + date;
+        } else if ("existing-client".equals(action)) {
+            return "redirect:/choose-client?bookingId=" + savedBookingId + "&username=" + username + "&date=" + date;
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid action.");
+            return "redirect:/create-new-booking?date=" + date;
+        }
+    }
+
+    /**
+     * @Author Tara
+     * @param model
+     * @param session
+     * @param bookingId
+     * @param username
+     * @param clientId
+     * @return booking-preview
+     */
+    @GetMapping("/booking-preview")
+    public String bookingPreview (Model model, HttpSession session, @RequestParam int bookingId,
+                                  @RequestParam String username,
+                                  @RequestParam int clientId){
+
+        boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn) {
+            return "redirect:/";
+        }
+
+        //tilføjer den "nye" ClientId til bookingen
+        clientService.updateClientOnBooking(bookingId, clientId);
+
+        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("username", session.getAttribute(username));
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
+        Booking booking = bookingService.getBookingDetail(bookingId);
+        model.addAttribute("booking", booking);
+
+        // Henter billeder fra den specifikke booking
+        List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
+        model.addAttribute("base64Images", base64Images);
+
+        return "home/booking-preview";
+    }
+
+    @GetMapping("/cancel-booking")
+    public String cancelBooking(@RequestParam int bookingId, @RequestParam String date, Model model) {
+        bookingService.deleteBooking(bookingId);
+        System.out.println("here");
+        return "redirect:/day?date=" + date;
+    }
+    @GetMapping("/save-booking")
+    public String saveBooking(@RequestParam int bookingId, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+        String username = (String) session.getAttribute("username");
+        Booking booking =  bookingService.getBookingDetail(bookingId);
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        Client client =booking.getClient();
+        String bookingEnd =booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingStart =booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        //Send to mail template
+        Context context = new Context();
+        context.setVariable("ClientFirstName", client.getFirstName());
+        context.setVariable("ArtistFirstName", tattooArtist.getFirstName());
+        context.setVariable("ArtistLastName", tattooArtist.getLastName());
+        context.setVariable("ArtistPhone", tattooArtist.getPhoneNumber());
+        context.setVariable("ArtistEmail", tattooArtist.getEmail());
+        context.setVariable("ArtistFacebook", tattooArtist.getFacebook());
+        context.setVariable("ArtistInstagram", tattooArtist.getInstagram());
+        context.setVariable("BookingStart", bookingStart);
+        context.setVariable("BookingEnd", bookingEnd);
+        context.setVariable("BookingDate", bookingDate);
+        context.setVariable("BookingTitle", booking.getProjectTitle());
+        context.setVariable("BookingDescription", booking.getProjectDesc());
+        emailService.sendConfirmationMail(client.getEmail(), context);
+        return "redirect:/booking?bookingId="+bookingId + "&username=" + tattooArtist.getUsername();
     }
 
     @GetMapping("/edit-booking")
@@ -233,6 +317,13 @@ public class BookingController {
         return "redirect:/delete-booking";
     }
 
+    /**
+     *
+     * @param bookingIdToDelete
+     * @param session
+     * @param model
+     * @return
+     */
     @PostMapping("/delete-booking")
     public String deleteBooking(@RequestParam int bookingIdToDelete, HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -243,6 +334,8 @@ public class BookingController {
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
     }
+
+
 
 
 }

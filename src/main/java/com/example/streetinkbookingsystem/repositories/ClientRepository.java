@@ -124,6 +124,7 @@ public class ClientRepository {
         }
     }
 
+
     public Client saveClient(Client client){
         String query = "INSERT INTO client (first_name, last_name, email, phone_number, description) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -147,6 +148,7 @@ public class ClientRepository {
         String query = "UPDATE booking SET client_id = ? WHERE id = ?";
         jdbcTemplate.update(query, clientId, bookingId);
     }
+
 
 
 

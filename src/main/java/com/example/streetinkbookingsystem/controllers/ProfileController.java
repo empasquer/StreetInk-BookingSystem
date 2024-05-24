@@ -1,5 +1,6 @@
 package com.example.streetinkbookingsystem.controllers;
 
+import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
@@ -51,6 +52,7 @@ public class ProfileController {
         }
 
     }
+
 
     /**
      * @return get client to create-new-profile view

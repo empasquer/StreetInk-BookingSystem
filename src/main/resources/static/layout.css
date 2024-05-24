@@ -86,7 +86,7 @@ h3 {
 
 
 input, textarea {
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: var(--input-field-gray);
     border:none;
     color: var(--header-footer-color);

@@ -33,7 +33,7 @@ public class BookingService {
      * @param personalNote
      * @param isDepositPayed
      */
-    @Transactional //Håndtere database transaktioner automatisk, når metoden lykkedes
+   // @Transactional //Håndtere database transaktioner automatisk, når metoden lykkedes
     public Booking createNewBooking(LocalTime startTimeSlot,
                                     LocalTime endTimeSlot,
                                     LocalDate date,
@@ -57,15 +57,14 @@ public class BookingService {
             ProjectPicture projectPicture = new ProjectPicture();
             projectPicture.setPictureData(picture);
             return projectPicture;
-                })
-                        .collect(Collectors.toList()));
+                }).collect(Collectors.toList()));
 
              /*return bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date, username,
                 projectTitle, projectDesc, personalNote, isDepositPayed);
 
                  */
 
-       Booking savedBooking = bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date,
+        Booking savedBooking = bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date,
                 username, projectTitle, projectDesc, personalNote, isDepositPayed);
 
         for(byte[] pictureData : pictureList){
@@ -76,7 +75,6 @@ public class BookingService {
         }
 
         return savedBooking;
-
 
     }
 
