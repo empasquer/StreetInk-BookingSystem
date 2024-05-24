@@ -13,12 +13,17 @@
     <h1>Confirm Deletion of Booking</h1>
     <section class="box-shadow">
         <div class="confirmation-container">
-            <h4>Are you sure you want to delete booking:
-                <span th:text="${booking.getDate()} + ' at ' + ${booking.getStartTimeSlot()}"></span>?
-            </h4>
-            <p>Be aware that the booking will be deleted permanently.</p>
+            <h2>Are you sure you want to delete this booking:
+                <span th:text="${booking.getDate()} + ' at ' + ${booking.getStartTimeSlot()} +
+                ' with ' + ${booking.client.getFirstName()} + ' ' + ${booking.client.getLastName()}"></span>?
+            </h2>
+            <p>Be aware that the booking will be deleted permanently!
+                You can not retrieve any kind of information from this booking after deletion</p>
+
             <div class="buttons">
-                <form th:action="@{/calendar}" method="get">
+                <form th:action="@{/booking}" method="get">
+                    <input type="hidden" name="bookingId" th:value="${booking.getId()}"/>
+                    <input type="hidden" name="username" th:value="${session.username}"/>
                     <button class="gray-button">Cancel</button>
                 </form>
                 <form th:action="@{/delete-booking}" method="post">

@@ -62,4 +62,20 @@ public class ProjectPictureService {
         return Base64.getEncoder().encodeToString(imageData);
     }
 
+    public void deleteProjectPictures(List<Integer> pictureList) {
+        for (Integer pictureId : pictureList){
+            projectPictureRepository.deleteProjectPictureById(pictureId);
+        }
+    }
+
+    public List<String> getPicturesByBooking(int bookingId) {
+        return convertToBase64(projectPictureRepository.getPicturesByBooking(bookingId));
+    }
+
+    public List<ProjectPicture> getPicturesAsObjects(int bookingId) {
+        return projectPictureRepository.getPicturesByBooking(bookingId);
+    }
+
+
+
 }

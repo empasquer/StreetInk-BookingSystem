@@ -22,6 +22,13 @@
 
 
   <section>
+    <div class="button-container">
+      <form class="edit-btn" th:action="@{/edit-booking}" method="get">
+        <input type="hidden" name="bookingId" th:value="${booking.getId()}" />
+        <button type="submit"><i class="fa fa-edit fa-2x"></i></button>
+      </form>
+    </div>
+
     <div class="booking-container">
       <div th:each="booking : ${booking}" class="booking-item">
         <div class="information-container">
@@ -68,9 +75,8 @@
   </section>
 
 <!--this is just for testing -->
-<form th:action="@{/confirm-delete-booking}" method="get">
-  <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
-  <button class="gray-button" type="submit">delete</button>
+<form th:action="@{/calendar}" method="get">
+  <button class="gray-button" type="submit">Send mail</button>
 </form>
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>

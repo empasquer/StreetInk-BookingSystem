@@ -145,17 +145,6 @@ public class BookingRepository {
                                   String username, String projectTitle, String projectDesc, String personalNote,
                                   boolean isDepositPayed){
 
-        // Skal se hvad den bringer med sig over.
-        System.out.println("Start Time Slot: " + startTimeSlot);
-        System.out.println("End Time Slot: " + endTimeSlot);
-        System.out.println("Date: " + date);
-        System.out.println("Client ID: 1");
-        System.out.println("Username: " + username);
-        System.out.println("Project Title: " + projectTitle);
-        System.out.println("Project Description: " + projectDesc);
-        System.out.println("Personal Note: " + personalNote);
-        System.out.println("Is Deposit Payed: " + isDepositPayed);
-
         // tjjer om username eksisterer i tattoo_artist table
         String checkUsernameQuery = "SELECT COUNT(*) FROM tattoo_artist WHERE username = ?";
         Integer count = jdbcTemplate.queryForObject(checkUsernameQuery, new Object[]{username}, Integer.class);
@@ -193,6 +182,17 @@ public class BookingRepository {
 
         return findById(bookingId);
 
+    }
+
+    public void updateBooking(int bookingId, LocalTime startTimeSlot, LocalTime endTimeSlot,
+                                 LocalDate date, String projectTitle, String projectDesc,
+                                 String personalNote, boolean isDepositPayed) {
+        String query = "UPDATE booking SET start_time_slot = ?, end_time_slot = ?, date = ?, " +
+                "project_title = ?, project_desc = ?, personal_note = ?, " +
+                "is_deposit_payed = ? WHERE id = ?";
+
+        jdbcTemplate.update(query, startTimeSlot, endTimeSlot, Date.valueOf(date),
+                projectTitle, projectDesc, personalNote, isDepositPayed, bookingId);
     }
 
     /**

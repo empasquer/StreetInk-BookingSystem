@@ -1,6 +1,8 @@
 package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.models.Booking;
+import com.example.streetinkbookingsystem.models.Client;
+import com.example.streetinkbookingsystem.models.ProjectPicture;
 import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.LoginService;
@@ -159,6 +161,52 @@ public class BookingController {
 
     }
 
+    @GetMapping("/edit-booking")
+    public String editBooking(Model model, HttpSession session, @RequestParam("bookingId") int bookingId, RedirectAttributes redirectAttributes) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        Booking booking = bookingService.getBookingDetail(bookingId);
+        model.addAttribute("booking", booking);
+
+        //Henter de billeder der allerede findes
+        List<ProjectPicture> projectPictures = projectPictureService.getPicturesAsObjects(bookingId);
+        model.addAttribute("projectPictures", projectPictures);
+        List<String> base64Images = projectPictureService.getPicturesByBooking(bookingId);
+        model.addAttribute("base64Images", base64Images);
+
+        return "home/edit-booking";
+    }
+
+    @PostMapping("/edit-booking")
+    public String updateBooking(@RequestParam LocalTime startTimeSlot, @RequestParam LocalTime endTimeSlot, @RequestParam LocalDate date,
+                                @RequestParam String projectTitle, @RequestParam String projectDesc,
+                                @RequestParam String personalNote, @RequestParam boolean isDepositPayed, @RequestParam(required = false) List<Integer> deletePictures,
+                                @RequestParam("projectPictures") MultipartFile[] projectPictures,
+                                @RequestParam int bookingId, Model model, HttpSession session) {
+
+
+        if (deletePictures != null) {
+            projectPictureService.deleteProjectPictures(deletePictures);
+        }
+
+        List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
+                .map(file -> {
+                    try {
+                        return file.getBytes();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                        return null;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+        return "redirect:/booking?bookingId=" + bookingId + "&username=" + session.getAttribute("username");
+    }
+
     @GetMapping("/confirm-delete-booking")
     public String confirmDeleteBooking(Model model, HttpSession session, @RequestParam int bookingIdToDelete) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -190,6 +238,7 @@ public class BookingController {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
