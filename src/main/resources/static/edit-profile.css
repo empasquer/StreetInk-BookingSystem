@@ -6,33 +6,19 @@ section {
 .upload-wrapper {
     padding-bottom: 3em;
 }
+
 .upload-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px; /* Adjust the height as needed */
-    align-items: center;
-    justify-content: center;
+    height: 200px;
     background-size: cover;
     background-position: center;
     flex-direction: column;
     margin: 1em;
 }
 
-.upload-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4em;
-    height: 4em;
-    border-radius: 50%;
-    background-color: var(--input-field-gray);
-    color: var(--section-background-color);
-    text-align: center;
-    line-height: 100px; /* Make the line height the same as the width/height for centering */
-    font-size: 3em;
-    position: relative;
-}
+.upload-label,
 .upload-label-with-picture {
     display: flex;
     align-items: center;
@@ -40,20 +26,26 @@ section {
     width: 4em;
     height: 4em;
     border-radius: 50%;
-    text-align: center;
-    line-height: 100px; /* Make the line height the same as the width/height for centering */
     font-size: 3em;
-    cursor: pointer;
     position: relative;
+    text-align: center;
+}
+
+.upload-label {
+    background-color: var(--input-field-gray);
+    color: var(--section-background-color);
+    line-height: 4em;
+}
+
+.upload-label-with-picture {
+    cursor: pointer;
     background-size: cover;
 }
+
+.upload-label input[type="file"],
 .upload-label-with-picture input[type="file"] {
     display: none;
 }
-.upload-label input[type="file"] {
-    display: none;
-}
-
 
 .upload-label-with-picture .fa-plus {
     vertical-align: middle;
@@ -67,99 +59,95 @@ section {
     display: flex;
     margin-left: 0.5em;
     font-size: large;
-    margin-bottom: -0.5em;
+    margin-bottom: 0.5em;
 }
 
-.form-group input {
+.form-group input,
+.form-group-SM input {
     background-color: var(--input-field-gray);
     border-radius: 15px;
     height: 50px;
     width: 290px;
     padding: 1rem;
-    border-style: none;
+    border: none;
 }
 
-.form-row {
+.form-row,
+.form-row-SM {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
     align-items: center;
 }
+
 .form-box {
     display: flex;
     flex-direction: column;
-
 }
+
 .form-box-label {
     display: flex;
     flex-direction: row;
-    z-index: 4;
     position: relative;
-    /* margin-right: 7em; */
     width: 24em;
-    /* margin-bottom: 10em; */
-
 }
 
 .form-row-grid {
     display: flex;
     flex-direction: row;
-    /* justify-content: flex-start; */
     margin-bottom: 30px;
     width: 48.5em;
     justify-content: space-between;
     padding: 0.5em;
-
 }
+
 .info-box {
     margin-left: 1em;
-
 }
 
-/* Tilpasser størrelsen på checkbox */
 .checkboxes {
-    -webkit-appearance: none; /* Fjerner browserens standard checkbox-styling */
+    -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 4.5em; /* Juster bredden efter behov */
-    height: 4.5em; /* Juster højden efter behov */
-    border-radius: 8px; /* Runder hjørnerne */
-    background-color: var(--input-field-gray); /* Gennemsigtig baggrund */
-    outline: none; /* Fjerner den blå fokusramme */
-    cursor: pointer; /* Viser en markør ved hover */
+    width: 4.5em;
+    height: 4.5em;
+    border-radius: 8px;
+    background-color: var(--input-field-gray);
+    outline: none;
+    cursor: pointer;
 }
 
-/* Tilføjer et tilpasset udseende for den indre checkmark */
 .checkboxes:checked::after {
-    content: '\2713'; /* Tilføjer en checkmark (unicode-tegn) */
-    font-size: 50px; /* Juster størrelsen efter behov */
-    color: black; /* Farve på checkmark */
-    text-align: center; /* Justerer placering */
-    line-height: 50px; /* Justerer linjehøjde */
-    position: relative; /* Positionering relativ til parent */
-    width: 100%; /* Fylder hele checkboxen */
-    height: 100%; /* Fylder hele checkboxen */
+    content: '\2713';
+    font-size: 50px;
+    color: black;
+    text-align: center;
+    line-height: 4.5em;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
-
-/* Show the checkmark when the checkbox is checked */
-input[type="checkbox"]:checked + .custom-checkbox:after {
-    transform: translate(-50%, -50%) scale(1);
-}
-
 
 /* Show the message when the checkbox is checked */
 .info-checkbox:checked + .info-label + .info-message {
     display: block;
 }
 
-/* Basic styling for form */
-.form-group, .form-grid-cell {
+.form-group,
+.form-grid-cell {
     position: relative;
     margin-bottom: 1.5em;
 }
 
-.form-group label, .form-grid-cell label {
+.form-group label,
+.form-grid-cell label {
     margin-right: 0.5em;
+}
+.form-group-SM label {
+    display: flex;
+    margin-left: 0.5em;
+    font-size: large;
+    margin-bottom: -1em;
 }
 
 /* Hide the checkbox */
@@ -177,7 +165,6 @@ input[type="checkbox"]:checked + .custom-checkbox:after {
     width: 1.5em;
     border-radius: 50%;
     cursor: pointer;
-    /* margin-left: 0.5em; */
     vertical-align: middle;
 }
 
@@ -190,32 +177,25 @@ input[type="checkbox"]:checked + .custom-checkbox:after {
     margin-top: -1.9em;
     border-radius: 0.5em;
     position: absolute;
-    /* top: 100%; */
     left: 0;
     z-index: 10;
     width: 200px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-left: 9em;
 }
+
 .info-message-right {
     margin-left: 6em;
 }
 
-
 select {
-    background: lightgray;
+    background: radial-gradient(white, lightgray);
     border-radius: 1em;
     height: 4.5em;
     width: 4.5em;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    background: radial-gradient(lightgray, darkgray);
     text-align: center;
-/* margin-left: -0.5em; */
 }
-.form-group-button {
-    width: 20em;
 
-}
 .red-button {
     font-size: 1.5em;
     height: 4em;
@@ -223,7 +203,14 @@ select {
     margin-top: 2em;
     font-weight: bold;
 }
+
 .change-password {
-    padding: 1em;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    width: 290px;
+    margin-bottom: 1.4em;
+    align-items: center;
+    font-size: 1.3em;
 }

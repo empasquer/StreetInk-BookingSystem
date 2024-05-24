@@ -49,8 +49,8 @@
         </div>
 
         <figure>
-            <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede">
-            <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede">
+            <img th:if="${tattooArtist.base64ProfilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.base64ProfilePicture}}" alt="Profilbillede">
+            <img th:unless="${tattooArtist.base64ProfilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede">
         </figure>
 
         <p th:text="${tattooArtist.username}"></p>

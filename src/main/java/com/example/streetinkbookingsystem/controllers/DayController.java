@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,33 +36,25 @@ public class DayController {
      * @return day view with a list of booking for that day
      */
     @GetMapping("/day")
-    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
+    public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date){
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/";
-        }
 
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("username", username);
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        List<Booking> bookingList = bookingService.getBookingsForDay(date, username);
+        List<Booking> bookingList = bookingService.getBookingsForDay(date,(String) session.getAttribute("username"));
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
-
+        String day = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        model.addAttribute("day", day);
         // might move to service, this makes a list of quarter hours
         List<Double> hours = new ArrayList<>();
         for (double hour = 9; hour <= 20; hour += 0.25) {
             hours.add(hour);
         }
         model.addAttribute("hours", hours);
-        model.addAttribute("bookingService", bookingService);
+        model.addAttribute("bookingService",bookingService);
 
         return "home/day";
     }

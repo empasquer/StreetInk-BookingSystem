@@ -5,7 +5,9 @@ import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.LoginService;
+import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +29,7 @@ public class EmailController {
     @Autowired
     LoginService loginService;
     @Autowired
-    TattooArtistRepository tattooArtistService;
+    TattooArtistService tattooArtistService;
 
     /**
      * @author Nanna
@@ -38,11 +40,11 @@ public class EmailController {
      * will be changed.
      */
     @PostMapping("/send-confirmation-mail")
-    public String sendConfirmationEmail(@RequestParam int bookingId, HttpSession session) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
+    public String sendConfirmationEmail(@RequestParam int bookingId, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
@@ -69,7 +71,5 @@ public class EmailController {
         emailService.sendConfirmationMail(client.getEmail(), context);
         return "redirect:/booking?bookingId="+ bookingId + "&username=" +username;
     }
-
-
 
 }

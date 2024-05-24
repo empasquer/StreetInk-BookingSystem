@@ -182,14 +182,18 @@ h1 {
 
 
 .daily-info {
+    scrollbar-width: none;
     align-items: flex-start;
     flex-direction: column;
     display: flex;
     height: auto;
     place-content: baseline;
-    padding: 3em 0 0 0;
+    /* padding: 3em 0 0 0; */
+    margin-top: 2em;
     align-self: flex-start;
     margin-left: -1em;
+    overflow: scroll;
+    height: 200px;
 
 }
 
@@ -202,34 +206,5 @@ h1 {
 }
 .daily-info h3 {
     font-size: 1.5em;
+
 }
-
-/* Media Query for Small Screens */
-@media screen and (max-width: 768px) {
-    section {
-        padding: 0.5em; /* Adjust padding */
-    }
-
-    h1 {
-        font-size: 2em; /* Adjust font size */
-    }
-
-    .calendar-navigation {
-        font-size: 2em; /* Adjust font size */
-    }
-
-    .calendar-information-bar {
-        font-size: 1em; /* Adjust font size */
-    }
-
-    .calendar-information-bar .weekdays {
-        font-size: 0.8em; /* Adjust font size */
-    }
-
-    .dates {
-        grid-row-gap: 0.5em; /* Adjust row gap */
-        grid-column-gap: 0.3em; /* Adjust column gap */
-    }
-}
-
-

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DAY</title>
+    <title th:text="${day}"></title>
     <link rel="stylesheet" href="/layout.css">
     <link rel="stylesheet" href="/day.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -48,23 +48,28 @@
             <div th:each="hour : ${hours}">
                     <!-- Check for bookings -->
                     <div th:each="booking : ${bookingList}" th:if="${((booking.getStartTimeSlot().getHour() * 60.0 + booking.getStartTimeSlot().getMinute()) / 60) == hour}">
+
                         <!-- Calculate the duration of the booking -->
                         <th:block th:with="bookingDuration=${bookingService.calculateTotalDurationOfBooking(booking)}">
+
                         <!-- Calculate the height of the booking box based on the duration -->
-                        <th:block th:with="bookingHeight=${(bookingDuration / 60)*4}">
+                        <th:block th:with="bookingHeight=${bookingDuration == 0 ? 0.5 : (bookingDuration / 60) * 4}">
+
                         <!-- Apply the height dynamically to the booking box -->
                         <div class="booking-block" th:style="'height:' + ${bookingHeight}  + 'em;'">
-                            <a class="booking-info" th:href="@{/booking(bookingId=${booking.id},username=${username})}">
-                                <h2 th:text="${booking.getStartTimeSlot()}
+                            <a th:classappend="${bookingDuration >= 60} ? 'booking-info-long' : 'booking-info-short'"th:href="@{/booking(bookingId=${booking.id},username=${username})}">
+                                <!--change size of info depending on duration of booking so that it fits -->
+                                <h2  th:text="${booking.getStartTimeSlot()}
                                 + ' - ' +
                                  ${booking.getEndTimeSlot()}
                                  + ' - ' +
                                  ${booking.client.getFirstName()}
                                   + '  ' +
                                  ${booking.client.getLastName()}"></h2>
-                                <!--Only display project title if the booking i over 1 hour, else i can't fit -->
+                                <!--Only display project title if the booking i over 1 hour, else it can't fit -->
                                 <p th:if="${bookingDuration >= 60 }" th:text="${booking.getProjectTitle()}"></p>
                             </a>
+
                         </div>
                         </th:block>
                         </th:block>

@@ -69,8 +69,14 @@ public class TattooArtistRepository {
         }
     }
 
-
-
+    public String getEmail(String username) {
+        String query = "SELECT email FROM tattoo_artist WHERE username=?";
+        try {
+            return jdbcTemplate.queryForObject(query, String.class, username);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 
     public void changeAdminStatus(String username, boolean status) {
         String query = "UPDATE tattoo_artist SET is_admin=? WHERE username=?";

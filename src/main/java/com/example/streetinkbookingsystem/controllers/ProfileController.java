@@ -5,22 +5,14 @@ import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.models.TattooArtist;
-import com.example.streetinkbookingsystem.services.LoginService;
-import com.example.streetinkbookingsystem.services.TattooArtistService;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -35,40 +27,16 @@ public class ProfileController {
     @Autowired
     LoginService loginService;
 
-    // Taken from Emma's Client controller. We need to find a way to implement it everywhere.
-    private void addLoggedInUserInfo(Model model, HttpSession session) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            String username = (String) session.getAttribute("username");
-            model.addAttribute("loggedIn", true);
-            model.addAttribute("username", username);
-            TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-            model.addAttribute("tattooArtist", tattooArtist);
-        } else {
-            model.addAttribute("loggedIn", false);
-        }
-    }
-
     @GetMapping("/profile")
-    public String seeProfile(HttpSession session, Model model,  @RequestParam(required = false) String profileToDelete) {
-
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+    public String seeProfile(HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-        model.addAttribute("loggedIn", loggedIn);
+        session.removeAttribute("imageData");
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-
-        model.addAttribute("username", tattooArtist.getUsername());
-        model.addAttribute("tattooArtist", tattooArtist);
-
-
-        if (profileToDelete != null) {
-            model.addAttribute("profileToDelete", profileToDelete);
-        }
 
         //to display profile pic:
         if (tattooArtist.getProfilePicture() != null) {
@@ -92,6 +60,16 @@ public class ProfileController {
      */
     @GetMapping("/create-new-profile")
     public String newProfile(Model model, HttpSession session) {
+        //to display the preview if a picture is chosen
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        String username = (String) session.getAttribute("username");
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        model.addAttribute("tattooArtist", tattooArtist);
+
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String base64Image = Base64.getEncoder().encodeToString(imageData);
@@ -155,12 +133,15 @@ public class ProfileController {
                                 @RequestParam String instagramUrl,
                                 @RequestParam int avgWorkHours,
                                 @RequestParam(value = "isAdmin", required = false) Boolean isAdmin
-            /* @RequestParam(value = "imageFile",required = false) byte[] imageData,*/, HttpSession session) {
+          , HttpSession session) {
         TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
 
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -179,6 +160,7 @@ public class ProfileController {
 
             boolean adminStatus = isAdmin != null && isAdmin;
             tattooArtistService.createProfile(profileUsername, profileFirstname, profileLastName, profilePassword, facebookUrl, instagramUrl, phone, email, avgWorkHours, adminStatus, Optional.ofNullable(imageData));
+            session.removeAttribute("imageData");
             return "redirect:/manage-profiles";
         }
     }
@@ -193,8 +175,12 @@ public class ProfileController {
      */
     @GetMapping("/manage-profiles")
     public String manageProfiles(Model model, HttpSession session, @RequestParam(required = false) String profileToDelete, @RequestParam(required = false) String message) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         model.addAttribute("tattooArtist", tattooArtist);
 
@@ -211,8 +197,10 @@ public class ProfileController {
         }
         List<TattooArtist> profiles = tattooArtistService.showTattooArtist();
         model.addAttribute("profiles", profiles);
-        model.addAttribute("user", tattooArtist);
 
+
+        //Remove imageData so it doesn't reapear when creating a new profile
+        session.removeAttribute("imageData");
 
         return "home/manage-profiles";
     }
@@ -261,9 +249,7 @@ public class ProfileController {
         }
         String message = tattooArtistService.deleteProfileByUsername(profileToDelete);
         redirectAttributes.addFlashAttribute("message", message);
-        if(username==profileToDelete) {
-            return "redirect:/index";
-        }else return "home/manage-profiles";
+        return "redirect:/manage-profiles";
     }
 
 
@@ -294,24 +280,18 @@ public class ProfileController {
 
     @GetMapping("/edit-profile")
     public String editProfile(Model model, HttpSession session) {
-        addLoggedInUserInfo(model, session);
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-        String username = (String) session.getAttribute("username");
-        TattooArtist artist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", artist);
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        // To display profile picture
+        TattooArtist artist = tattooArtistService.getTattooArtistByUsername((String) session.getAttribute("username"));
+
+        // To display preview if picture is chosen
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String newBase64Image = Base64.getEncoder().encodeToString(imageData);
             model.addAttribute("newBase64Image", newBase64Image);
-        }
-
-        if (artist.getProfilePicture() != null) {
-            String base64Image = Base64.getEncoder().encodeToString(artist.getProfilePicture());
-            artist.setBase64ProfilePicture(base64Image);
         }
 
 
@@ -325,28 +305,45 @@ public class ProfileController {
                                 @RequestParam int avgWorkHours, @RequestParam String newUsername,
                                 @RequestParam String currentUsername,
                                 Model model, HttpSession session) {
-        addLoggedInUserInfo(model, session);
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         byte[] imageData = (byte[]) session.getAttribute("imageData");
 
         tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername,  Optional.ofNullable(imageData));
         session.setAttribute("username", newUsername);
+        session.removeAttribute("imageData");
         return "redirect:/profile";
     }
-@GetMapping("/reset-password")
-    public String resetPassword () {
-        return "home/reset-password";
 
-}
+    /**
+     * @author Munazzah
+     * @return String
+     */
+    @GetMapping("/reset-password")
+        public String resetPassword () {
+            return "home/reset-password";
+
+    }
+
+    /**
+     * @author Munazzah
+     * @param currentPassword
+     * @param newPassword
+     * @param repeatedPassword
+     * @param session
+     * @param model
+     * @param redirectAttributes
+     * @return String
+     * @summary the method checks if the new password matches the repeated password and if
+     * the current password matches the password in the database
+     */
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam String currentPassword, @RequestParam String newPassword,
                                 @RequestParam String repeatedPassword, HttpSession session, Model model,
                                 RedirectAttributes redirectAttributes) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         String username = (String) session.getAttribute("username");
         String hashedPassword = tattooArtistService.getPassword(username);

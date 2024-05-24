@@ -37,7 +37,7 @@ public class BookingRepository {
      */
     public List<Booking> getBookingsForDay( LocalDate date, String username){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
-                "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =?;";
+                "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =? ORDER BY start_time_slot;";
         RowMapper<Booking> rowMapper = (rs, rowNum) -> {
             Booking booking = new Booking();
             booking.setId(rs.getInt("booking.id"));

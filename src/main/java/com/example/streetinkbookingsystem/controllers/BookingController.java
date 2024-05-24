@@ -18,7 +18,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,29 +38,22 @@ public class BookingController {
     ClientService clientService;
 
     /**
-     * @Author
+     * @Author Nanna
      * @param model
      * @param session
      * @param bookingId
+     * @param username
      * @return
      */
     @GetMapping("/booking")
-     public String booking(Model model, HttpSession session, @RequestParam int bookingId){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
+     public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username){
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-
-        model.addAttribute("loggedIn", loggedIn);
-        String username = (String) session.getAttribute("username");
-        model.addAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
-        System.out.println(booking.getId());
-        System.out.println(bookingId);
 
         // Henter billeder fra den specifikke booking
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
@@ -80,10 +73,10 @@ public class BookingController {
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn){
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
 
 
@@ -115,7 +108,7 @@ public class BookingController {
      * @param projectPictures
      * @param action
      * @param redirectAttributes
-     * @return add-client eller existing-client
+     * @returnadd-client eller existing-client
      */
     @PostMapping("/save-tattoo-info")
     public String saveNewBooking(@RequestParam LocalTime startTimeSlot,
@@ -149,7 +142,7 @@ public class BookingController {
                     })
                     .collect(Collectors.toList());
 
-            // Gemmer booking
+            // Gemmer booking og henter den gemte entitet
            Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
                     projectDesc, personalNote, isDepositPayed, pictureList);
 
@@ -157,7 +150,6 @@ public class BookingController {
 
            //henter bookingId fra den gemte entitet
             int bookingId = newBooking.getId() ;
-           // int clientId = newBooking.getClient().getId();
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId

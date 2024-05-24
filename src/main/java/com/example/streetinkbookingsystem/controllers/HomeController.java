@@ -30,12 +30,6 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model){
         List<TattooArtist> tattooArtists = tattooArtistService.showTattooArtist();
-        for (TattooArtist artist : tattooArtists) {
-            if (artist.getProfilePicture() != null) {
-                String base64Image = Base64.getEncoder().encodeToString(artist.getProfilePicture());
-                artist.setBase64ProfilePicture(base64Image); // Assuming you add a field for base64 string
-            }
-        }
         model.addAttribute("tattooArtists", tattooArtists);
         return "home/index";
     }
