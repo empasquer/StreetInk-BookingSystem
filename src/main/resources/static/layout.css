@@ -147,7 +147,7 @@ button {
     left: 2rem;
     align-self: start;
     background-color: var(--section-background-color);
-    padding: 5px 15px;
+    padding: 10px 30px;
     border-radius: 15px;
 }
 
