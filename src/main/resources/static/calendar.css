@@ -1,11 +1,20 @@
 body {
     height: auto;
 }
+
+h2 {
+    margin-bottom: 0;
+}
+
+main {
+    padding: 2rem 5vw;
+}
 section {
-    width: 105%;
-    height: 60%;
+    width: 100%;
+   /* height: 60%;
     padding: 1em;
-    margin: 0px 0 0 -4%;
+    margin: 0px 0 0 -4%;*/
+    padding: 0;
 }
 h1 {
     display:grid;
@@ -16,25 +25,29 @@ h1 {
 
 .calendar-navigation {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: .3fr 1fr .3fr ;
     justify-items: normal;
     align-items: end;
     font-size: 5em;
     margin-bottom: 0.5em;
-    margin-left: -4%;
+ /*   margin-left: -4%;*/
     /* align-self: center; */
-    width: 108%;
+    width: 100%;
 }
 .previous {
     display: grid;
-    place-content: flex-start;
-    padding-left: 5%;
+ /*   place-content: flex-start;*/
+
+/*    padding-left: 5%;*/
 }
 .next {
     display: grid;
-    place-content: flex-end;
-    padding-right: 5%;
+/*    place-content: flex-end;*/
+/*    padding-right: 5%;*/
+
 }
+
+
 .year {
     display: grid;
     place-content: center;
@@ -48,8 +61,9 @@ h1 {
     grid-column-gap: 5px;
     background-color: var(--accent-red);
     font-size: 1.5em;
-    border-radius: 0.5em;
+    border-radius: 15px 15px 0 0;
     align-content: center;
+    padding: 3% 1%;
 
 }
 .calendar-information-bar .weekdays {
@@ -67,7 +81,7 @@ h1 {
         display: grid;
         grid-template-columns: 8% 1fr;
         justify-content: center;
-        padding: 6% 1% 1%;
+        padding: 6% 1%;
     }
 
     .weeknumbers {
@@ -182,14 +196,17 @@ h1 {
 
 
 .daily-info {
+    scrollbar-width: none;
     align-items: flex-start;
     flex-direction: column;
     display: flex;
     height: auto;
     place-content: baseline;
-    padding: 3em 0 0 0;
+    /* padding: 3em 0 0 0; */
+    margin-top: 2em;
     align-self: flex-start;
-    margin-left: -1em;
+    overflow: scroll;
+    height: 200px;
 
 }
 
@@ -202,34 +219,5 @@ h1 {
 }
 .daily-info h3 {
     font-size: 1.5em;
+
 }
-
-/* Media Query for Small Screens */
-@media screen and (max-width: 768px) {
-    section {
-        padding: 0.5em; /* Adjust padding */
-    }
-
-    h1 {
-        font-size: 2em; /* Adjust font size */
-    }
-
-    .calendar-navigation {
-        font-size: 2em; /* Adjust font size */
-    }
-
-    .calendar-information-bar {
-        font-size: 1em; /* Adjust font size */
-    }
-
-    .calendar-information-bar .weekdays {
-        font-size: 0.8em; /* Adjust font size */
-    }
-
-    .dates {
-        grid-row-gap: 0.5em; /* Adjust row gap */
-        grid-column-gap: 0.3em; /* Adjust column gap */
-    }
-}
-
-

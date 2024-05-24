@@ -16,7 +16,7 @@ ul {
 
 section, .container {
     padding-top: 4rem;
-    padding-bottom: 2rem; /* Juster denne værdi efter behov */
+    padding-bottom: 2rem;
 
 }
 
@@ -74,4 +74,18 @@ button {
     display: flex;
     justify-content: center;
     gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    padding-bottom: 1.5rem;
+    gap: 2rem;
+}
+
+.input-group div{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: .3rem;
+    width: 100%;
 }
