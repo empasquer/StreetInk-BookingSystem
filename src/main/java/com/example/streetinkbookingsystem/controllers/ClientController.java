@@ -206,7 +206,7 @@ public class ClientController {
      * @Summary Creates the new client, that the user wants to add to the booking that the user is creating
      */
     @GetMapping("/add-client")
-    public String addClient(@RequestParam int bookingId,
+    public String addClient(@RequestParam int bookingId, @RequestParam LocalDate date,
                            // @RequestParam(required = false) int clientId,
                             Model model,
                             HttpSession session) {
@@ -215,7 +215,7 @@ public class ClientController {
         if (!loggedIn) {
             return "redirect:/";
         }
-
+        model.addAttribute("date",date);
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 /*
@@ -225,6 +225,7 @@ public class ClientController {
         if (clientId == null){
             client = new Client();
         }*/
+
 
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("loggedIn", loggedIn);

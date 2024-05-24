@@ -161,7 +161,8 @@ public class BookingController {
 
             if ("new-client".equals(action)) {
                 //Omdirigerer til add-client med det gemte bookingId
-                return "redirect:/add-client?bookingId=" + bookingId + "&username=" + username;
+
+                return "redirect:/add-client?bookingId=" + bookingId + "&username=" + username + "&date=" + date;
             } else if ("existing-client".equals(action)) {
                 System.out.println("here");
                 return "redirect:/choose-client?bookingId=" + bookingId + "&username=" + username;
