@@ -66,8 +66,15 @@ button {
 
 .button-container form button {
     background-color: transparent;
-    color: var(--white);
     border:none;
+}
+
+.edit {
+    color: white;
+}
+
+.delete {
+    color: black;
 }
 
 .buttons {
