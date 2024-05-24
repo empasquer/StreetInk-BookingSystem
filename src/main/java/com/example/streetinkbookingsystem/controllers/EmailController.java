@@ -50,7 +50,6 @@ public class EmailController {
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
         Booking booking =  bookingService.getBookingDetail(bookingId);
         Client client =booking.getClient();
-        client.setEmail("nannahofgaard@hotmail.com");
         String bookingEnd =booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
         String bookingStart =booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
         String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));

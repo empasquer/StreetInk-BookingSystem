@@ -79,7 +79,7 @@
             <input type="hidden" name="bookingId" th:value="${booking.id}">
             <button class="gray-button" type="submit">Cancel</button>
         </form>
-        <form th:action="@{/booking}" method="get">
+        <form th:action="@{/save-booking}" method="get">
             <input type="hidden" name="bookingId" th:value="${booking.id}">
             <button class="gray-button" type="submit">Save</button>
         </form>

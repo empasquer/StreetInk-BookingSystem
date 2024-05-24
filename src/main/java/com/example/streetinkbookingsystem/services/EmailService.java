@@ -38,7 +38,6 @@ import java.util.regex.Pattern;
         // Start preparing the email
         MimeMessagePreparator preparator = message -> {
             MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-            helper.setFrom("nannahofgaard@gmail.com"); //change to correct email
             helper.setTo(clientEmail);
             helper.setSubject("Booking Confirmation");
             helper.setText(processedHTMLTemplate, true);

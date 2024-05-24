@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.context.Context;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,6 +40,8 @@ public class BookingController {
     ProjectPictureService projectPictureService;
     @Autowired
     ClientService clientService;
+    @Autowired
+    EmailService emailService;
 
     /**
      * @Author Nanna
@@ -218,7 +222,36 @@ public class BookingController {
         System.out.println("here");
         return "redirect:/day?date=" + date;
     }
-
+    @GetMapping("/save-booking")
+    public String saveBooking(@RequestParam int bookingId, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+        String username = (String) session.getAttribute("username");
+        Booking booking =  bookingService.getBookingDetail(bookingId);
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        Client client =booking.getClient();
+        String bookingEnd =booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingStart =booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        //Send to mail template
+        Context context = new Context();
+        context.setVariable("ClientFirstName", client.getFirstName());
+        context.setVariable("ArtistFirstName", tattooArtist.getFirstName());
+        context.setVariable("ArtistLastName", tattooArtist.getLastName());
+        context.setVariable("ArtistPhone", tattooArtist.getPhoneNumber());
+        context.setVariable("ArtistEmail", tattooArtist.getEmail());
+        context.setVariable("ArtistFacebook", tattooArtist.getFacebook());
+        context.setVariable("ArtistInstagram", tattooArtist.getInstagram());
+        context.setVariable("BookingStart", bookingStart);
+        context.setVariable("BookingEnd", bookingEnd);
+        context.setVariable("BookingDate", bookingDate);
+        context.setVariable("BookingTitle", booking.getProjectTitle());
+        context.setVariable("BookingDescription", booking.getProjectDesc());
+        emailService.sendConfirmationMail(client.getEmail(), context);
+        return "redirect:/booking?bookingId="+bookingId + "&username=" + tattooArtist.getUsername();
+    }
 
     @GetMapping("/edit-booking")
     public String editBooking(Model model, HttpSession session, @RequestParam("bookingId") int bookingId, RedirectAttributes redirectAttributes) {
