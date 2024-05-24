@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Profiles</title>
-    <link rel="stylesheet" href="/layout.css?v=1.0">
-    <link rel="stylesheet" href="/manage-profiles.css?v=1.0">
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/manage-profiles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -15,7 +15,6 @@
 <main>
 
 
-
     <div class="back-arrow-container">
         <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
@@ -23,7 +22,6 @@
     <h1>Manage Profiles</h1>
 
     <section>
-        <div class="section-divider">
             <article class="warning-container">
                 <h3 class="warning">Warning:</h3>
                 <div class="warning-text"></div>
@@ -31,27 +29,27 @@
                 <p>If you need to look back at bookings for legal reasons, please reconsider your deleting </p>
             </article>
 
-            <article class="confirmation-wrapper" >
-                <th:block  th:if="${profileToDelete!=null}" >
+            <article class="confirmation-wrapper">
+                <th:block th:if="${profileToDelete!=null}">
                     <div class="confirmation-container">
-                    <h4>Are you sure you want to delete <span th:text="${profileToDelete}"></span>?</h4>
-                    <p>Be aware that the profile will be deleted permanently</p>
+                        <h4>Are you sure you want to delete <span th:text="${profileToDelete}"></span>?</h4>
+                        <p>Be aware that the profile will be deleted permanently</p>
 
-                    <div class="buttons">
-                        <form th:action="@{/manage-profiles}" method="get">
-                            <button class="gray-button">Cancel</button>
-                        </form>
-                        <form th:action="@{/delete-profile(profileToDelete=${profileToDelete})}" method="post">
-                            <button class="red-button">Delete</button>
-                        </form>
-                    </div>
+                        <div class="buttons">
+                            <form th:action="@{/manage-profiles}" method="get">
+                                <button class="gray-button">Cancel</button>
+                            </form>
+                            <form th:action="@{/delete-profile(profileToDelete=${profileToDelete})}" method="post">
+                                <button class="red-button">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </th:block>
-                    <th:block  th:if="${message!=null}" >
-                        <div class="confirmation-container">
+                <th:block th:if="${message!=null}">
+                    <div class="confirmation-container">
                         <p th:text="${message}"></p>
-                        </div>
-                    </th:block>
+                    </div>
+                </th:block>
 
             </article>
 
@@ -61,26 +59,26 @@
                     <h3>Admin</h3>
                     <h3>Delete</h3>
                 </div>
-<div class="profiles-container">
-                <ul class="profiles">
-                    <li class="profile" th:each="profile : ${profiles}">
-                        <p th:text="${profile.getUsername()}"></p>
-                        <form th:action="@{/change-admin(profileToChange=${profile.username})}" method="post">
-                            <label>
-                                <input  type="checkbox" th:checked="${profile.getIsAdmin()}" class="checkboxes" onchange="this.form.submit()">
-                            </label>
-                        </form>
+                <div class="profiles-container">
+                    <ul class="profiles">
+                        <li class="profile" th:each="profile : ${profiles}">
+                            <p th:text="${profile.getUsername()}"></p>
+                            <form th:action="@{/change-admin(profileToChange=${profile.username})}" method="post">
+                                <label>
+                                    <input type="checkbox" th:checked="${profile.getIsAdmin()}" class="checkboxes"
+                                           onchange="this.form.submit()">
+                                </label>
+                            </form>
 
-                        <form  th:action="@{/manage-profiles(profileToDelete=${profile.username})}" method="post" >
-                            <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
-                        </form>
+                            <form th:action="@{/manage-profiles(profileToDelete=${profile.username})}" method="post">
+                                <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
+                            </form>
 
-                    </li>
-                </ul>
-</div>
+                        </li>
+                    </ul>
+                </div>
             </article>
 
-        </div>
 
 
     </section>
