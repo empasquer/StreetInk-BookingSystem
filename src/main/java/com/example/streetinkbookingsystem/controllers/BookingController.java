@@ -74,13 +74,18 @@ public class BookingController {
      * @return den gemte booking.
      */
     @GetMapping("/create-new-booking")
-    public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date){
+    public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam (required = false) Integer bookingId ){
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
+        model.addAttribute("bookingId", bookingId);
+        if (bookingId != null) {
+            Booking booking =bookingService.getBookingDetail(bookingId);
+            model.addAttribute("booking",booking);
+        }
         model.addAttribute("date", date);
+
 
 
         return "home/create-new-booking";
@@ -113,7 +118,7 @@ public class BookingController {
                                  //Multipartfile er en datatypen. Disse objekter repræsenterer filer, som er blevet uploadet via en html-formular. Der kan være flere filer som er uploadet.
                                  @RequestParam("projectPictures") MultipartFile[] projectPictures,
                                  @RequestParam String action, // Tilføjet parameter for handling af knap handlinger
-                                 RedirectAttributes redirectAttributes) {
+                                 RedirectAttributes redirectAttributes, Model model) {
       /*  try {*/
             String username = (String) session.getAttribute("username");
 
@@ -133,6 +138,11 @@ public class BookingController {
                     })
                     .collect(Collectors.toList());
 
+        if (endTimeSlot.isBefore(startTimeSlot)) {
+            model.addAttribute("errorMessage", "End time cannot be before start time.");
+            model.addAttribute("date", date);
+           return "home/create-new-booking";
+        }
             // Gemmer booking og henter den gemte entitet
            Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
                     projectDesc, personalNote, isDepositPayed, pictureList);
@@ -148,7 +158,7 @@ public class BookingController {
                 return "redirect:/add-client?bookingId=" + bookingId + "&username=" + username + "&date=" + date;
             } else if ("existing-client".equals(action)) {
                 System.out.println("here");
-                return "redirect:/choose-client?bookingId=" + bookingId + "&username=" + username;
+                return "redirect:/choose-client?bookingId=" + bookingId + "&username=" + username +"&date=" + date;
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Invalid actions.");
                 return "redirect:/create-new-booking?date=" + date;
@@ -202,11 +212,10 @@ public class BookingController {
         return "home/booking-preview";
     }
 
-    @PostMapping("/cancel-booking")
+    @GetMapping("/cancel-booking")
     public String cancelBooking(@RequestParam int bookingId, @RequestParam String date, Model model) {
-
-           // bookingService.cancelBooking(bookingId);
-
+        bookingService.deleteBooking(bookingId);
+        System.out.println("here");
         return "redirect:/day?date=" + date;
     }
 
@@ -283,6 +292,13 @@ public class BookingController {
         return "redirect:/delete-booking";
     }
 
+    /**
+     *
+     * @param bookingIdToDelete
+     * @param session
+     * @param model
+     * @return
+     */
     @PostMapping("/delete-booking")
     public String deleteBooking(@RequestParam int bookingIdToDelete, HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -293,6 +309,8 @@ public class BookingController {
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
     }
+
+
 
 
 }

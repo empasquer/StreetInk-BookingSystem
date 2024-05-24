@@ -202,7 +202,6 @@ public class BookingRepository {
      */
     public void deleteBooking(int bookingId) {
         validateBookingExistence(bookingId);
-
         String deleteQuery = "DELETE FROM booking WHERE id = ?";
         jdbcTemplate.update(deleteQuery, bookingId);
     }
