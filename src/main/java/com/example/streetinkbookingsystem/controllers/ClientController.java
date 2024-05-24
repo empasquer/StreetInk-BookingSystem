@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,7 +33,6 @@ public class ClientController {
 
     @Autowired
     TattooArtistService tattooArtistService;
-
 
     /**
      * @author Munazzah
@@ -64,6 +64,7 @@ public class ClientController {
     }
 
     /**
+
      * @Author Munazzah
      * @param searchQuery
      * @param model

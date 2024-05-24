@@ -85,8 +85,6 @@ public class BookingController {
 
         //String username;
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-
-        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("username", username);
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
