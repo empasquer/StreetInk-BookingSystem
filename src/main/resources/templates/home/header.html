@@ -1,8 +1,12 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <header>
-  <a th:if="${loggedIn}" th:href="@{/profile}">
-    <img th:if="${tattooArtist.base64ProfilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.base64ProfilePicture}}" alt="Profilbillede" class="profile-pic">
-    <img th:unless="${tattooArtist.base64ProfilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
-  </a>
+  <div class="profile-pic-container">
+    <a th:if="${loggedIn}" th:href="@{/profile}">
+     <img th:if="${tattooArtist.base64ProfilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.base64ProfilePicture}}" alt="Profilbillede" class="profile-pic">
+      <i th:unless="${tattooArtist.base64ProfilePicture != null}" class="fas fa-user profile-pic" alt="Standard Profilbillede"></i>
+    </a>
+  </div>
 
   <div class="logo-container">
     <a th:if="${loggedIn}" th:href="@{/dashboard}">
