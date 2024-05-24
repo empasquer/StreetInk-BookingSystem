@@ -39,7 +39,7 @@ public class ClientController {
      * @param model to add attributes to controller
      * @param session to check if logged in
      * @return String - View of the client-list page
-     * @summary Gets the sorted list og Clients from the service layer, and then uses Map to
+     * @summary Gets the sorted list of Clients from the service layer, and then uses Map to
      * group the Clients based on the first letter in name
      */
     @GetMapping("/client-list")
@@ -50,14 +50,13 @@ public class ClientController {
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         List<Client> sortedClients = clientService.getSortedListOfClients();
-        //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
-        //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
-        //Uses stream to handle everything simulationaly
-        //Uses collect (Collectors.groupingBy) to group the elements of the stream based on first letter in first name
+        // ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
+        // Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
+        // Uses stream to handle everything simultaneously
+        // Uses collect (Collectors.groupingBy) to group the elements of the stream based on first letter in first name
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
                 .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
                         TreeMap::new, Collectors.toList()));
-
 
         model.addAttribute("groupedClients", groupedClients);
         return "home/client-list";
@@ -80,7 +79,7 @@ public class ClientController {
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        //Checks (via regex) if there are only numbers or only letters and acts accordingly
+        // Checks (via regex) if there are only numbers or only letters and acts accordingly
         if (searchQuery.matches("[0-9]+")) {
             model.addAttribute("searchType", "phoneNumber");
             List<Client> clientByNumber = clientService.getClientsByPhoneNumber(Integer.parseInt(searchQuery));
@@ -94,9 +93,8 @@ public class ClientController {
         return "home/search-result";
     }
 
-
     /**
-     * @author Muanzzah
+     * @author Munazzah
      * @param searchQuery to get what there has been searched for
      * @param model to add attributes to the controller
      * @param redirectAttributes to add redirect message
@@ -114,7 +112,7 @@ public class ClientController {
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         model.addAttribute("searchQuery", searchQuery);
-        //Checks (via regex) if there is a mix of numbers and letters. If yes, it redirects with error message
+        // Checks (via regex) if there is a mix of numbers and letters. If yes, it redirects with error message
         if (searchQuery.matches(".*[A-Za-z].*") && searchQuery.matches(".*[0-9].*")) {
             redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
             return "redirect:/client-list";
@@ -123,6 +121,16 @@ public class ClientController {
         return "redirect:/search-result";
     }
 
+    /**
+     * Displays the client detail page with an optional delete warning.
+     *
+     * @param session        the current HTTP session to check if logged in
+     * @param model          the model to add attributes to for rendering view
+     * @param clientId       the ID of the client to view
+     * @param clientToDelete the ID of the client to delete, if applicable
+     * @return the view name of the client detail page
+     * @author Emma
+     */
     @GetMapping("/client")
     public String seeClient(HttpSession session, Model model, @RequestParam("clientId") int clientId,
                             @RequestParam(required = false) Integer clientToDelete) {
@@ -144,7 +152,17 @@ public class ClientController {
         return "home/client";
     }
 
-
+    /**
+     * Redirects to the client detail page with a delete warning.
+     *
+     * @param clientToDelete the ID of the client to delete
+     * @param clientId       the ID of the client to view
+     * @param redirectAttributes the attributes for a redirect scenario
+     * @param model          the model to add attributes to for rendering view
+     * @param session        the current HTTP session to check if logged in
+     * @return the redirect string to the client detail page with a delete warning
+     * @author Emma
+     */
     @PostMapping("/client")
     public String clientWithWarning(@RequestParam Integer clientToDelete, @RequestParam int clientId, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -159,6 +177,15 @@ public class ClientController {
         return "redirect:/client?clientId=" + clientId;
     }
 
+    /**
+     * Displays the edit client page.
+     *
+     * @param model    the model to add attributes to for rendering view
+     * @param session  the current HTTP session to check if logged in
+     * @param clientId the ID of the client to edit
+     * @return the view name of the edit client page
+     * @author Emma
+     */
     @GetMapping("/edit-client")
     public String editClient(Model model, HttpSession session, @RequestParam("clientId") int clientId) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -166,13 +193,26 @@ public class ClientController {
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-
         Client client = clientService.getClientFromClientId(clientId);
         model.addAttribute("client", client);
 
         return "home/edit-client";
     }
 
+    /**
+     * Updates the client information and redirects to the client detail page.
+     *
+     * @param firstName   the first name of the client
+     * @param lastName    the last name of the client
+     * @param email       the email of the client
+     * @param phoneNumber the phone number of the client
+     * @param description the description of the client
+     * @param clientId    the ID of the client to update
+     * @param model       the model to add attributes to for rendering view
+     * @param session     the current HTTP session to check if logged in
+     * @return the redirect string to the client detail page
+     * @author Emma
+     */
     @PostMapping("/edit-client")
     public String updateClient(@RequestParam String firstName, @RequestParam String lastName,
                                @RequestParam String email, @RequestParam int phoneNumber,
@@ -184,6 +224,15 @@ public class ClientController {
         return "redirect:/client?clientId=" + clientId;
     }
 
+    /**
+     * Deletes the client information and redirects to the client detail page.
+     *
+     * @param model    the model to add attributes to for rendering view
+     * @param session  the current HTTP session to check if logged in
+     * @param clientId the ID of the client to delete
+     * @return the redirect string to the client detail page
+     * @author Emma
+     */
     @PostMapping("/delete-client")
     public String deleteClient(Model model, HttpSession session, @RequestParam("clientId") int clientId) {
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
@@ -214,13 +263,6 @@ public class ClientController {
         model.addAttribute("date",date);
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-/*
-        //int clientId = bookingService.getBookingDetail(bookingId).getClient().getId();
-        Client client = clientService.getClientFromClientId(clientId);
-
-        if (clientId == null){
-            client = new Client();
-        }*/
 
 
         model.addAttribute("tattooArtist", tattooArtist);
@@ -229,7 +271,6 @@ public class ClientController {
         model.addAttribute("bookingId", bookingId);
         //model.addAttribute("client", client);
         return "home/add-client";
-
     }
 
     /**
@@ -256,11 +297,11 @@ public class ClientController {
                              @RequestParam int phoneNumber,
                              @RequestParam String description,
                              HttpSession session,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes) {
 
         String username = (String) session.getAttribute("username");
 
-        if (username == null){
+        if (username == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Your session ran out, log in again.");
             return "redirect:/";
         }
