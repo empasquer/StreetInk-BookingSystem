@@ -13,7 +13,7 @@
 
     <main>
         <h1 th:text="'Welcome ' + ${tattooArtist.username} + '!'"></h1>
-        <section class="box-shadow">
+        <section>
             <div class="inset stat-wrapper">
                 <h2>You have <span class="red big" th:text="${bookingsADay}"></span> bookings today</h2>
             </div>
@@ -29,7 +29,7 @@
 
 
         </section>
-        <a class="red-button box-shadow" th:href="@{/calendar}">Calendar</a>
+        <a class="red-button" th:href="@{/calendar}">Calendar</a>
 
     </main>
 

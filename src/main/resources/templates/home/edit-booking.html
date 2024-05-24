@@ -5,7 +5,9 @@
     <title>Edit Booking</title>
     <link rel="stylesheet" href="/layout.css">
     <link rel="stylesheet" href="/create-new-booking.css">
+    <link rel="stylesheet" href="/edit-booking.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -18,12 +20,12 @@
     <h1>Edit Booking - <span th:text="${booking.date}"></span></h1>
 
     <section>
-        <form  th:action="@{/confirm-delete-booking}" method="get" >
+        <form  th:action="@{/confirm-delete-booking}" method="get" class="delete-form" >
             <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
             <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
         </form>
 
-        <form action="/edit-booking" method="post" enctype="multipart/form-data">
+        <form th:action="@{/edit-booking}" method="post" enctype="multipart/form-data">
             <div class="booking-container">
                 <div class="information-container">
                     <h2>Tattoo Information</h2>
@@ -69,33 +71,36 @@
                         <input type="hidden" name="bookingId" th:value="${booking.getId()}">
                     </div>
 
-                    <p>Check the images you want to delete:</p>
-                    <div th:if="${#lists.isEmpty(booking.projectPictures)}">
-                        <p>No pictures have been uploaded</p>
-                    </div>
-                    <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
-                        <div th:each="picture, index : ${booking.projectPictures}">
-                            <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture" style="max-width: 200px; max-height: 200px;">
-                            <label>
-                                <input type="checkbox" th:name="deletePictures" th:value="${picture.id}" /> Delete
-                            </label>
+                    <div class="form-group">
+                        <p>Check the images you want to delete:</p>
+                        <div th:if="${#lists.isEmpty(booking.projectPictures)}">
+                            <p>No pictures have been uploaded</p>
+                        </div>
+                        <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
+                            <div th:each="picture, index : ${booking.projectPictures}" class="picture-container">
+                                <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture">
+                                <div class="checkbox-container">
+                                    <label>
+                                        <input class="checkbox" type="checkbox" th:name="deletePictures" th:value="${picture.id}" />
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
 
                     <div class="form-group">
                         <label for="image">Add image:</label>
-                        <input type="file" id="image" name="projectPictures">
+                        <input type="file" id="image" name="projectPictures" multiple>
                     </div>
 
-                    <form th:action="@{/calendar}" method="post">
-                        <div class="button-container">
+                    <div class="button-container-edit">
+                        <form th:action="@{/calendar}" method="post">
                             <button type="submit" class="gray-button">Save and resend mail</button>
-                        </div>
-                    </form>
+                        </form>
 
-                    <div class="button-container">
-                        <button type="submit" class="red-button">Save Booking</button>
+                        <div>
+                            <button type="submit" class="red-button">Save Booking</button>
+                        </div>
                     </div>
 
                 </div>

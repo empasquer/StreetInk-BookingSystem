@@ -73,7 +73,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0.75rem;
 }
@@ -125,21 +125,14 @@ button {
     border: none;
     padding:1rem;
 }
-.gray-button:hover {
-    background-color: #C6C6C6; /* har ikke fundet den rigtige farve */
-}
 
 .red-button {
     cursor: pointer; /* ændrer curser til en pointer */
     border-radius: 15px;
-    background-color: var(--accent-red); /* denne er meget lydere end på prototyperne*/
+    background-color: var(--accent-red);
     color: var(--input-field-gray);
     border:none;
     padding:1rem;
-}
-.red-button:hover {
-    background-color: #713232; /* Mørkere farve når musen er over */
-
 }
 
 .back-arrow-container {
@@ -154,8 +147,6 @@ button {
 .back-arrow {
     font-size: large;
 }
-
-
 
 /* header og footer styles */
 footer {
@@ -214,6 +205,7 @@ header {
 
 nav li {
     list-style: none;
+    background-color: transparent;
 }
 
 a.nav-link {

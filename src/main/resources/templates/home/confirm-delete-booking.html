@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Delete Booking</title>
     <link rel="stylesheet" type="text/css" href="/layout.css">
+    <link rel="stylesheet" type="text/css" href="/edit-booking.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -13,14 +14,19 @@
     <h1>Confirm Deletion of Booking</h1>
     <section class="box-shadow">
         <div class="confirmation-container">
-            <h2>Are you sure you want to delete this booking:
-                <span th:text="${booking.getDate()} + ' at ' + ${booking.getStartTimeSlot()} +
-                ' with ' + ${booking.client.getFirstName()} + ' ' + ${booking.client.getLastName()}"></span>?
-            </h2>
-            <p>Be aware that the booking will be deleted permanently!
+            <h2>Are you sure you want to delete this booking:</h2>
+            <h1 class="booking-name">
+                <span class="red-text" th:text="${booking.getDate()}"></span>
+                <span class="white-text">at</span>
+                <span class="red-text" th:text="${booking.getStartTimeSlot()}"></span>
+                <span class="white-text">with</span>
+                <span class="red-text" th:text="${booking.client.getFirstName()}"></span>
+                <span class="red-text" th:text="${booking.client.getLastName()}"></span> </h1>
+
+            <p class="warning-text">Be aware that the booking will be deleted permanently!
                 You can not retrieve any kind of information from this booking after deletion</p>
 
-            <div class="buttons">
+            <div class="button-container-edit">
                 <form th:action="@{/booking}" method="get">
                     <input type="hidden" name="bookingId" th:value="${booking.getId()}"/>
                     <input type="hidden" name="username" th:value="${session.username}"/>

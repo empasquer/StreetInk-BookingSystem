@@ -1,0 +1,94 @@
+.picture-container {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.picture-container img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.checkbox-container {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.checkbox {
+    webkit-appearance: none; /* Remove default checkbox styling */
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+    border-radius: 8px; /* Rounded corners */
+    background-color: var(--input-field-gray); /* Background color */
+    outline: none; /* Remove blue focus outline */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+
+.checkbox:checked::after {
+    content: '\2713';
+    font-size: 15px;
+    color: black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: -5px;
+}
+
+.icon-button {
+    border-radius: 0.4em;
+    background-color: transparent;
+    color: black;
+    border: none;
+}
+
+.delete-form {
+    text-align: right;
+}
+
+p {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+}
+
+.booking-name {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.red-text {
+    color: red;
+}
+
+.white-text {
+    color: white;
+}
+
+.button-container-edit {
+    display: flex;
+    justify-content: center;
+}
+
+.gray-button {
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+
+}
+
+.red-button {
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
