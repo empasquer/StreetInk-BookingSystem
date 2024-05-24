@@ -102,6 +102,7 @@ public class ClientRepository {
         }
     }
 
+
     public Client saveClient(Client client){
         String query = "INSERT INTO client (first_name, last_name, email, phone_number, description) " +
                 "VALUES (?, ?, ?, ?, ?)";

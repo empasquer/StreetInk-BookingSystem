@@ -198,7 +198,7 @@ public class ClientController {
     /**
      * @Author Tara
      * @param bookingId
-     * @param clientId
+    // * @param clientId
      * @param model
      * @param session Used to determine if the user is logged in or not. User will be redirected
      *                to index page if not logged in.
@@ -207,7 +207,7 @@ public class ClientController {
      */
     @GetMapping("/add-client")
     public String addClient(@RequestParam int bookingId,
-                            @RequestParam int clientId,
+                           // @RequestParam(required = false) int clientId,
                             Model model,
                             HttpSession session) {
 
@@ -218,19 +218,19 @@ public class ClientController {
 
         String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-
+/*
         //int clientId = bookingService.getBookingDetail(bookingId).getClient().getId();
         Client client = clientService.getClientFromClientId(clientId);
 
-        if (client.getId() == 1){
+        if (clientId == null){
             client = new Client();
-        }
+        }*/
 
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("username", username);
         model.addAttribute("bookingId", bookingId);
-        model.addAttribute("client", client);
+        //model.addAttribute("client", client);
         return "home/add-client";
 
     }
@@ -238,7 +238,7 @@ public class ClientController {
     /**
      * @Author Tara
      * @param bookingId
-     * @param clientId
+     //* @param clientId
      * @param firstName
      * @param lastName
      * @param email
@@ -252,7 +252,7 @@ public class ClientController {
      */
     @PostMapping("/save-client")
     public String saveClient(@RequestParam int bookingId,
-                             @RequestParam(required = false, defaultValue = "1") int clientId,
+                            /* @RequestParam(required = false, defaultValue = "1") int clientId,*/
                              @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam String email,
@@ -269,7 +269,7 @@ public class ClientController {
         }
 
         Client client = new Client();
-        client.setId(clientId);
+        //client.setId(clientId);
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setEmail(email);
@@ -277,6 +277,7 @@ public class ClientController {
         client.setDescription(description);
         client = clientService.saveClient(client);
 
+        int clientId = client.getId();
         clientService.updateClientOnBooking(bookingId, client.getId());
 
         return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
