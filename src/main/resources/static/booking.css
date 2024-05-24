@@ -1,10 +1,10 @@
 .booking-container {
-    margin-bottom: 2em; /* Juster denne værdi efter behov */
+    margin-bottom: 2em;
     margin-left: 2em;
 }
 
 section {
-    padding-bottom: 2em; /* Juster denne værdi efter behov */
+    padding-bottom: 2em;
 }
 
 
@@ -76,4 +76,10 @@ hr {
     position: relative; /* Positionering relativ til parent */
     width: 100%; /* Fylder hele checkboxen */
     height: 100%; /* Fylder hele checkboxen */
+}
+
+.project-picture {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }

@@ -145,7 +145,7 @@ public class BookingController {
            Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
                     projectDesc, personalNote, isDepositPayed, pictureList);
 
-           projectPictureService.saveProjectPictures(newBooking.getId(), pictureList);
+           //projectPictureService.saveProjectPictures(newBooking.getId(), pictureList);
 
            //henter bookingId fra den gemte entitet
             int bookingId = newBooking.getId() ;
