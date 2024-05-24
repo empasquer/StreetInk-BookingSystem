@@ -80,6 +80,24 @@ public class BookingService {
 
     }
 
+    public void updateBooking(int bookingId, LocalTime startTimeSlot, LocalTime endTimeSlot,
+                                 LocalDate date, String projectTitle, String projectDesc,
+                                 String personalNote, boolean isDepositPayed,
+                                 List<byte[]> pictureList) {
+
+        for (byte[] pictureData : pictureList) {
+            ProjectPicture picture = new ProjectPicture();
+            picture.setPictureData(pictureData);
+            picture.setBookingId(bookingId);
+            projectPictureRepository.saveProjectPicture(picture);
+        }
+
+        bookingRepository.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc,
+                personalNote, isDepositPayed);
+
+    }
+
+
 
     public int getBookingCountForDate(LocalDate specificDate, String username) {
         return bookingRepository.getBookingCountForDate(specificDate, username);
@@ -133,5 +151,9 @@ public class BookingService {
 
     public List<Booking> getBookingsByClientId(int clientId) {
         return bookingRepository.getBookingsByClientId(clientId);
+    }
+
+    public void deleteBooking(int bookingId) {
+        bookingRepository.deleteBooking(bookingId);
     }
 }

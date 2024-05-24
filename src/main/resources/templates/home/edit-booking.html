@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Booking</title>
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/create-new-booking.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header th:block th:insert="~{home/header :: header}"></header>
+
+<main>
+    <div class="back-arrow-container">
+        <a th:href="@{/calendar}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <h1>Edit Booking - <span th:text="${booking.date}"></span></h1>
+
+    <section>
+        <form  th:action="@{/confirm-delete-booking}" method="get" >
+            <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
+            <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
+        </form>
+
+        <form action="/edit-booking" method="post" enctype="multipart/form-data">
+            <div class="booking-container">
+                <div class="information-container">
+                    <h2>Tattoo Information</h2>
+
+                    <div th:if="${errorMessage}" class="error-message">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isDepositPayed">Deposit Paid:</label>
+                        <input type="hidden" name="isDepositPayed" th:value="${booking.getIsDepositPayed()}">
+                        <input type="checkbox" id="isDepositPayed" name="isDepositPayed" th:chencked="${booking.isDepositPayed}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" th:value="${booking.date}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startTimeSlot">Start Time:</label>
+                        <input type="time" id="startTimeSlot" name="startTimeSlot" th:value="${booking.startTimeSlot}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endTimeSlot">End Time:</label>
+                        <input type="time" id="endTimeSlot" name="endTimeSlot" th:value="${booking.endTimeSlot}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectTitle">Project Title:</label>
+                        <input type="text" id="projectTitle" name="projectTitle" th:value="${booking.projectTitle}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDesc">Project Description:</label>
+                        <textarea id="projectDesc" name="projectDesc" rows="4" required th:text="${booking.projectDesc}"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalNote">Private Note:</label>
+                        <textarea id="personalNote" name="personalNote" rows="4" th:text="${booking.personalNote}"></textarea>
+                        <input type="hidden" name="bookingId" th:value="${booking.getId()}">
+                    </div>
+
+                    <p>Check the images you want to delete:</p>
+                    <div th:if="${#lists.isEmpty(booking.projectPictures)}">
+                        <p>No pictures have been uploaded</p>
+                    </div>
+                    <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
+                        <div th:each="picture, index : ${booking.projectPictures}">
+                            <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture" style="max-width: 200px; max-height: 200px;">
+                            <label>
+                                <input type="checkbox" th:name="deletePictures" th:value="${picture.id}" /> Delete
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="image">Add image:</label>
+                        <input type="file" id="image" name="projectPictures">
+                    </div>
+
+                    <form th:action="@{/calendar}" method="post">
+                        <div class="button-container">
+                            <button type="submit" class="gray-button">Save and resend mail</button>
+                        </div>
+                    </form>
+
+                    <div class="button-container">
+                        <button type="submit" class="red-button">Save Booking</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
