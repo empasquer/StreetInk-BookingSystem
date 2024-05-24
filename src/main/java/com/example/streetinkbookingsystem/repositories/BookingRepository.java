@@ -37,7 +37,7 @@ public class BookingRepository {
      */
     public List<Booking> getBookingsForDay( LocalDate date, String username){
         String query = "SELECT * FROM booking JOIN client ON booking.client_id =  client.id " +
-                "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =?;";
+                "LEFT JOIN project_picture On booking.id = project_picture.booking_id WHERE booking.username = ? AND date =? ORDER BY start_time_slot;";
         RowMapper<Booking> rowMapper = (rs, rowNum) -> {
             Booking booking = new Booking();
             booking.setId(rs.getInt("booking.id"));
@@ -185,12 +185,48 @@ public class BookingRepository {
 
     }
 
-    public Booking findById(int bookingId){
+    public void updateBooking(int bookingId, LocalTime startTimeSlot, LocalTime endTimeSlot,
+                                 LocalDate date, String projectTitle, String projectDesc,
+                                 String personalNote, boolean isDepositPayed) {
+        String query = "UPDATE booking SET start_time_slot = ?, end_time_slot = ?, date = ?, " +
+                "project_title = ?, project_desc = ?, personal_note = ?, " +
+                "is_deposit_payed = ? WHERE id = ?";
+
+        jdbcTemplate.update(query, startTimeSlot, endTimeSlot, Date.valueOf(date),
+                projectTitle, projectDesc, personalNote, isDepositPayed, bookingId);
+    }
+
+    /**
+     * @author Munazzah
+     * @param bookingId
+     */
+    public void deleteBooking(int bookingId) {
+        validateBookingExistence(bookingId);
+        String deleteQuery = "DELETE FROM booking WHERE id = ?";
+        jdbcTemplate.update(deleteQuery, bookingId);
+    }
+
+    /**
+     * @author Munazzah
+     * @param bookingId
+     * @summary Checks if the booking exist
+     */
+    private void validateBookingExistence(int bookingId) {
+        String checkBookingQuery = "SELECT COUNT(*) FROM booking WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(checkBookingQuery, new Object[]{bookingId}, Integer.class);
+        if (count == null || count == 0) {
+            throw new IllegalArgumentException("This booking does not exist: " + bookingId);
+        }
+    }
+
+    public Booking findById(int bookingId) {
+        validateBookingExistence(bookingId);
+
         String query = "SELECT * FROM booking WHERE id = ?";
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
-        Booking booking = jdbcTemplate.queryForObject(query, rowMapper, bookingId);
-        return booking;
+        return jdbcTemplate.queryForObject(query, rowMapper, bookingId);
     }
+
 
 
     //Retunerer antallet af booking for en bestemt dato og username

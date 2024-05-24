@@ -25,19 +25,34 @@ public class TattooArtistService {
         return tattooArtistRepository.showTattooArtists();
     }
 
+    /**
+     * @author Emma
+     * @param username
+     * @return
+     */
     public TattooArtist getTattooArtistByUsername(String username) {
         return tattooArtistRepository.getTattooArtistByUsername(username);
     }
 
+    /**
+     * @author Nanna
+     * @param profileToDelete
+     * @return
+     */
     public String deleteProfileByUsername(String profileToDelete) {
         TattooArtist artist = tattooArtistRepository.getTattooArtistByUsername(profileToDelete);
         if(artist.getIsAdmin()) {
             return "Cannot delete an admin profile";
         }
         else tattooArtistRepository.deleteProfileByUsername(profileToDelete);
-        return artist.getUsername() + "deleted";
+        return artist.getUsername() + " deleted";
     }
 
+    /**
+     * @author Nanna
+     * @param artist
+     * @return
+     */
     public String changeAdminStatus(TattooArtist artist) {
         boolean isAdmin = artist.getIsAdmin();
         List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
@@ -63,13 +78,40 @@ public class TattooArtistService {
     }
 
 
+    /**
+     * @author Nanna
+     * @param username
+     * @param firstname
+     * @param lastName
+     * @param password
+     * @param facebookUrl
+     * @param instagramUrl
+     * @param phone
+     * @param email
+     * @param avgWorkHours
+     * @param isAdmin
+     * @param pictureData
+     */
     public void createProfile(String username, String firstname, String lastName, String password, String facebookUrl,  String instagramUrl, int phone, String email, int avgWorkHours, boolean isAdmin, Optional<byte[]> pictureData){
         String hashedPassword = loginService.hashPassword(password);
         tattooArtistRepository.createProfile(username,firstname,lastName,hashedPassword,facebookUrl,instagramUrl,phone, email, avgWorkHours, isAdmin,pictureData);
     }
 
+    /**
+     * @author Nanna
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param facebook
+     * @param instagram
+     * @param avgWorkHours
+     * @param newUsername
+     * @param currentUsername
+     * @param pictureData
+     */
     public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String newUsername, String currentUsername, Optional<byte[]> pictureData) {
-    tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,firstName,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
+    tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,facebook,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
 }
 
 

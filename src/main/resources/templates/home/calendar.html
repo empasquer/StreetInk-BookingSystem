@@ -18,7 +18,7 @@
     </div>
 
 
-<!--header  -->
+
 <article>
     <h1 th:text="${date.getMonth()}"></h1>
 
@@ -77,9 +77,10 @@
                     </th:block>
 
                     <!-- Iterate through days in the month -->
-                      <li class="day-wrapper" th:each="day : ${daysInMonth}">
+                    <li class="day-wrapper" th:each="day : ${daysInMonth}"
+                        th:classappend="${day.dayOfWeek.value == 6 || day.dayOfWeek.value == 7} ? 'weekend' : ''">
 
-                          <!--Calculate percentage of day booked based on workhourd-->
+                    <!--Calculate percentage of day booked based on workhourd-->
 
                           <th:block th:if="${calendar.calculateDegreeOfBookedDay(day, username) > 80}">
 

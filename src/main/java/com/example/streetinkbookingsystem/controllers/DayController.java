@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,30 +37,17 @@ public class DayController {
      */
     @GetMapping("/day")
     public String seeDay(Model model, HttpSession session, @RequestParam LocalDate date){
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-
-        String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        if (username == null){
-            // Redirect logic when username is null
-            return "redirect:/";
-        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
 
-
-        List<Booking> bookingList = bookingService.getBookingsForDay(date,username);
+        List<Booking> bookingList = bookingService.getBookingsForDay(date,(String) session.getAttribute("username"));
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("date", date);
-        model.addAttribute("username", username);
-
+        String day = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        model.addAttribute("day", day);
         // might move to service, this makes a list of quarter hours
         List<Double> hours = new ArrayList<>();
         for (double hour = 9; hour <= 20; hour += 0.25) {

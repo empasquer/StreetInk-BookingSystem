@@ -18,8 +18,9 @@
     <input type="hidden" name="clientId" th:value="${clientId}">
     <div class="back-arrow-container">
         <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
-        <a th:href="@{/day(username=${tattooArtist.username},date=${booking.getDate()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
-        <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
+
+        <a  th:href="@{/create-new-booking(date=${booking.getDate()},bookingId=${booking.getId()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+               <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
     </div>
 
     <img src="/assets/proBar-3.png" alt="Process Picture3/3" class="process-picture">
@@ -58,15 +59,6 @@
                         </div>
                     </div>
 
-                    <div class="button-container">
-                        <!--virker og kan bruges som save knap -->
-                        <!--<a th:href="@{/day(username=${tattooArtist.username},date=${booking.getDate()})}" class="red-button box-shadow"></i></a> -->
-
-                        <!--disse knapper er bare hylstre -->
-                        <button type="submit" name="cancel" value="day" class="gray-button">Cancel</button>
-                        <button type="submit" name="action" value="day" class="red-button">Save</button>
-                    </div>
-
 
                 </div>
             </div>
@@ -74,12 +66,25 @@
         </div>
 
     </section>
+    <div class="button-container">
+        <form th:action="@{/cancel-booking}" method="get">
+            <input type="hidden" name="date" th:value="${booking.date}">
+            <input type="hidden" name="bookingId" th:value="${booking.id}">
+            <button class="gray-button" type="submit">Cancel</button>
+        </form>
+        <form th:action="@{/save-booking}" method="get">
+            <input type="hidden" name="bookingId" th:value="${booking.id}">
+            <button class="gray-button" type="submit">Save</button>
+        </form>
+    </div>
 
 
     <!--this is just for testing -->
+    <!--this is just for testing --> <!--
     <form th:action="@{/send-confirmation-mail(bookingId = ${booking.getId()})}" method="post">
         <button class="gray-button" type="submit">sendmail</button>
     </form>
+    -->
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>

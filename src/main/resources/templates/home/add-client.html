@@ -13,7 +13,7 @@
 <main>
     <div class="back-arrow-container">
         <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
-        <a th:href="@{/client(clientId=${client.id})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <a th:href="@{/create-new-booking(date=${date}, bookingId=${bookingId})}" class="small button"><i class="fas fa-arrow-left"></i></a>
         <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
     </div>
 
@@ -23,33 +23,33 @@
         <div class="form-container">
             <form th:action="@{/save-client}" method="post">
                 <input type="hidden" name="bookingId" th:value="${bookingId}">
-                <input type="hidden" name="clientId" th:value="${client.id}">
+                <!-- <input type="hidden" name="clientId" th:value="${client.id}"> -->
                 <div class="input-group">
                     <div>
                         <label for="firstName">First Name: *</label>
-                        <input type="text" id="firstName" name="firstName" th:value="${client.firstName}" required>
+                        <input type="text" id="firstName" name="firstName"  required>
                     </div>
                     <div>
                         <label for="lastName">Last Name:</label>
-                        <input type="text" id="lastName" name="lastName" th:value="${client.lastName}">
+                        <input type="text" id="lastName" name="lastName" >
                     </div>
 
                 </div>
                 <div class="input-group">
                     <div>
                         <label for="email">Email: *</label>
-                        <input type="email" id="email" name="email" th:value="${client.email}" required>
+                        <input type="email" id="email" name="email"  required>
                     </div>
                     <div>
                         <label for="phoneNumber">Phone Number: *</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" th:value="${client.phoneNumber}">
+                        <input type="tel" id="phoneNumber" name="phoneNumber">
                     </div>
 
                 </div>
                 <div class="input-group">
                     <div>
                         <label for="description">Description:</label>
-                        <textarea id="description" name="description" rows="4" cols="50" th:text="${client.description}"></textarea>
+                        <textarea id="description" name="description" rows="4" cols="50" ></textarea>
                     </div>
 
                 </div>

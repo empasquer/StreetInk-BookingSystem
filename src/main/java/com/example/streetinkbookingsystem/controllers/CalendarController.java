@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -42,13 +43,10 @@ public class CalendarController {
     @GetMapping("/calendar")
     public String seeCurrentMonth(Model model, @RequestParam(required = false) Integer year, @RequestParam(required = false)  Integer month, HttpSession session) {
         //Check if user has a session, if not redirect to login.
-
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn); // where do we use this?
-        } else {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         //Initialize the calendar. If client gets to the calendar from another view
         //then show the current month. If they push the "next" or "previous" buttons then show that month.
@@ -62,13 +60,12 @@ public class CalendarController {
         // Calculate the days in the month, get the weekNumbers, and calculate how many empty fills
         // there are needed before and after the dates of the months, so that the matrix is always
         // full, 6x7.
-        String username = (String) session.getAttribute("username");
-        List<Booking> bookingsToday = bookingService.getBookingsForDay(currentDate,username);
+        List<Booking> bookingsToday = bookingService.getBookingsForDay(currentDate,(String) session.getAttribute("username"));
         ArrayList<LocalDate> daysInMonth = calendarService.getDaysInMonth(date.getYear(), date.getMonth());
         int[] weekNumbers = calendarService.getWeekNumbers(daysInMonth.get(0)); // calculate the week numbers based on the first date in the month
         int startFillers = calendarService.getEmptyStartFills(daysInMonth.get(0));
         int endFillers = calendarService.getEmptyEndFills(daysInMonth.get(0),daysInMonth);
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
 
         //Add to model
         model.addAttribute("currentDate", currentDate);
@@ -79,8 +76,6 @@ public class CalendarController {
         model.addAttribute("date", date);
         model.addAttribute("calendar", calendarService); //used in view to calculate how booked the day is
         model.addAttribute("weekNumbers", weekNumbers);
-        model.addAttribute("tattooArtist", tattooArtist); //where is this used?
-        model.addAttribute("username", username);
         return "home/calendar";
     }
 
@@ -94,7 +89,6 @@ public class CalendarController {
     @PostMapping("/calendar/next")
     public String seeNextMonth( @RequestParam Integer year, @RequestParam Integer month) {
         LocalDate nextDate = LocalDate.of(year, month, 1).plusMonths(1);
-
         return "redirect:/calendar?username=" + "&year=" + nextDate.getYear() + "&month=" + nextDate.getMonthValue();
     }
 

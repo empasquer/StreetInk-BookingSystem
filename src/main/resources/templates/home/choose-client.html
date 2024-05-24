@@ -15,7 +15,7 @@
 
   <div class="back-arrow-container">
     <!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE -->
-    <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+    <a th:href="@{/create-new-booking(date=${date}, bookingId=${bookingId})}" class="small button"><i class="fas fa-arrow-left"></i></a>
     <!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE --><!-- ÆNDRER DENNE -->
   </div>
 
@@ -24,7 +24,7 @@
 
   <section class="box-shadow">
 
-    <form th:action="@{/search-for-existing-client(bookingId=${bookingId})}" method="post">
+    <form th:action="@{/search-for-existing-client(bookingId=${bookingId}, date=${date})}" method="post">
       <!-- <input type="hidden" name="bookingId" id="bookingId" th:value="${bookingId}">
      <input type="hidden" name="username" th:value="${tattooArtist.username}">
       <input type="hidden" name="date" th:value="${date}" />
