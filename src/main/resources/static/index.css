@@ -25,28 +25,41 @@ section {
     justify-content: space-around;
     flex-wrap: wrap;
     margin-top: 20px;
+
     overflow: scroll;
     scrollbar-width: none;
-    height: 84em;
+    /*height: 84em; denne sære stor for pladsen imellem profiler.
+     */
 }
 
 .username-item {
-    margin-bottom: 40px;
-    flex: 1 1 100px; /* Sikrer fleksibilitet og minimum bredde */
-    text-align: center; /* Centrerer indholdet inden for hver username-item */
+    margin-bottom: 20px; /* ændret pga. profilbillederne i index*/
+    flex-basis: calc(40% - 30px); /* Specificerer en bredde på 50% minus margin*/
+    /*flex: 0 1 20%; /* Sikrer fleksibilitet og minimum bredde*/
+    text-align: center; /* Centrerer indholdet inden for hver username-item*/
     align-items: center;
-    margin-left: 2.5em;
-    margin-right: 2.5em;
+    margin-left: 1em;
+    margin-right: 1em;
     overflow-wrap: anywhere;
 }
 
-.profile-container {
+
+.username-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; /* Sikrer at containeren fylder hele bredden */
+    width: 50%; /* Sikrer at containeren fylder hele bredden */
+}
+
+/*.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Sikrer at containeren fylder hele bredden
 
 }
+
+ */
 
 .profile-pic-index {
     box-sizing: border-box;
@@ -63,6 +76,7 @@ section {
 
 }
 .profile-container img.profile-pic-index {
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges */
     border-radius: 50%;
     border: 0.1em solid #D1D1D1FF;
     cursor: pointer;
@@ -86,6 +100,7 @@ section {
     justify-content: center;
     align-items: center;
 }
+
 
 .username{
     font-size: 2em;
