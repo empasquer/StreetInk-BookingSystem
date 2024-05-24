@@ -308,11 +308,6 @@ public class ClientController {
         //Integer bookingId = (Integer) session.getAttribute("bookingId");
         model.addAttribute("bookingId", bookingId);
 
-        System.out.println("choose client controller");
-        System.out.println("booking ID: " + bookingId);
-        System.out.println("Username: " + username);
-
-
 
         List<Client> sortedClients = clientService.getSortedListOfClients();
         //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
