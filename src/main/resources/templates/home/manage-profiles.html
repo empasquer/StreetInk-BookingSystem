@@ -39,7 +39,8 @@
                             <form th:action="@{/manage-profiles}" method="get">
                                 <button class="gray-button">Cancel</button>
                             </form>
-                            <form th:action="@{/delete-profile(profileToDelete=${profileToDelete})}" method="post">
+                            <form th:action="@{/delete-profile}" method="post">
+                                <input type="hidden" name="profileToDelete" th:value="${profileToDelete}">
                                 <button class="red-button">Delete</button>
                             </form>
                         </div>
@@ -63,14 +64,16 @@
                     <ul class="profiles">
                         <li class="profile" th:each="profile : ${profiles}">
                             <p th:text="${profile.getUsername()}"></p>
-                            <form th:action="@{/change-admin(profileToChange=${profile.username})}" method="post">
+                            <form th:action="@{/change-admin}" method="post">
+                                <input type="hidden" name="profileToChange" th:value="${profile.username}">
                                 <label>
                                     <input type="checkbox" th:checked="${profile.getIsAdmin()}" class="checkboxes"
                                            onchange="this.form.submit()">
                                 </label>
                             </form>
 
-                            <form th:action="@{/manage-profiles(profileToDelete=${profile.username})}" method="post">
+                            <form th:action="@{/manage-profiles}" method="get">
+                                <input type="hidden" name="profileToDelete" th:value="${profile.username}">
                                 <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
                             </form>
 
