@@ -119,63 +119,59 @@ public class BookingController {
                                  @RequestParam String projectDesc,
                                  @RequestParam String personalNote,
                                  @RequestParam(name = "isDepositPayed", defaultValue = "false") boolean isDepositPayed,
-                                 //Multipartfile er en datatypen. Disse objekter repræsenterer filer, som er blevet uploadet via en html-formular. Der kan være flere filer som er uploadet.
                                  @RequestParam("projectPictures") MultipartFile[] projectPictures,
-                                 @RequestParam String action, // Tilføjet parameter for handling af knap handlinger
+                                 @RequestParam String action, // Button action parameter
+                                 @RequestParam(required = false) Integer bookingId,
                                  RedirectAttributes redirectAttributes, Model model) {
-      /*  try {*/
-            String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
 
-            if (username == null){
-                redirectAttributes.addFlashAttribute("errorMessge", "You session ran out, log in again.");
-                return "redirect:/";
-            }
+        if (username == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your session has expired. Please log in again.");
+            return "redirect:/";
+        }
 
-            List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
-                    .map(file -> {
-                        try { //læs op på dette
-                            return file.getBytes();
-                        } catch (IOException e){
-                            e.printStackTrace(); //læs op på dette
-                            return null;
-                        }
-                    })
-                    .collect(Collectors.toList());
+        List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
+                .map(file -> {
+                    try {
+                        return file.getBytes();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                })
+                .collect(Collectors.toList());
 
         if (endTimeSlot.isBefore(startTimeSlot)) {
             model.addAttribute("errorMessage", "End time cannot be before start time.");
             model.addAttribute("date", date);
-           return "home/create-new-booking";
+            return "home/create-new-booking";
         }
-            // Gemmer booking og henter den gemte entitet
-           Booking newBooking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle,
-                    projectDesc, personalNote, isDepositPayed, pictureList);
 
-           projectPictureService.saveProjectPictures(newBooking.getId(), pictureList);
+        Booking booking;
+        if (bookingId != null) {
+            // Update existing booking
+            System.out.println("Updating booking with ID: " + bookingId);
+            bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+            booking = bookingService.getBookingDetail(bookingId);
+            projectPictureService.updateProjectPictures(bookingId, pictureList);
+        } else {
+            // Create new booking
+            System.out.println("Creating new booking");
+            booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+            projectPictureService.saveProjectPictures(booking.getId(), pictureList);
+        }
 
-           //henter bookingId fra den gemte entitet
-            int bookingId = newBooking.getId() ;
-
-            if ("new-client".equals(action)) {
-                //Omdirigerer til add-client med det gemte bookingId
-
-                return "redirect:/add-client?bookingId=" + bookingId + "&username=" + username + "&date=" + date;
-            } else if ("existing-client".equals(action)) {
-                System.out.println("here");
-                return "redirect:/choose-client?bookingId=" + bookingId + "&username=" + username +"&date=" + date;
-            } else {
-                redirectAttributes.addFlashAttribute("errorMessage", "Invalid actions.");
-                return "redirect:/create-new-booking?date=" + date;
-            }
-/*
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong, try again.");
+        int savedBookingId = booking.getId();
+        if ("new-client".equals(action)) {
+            return "redirect:/add-client?bookingId=" + savedBookingId + "&username=" + username + "&date=" + date;
+        } else if ("existing-client".equals(action)) {
+            return "redirect:/choose-client?bookingId=" + savedBookingId + "&username=" + username + "&date=" + date;
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid action.");
             return "redirect:/create-new-booking?date=" + date;
-
-        }*/
-
+        }
     }
+
 
     /**
      * @Author Tara

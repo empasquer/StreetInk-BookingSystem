@@ -36,6 +36,16 @@ public class ProjectPictureRepository {
         String sql = "DELETE FROM project_picture WHERE id = ?";
         jdbcTemplate.update(sql, pictureId);
     }
+    public void updateProjectPictures(int bookingId, List<byte[]> pictureDataList) {
+        // First, delete existing pictures for the booking
+        String deleteQuery = "DELETE FROM project_picture WHERE booking_id = ?";
+        jdbcTemplate.update(deleteQuery, bookingId);
 
+        // Then, insert the new pictures
+        String insertQuery = "INSERT INTO project_picture (booking_id, picture_data) VALUES (?, ?)";
+        for (byte[] pictureData : pictureDataList) {
+            jdbcTemplate.update(insertQuery, bookingId, pictureData);
+        }
+    }
 
 }

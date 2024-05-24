@@ -21,6 +21,7 @@
 
     <section>
         <form action="/save-tattoo-info" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="bookingId" th:if="${bookingId}" th:value="${bookingId}">
             <div class="booking-container">
                 <div class="information-container">
                     <h2>Tattoo Information</h2>

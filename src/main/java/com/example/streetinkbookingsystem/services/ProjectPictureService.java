@@ -75,7 +75,9 @@ public class ProjectPictureService {
     public List<ProjectPicture> getPicturesAsObjects(int bookingId) {
         return projectPictureRepository.getPicturesByBooking(bookingId);
     }
-
+public void updateProjectPictures(int bookingId, List<byte[]> pictureDataList) {
+        projectPictureRepository.updateProjectPictures(bookingId,pictureDataList);
+}
 
 
 }
