@@ -12,18 +12,17 @@
 
 <main>
     <div class="back-arrow-container">
-        <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
+
         <a th:href="@{/create-new-booking(date=${date}, bookingId=${bookingId})}" class="small button"><i class="fas fa-arrow-left"></i></a>
-        <!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE --><!-- HUSK AT ÆNDRE DENNNE -->
+
     </div>
 
     <h1>New Booking - New Client</h1>
 
     <section>
         <div class="form-container">
-            <form th:action="@{/save-client}" method="post">
+            <form th:action="@{/add-client}" method="post">
                 <input type="hidden" name="bookingId" th:value="${bookingId}">
-                <!-- <input type="hidden" name="clientId" th:value="${client.id}"> -->
                 <div class="input-group">
                     <div>
                         <label for="firstName">First Name: *</label>

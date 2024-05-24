@@ -16,7 +16,6 @@
     <a th:href="@{/day(username=${tattooArtist.username},date=${booking.getDate()})}" class="small button"><i class="fas fa-arrow-left"></i></a>
   </div>
 
-  <!--<h1 th:text="${date.getDayOfMonth() + ' ' + date.getMonth().toString().substring(0,3)}"></h1> -->
   <h1 th:text="${booking.date.dayOfMonth} + ' ' + ${booking.date.month.toString().substring(0,3)} + ' ' + ${booking.startTimeSlot}"></h1>
   <h2 th:text="${booking.startTimeSlot} + ' - ' + ${booking.endTimeSlot}"></h2>
 
@@ -66,11 +65,6 @@
     </div>
 
   </section>
-
-<!--this is just for testing -->
-<form th:action="@{/calendar}" method="get">
-  <button class="gray-button" type="submit">Send mail</button>
-</form>
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>

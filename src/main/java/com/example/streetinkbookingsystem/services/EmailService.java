@@ -1,5 +1,8 @@
 package com.example.streetinkbookingsystem.services;
 
+import com.example.streetinkbookingsystem.models.Booking;
+import com.example.streetinkbookingsystem.models.Client;
+import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import org.thymeleaf.context.Context;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,25 +30,45 @@ import java.util.regex.Pattern;
 
     @Autowired
     TattooArtistRepository tattooArtistRepository;
+    @Autowired
+    BookingService bookingService;
+    @Autowired
+    TattooArtistService tattooArtistService;
 
-    /**
-     * @param clientEmail used to send the email to this address
-     * @param context     used to set variables in the email template
-     * @author Nanna
-     * @summary Sends a confirmation mail to the client with the relevant booking details.
-     */
-    public void sendConfirmationMail(String clientEmail, Context context) {
+
+
+
+    public void sendConfirmationMail(int bookingId, String username) {
+        Booking booking =  bookingService.getBookingDetail(bookingId);
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        Client client =booking.getClient();
+        String bookingEnd =booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingStart =booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        Context context = new Context();
+        context.setVariable("ClientFirstName", client.getFirstName());
+        context.setVariable("ArtistFirstName", tattooArtist.getFirstName());
+        context.setVariable("ArtistLastName", tattooArtist.getLastName());
+        context.setVariable("ArtistPhone", tattooArtist.getPhoneNumber());
+        context.setVariable("ArtistEmail", tattooArtist.getEmail());
+        context.setVariable("ArtistFacebook", tattooArtist.getFacebook());
+        context.setVariable("ArtistInstagram", tattooArtist.getInstagram());
+        context.setVariable("BookingStart", bookingStart);
+        context.setVariable("BookingEnd", bookingEnd);
+        context.setVariable("BookingDate", bookingDate);
+        context.setVariable("BookingTitle", booking.getProjectTitle());
+        context.setVariable("BookingDescription", booking.getProjectDesc());
+
         String processedHTMLTemplate = templateEngine.process("home/confirmation-mail", context);
         // Start preparing the email
         MimeMessagePreparator preparator = message -> {
             MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-            helper.setTo(clientEmail);
+            helper.setTo(client.getEmail());
             helper.setSubject("Booking Confirmation");
             helper.setText(processedHTMLTemplate, true);
         };
 
         javaMailSender.send(preparator); //send the email
-        System.out.println("sent");
     }
 
 

@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -218,7 +219,7 @@ public class LoginService {
      * @param session
      * @summary Method to add all the attributes if user is logged in, or else return false if not logged in
      */
-    public void addLoggedInUserInfo(Model model, HttpSession session, TattooArtistService tattooArtistService) {
+    public TattooArtist addLoggedInUserInfo(Model model, HttpSession session, TattooArtistService tattooArtistService) {
         boolean loggedIn = isUserLoggedIn(session);
         model.addAttribute("loggedIn", loggedIn);
 
@@ -227,7 +228,9 @@ public class LoginService {
             model.addAttribute("username", username);
             TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
             model.addAttribute("tattooArtist", tattooArtist);
+            return tattooArtist;
         }
+        return null;
     }
 
 }

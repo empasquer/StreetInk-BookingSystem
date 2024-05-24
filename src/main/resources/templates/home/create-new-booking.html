@@ -12,16 +12,18 @@
 
 <main>
     <div class="back-arrow-container">
-        <a th:if="${bookingId}" th:href="@{/cancel-booking(bookingId=${bookingId},date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
-        <a th:unless="${bookingId}" th:href="@{/day(date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <!-- Check if the 'booking' attribute exists in the model -->
+        <a th:if="${booking != null}" th:href="@{/cancel-booking(bookingId=${booking.getId()},date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <!-- If 'booking' doesn't exist, directly link to the day page -->
+        <a th:unless="${booking != null}" th:href="@{/day(date=${date})}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
 
     <img src="/assets/proBar-1.png" alt="Process Picture1/3" class="process-picture">
     <h1>New Booking</h1>
 
     <section>
-        <form action="/save-tattoo-info" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="bookingId" th:if="${bookingId}" th:value="${bookingId}">
+        <form action="/create-new-booking" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="bookingId" th:if="${booking != null}"  th:value="${booking.getId()}">
             <div class="booking-container">
                 <div class="information-container">
                     <h2>Tattoo Information</h2>
@@ -52,7 +54,7 @@
 
                     <div class="form-group">
                         <label for="projectDesc">Project Description:</label>
-                        <textarea id="projectDesc" name="projectDesc" rows="4" required th:text="${booking?.projectDesc ?: ''}"></textarea>
+                        <textarea id="projectDesc" name="projectDesc" rows="4"  th:text="${booking?.projectDesc ?: ''}"></textarea>
                     </div>
 
                     <div class="form-group">

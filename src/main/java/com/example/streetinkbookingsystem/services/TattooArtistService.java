@@ -50,10 +50,11 @@ public class TattooArtistService {
 
     /**
      * @author Nanna
-     * @param artist
+     * @param tattooArtist
      * @return
      */
-    public String changeAdminStatus(TattooArtist artist) {
+    public String changeAdminStatus(String tattooArtist) {
+        TattooArtist artist = tattooArtistRepository.getTattooArtistByUsername(tattooArtist);
         boolean isAdmin = artist.getIsAdmin();
         List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
         int adminCount = 0;
