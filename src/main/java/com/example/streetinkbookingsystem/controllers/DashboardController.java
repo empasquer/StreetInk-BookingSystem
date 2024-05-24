@@ -25,6 +25,20 @@ public class DashboardController {
     @Autowired
     LoginService loginService;
 
+
+    /**
+     * Displays the dashboard view for the logged-in user.
+     * <p>
+     * This method checks if the user is logged in, retrieves the relevant data
+     * for the dashboard, and adds it to the model. If the user is not logged in,
+     * they are redirected to the home page.
+     * </p>
+     *
+     * @param model   the model to add attributes to for rendering view
+     * @param session the current HTTP session
+     * @return the name of the view to be rendered, or a redirect to login if not logged in
+     */
+
     @GetMapping("/dashboard")
     public String seeDashboard(Model model, HttpSession session) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
@@ -35,11 +49,6 @@ public class DashboardController {
         }
 
         String username = (String) session.getAttribute("username");
-
-        // ArrayList<TattooArtist> profiles = (ArrayList) tattooArtistService.showTattooArtist();
-
-        // temporary profile
-        // TattooArtist profile = profiles.get(1);
 
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
