@@ -47,7 +47,7 @@
                             <th:block th:with="bookingHeight=${bookingDuration == 0 ? 0.5 : (bookingDuration / 60) * 4}">
                                 <!-- Apply the height dynamically to the booking box -->
                                 <div class="booking-block" th:style="'height:' + ${bookingHeight} + 'em;'">
-                                    <a th:classappend="${bookingDuration >= 60} ? 'booking-info-long' : 'booking-info-short'" th:href="@{/booking(bookingId=${booking.id},username=${username})}">
+                                    <a th:classappend="${bookingDuration >= 60} ? 'booking-info-long' : 'booking-info-short'" th:href="@{/booking(bookingId=${booking.id})}">
                                         <!-- Change size of info depending on duration of booking so that it fits -->
                                         <h2 th:text="${booking.getStartTimeSlot()} + ' - ' + ${booking.getEndTimeSlot()} + ' - ' + ${booking.client.getFirstName()} + ' ' + ${booking.client.getLastName()}"></h2>
                                         <!-- Only display project title if the booking is over 1 hour, else it can't fit -->
