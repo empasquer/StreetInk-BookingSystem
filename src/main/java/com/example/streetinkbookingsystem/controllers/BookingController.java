@@ -129,6 +129,7 @@ public class BookingController {
             return "redirect:/";
         }
 
+
             List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
                     .map(file -> {
                         try {
@@ -150,15 +151,13 @@ public class BookingController {
         Booking booking;
         if (bookingId != null) {
             // Update existing booking
-            System.out.println("Updating booking with ID: " + bookingId);
             bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
             booking = bookingService.getBookingDetail(bookingId);
             projectPictureService.updateProjectPictures(bookingId, pictureList);
         } else {
             // Create new booking
-            System.out.println("Creating new booking");
             booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
-            projectPictureService.saveProjectPictures(booking.getId(), pictureList);
+           // projectPictureService.saveProjectPictures(booking.getId(), pictureList);
         }
         int savedBookingId = booking.getId();
         if ("new-client".equals(action)) {

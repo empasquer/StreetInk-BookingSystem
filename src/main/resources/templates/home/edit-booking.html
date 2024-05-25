@@ -75,7 +75,7 @@
                     </div>
                     <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
                         <div th:each="picture, index : ${booking.projectPictures}">
-                            <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture" style="max-width: 200px; max-height: 200px;">
+                            <img th:src="'data:image/jpeg;base64,' + ${base64Images[index.index]}" alt="Project Picture" multiple>
                             <label>
                                 <input type="checkbox" th:name="deletePictures" th:value="${picture.id}" /> Delete
                             </label>
