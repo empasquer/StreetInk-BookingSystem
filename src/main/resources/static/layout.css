@@ -234,16 +234,19 @@ header {
 
 .profile-pic-container img.profile-pic,
 .profile-pic-container i.profile-pic {
-font-size: 3em;
-color: #D1D1D1FF;
-line-height: 4em; /* Vertikal centrering, justeret for at passe til størrelsen */
-border: 0.1em solid #D1D1D1FF;
-border-radius: 50%; /* laver ikonet rundt*/
-width: 2.5em;
-height: 2.5em;
-display: flex;
-justify-content: center;
-align-items: center;
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
+    font-size: 3em;
+    color: #D1D1D1FF;
+    line-height: 4em; /* Vertikal centrering, justeret for at passe til størrelsen */
+    border: 0.1em solid #D1D1D1FF;
+    border-radius: 50%; /* laver ikonet rundt*/
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
+
 }
 
 
@@ -305,8 +308,8 @@ a.nav-link {
     display: block;
     cursor: pointer;
     z-index: 999;
-    width: 50px;  /* Tara har justeret :S */
-    height: 50px; /* Tara har justeret :S */
+    width: 50px;  /* Tara har prøvet at justeret :S */
+    height: 50px; /* Tara har prøvet at justeret :S */
 
 }
 

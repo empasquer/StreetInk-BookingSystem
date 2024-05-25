@@ -3,6 +3,10 @@ figure {
     place-content: center;
 }
 
+figure img {
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
+}
+
 section img {
     width: 300px;
     aspect-ratio: 1/1;
