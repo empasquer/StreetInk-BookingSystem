@@ -24,7 +24,7 @@
     </div>
 
     <img src="/assets/proBar-3.png" alt="Process Picture3/3" class="process-picture">
-    <h1 th:text="${booking.date.dayOfMonth} + ' ' + ${booking.date.month.toString().substring(0,3)} + ' ' + ${booking.startTimeSlot}"></h1>
+    <h1 th:text="${booking.date.dayOfMonth} + ' ' + ${booking.date.month.toString().substring(0,3)}"></h1>
     <h2 th:text="${booking.startTimeSlot} + ' - ' + ${booking.endTimeSlot}"></h2>
 
 
@@ -39,19 +39,20 @@
 
                     <hr>
                     <p class="tattoo-info">Tattoo Information</p>
-                    <p>Deposit payed: <span th:text="${booking.isDepositPayed ? 'Yes' : 'No'}"></span></p>
-                    <!-- <p>Deposit payed: <input type="checkbox" th:checked="${booking.depositPayed}" class="checkboxes"></p> -->
+                    <p class="tattoo-info">Tattoo Information</p>
+                    <p class="title">Deposit paid:
+                        <span id="depanswer" th:text="${booking.isDepositPayed ? 'Yes' : 'No'}"></span></p>
 
-                    <p>Project Title:</p>
-                    <div th:text="${booking.projectTitle}"></div>
-                    <p>Project Description:</p>
-                    <div th:text="${booking.projectDesc}"></div>
-                    <p>Personal Note:</p>
-                    <div th:text="${booking.personalNote}"></div>
+                    <p class="title">Project Title:</p>
+                    <div class="respons" th:text="${booking.projectTitle}"></div>
+                    <p class="title">Project Description:</p>
+                    <div class="respons" th:text="${booking.projectDesc}"></div>
+                    <p class="title">Personal Note:</p>
+                    <div class="respons" th:text="${booking.personalNote}"></div>
 
-                    <p>Image:</p>
+                    <p class="title">Image:</p>
                     <div th:if="${#lists.isEmpty(booking.projectPictures)}">
-                        <p>No pictures have been uploaded</p>
+                        <p class="image-message">No pictures has been uploaded</p>
                     </div>
                     <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
                         <div th:each="picture, index : ${booking.projectPictures}">
@@ -63,28 +64,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="button-container">
+            <form th:action="@{/cancel-booking}" method="get">
+                <input type="hidden" name="date" th:value="${booking.date}">
+                <input type="hidden" name="bookingId" th:value="${booking.id}">
+                <button class="gray-button" type="submit">Cancel</button>
+            </form>
+            <form th:action="@{/save-booking}" method="get">
+                <input type="hidden" name="bookingId" th:value="${booking.id}">
+                <button class="gray-button" type="submit">Save</button>
+            </form>
         </div>
-
     </section>
-    <div class="button-container">
-        <form th:action="@{/cancel-booking}" method="get">
-            <input type="hidden" name="date" th:value="${booking.date}">
-            <input type="hidden" name="bookingId" th:value="${booking.id}">
-            <button class="gray-button" type="submit">Cancel</button>
-        </form>
-        <form th:action="@{/save-booking}" method="get">
-            <input type="hidden" name="bookingId" th:value="${booking.id}">
-            <button class="gray-button" type="submit">Save</button>
-        </form>
-    </div>
 
-
-    <!--this is just for testing -->
-    <!--this is just for testing --> <!--
-    <form th:action="@{/send-confirmation-mail(bookingId = ${booking.getId()})}" method="post">
-        <button class="gray-button" type="submit">sendmail</button>
-    </form>
-    -->
 </main>
 <footer th:block th:insert="~{home/footer :: footer}"></footer>
 </body>

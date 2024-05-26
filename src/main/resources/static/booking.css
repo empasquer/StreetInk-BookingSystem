@@ -1,3 +1,11 @@
+h1 {
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
 .booking-container {
     margin-bottom: 2em;
     margin-left: 2em;
@@ -14,35 +22,47 @@ section {
 }
 
 p {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: bold;
-    margin-top: 1.3em;
+    margin-top: 0.8em;
+    margin-bottom: -1%;
+
+}
+
+div .respons{
+    font-size: 1.2em;
 }
 
 .image-message {
-    font-size: 0.5em;
+    font-size: 0.8em;
     color: #333333;
     font-style: italic;
     margin-bottom: 0.5em; /* Adding some space below the message */
+    margin-top: -1%;
 }
 
 hr {
     border-color: white;
-    border-width: 3px;
+    border-width: 2px;
     margin-top: 20px; /* Tilføjer mellemrum over hr-linjen */
     margin-bottom: 15px;
 }
 
 .client-name {
-    font-size: 1.7em;
+    font-size: 2em;
     font-weight: bold;
     text-align: center;
     color: #D2D1D1;
+    margin-bottom: 30px;
+}
+
+.contact-item {
+    margin-bottom: 10px;
 }
 
 .underline{
     text-decoration: underline;
-    margin-top: 2em;
+    margin-top: 2.5em;
 }
 
 .tattoo-info {
@@ -51,6 +71,25 @@ hr {
     text-align: left;
 }
 
+
+/* Munazzah
+.booking-name {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: white;
+}
+
+.gray-button {
+    margin: 20px 10px 30px;
+    font-size: x-large;
+
+}
+
+.red-button {
+    margin: 20px 10px 30px;
+    font-size: x-large;
+}
+ */
 
 .project-picture {
     width: 100%;
@@ -80,4 +119,44 @@ button {
     align-items: center;
     justify-content: center;
 }
+
+
+.edit-btn {
+    margin-right: 1rem;
+}
+
+.edit-delete-container form button {
+    background-color: transparent;
+    border:none;
+}
+
+
+.edit-delete-container {
+
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit-btn, .delete-btn {
+    margin-right: 1rem;
+}
+
+.edit {
+    color: white;
+}
+
+.delete {
+    color: black;
+}
+
+
+.edit-delete-container-edit {
+    display: flex;
+    justify-content: center;
+}
+
+
+
 
