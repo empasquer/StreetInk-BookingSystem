@@ -1,6 +1,5 @@
 package com.example.streetinkbookingsystem.controllers;
 
-import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
@@ -34,7 +33,7 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/profile")
-    public String seeProfile(HttpSession session, Model model) {
+    public String seeProfile(HttpSession session, Model model, @RequestParam(required = false) String profileToDelete) {
 
         session.removeAttribute("imageData");
         if (!loginService.isUserLoggedIn(session)) {
@@ -48,9 +47,45 @@ public class ProfileController {
             String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
             tattooArtist.setBase64ProfilePicture(base64Image);
         }
+
+        //For deleting the profile if necessary
+        if (profileToDelete != null) {
+            model.addAttribute("profileToDelete", profileToDelete);
+        }
+
         return "home/profile";
 
 
+    }
+
+    @PostMapping("/profile")
+    public String deleteProfileWithWarning(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        if (tattooArtist.getIsAdmin()) {
+            redirectAttributes.addFlashAttribute("message", "Please revoke admin status before deletion!");
+            return "redirect:/profile";
+        }
+
+        model.addAttribute("profileToDelete", session.getAttribute("username"));
+
+        redirectAttributes.addAttribute("profileToDelete", session.getAttribute("username"));
+        return "redirect:/profile?username=" + session.getAttribute("username");
+    }
+
+    @PostMapping("/delete-own-profile")
+    public String deleteOwnProfile(@RequestParam String profileToDelete, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        tattooArtistService.deleteProfileByUsername(profileToDelete);
+        return "redirect:/";
     }
 
 

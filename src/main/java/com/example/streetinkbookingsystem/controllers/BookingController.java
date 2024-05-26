@@ -350,8 +350,6 @@ public class BookingController {
         model.addAttribute("booking", booking);
         model.addAttribute("bookingIdToDelete", bookingIdToDelete);
 
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
         redirectAttributes.addAttribute("bookingIdToDelete", bookingIdToDelete);
         return "redirect:/booking?bookingId=" + bookingIdToDelete;
     }
