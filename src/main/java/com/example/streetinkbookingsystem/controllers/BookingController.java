@@ -53,7 +53,8 @@ public class BookingController {
      *         If the user is not logged in, it redirects to the home page.
      */
     @GetMapping("/booking")
-            public String booking(Model model, HttpSession session, @RequestParam int bookingId) {
+            public String booking(Model model, HttpSession session, @RequestParam int bookingId,
+                                  @RequestParam(required = false) Integer bookingIdToDelete) {
                 // Check if the user is logged in
                 if (!loginService.isUserLoggedIn(session)) {
                     return "redirect:/";
@@ -69,6 +70,11 @@ public class BookingController {
         // Retrieve and convert project pictures to base64 format
         List<String> base64Images = projectPictureService.convertToBase64(booking.getProjectPictures());
         model.addAttribute("base64Images", base64Images);
+
+        // For deleting the booking if necessary
+        if (bookingIdToDelete != null) {
+            model.addAttribute("bookingIdToDelete", bookingIdToDelete);
+        }
 
         return "home/booking";
     }
@@ -293,7 +299,7 @@ public class BookingController {
         return "redirect:/booking?bookingId=" + bookingId + "&username=" + session.getAttribute("username");
     }
 
-    @GetMapping("/confirm-delete-booking")
+    /*@GetMapping("/confirm-delete-booking")
     public String confirmDeleteBooking(Model model, HttpSession session, @RequestParam int bookingIdToDelete) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
@@ -305,18 +311,27 @@ public class BookingController {
         model.addAttribute("bookingIdToDelete", bookingIdToDelete);
 
         return "home/confirm-delete-booking";
-    }
+    }*/
 
-    @PostMapping("/confirm-delete-booking")
-    public String deleteBookingWithWarning(@RequestParam int bookingIdToDelete, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+    @PostMapping("/booking")
+    public String deleteBookingWithWarning(@RequestParam Integer bookingIdToDelete, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
+        Booking booking = bookingService.getBookingDetail(bookingIdToDelete);
+        model.addAttribute("booking", booking);
+        model.addAttribute("bookingIdToDelete", bookingIdToDelete);
+
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         redirectAttributes.addAttribute("bookingIdToDelete", bookingIdToDelete);
-        redirectAttributes.addAttribute("showConfirmation", true);
-        return "redirect:/delete-booking";
+        return "redirect:/booking?bookingId=" + bookingIdToDelete;
     }
 
     /**
@@ -327,7 +342,7 @@ public class BookingController {
      * @return
      */
     @PostMapping("/delete-booking")
-    public String deleteBooking(@RequestParam int bookingIdToDelete, HttpSession session, Model model) {
+    public String deleteBooking(@RequestParam Integer bookingIdToDelete, HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }

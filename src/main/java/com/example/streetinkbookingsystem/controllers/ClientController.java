@@ -307,10 +307,8 @@ public class ClientController {
         //Returns the new client so that the clientId can be used to update the default client in the booking
         client = clientService.saveClient(client);
         int clientId = client.getId();
-        clientService.updateClientOnBooking(bookingId, client.getId());
 
-        return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username + "&clientId=" + clientId;
-        //return "redirect:/booking-preview?bookingId=" + bookingId + "&username=" + username;
+        return "redirect:/booking-preview?bookingId=" + bookingId + "&clientId=" + clientId;
     }
 
     /**
@@ -366,7 +364,7 @@ public class ClientController {
                                           @RequestParam String searchQuery,
                                           @RequestParam int bookingId,
                                         @RequestParam LocalDate date,
-                                        /*  @RequestParam(required = false) int clientId, //clientId er ikke et must*/
+                                        @RequestParam(required = false) int clientId, //clientId er ikke et must*/
                                           Model model,
                          RedirectAttributes redirectAttributes) {
         boolean loggedIn = loginService.isUserLoggedIn(session);

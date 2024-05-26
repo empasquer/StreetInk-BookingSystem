@@ -20,11 +20,6 @@
     <h1>Edit Booking - <span th:text="${booking.date}"></span></h1>
 
     <section>
-        <form  th:action="@{/confirm-delete-booking}" method="get" class="delete-form" >
-            <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
-            <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
-        </form>
-
         <form th:action="@{/edit-booking}" method="post" enctype="multipart/form-data">
             <div class="booking-container">
                 <div class="information-container">

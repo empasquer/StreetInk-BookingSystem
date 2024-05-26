@@ -48,25 +48,61 @@ hr {
  */
 }
 
-
-
-.button-container {
-    top: 2rem;
-    right: 2rem;
-    display: flex;
-    justify-content: flex-end;
-}
-
 .edit-btn {
     margin-right: 1rem;
 }
 
 .button-container form button {
     background-color: transparent;
-    color: var(--white);
     border:none;
 }
 
+
+.button-container {
+    /*position: relative;*/
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit-btn, .delete-btn {
+    margin-right: 1rem;
+}
+
+.edit {
+    color: white;
+}
+
+.delete {
+    color: black;
+}
+
+.booking-name {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: white;
+}
+
+.button-container-edit {
+    display: flex;
+    justify-content: center;
+}
+
+.gray-button {
+    margin: 20px 10px 30px;
+    font-size: x-large;
+
+}
+
+.red-button {
+    margin: 20px 10px 30px;
+    font-size: x-large;
+}
+
+.confirmation-container {
+    margin-bottom: 20px;
+}
 
 .project-picture {
     width: 100%;
@@ -82,16 +118,16 @@ hr {
 
 .button-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 60px;
+/*justify-content: space-between;*/
+    /*margin-top: 60px;*/
 }
 
 button {
-    padding: 40px 70px; /* Gør knapperne større */
+    /*padding: 40px 70px; /* Gør knapperne større */
     font-size: 1em;
     margin: 10px; /* Mindsk afstanden mellem knapperne */
-    width: 230px; /* Fast bredde for alle knapper */
-    height: 100px; /* Fast højde for alle knapper */
+    /*width: 230px; /* Fast bredde for alle knapper */
+    /*height: 100px; /* Fast højde for alle knapper */
     display: flex;
     align-items: center;
     justify-content: center;
