@@ -104,12 +104,15 @@ import java.util.regex.Pattern;
         // Send the email using JavaMailSender
         javaMailSender.send(message);
     }
+
     /**
-     * @author Munazzah
-     * @param email
-     * @return boolean
      * @summary Uses regex to check if the structure of the mail is valid fx xxxx@yyy.mmm
      * and if the email is the same that is written in the database
+     *
+     * @author Munazzah
+     * @param email Input
+     * @param username To check if the given email is the same as the one in database
+     * @return True, if the email is structured as it should and is the same as in database
      */
     public boolean isValidEmail(String email, String username) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";

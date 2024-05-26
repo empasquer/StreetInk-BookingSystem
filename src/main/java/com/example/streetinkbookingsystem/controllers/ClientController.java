@@ -35,12 +35,13 @@ public class ClientController {
     TattooArtistService tattooArtistService;
 
     /**
+     * @summary Gets the sorted list of Clients from the service layer, and then uses Map to
+     * group the Clients based on the first letter in name
+     *
+     * @author Munazzah
      * @param model   to add attributes to controller
      * @param session to check if logged in
      * @return String - View of the client-list page
-     * @author Munazzah
-     * @summary Gets the sorted list of Clients from the service layer, and then uses Map to
-     * group the Clients based on the first letter in name
      */
     @GetMapping("/client-list")
     public String clientList(Model model, HttpSession session, @RequestParam(required = false) Integer bookingId, @RequestParam(required = false) LocalDate date) {
@@ -51,14 +52,14 @@ public class ClientController {
 
         List<Client> sortedClients = clientService.getSortedListOfClients();
         // ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
-        // Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
+        // Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand through Collections.sort)
         // Uses stream to handle everything simultaneously
         // Uses collect (Collectors.groupingBy) to group the elements of the stream based on first letter in first name
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
                 .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
                         TreeMap::new, Collectors.toList()));
-
         model.addAttribute("groupedClients", groupedClients);
+
         //If creating booking:
         if (bookingId != null) {
             model.addAttribute("bookingId", bookingId);
@@ -69,13 +70,51 @@ public class ClientController {
     }
 
     /**
-     * @param searchQuery
-     * @param model
-     * @param session
-     * @return String - View of search-results
-     * @Author Munazzah
+     * @summary Search for a Client based on first name or phone number. The if statement
+     * validates that is either one or the other, so the input is validated before showing the
+     * actual result-page, or else redirects to client-list page with error message
+     *
+     * @author Munazzah
+     * @param searchQuery        To get what there has been searched for
+     * @param model              To add attributes to the controller
+     * @param redirectAttributes To add redirect message
+     * @param session            To check if logged in
+     * @return String - redirects to the view of search-results
+     */
+    @PostMapping("/search-result")
+    public String search(@RequestParam("search") String searchQuery, Model model,
+                         RedirectAttributes redirectAttributes, HttpSession session, @RequestParam(required = false) Integer bookingId, @RequestParam(required = false) LocalDate date) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        model.addAttribute("searchQuery", searchQuery);
+
+        // Checks (via regex) if there is a mix of numbers and letters. If yes, it redirects with error message
+        if (searchQuery.matches(".*[A-Za-z].*") && searchQuery.matches(".*[0-9].*")) {
+            redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
+            return "redirect:/client-list";
+        }
+        redirectAttributes.addAttribute("searchQuery", searchQuery);
+
+        //If creating booking:
+        if (bookingId != null) {
+            return "redirect:/search-result?bookingId=" + bookingId + "&date=" + date;
+        }
+        return "redirect:/search-result";
+    }
+
+
+    /**
      * @summary Search for a Client based on phone number or first name. The if-statement
      * checks if it is a number or name and acts accordingly
+     *
+     * @author Munazzah
+     * @param searchQuery The String that the has been searched for
+     * @param model To add attributes to the view
+     * @param session For login
+     * @return String - View of search-results
      */
     @GetMapping("/search-result")
     public String searchResult(@RequestParam("searchQuery") String searchQuery, Model model, HttpSession session, @RequestParam(required = false) Integer bookingId, @RequestParam(required = false) LocalDate date) {
@@ -94,45 +133,15 @@ public class ClientController {
             List<Client> clientByName = clientService.getClientsByFistName(searchQuery);
             model.addAttribute("results", clientByName);
         }
+
         model.addAttribute("searchQuery", searchQuery);
+
         //If creating booking:
         if (bookingId != null) {
             model.addAttribute("bookingId", bookingId);
             model.addAttribute("date", date);
         }
         return "home/search-result";
-    }
-
-    /**
-     * @param searchQuery        to get what there has been searched for
-     * @param model              to add attributes to the controller
-     * @param redirectAttributes to add redirect message
-     * @param session            to check if logged in
-     * @return String - View of search-results
-     * @author Munazzah
-     * @summary Search for a Client based on first name or phone number. The if statement
-     * validates that is either one or the other
-     */
-    @PostMapping("/search-result")
-    public String search(@RequestParam("search") String searchQuery, Model model,
-                         RedirectAttributes redirectAttributes, HttpSession session, @RequestParam(required = false) Integer bookingId, @RequestParam(required = false) LocalDate date) {
-        if (!loginService.isUserLoggedIn(session)) {
-            return "redirect:/";
-        }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
-        model.addAttribute("searchQuery", searchQuery);
-        // Checks (via regex) if there is a mix of numbers and letters. If yes, it redirects with error message
-        if (searchQuery.matches(".*[A-Za-z].*") && searchQuery.matches(".*[0-9].*")) {
-            redirectAttributes.addFlashAttribute("message", "Please enter a valid number or first name");
-            return "redirect:/client-list";
-        }
-        redirectAttributes.addAttribute("searchQuery", searchQuery);
-        //If creating booking:
-        if (bookingId != null) {
-            return "redirect:/search-result?bookingId=" + bookingId + "&date=" + date;
-        }
-        return "redirect:/search-result";
     }
 
     /**
@@ -318,6 +327,7 @@ public class ClientController {
      * @param bookingId
      * @return
      */
+
     @GetMapping("/choose-client")
     public String chooseClient(Model model, HttpSession session,
                                @RequestParam int bookingId, @RequestParam LocalDate date) {
@@ -371,7 +381,6 @@ public class ClientController {
         if (!loggedIn) {
             return "redirect:/";
         }
-
 
         String username = (String) session.getAttribute("username");
 

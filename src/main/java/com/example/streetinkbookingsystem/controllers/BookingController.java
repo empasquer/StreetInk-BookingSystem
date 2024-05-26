@@ -45,7 +45,7 @@ public class BookingController {
 
     /**
      *
-     * @Author Nanna & Tara
+     * @author Nanna & Tara
      * @param model The model to be populated with attributes for rendering the view.
      * @param session The HttpSession object to check if the user is logged in.
      * @param bookingId The ID of the booking that needs to be retrieved.
@@ -81,7 +81,7 @@ public class BookingController {
 
 
     /**
-     * @Author Tara
+     * @author Tara
      * @param model
      * @param session Used to determine if the user is logged in or not. User will be redirected
      *                to index page if not logged in.
@@ -103,9 +103,9 @@ public class BookingController {
     }
 
     /**
-     * @summary: Saves a new booking or updates an existing booking based on user input.
+     * @summary Saves a new booking or updates an existing booking based on user input.
      *
-     * @Author Tara & Nanna
+     * @author Tara & Nanna
      * @param startTimeSlot The start time of the booking slot.
      * @param endTimeSlot The end time of the booking slot.
      * @param date The date of the booking.
@@ -141,6 +141,7 @@ public class BookingController {
             model.addAttribute("errorMessage", "End time cannot be before start time.");
             return "home/create-new-booking?date="+date;
         }
+
         //Either create new booking or update the one in the making
         Booking booking;
         if (bookingId != null) {
@@ -171,6 +172,7 @@ public class BookingController {
     /**
      * Converts an array of MultipartFile objects to a list of byte arrays.
      *
+     * @author Nanna
      * @param projectPictures The array of MultipartFile objects.
      * @return A list of byte arrays.
      */
@@ -211,7 +213,7 @@ public class BookingController {
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        //tilføjer den "nye" ClientId til bookingen
+        //Tilføjer den "nye" ClientId til bookingen
         clientService.updateClientOnBooking(bookingId, clientId);
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
@@ -253,8 +255,17 @@ public class BookingController {
         return "redirect:/booking?bookingId="+bookingId;
     }
 
+    /**
+     * @summary Retrieves all the information from the booking, so they can be presented in the view
+     *
+     * @author Munazzah
+     * @param model To add attributes
+     * @param session To check for login and retrieve information from session
+     * @param bookingId To know which booking that need editing
+     * @return Edit booking view
+     */
     @GetMapping("/edit-booking")
-    public String editBooking(Model model, HttpSession session, @RequestParam("bookingId") int bookingId, RedirectAttributes redirectAttributes) {
+    public String editBooking(Model model, HttpSession session, @RequestParam("bookingId") int bookingId) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
@@ -272,6 +283,24 @@ public class BookingController {
         return "home/edit-booking";
     }
 
+    /**
+     * @Summary Updates the booking with the new information that has been written in view
+     *
+     * @author Munazzah
+     * @param startTimeSlot
+     * @param endTimeSlot
+     * @param date
+     * @param projectTitle
+     * @param projectDesc
+     * @param personalNote
+     * @param isDepositPayed
+     * @param deletePictures
+     * @param projectPictures
+     * @param bookingId
+     * @param model
+     * @param session
+     * @return Redirects to booking view
+     */
     @PostMapping("/edit-booking")
     public String updateBooking(@RequestParam LocalTime startTimeSlot, @RequestParam LocalTime endTimeSlot, @RequestParam LocalDate date,
                                 @RequestParam String projectTitle, @RequestParam String projectDesc,
@@ -299,26 +328,19 @@ public class BookingController {
         return "redirect:/booking?bookingId=" + bookingId + "&username=" + session.getAttribute("username");
     }
 
-    /*@GetMapping("/confirm-delete-booking")
-    public String confirmDeleteBooking(Model model, HttpSession session, @RequestParam int bookingIdToDelete) {
-        if (!loginService.isUserLoggedIn(session)) {
-            return "redirect:/";
-        }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
-        Booking booking = bookingService.getBookingDetail(bookingIdToDelete);
-        model.addAttribute("booking", booking);
-        model.addAttribute("bookingIdToDelete", bookingIdToDelete);
-
-        return "home/confirm-delete-booking";
-    }*/
-
+    /**
+     * @summary Adds a bookingIdToDelete attribute to the view though the delete button,
+     * and when it is present, the booking page shows teh warning message thanks to the th:block
+     *
+     * @author Munazzah
+     * @param bookingIdToDelete The booking that needs to be deleted
+     * @param redirectAttributes So the bookingId can be redirected to the delete method that deletes the booking
+     * @param session To check for login
+     * @param model To render the view
+     * @return Redirects to the booking view with the specified bookingId
+     */
     @PostMapping("/booking")
     public String deleteBookingWithWarning(@RequestParam Integer bookingIdToDelete, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
-        if (!loginService.isUserLoggedIn(session)) {
-            return "redirect:/";
-        }
-
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
@@ -335,25 +357,24 @@ public class BookingController {
     }
 
     /**
+     * @summary Deletes the specifik booking
      *
-     * @param bookingIdToDelete
-     * @param session
-     * @param model
-     * @return
+     * @author Munazzah
+     * @param bookingIdToDelete bookingId of booking to be deleted
+     * @param session For login
+     * @param model to add things to the view
+     * @return Redirects to the calendar
      */
     @PostMapping("/delete-booking")
     public String deleteBooking(@RequestParam Integer bookingIdToDelete, HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
     }
-
-
-
 
 }
 

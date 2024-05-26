@@ -10,9 +10,9 @@ public class LogoutController {
 
     /**
      * @author Munazzah
-     * @param request
-     * @param sessionStatus
-     * @return String
+     * @param request Used to get the session so we can invalidate it
+     * @param sessionStatus Status of current session
+     * @return Redirects to index page
      */
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, SessionStatus sessionStatus) {

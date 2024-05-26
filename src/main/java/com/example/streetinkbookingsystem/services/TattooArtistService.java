@@ -121,8 +121,8 @@ public class TattooArtistService {
 
     /**
      * @author Munazzah
-     * @param username
-     * @return String
+     * @param username To get the right password
+     * @return String the password
      */
     public String getPassword(String username) {
         return tattooArtistRepository.getPassword(username);

@@ -78,6 +78,21 @@ public class BookingService {
 
     }
 
+    /**
+     * @summary Updates the booking with new parameters (or just the old ones).
+     * First it saves the pictures to the booking, and afterward, it updates the actual booking
+     *
+     * @author Munazzah
+     * @param bookingId
+     * @param startTimeSlot
+     * @param endTimeSlot
+     * @param date
+     * @param projectTitle
+     * @param projectDesc
+     * @param personalNote
+     * @param isDepositPayed
+     * @param pictureList
+     */
     public void updateBooking(int bookingId, LocalTime startTimeSlot, LocalTime endTimeSlot,
                                  LocalDate date, String projectTitle, String projectDesc,
                                  String personalNote, boolean isDepositPayed,
@@ -151,6 +166,10 @@ public class BookingService {
         return bookingRepository.getBookingsByClientId(clientId);
     }
 
+    /**
+     * @author Munazzah
+     * @param bookingId That needs to be deleted
+     */
     public void deleteBooking(int bookingId) {
         bookingRepository.deleteBooking(bookingId);
     }

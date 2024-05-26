@@ -317,7 +317,7 @@ public class ProfileController {
 
     /**
      * @author Munazzah
-     * @return String
+     * @return View of reset password page
      */
     @GetMapping("/reset-password")
         public String resetPassword () {
@@ -326,14 +326,18 @@ public class ProfileController {
     }
 
     /**
+     * @summary Checks if current password matches the one in the database, and if
+     * the new password matches the repeated one, and if it does, the password is reset,
+     * and you are redirected to login
+     *
      * @author Munazzah
-     * @param currentPassword
-     * @param newPassword
-     * @param repeatedPassword
-     * @param session
-     * @param model
-     * @param redirectAttributes
-     * @return String
+     * @param currentPassword The current password
+     * @param newPassword The chosen new password
+     * @param repeatedPassword Repeated chosen new password
+     * @param session For login
+     * @param model To ass attributes to view
+     * @param redirectAttributes For error message
+     * @return Redirects to login page
      * @summary the method checks if the new password matches the repeated password and if
      * the current password matches the password in the database
      */
@@ -363,7 +367,6 @@ public class ProfileController {
 
         return "redirect:/login";
     }
-
 
 }
 

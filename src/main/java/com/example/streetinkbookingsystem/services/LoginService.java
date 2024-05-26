@@ -28,9 +28,10 @@ public class LoginService {
     private HttpSession session;
 
     /**
-     * @author Munazzah
      * @summary Hashes and saves the passwords that are already in the database
      * should be deleted when everyone have hashed the passwords on local database
+     *
+     * @author Munazzah
      */
     public void hashExistingPasswords() {
         List<TattooArtist> tattooArtists = tattooArtistRepository.showTattooArtists();
@@ -43,11 +44,14 @@ public class LoginService {
     }
 
     /**
+     * @summary Checks if the given password matches the hashed password in database. If it does,
+     * then sets the session attributes loggedIn to true, and stores the username in session
+     *
      * @author Munazzah
-     * @param username
-     * @param password
-     * @return boolean
-     * @summary Checks if the given password matches the hashed password in database
+     * @param username TattooArtist username input
+     * @param password TattooArtist password input
+     * @return Boolean, returns true if username and password match the one in database or else
+     * return false
      */
     public boolean authenticateUser(String username, String password) {
         TattooArtist tattooArtist = tattooArtistRepository.getTattooArtistByUsername(username);
@@ -67,11 +71,12 @@ public class LoginService {
 
 
     /**
+     * @summary Salts and hashes the password first, and the adds the salt to the salted and hashed
+     * password, so we can extract the salt afterward for verification
+     *
      * @author Munazzah
-     * @param password
-     * @return String
-     * @summary Salts and hashes the password first, and the adds the salt to the salted and and hashed
-     * password, so we can extract the salt afterwards for verification
+     * @param password The password that needs to be hashed
+     * @return The hashed password as a string
      */
     public String hashPassword(String password) {
         try {
@@ -97,11 +102,12 @@ public class LoginService {
     }
 
     /**
+     * @summary Method to verify the given password with the hashed password (in the database)
+     *
      * @author Munazzah
-     * @param password
-     * @param hashedPassword
-     * @return boolean
-     * @summary Method to verify the given password with the hashed password
+     * @param password The input password
+     * @param hashedPassword The stored hashed password in the database
+     * @return Boolean if they match or not
      */
     public boolean verifyPassword(String password, String hashedPassword) {
         try {
@@ -127,12 +133,13 @@ public class LoginService {
     }
 
     /**
-     * @author Munazzah
-     * @param hashedPasswordToCompare
-     * @param storedHash
-     * @return int
      * @summary Compares the bytes of the storedHash in database with the given password
      * that we have added the original salt to, and also hashed, to see if the bytes match
+     *
+     * @author Munazzah
+     * @param hashedPasswordToCompare The given password input that is salted and hashed
+     * @param storedHash The database password
+     * @return The difference in bytes as an int, if it is 0, the passwords match
      */
     //Compares the storedHash password with the one made with the given password and the salt
     private static int getDiff(byte[] hashedPasswordToCompare, byte[] storedHash) {
@@ -151,13 +158,14 @@ public class LoginService {
     }
 
     /**
-     * @author Munazzah
-     * @param password
-     * @param salt
-     * @return byte[]
-     * @throws NoSuchAlgorithmException
      * @summary Creates a byte array with the length of the salt and password, adds the salt and password
-     * and hashes the whole thing using an algorithm
+     * and hashes the whole thing using a chosen algorithm
+     *
+     * @author Munazzah
+     * @param password The given password that afterward need to be stored in the database
+     * @param salt The salt for the password
+     * @return byte[] - Byte array that contains the hashed password with the chosen algorith
+     * @throws NoSuchAlgorithmException In case the chosen algorithm for hashing does not exist
      */
     //Method that uses the combined salt and password and hashes it
     private byte[] saltAndHash(String password, byte[] salt) throws NoSuchAlgorithmException {
@@ -176,9 +184,10 @@ public class LoginService {
     }
 
     /**
-     * @author Munazzah
-     * @return String
      * @summary Generates a random 8 char password where all the validChars can be added
+     *
+     * @author Munazzah
+     * @return Returns the random password as a String
      */
     public String randomPassword() {
         String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#&_+-=";
@@ -194,8 +203,8 @@ public class LoginService {
 
     /**
      * @author Munazzah
-     * @param password
-     * @param username
+     * @param password Given password as input
+     * @param username Given username, to know which password needs updating
      */
     public void updatePassword(String password, String username) {
         String hashedPassword = hashPassword(password);
@@ -203,21 +212,23 @@ public class LoginService {
     }
 
     /**
-     * @author Munazzah
-     * @param session
-     * @return boolean
      * @summary Returns true if session attribute LoggedIn is true.
-     * LoggedIn is casted as a boolean because session can return attributes as objects
+     * LoggedIn is cast as a boolean because session can return attributes as objects
+     *
+     * @author Munazzah og Nanna
+     * @param session For login status
+     * @return True if LoggedIn is true, else false
      */
     public boolean isUserLoggedIn(HttpSession session) {
         return session.getAttribute("loggedIn") != null && (boolean) session.getAttribute("loggedIn");
     }
 
     /**
-     * @author Emma og Munazzah
-     * @param model
-     * @param session
      * @summary Method to add all the attributes if user is logged in, or else return false if not logged in
+     *
+     * @author Emma og Munazzah
+     * @param model To add attributes used in view
+     * @param session To check for login status
      */
     public TattooArtist addLoggedInUserInfo(Model model, HttpSession session, TattooArtistService tattooArtistService) {
         boolean loggedIn = isUserLoggedIn(session);
