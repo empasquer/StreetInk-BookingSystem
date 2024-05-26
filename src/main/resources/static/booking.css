@@ -19,6 +19,13 @@ p {
     margin-top: 1.3em;
 }
 
+.image-message {
+    font-size: 0.5em;
+    color: #333333;
+    font-style: italic;
+    margin-bottom: 0.5em; /* Adding some space below the message */
+}
+
 hr {
     border-color: white;
     border-width: 3px;
@@ -31,7 +38,6 @@ hr {
     font-weight: bold;
     text-align: center;
     color: #D2D1D1;
-    /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);*/
 }
 
 .underline{
@@ -43,9 +49,6 @@ hr {
     font-size: 1.7em;
     font-weight: bold;
     text-align: left;
-/*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-
- */
 }
 
 /* Tilpasser størrelsen på checkbox */
@@ -107,3 +110,4 @@ button {
     align-items: center;
     justify-content: center;
 }
+

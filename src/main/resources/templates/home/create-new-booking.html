@@ -62,15 +62,17 @@
 
                     <div class="form-group">
                         <label for="image">Image:</label>
-                        <p>If you wanna upload more than 1 photo, you must choose them all at ones</p>
                         <input type="file" id="image" name="projectPictures" multiple>
+                        <div class="image-message">
+                            <p>**If you want to upload more than one image, you must choose them all at once.</p>
+                        </div>
                     </div>
 
                     <input type="hidden" name="date" th:value="${date}" />
 
                     <div class="button-container">
-                        <button type="submit" name="action" value="new-client" class="red-button box-shadow">New Client</button>
-                        <button type="submit" name="action" value="existing-client" class="red-button box-shadow">Existing Client</button>
+                        <button type="submit" name="action" value="new-client" class="red-button">New Client</button>
+                        <button type="submit" name="action" value="existing-client" class="red-button">Existing Client</button>
                     </div>
                 </div>
             </div>
