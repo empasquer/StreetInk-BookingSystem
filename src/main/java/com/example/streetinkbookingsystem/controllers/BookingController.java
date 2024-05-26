@@ -53,10 +53,15 @@ public class BookingController {
      */
     @GetMapping("/booking")
      public String booking(Model model, HttpSession session, @RequestParam int bookingId, @RequestParam String username){
-        if (!loginService.isUserLoggedIn(session)) {
+        /*if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+         */
+        //kun lavet så jeg kunne rette design uden at logge ind hele tiden.
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+        tattooArtist.setUsername("Hanzoo");
 
         Booking booking = bookingService.getBookingDetail(bookingId);
         model.addAttribute("booking", booking);
@@ -79,7 +84,7 @@ public class BookingController {
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam (required = false) Integer bookingId ){
-       /* if (!loginService.isUserLoggedIn(session)) {
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
@@ -89,7 +94,7 @@ public class BookingController {
             model.addAttribute("booking",booking);
         }
 
-        */
+
 
 
         model.addAttribute("date", date);

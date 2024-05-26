@@ -51,36 +51,6 @@ hr {
     text-align: left;
 }
 
-/* Tilpasser størrelsen på checkbox */
-.checkboxes {
-    -webkit-appearance: none; /* Fjerner browserens standard checkbox-styling */
-    -moz-appearance: none;
-    appearance: none;
-    width: 50px; /* Juster bredden efter behov */
-    height: 50px; /* Juster højden efter behov */
-    border: 3px solid #713232; /* Tilføj en kantlinje */
-    border-radius: 8px; /* Runder hjørnerne */
-    background-color: transparent; /* Gennemsigtig baggrund */
-    outline: none; /* Fjerner den blå fokusramme */
-    cursor: pointer; /* Viser en markør ved hover */
-}
-
-/* Tilføjer et tilpasset udseende, når checkbox er markeret */
-.checkboxes:checked {
-    background-color: #713232; /* Ændrer baggrundsfarven når markeret */
-}
-
-/* Tilføjer et tilpasset udseende for den indre checkmark */
-.checkboxes:checked::after {
-    content: '\2713'; /* Tilføjer en checkmark (unicode-tegn) */
-    font-size: 50px; /* Juster størrelsen efter behov */
-    color: white; /* Farve på checkmark */
-    text-align: center; /* Justerer placering */
-    line-height: 50px; /* Justerer linjehøjde */
-    position: relative; /* Positionering relativ til parent */
-    width: 100%; /* Fylder hele checkboxen */
-    height: 100%; /* Fylder hele checkboxen */
-}
 
 .project-picture {
     width: 100%;
