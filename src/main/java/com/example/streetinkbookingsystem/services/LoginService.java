@@ -203,7 +203,7 @@ public class LoginService {
     }
 
     /**
-     * @author Nanna and Munazzah
+     * @author Munazzah
      * @param session
      * @return boolean
      * @summary Returns true if session attribute LoggedIn is true.

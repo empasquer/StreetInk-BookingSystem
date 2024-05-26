@@ -36,15 +36,27 @@ import java.util.regex.Pattern;
     TattooArtistService tattooArtistService;
 
 
-
-
+    /**
+     * @author Nanna
+      * @param bookingId The ID of the booking
+     * @param username The username of the tattoo artist
+     */
     public void sendConfirmationMail(int bookingId, String username) {
-        Booking booking =  bookingService.getBookingDetail(bookingId);
+        // Retrieve booking details based on the booking ID
+        Booking booking = bookingService.getBookingDetail(bookingId);
+
+        // Retrieve tattoo artist details based on the username
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        Client client =booking.getClient();
-        String bookingEnd =booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
-        String bookingStart =booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        // Retrieve client details from the booking
+        Client client = booking.getClient();
+
+        // Format booking start time, end time, and date
+        String bookingEnd = booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingStart = booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
         String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        // Prepare context for email template
         Context context = new Context();
         context.setVariable("ClientFirstName", client.getFirstName());
         context.setVariable("ArtistFirstName", tattooArtist.getFirstName());
@@ -59,8 +71,10 @@ import java.util.regex.Pattern;
         context.setVariable("BookingTitle", booking.getProjectTitle());
         context.setVariable("BookingDescription", booking.getProjectDesc());
 
+        // Process the email template
         String processedHTMLTemplate = templateEngine.process("home/confirmation-mail", context);
-        // Start preparing the email
+
+        // Prepare the email
         MimeMessagePreparator preparator = message -> {
             MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
             helper.setTo(client.getEmail());
@@ -68,25 +82,28 @@ import java.util.regex.Pattern;
             helper.setText(processedHTMLTemplate, true);
         };
 
-        javaMailSender.send(preparator); //send the email
+        // Send the email
+        javaMailSender.send(preparator);
     }
 
 
     /**
      * @author Nanna og Munazzah
-     * @param recipient
-     * @param subject
-     * @param content
+     * param recipient The email address of the recipient
+     * @param subject The subject of the email
+     * @param content The content of the email
      */
     public void sendEmail(String recipient, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
 
+        // Set the recipient, subject, and content of the email
         message.setTo(recipient);
         message.setSubject(subject);
         message.setText(content);
+
+        // Send the email using JavaMailSender
         javaMailSender.send(message);
     }
-
     /**
      * @author Munazzah
      * @param email

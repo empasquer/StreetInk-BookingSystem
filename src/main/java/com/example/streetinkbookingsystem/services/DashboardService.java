@@ -28,25 +28,6 @@ public class DashboardService {
         return bookingService.getBookingCountForThisWeek(username);
     }
 
-    /**
-     * THANK YOU CHATTY
-     * Retrieves the week number of the given date based on the ISO-8601 standard.
-     * ISO week numbering defines the week as starting on Monday and ending on Sunday,
-     * and assigns each week a number within the year based on this scheme.
-     *
-     * @param date The LocalDate for which to determine the week number.
-     * @return The week number of the given date according to the ISO-8601 standard.
-     */
-
-    public static int getWeekNumber(LocalDate date) {
-        // Get the WeekFields for ISO definition (Monday as the start of the week)
-        WeekFields weekFields = WeekFields.ISO;
-
-        // Get the week number using ISO week-of-week-based-year
-        int weekNumber = date.get(weekFields.weekOfWeekBasedYear());
-
-        return weekNumber;
-    }
 
 
     public int calculateBookingPercentageOfMonth(String username) {
@@ -71,17 +52,6 @@ public class DashboardService {
         return (int) Math.round(bookingPercentage);
     }
 
-    // Calculates month progress in percentage only for week days
-/*    public int calculateMonthProgressPercentage() {
-        LocalDate currentDate = LocalDate.now();
-        int totalWeekdaysInMonth = calculateWeekdaysInMonth(currentDate);
-        int currentDayOfMonth = currentDate.getDayOfMonth();
-
-        double progressPercentage = ((double) currentDayOfMonth / totalWeekdaysInMonth) * 100;
-        return (int) Math.round(progressPercentage);
-    }*/
-
-    // we now want to calculate the whole month's progress in percentage, with weekends
 
     public int calculateMonthProgressPercentage() {
         LocalDate currentDate = LocalDate.now();
