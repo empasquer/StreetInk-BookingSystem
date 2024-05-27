@@ -17,27 +17,31 @@
         <a th:href="@{/calendar}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
 
-    <h1>Edit Booking - <span th:text="${booking.date}"></span></h1>
+    <h1>Edit Booking</h1>
+    <h2 th:text="${booking.date}"></h2>
 
     <section>
-        <form  th:action="@{/confirm-delete-booking}" method="get" >
-            <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
-            <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
-        </form>
+        <div class="button-container">
+            <form  th:action="@{/confirm-delete-booking}" method="get" >
+                <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
+                <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
+            </form>
+        </div>
+
 
         <form action="/edit-booking" method="post" enctype="multipart/form-data">
             <div class="booking-container">
                 <div class="information-container">
-                    <h2>Tattoo Information</h2>
+                    <h3>Tattoo Information</h3>
 
                     <div th:if="${errorMessage}" class="error-message">
                         <p th:text="${errorMessage}"></p>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group deposit">
                         <label for="isDepositPayed">Deposit Paid:</label>
                         <input type="hidden" name="isDepositPayed" th:value="${booking.getIsDepositPayed()}">
-                        <input type="checkbox" id="isDepositPayed" name="isDepositPayed" th:chencked="${booking.isDepositPayed}">
+                        <input type="checkbox" id="isDepositPayed" name="isDepositPayed" th:checked="${booking.isDepositPayed}">
                     </div>
 
                     <div class="form-group">

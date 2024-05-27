@@ -43,8 +43,23 @@
 .icon-button {
     border-radius: 0.4em;
     background-color: transparent;
-    color: black;
+    color: white;
     border: none;
+    width: auto;
+    padding: 2rem;
+}
+
+.deposit {
+    display: flex;
+    flex-direction: row;
+}
+
+h2 {
+    font-size: 3.5rem;
+}
+
+h3 {
+    font-size: 2.5rem;
 }
 
 .delete-form {
@@ -97,3 +112,8 @@ h2 {
     text-align: center;
 }
 
+.button-container {
+    display: flex;
+    place-content: flex-end;
+    margin-top: 0;
+}
