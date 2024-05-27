@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -326,7 +327,7 @@ public class BookingController {
 
         bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
 
-        //If saved while wanting to send mail
+        //If saved with the intent to send mail
         if (sendMail) {
             String username = (String) session.getAttribute("username");
             emailService.sendConfirmationMail(bookingId, username);

@@ -90,9 +90,8 @@
 
                     <div class="button-container-edit">
                         <div>
-                            <input type="hidden" name="sendMail" th:value="True">
                             <input type="hidden" name="bookingId" th:value="${booking.id}">
-                            <button type="submit" class="gray-button">Save and resend mail</button>
+                            <button type="submit" th:value="true" class="gray-button" name="sendMail">Save and resend mail</button>
                         </div>
                         <div>
                             <button type="submit" class="red-button">Save Booking</button>
