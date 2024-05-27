@@ -64,7 +64,7 @@
 
         <div class="container">
             <ul>
-                <li th:each="booking : ${clientBookings}"><a th:href="@{/booking(bookingId=${booking.id},username=${username})}" class="booking gray-button box-shadow">
+                <li th:each="booking : ${clientBookings}"><a th:href="@{/booking(bookingId=${booking.id},username=${username})}" class="booking gray-button">
                     <span th:text="${booking.date}"></span>
                     <span th:text="${booking.projectTitle}"></span>
                 </a></li>
