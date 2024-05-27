@@ -137,12 +137,8 @@ public class BookingController {
                                  RedirectAttributes redirectAttributes, Model model) {
         String username = (String) session.getAttribute("username");
 
-        /*if (username == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Your session has expired. Please log in again.");
-            return "redirect:/";
-        }
 
-            List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
+            /*List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
                     .map(file -> {
                         try {
                             return file.getBytes();
@@ -165,15 +161,12 @@ public class BookingController {
         Booking booking;
         if (bookingId != null) {
             // Update existing booking
-            //bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
             bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, getPictureList(projectPictures));
             booking = bookingService.getBookingDetail(bookingId);
-            //projectPictureService.updateProjectPictures(bookingId, pictureList);
             projectPictureService.updateProjectPictures(bookingId, getPictureList(projectPictures));
         } else {
             // Create new booking
             // The new booking will have a default client until another is chosen
-            //booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
 
             booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, getPictureList(projectPictures));
            // denne laver dobbelgemning af billeder.
@@ -185,7 +178,6 @@ public class BookingController {
         if ("new-client".equals(action)) {
             return "redirect:/add-client?bookingId=" + savedBookingId + "&date=" + date;
         } else if ("existing-client".equals(action)) {
-           // return "redirect:/choose-client?bookingId=" + savedBookingId + "&username=" + username + "&date=" + date;
             return "redirect:/client-list?bookingId=" + savedBookingId +  "&date=" + date;
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid action.");
