@@ -84,7 +84,7 @@ public class BookingController {
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam (required = false) Integer bookingId ){
-        if (!loginService.isUserLoggedIn(session)) {
+       /* if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
@@ -93,6 +93,8 @@ public class BookingController {
             Booking booking =bookingService.getBookingDetail(bookingId);
             model.addAttribute("booking",booking);
         }
+
+        */
 
 
 
