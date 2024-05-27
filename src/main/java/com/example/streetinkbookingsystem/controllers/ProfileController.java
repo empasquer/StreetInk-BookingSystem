@@ -1,6 +1,5 @@
 package com.example.streetinkbookingsystem.controllers;
 
-import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
@@ -34,7 +33,7 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/profile")
-    public String seeProfile(HttpSession session, Model model) {
+    public String seeProfile(HttpSession session, Model model, @RequestParam(required = false) String profileToDelete) {
 
         session.removeAttribute("imageData");
         if (!loginService.isUserLoggedIn(session)) {
@@ -48,9 +47,57 @@ public class ProfileController {
             String base64Image = Base64.getEncoder().encodeToString(tattooArtist.getProfilePicture());
             tattooArtist.setBase64ProfilePicture(base64Image);
         }
+
+        //For deleting the profile if necessary
+        if (profileToDelete != null) {
+            model.addAttribute("profileToDelete", profileToDelete);
+        }
+
         return "home/profile";
 
 
+    }
+
+    /**
+     * @summary Shows the same profile page but if not admin, then shows the delete and cancel
+     * button through th:block in the view
+     *
+     * @author Munazzah
+     * @param session For login
+     * @param model To add attributes
+     * @param redirectAttributes To add error message and profileUsername
+     * @return Redirects to profile page with the username of teh profile to delete
+     */
+    @PostMapping("/profile")
+    public String deleteProfileWithWarning(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        //If admin, then redirects to same page with error messag
+        if (tattooArtist.getIsAdmin()) {
+            redirectAttributes.addFlashAttribute("message", "Please revoke admin status before deletion!");
+            return "redirect:/profile";
+        }
+
+        model.addAttribute("profileToDelete", session.getAttribute("username"));
+        redirectAttributes.addAttribute("profileToDelete", session.getAttribute("username"));
+        return "redirect:/profile?username=" + session.getAttribute("username");
+    }
+
+    /**
+     * @summary Deletes own profile and redirects to index
+     *
+     * @author Munazzah
+     * @param profileToDelete Username of the profile to delete
+     * @return Redirects to index
+     */
+    @PostMapping("/delete-own-profile")
+    public String deleteOwnProfile(@RequestParam String profileToDelete) {
+        tattooArtistService.deleteProfileByUsername(profileToDelete);
+        return "redirect:/";
     }
 
 

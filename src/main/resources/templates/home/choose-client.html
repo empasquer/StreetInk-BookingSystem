@@ -54,7 +54,6 @@
           <li th:each="client : ${entry.value}" class="client-item">
             <a th:href="@{/booking-preview(bookingId=${bookingId},clientId= ${client.id},username=${tattooArtist.username})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
           </li>
-          </li>
         </ul>
       </div>
     </div>

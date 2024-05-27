@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -306,7 +307,7 @@ public class BookingController {
                                 @RequestParam String projectTitle, @RequestParam String projectDesc,
                                 @RequestParam String personalNote, @RequestParam boolean isDepositPayed, @RequestParam(required = false) List<Integer> deletePictures,
                                 @RequestParam("projectPictures") MultipartFile[] projectPictures,
-                                @RequestParam int bookingId, Model model, HttpSession session) {
+                                @RequestParam int bookingId, Model model, HttpSession session, @RequestParam(required = false) boolean sendMail) {
 
 
         if (deletePictures != null) {
@@ -325,6 +326,13 @@ public class BookingController {
                 .collect(Collectors.toList());
 
         bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+
+        //If saved with the intent to send mail
+        if (sendMail) {
+            String username = (String) session.getAttribute("username");
+            emailService.sendConfirmationMail(bookingId, username);
+        }
+
         return "redirect:/booking?bookingId=" + bookingId + "&username=" + session.getAttribute("username");
     }
 
@@ -350,8 +358,6 @@ public class BookingController {
         model.addAttribute("booking", booking);
         model.addAttribute("bookingIdToDelete", bookingIdToDelete);
 
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
         redirectAttributes.addAttribute("bookingIdToDelete", bookingIdToDelete);
         return "redirect:/booking?bookingId=" + bookingIdToDelete;
     }
@@ -375,7 +381,6 @@ public class BookingController {
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
     }
-
 }
 
 

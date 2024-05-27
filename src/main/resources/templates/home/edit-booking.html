@@ -89,10 +89,10 @@
                     </div>
 
                     <div class="button-container-edit">
-                        <form th:action="@{/calendar}" method="post">
-                            <button type="submit" class="gray-button">Save and resend mail</button>
-                        </form>
-
+                        <div>
+                            <input type="hidden" name="bookingId" th:value="${booking.id}">
+                            <button type="submit" th:value="true" class="gray-button" name="sendMail">Save and resend mail</button>
+                        </div>
                         <div>
                             <button type="submit" class="red-button">Save Booking</button>
                         </div>
