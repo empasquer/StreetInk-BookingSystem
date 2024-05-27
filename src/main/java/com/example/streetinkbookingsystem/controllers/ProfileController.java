@@ -58,6 +58,16 @@ public class ProfileController {
 
     }
 
+    /**
+     * @summary Shows the same profile page but if not admin, then shows the delete and cancel
+     * button through th:block in the view
+     *
+     * @author Munazzah
+     * @param session For login
+     * @param model To add attributes
+     * @param redirectAttributes To add error message and profileUsername
+     * @return Redirects to profile page with the username of teh profile to delete
+     */
     @PostMapping("/profile")
     public String deleteProfileWithWarning(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         if (!loginService.isUserLoggedIn(session)) {
@@ -66,24 +76,26 @@ public class ProfileController {
 
         TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
+        //If admin, then redirects to same page with error messag
         if (tattooArtist.getIsAdmin()) {
             redirectAttributes.addFlashAttribute("message", "Please revoke admin status before deletion!");
             return "redirect:/profile";
         }
 
         model.addAttribute("profileToDelete", session.getAttribute("username"));
-
         redirectAttributes.addAttribute("profileToDelete", session.getAttribute("username"));
         return "redirect:/profile?username=" + session.getAttribute("username");
     }
 
+    /**
+     * @summary Deletes own profile and redirects to index
+     *
+     * @author Munazzah
+     * @param profileToDelete Username of the profile to delete
+     * @return Redirects to index
+     */
     @PostMapping("/delete-own-profile")
-    public String deleteOwnProfile(@RequestParam String profileToDelete, HttpSession session, Model model) {
-        if (!loginService.isUserLoggedIn(session)) {
-            return "redirect:/";
-        }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
+    public String deleteOwnProfile(@RequestParam String profileToDelete) {
         tattooArtistService.deleteProfileByUsername(profileToDelete);
         return "redirect:/";
     }
