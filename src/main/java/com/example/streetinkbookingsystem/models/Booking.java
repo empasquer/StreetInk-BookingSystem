@@ -10,16 +10,13 @@ public class Booking {
     private LocalTime startTimeSlot;
     private LocalTime endTimeSlot;
     private LocalDate date;
-    private String username; // Tara tilføjet denne.
+    private String username;
     private Client client;
     private String projectTitle;
     private String projectDesc;
     private String personalNote;
     private Boolean isDepositPayed;
-    private List<ProjectPicture> projectPictures; // Tara tilføjet denne
-   // private ArrayList<Byte[]> projectPictures; Ovenover har overtaget
-    //Overvej senere om denne skal ændres til string, med billedestier.
-
+    private List<ProjectPicture> projectPictures;
 
     public Booking() {
     }
@@ -56,11 +53,11 @@ public class Booking {
         this.date = date;
     }
 
-    public String getUsername() { // Tara tilføjet denne.
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) { // Tara tilføjet denne.
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -95,11 +92,11 @@ public class Booking {
     public void setPersonalNote(String personalNote) {
         this.personalNote = personalNote;
     }
-    // ændret disse. Forvirrede mig med navneskiftet, håber det er ok?
+
     public Boolean getIsDepositPayed() {
         return isDepositPayed;
     }
-    // ændret disse. Forvirrede mig med navneskiftet, håber det er ok?
+
     public void setIsDepositPayed(Boolean isDepositPayed) {
         this.isDepositPayed = isDepositPayed;
     }

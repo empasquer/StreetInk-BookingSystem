@@ -24,15 +24,13 @@ import java.util.stream.Collectors;
 public class ClientController {
 
     @Autowired
-    ClientService clientService;
-
+    private ClientService clientService;
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
     @Autowired
-    BookingService bookingService;
-
+    private BookingService bookingService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
 
     /**
      * @summary Gets the sorted list of Clients from the service layer, and then uses Map to
@@ -280,13 +278,14 @@ public class ClientController {
     }
 
     /**
-     * @param bookingId // * @param clientId
-     * @param model
+     *  @Summary Creates the new client, that the user wants to add to the booking that the user is creating
+     *
+     * @Author Tara
+     * @param bookingId We have the bookingId, with a default clientId, that we updates with the new clientId
+     * @param model Holds the attributes for the view.
      * @param session   Used to determine if the user is logged in or not. User will be redirected
      *                  to index page if not logged in.
      * @return String - add-client view
-     * @Author Tara
-     * @Summary Creates the new client, that the user wants to add to the booking that the user is creating
      */
     @GetMapping("/add-client")
     public String addClient(@RequestParam int bookingId, @RequestParam LocalDate date,
@@ -344,19 +343,19 @@ public class ClientController {
      * @return
      */
 
-    @GetMapping("/choose-client")
+    /*@GetMapping("/choose-client")
     public String chooseClient(Model model, HttpSession session,
                                @RequestParam int bookingId, @RequestParam LocalDate date) {
-       /* boolean loggedIn = loginService.isUserLoggedIn(session);
+        boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn) {
             return "redirect:/";
         }
-        */
+
 
         String username = "Hanzoo";
-        //String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-       // model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
         //Værdier som skal videre til view
@@ -377,6 +376,9 @@ public class ClientController {
         return "home/choose-client";
     }
 
+     */
+
+
     /**
      * @Author Tara
      * @param session
@@ -386,12 +388,12 @@ public class ClientController {
      * @param redirectAttributes
      * @return
      */
-    @PostMapping("/search-for-existing-client")
+    /*@PostMapping("/search-for-existing-client")
     public String searchForExistingClient(HttpSession session,
                                           @RequestParam String searchQuery,
                                           @RequestParam int bookingId,
-                                        @RequestParam LocalDate date,
-                                        @RequestParam(required = false) int clientId, //clientId er ikke et must*/
+                                          @RequestParam LocalDate date,
+                                          @RequestParam(required = false) int clientId,
                                           Model model,
                          RedirectAttributes redirectAttributes) {
         boolean loggedIn = loginService.isUserLoggedIn(session);
@@ -405,5 +407,7 @@ public class ClientController {
         return "redirect:/booking-preview?bookingId=" + bookingId + "&clientId=" + clientId;
 
     }
+
+     */
 }
 

@@ -16,13 +16,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProjectPictureService {
+
     @Autowired
     private BookingRepository bookingRepository;
     @Autowired
     private ProjectPictureRepository projectPictureRepository;
 
-    //@Transactional
-    public void saveProjectPictures(int bookingId, List<byte[]> pictureList){
+
+   /* public void saveProjectPictures(int bookingId, List<byte[]> pictureList){
 
        for (byte[] pictureData : pictureList){
            ProjectPicture picture = new ProjectPicture();
@@ -42,12 +43,19 @@ public class ProjectPictureService {
                     e.printStackTrace();
                 }
             }
-
         }
-
-        */
     }
 
+    */
+
+
+    /**
+     * @Summary is used to convert the data of the pictures into base64-strings
+     *
+     * @Author Tara
+     * @param projectPictures
+     * @return
+     */
     public List<String> convertToBase64(List<ProjectPicture> projectPictures){
         List<String> base64Images = new ArrayList<>();
         for (ProjectPicture picture : projectPictures){
@@ -56,11 +64,6 @@ public class ProjectPictureService {
         return base64Images;
     }
 
-    //Bruges til at konventere billeddataene til Base64-streng
-
-    public String getBase64String(byte[] imageData) {
-        return Base64.getEncoder().encodeToString(imageData);
-    }
 
     public void deleteProjectPictures(List<Integer> pictureList) {
         for (Integer pictureId : pictureList){
@@ -85,6 +88,12 @@ public class ProjectPictureService {
     public List<ProjectPicture> getPicturesAsObjects(int bookingId) {
         return projectPictureRepository.getPicturesByBooking(bookingId);
     }
+
+    /**
+     * @Author Tara
+     * @param bookingId
+     * @param pictureDataList
+     */
     public void updateProjectPictures(int bookingId, List<byte[]> pictureDataList) {
         projectPictureRepository.updateProjectPictures(bookingId,pictureDataList);
     }

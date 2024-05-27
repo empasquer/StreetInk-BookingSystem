@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
+
     @Autowired
     private BookingRepository bookingRepository;
     @Autowired
@@ -33,7 +34,6 @@ public class BookingService {
      * @param personalNote
      * @param isDepositPayed
      */
-   // @Transactional //Håndtere database transaktioner automatisk, når metoden lykkedes
     public Booking createNewBooking(LocalTime startTimeSlot,
                                     LocalTime endTimeSlot,
                                     LocalDate date,
@@ -44,28 +44,6 @@ public class BookingService {
                                     boolean isDepositPayed,
                                     List<byte[]> pictureList){
 
-       /* Booking booking = new Booking();
-        booking.setStartTimeSlot(startTimeSlot);
-        booking.setEndTimeSlot(endTimeSlot);
-        booking.setDate(date);
-        booking.setUsername(username);
-        booking.setProjectTitle(projectTitle);
-        booking.setProjectDesc(projectDesc);
-        booking.setPersonalNote(personalNote);
-        booking.setIsDepositPayed(isDepositPayed);
-        booking.setProjectPictures(pictureList.stream().map(picture -> {
-            ProjectPicture projectPicture = new ProjectPicture();
-            projectPicture.setPictureData(picture);
-            return projectPicture;
-                }).collect(Collectors.toList()));
-
-        */
-
-             /*return bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date, username,
-                projectTitle, projectDesc, personalNote, isDepositPayed);
-
-                 */
-
         Booking savedBooking = bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date,
                 username, projectTitle, projectDesc, personalNote, isDepositPayed);
 
@@ -75,10 +53,7 @@ public class BookingService {
             picture.setBookingId(savedBooking.getId());
             projectPictureRepository.saveProjectPictures(picture);
         }
-
-
         return savedBooking;
-
     }
 
     /**
@@ -114,7 +89,6 @@ public class BookingService {
     }
 
 
-
     public int getBookingCountForDate(LocalDate specificDate, String username) {
         return bookingRepository.getBookingCountForDate(specificDate, username);
     }
@@ -127,27 +101,18 @@ public class BookingService {
         return bookingRepository.getBookingCountForMonth(year, month, username);
     }
 
-
     public List<Booking> getBookingsForMonth(int year, int month, String username) {
         return bookingRepository.getBookingsForMonth(year, month, username);
     }
 
     public List<Booking> getBookingsForDay(LocalDate date, String username) {
         return bookingRepository.getBookingsForDay(date, username);
-
     }
 
     public Booking getBookingDetail(int bookingId) {
         return bookingRepository.getBookingDetails(bookingId);
     }
 
-    /**
-     * @Author Tara
-     * @return
-     */
-    public List<Booking> showBookingList(){
-        return bookingRepository.showBookingList();
-    }
 
     public double calculateTotalDurationOfBooking(Booking booking) {
         LocalTime startTime = booking.getStartTimeSlot();

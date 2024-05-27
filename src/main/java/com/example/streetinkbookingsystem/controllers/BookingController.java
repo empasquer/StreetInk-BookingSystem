@@ -34,15 +34,15 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
     @Autowired
-    ProjectPictureService projectPictureService;
+    private ProjectPictureService projectPictureService;
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     /**
      *
@@ -83,11 +83,11 @@ public class BookingController {
 
     /**
      * @Author Tara
-     * @param model
+     * @param model used to "hold" the attributes to use in the view.
      * @param session Used to determine if the user is logged in or not. User will be redirected
      *                to index page if not logged in.
      * @param date Is used, sp that we create af booking on the specific date.
-     * @return den gemte booking.
+     * @return to the create bookings view
      */
     @GetMapping("/create-new-booking")
     public String createNewBooking(Model model, HttpSession session, @RequestParam LocalDate date, @RequestParam (required = false) Integer bookingId ){
@@ -97,9 +97,10 @@ public class BookingController {
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         if (bookingId != null) {
             Booking booking =bookingService.getBookingDetail(bookingId);
-            model.addAttribute("booking",booking); // used when going back in the booking process so that no information is lost for the user
+            model.addAttribute("booking",booking);
         }
-        model.addAttribute("date", date); //needed to return to day page in "back-arrow".
+        //needed to return to day page in "back-arrow".
+        model.addAttribute("date", date);
         return "home/create-new-booking";
     }
 
@@ -137,20 +138,6 @@ public class BookingController {
                                  RedirectAttributes redirectAttributes, Model model) {
         String username = (String) session.getAttribute("username");
 
-
-            /*List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
-                    .map(file -> {
-                        try {
-                            return file.getBytes();
-                        } catch (IOException e){
-                            e.printStackTrace();
-                            return null;
-                        }
-                    })
-                    .collect(Collectors.toList());
-                    */
-
-
         // Ensure that booking cannot have a end-time that is before the start-time
         if (endTimeSlot.isBefore(startTimeSlot)) {
             redirectAttributes.addFlashAttribute("errorMessage", "End time cannot be before start time.");
@@ -160,20 +147,20 @@ public class BookingController {
         //Either create new booking or update the one in the making
         Booking booking;
         if (bookingId != null) {
+
             // Update existing booking
             bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, getPictureList(projectPictures));
             booking = bookingService.getBookingDetail(bookingId);
             projectPictureService.updateProjectPictures(bookingId, getPictureList(projectPictures));
-        } else {
-            // Create new booking
-            // The new booking will have a default client until another is chosen
 
+        } else {
+
+            // The new booking will have a default client until another is chosen
             booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, getPictureList(projectPictures));
-           // denne laver dobbelgemning af billeder.
-            //projectPictureService.saveProjectPictures(booking.getId(), getPictureList(projectPictures));
         }
 
         int savedBookingId = booking.getId();
+
         //Create new client or choose an existing client:
         if ("new-client".equals(action)) {
             return "redirect:/add-client?bookingId=" + savedBookingId + "&date=" + date;
@@ -186,7 +173,7 @@ public class BookingController {
     }
 
     /**
-     * Converts an array of MultipartFile objects to a list of byte arrays.
+     * @summary Converts an array of MultipartFile objects to a list of byte arrays.
      *
      * @author Nanna og Tara
      * @param projectPictures The array of MultipartFile objects.
@@ -213,11 +200,13 @@ public class BookingController {
 
 
     /**
+     * @Summary A preview of the booking you created, where you can choose to save it or cancel it
      * @Author Tara
-     * @param model
-     * @param session
-     * @param bookingId
-     * @param clientId
+     * @param model Containing all the attributes used i the views
+     * @param session The HttpSession object to retrieve the username of the logged-in user.
+     * @param bookingId So you can see the booking you just made.
+     * @param clientId Used i the view, so we can see the client in the booking. And update the booking with the choosen
+     *                 new/ existing client.
      * @return booking-preview
      */
     @GetMapping("/booking-preview")

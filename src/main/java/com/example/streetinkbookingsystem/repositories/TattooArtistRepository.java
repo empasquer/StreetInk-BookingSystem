@@ -17,7 +17,7 @@ import java.util.Optional;
 public class TattooArtistRepository {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
 
     /**

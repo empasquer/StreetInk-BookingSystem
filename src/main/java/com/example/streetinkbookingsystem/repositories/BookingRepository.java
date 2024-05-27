@@ -26,7 +26,7 @@ import java.util.List;
 public class BookingRepository {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * @author Nanna
@@ -61,7 +61,6 @@ public class BookingRepository {
      * @param bookingId used to find the booking
      * @return all details about a booking, creating a Client and adding it as an attribute to the booking,
      */
-    //laver ny, som kan tackle flere billeder. har Gemt den gamle, hvis jeg har fucket med noget andet.
     public Booking getBookingDetails(int bookingId) {
         String query = "SELECT booking.*, client.*, project_picture.id, project_picture.picture_data " +
                 "FROM booking " +
@@ -145,7 +144,6 @@ public class BookingRepository {
                                   String username, String projectTitle, String projectDesc, String personalNote,
                                   boolean isDepositPayed){
 
-
         // tjekker om username eksisterer i tattoo_artist table
         String checkUsernameQuery = "SELECT COUNT(*) FROM tattoo_artist WHERE username = ?";
         Integer count = jdbcTemplate.queryForObject(checkUsernameQuery, new Object[]{username}, Integer.class);
@@ -219,6 +217,12 @@ public class BookingRepository {
         }
     }
 
+
+    /**
+     * @Author Tara
+     * @param bookingId
+     * @return will find the specifik booking from the bookingId.
+     */
     public Booking findById(int bookingId) {
         validateBookingExistence(bookingId);
 
@@ -226,7 +230,6 @@ public class BookingRepository {
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
         return jdbcTemplate.queryForObject(query, rowMapper, bookingId);
     }
-
 
 
     //Retunerer antallet af booking for en bestemt dato og username

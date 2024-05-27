@@ -20,12 +20,14 @@ import java.util.List;
 public class ClientRepository {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
+
     public Client getClientFromClientId(int clientId) {
         String query = "SELECT * FROM client WHERE id = ?";
         RowMapper<Client> rowMapper = new BeanPropertyRowMapper<>(Client.class);
             return jdbcTemplate.queryForObject(query, rowMapper, clientId);
     }
+
     /**
      * @author Munazzah
      * @param phoneNumber
@@ -58,6 +60,15 @@ public class ClientRepository {
         }
     }
 
+    /**
+     * @Tara TROOOOR JEG ???
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param description
+     * @param clientId
+     */
     public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description, int clientId) {
         String query = "UPDATE client SET first_name = ?, last_name = ?, email = ?, phone_number = ?, description = ? WHERE id = ?";
         try {
@@ -124,7 +135,11 @@ public class ClientRepository {
         }
     }
 
-
+    /**
+     * @Author Tara
+     * @param client
+     * @return
+     */
     public Client saveClient(Client client){
         String query = "INSERT INTO client (first_name, last_name, email, phone_number, description) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -143,6 +158,7 @@ public class ClientRepository {
         client.setId(keyHolder.getKey().intValue());
         return client;
     }
+
 
     public void updateClientOnBooking(int bookingId, int clientId){
         String query = "UPDATE booking SET client_id = ? WHERE id = ?";

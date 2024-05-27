@@ -17,13 +17,11 @@ import java.util.ArrayList;
 public class DashboardController {
 
     @Autowired
-    TattooArtistService tattooArtistService;
-
+    private TattooArtistService tattooArtistService;
     @Autowired
-    DashboardService dashboardService;
-
+    private DashboardService dashboardService;
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
 
     /**
