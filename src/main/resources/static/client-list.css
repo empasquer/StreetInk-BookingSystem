@@ -45,7 +45,7 @@ li {
     font-size: 2rem;
 }
 
-.found-client a {
+li a {
     text-decoration: underline;
 }
 
