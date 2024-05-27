@@ -38,10 +38,12 @@ section {
 
 .contact {
     padding-bottom : 1.5rem;
+    gap: 1rem;
+    display: flex;
 }
 
 
-p, a {
+p, section a {
     font-size: 1.5em;
 }
 
@@ -69,12 +71,8 @@ button {
     border:none;
 }
 
-.edit {
+.edit, .delete {
     color: white;
-}
-
-.delete {
-    color: black;
 }
 
 .buttons {
@@ -95,6 +93,11 @@ button {
     text-align: left;
     gap: .3rem;
     width: 100%;
+}
+
+.red-button {
+    width: 100%;
+    padding:2rem 0;
 }
 
 .process-picture {

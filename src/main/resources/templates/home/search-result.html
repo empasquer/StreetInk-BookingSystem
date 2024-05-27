@@ -21,8 +21,8 @@
 
     <section class="box-shadow">
         <div th:if="${results}">
-            <ul>
-                <li class="client-list" th:each="client : ${results}">
+            <ul class="client-list">
+                <li class="found-client" th:each="client : ${results}">
                     <a th:if="${bookingId}" th:href="@{/booking-preview(bookingId=${bookingId}, date=${date}, clientId=${client.getId()})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
                     <a th:unless="${bookingId}" th:href="@{/client(clientId=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
                 </li>
