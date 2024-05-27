@@ -38,6 +38,7 @@ section {
 }
 
 .upload-label-with-picture {
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
     cursor: pointer;
     background-size: cover;
 }

@@ -1,3 +1,11 @@
+h1 {
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 3em;
+}
+
 .booking-container {
     margin-bottom: 2em;
     margin-left: 2em;
@@ -13,95 +21,56 @@ section {
     font-size: 1.5em;
 }
 
-/*p {
-    font-size: 1.5em;
+p {
+    font-size: 1.4em;
     font-weight: bold;
-    margin-top: 1.3em;
-}*/
+    margin-top: 0.8em;
+
+
+}
+
+div .respons{
+    font-size: 1.2em;
+}
+
+.image-message {
+    font-size: 0.8em;
+    color: #333333;
+    font-style: italic;
+    margin-bottom: 0.5em; /* Adding some space below the message */
+    margin-top: -1%;
+
+}
 
 hr {
     border-color: white;
-    border-width: 3px;
+    border-width: 2px;
     margin-top: 20px; /* Tilføjer mellemrum over hr-linjen */
     margin-bottom: 15px;
 }
 
 .client-name {
-    font-size: 1.7em;
+    font-size: 2em;
     font-weight: bold;
     text-align: center;
     color: #D2D1D1;
-    /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);*/
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.contact-item {
+    margin-bottom: 10px;
 }
 
 .underline{
     text-decoration: underline;
-    margin-top: 2em;
+    margin-top: 2.5em;
 }
 
 .tattoo-info {
     font-size: 1.7em;
     font-weight: bold;
     text-align: left;
-/*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-
- */
-}
-
-.edit-btn {
-    margin-right: 1rem;
-}
-
-.button-container form button {
-    background-color: transparent;
-    border:none;
-}
-
-
-.button-container {
-    /*position: relative;*/
-    top: 2rem;
-    right: 2rem;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.edit-btn, .delete-btn {
-    margin-right: 1rem;
-}
-
-.edit {
-    color: white;
-}
-
-.delete {
-    color: black;
-}
-
-.booking-name {
-    margin-bottom: 30px;
-    margin-top: 30px;
-    color: white;
-}
-
-.button-container-edit {
-    display: flex;
-    justify-content: center;
-}
-
-.gray-button {
-    margin: 20px 10px 30px;
-    font-size: x-large;
-
-}
-
-.red-button {
-    margin: 20px 10px 30px;
-    font-size: x-large;
-}
-
-.confirmation-container {
-    margin-bottom: 20px;
 }
 
 .project-picture {
@@ -111,24 +80,65 @@ hr {
 }
 
 .process-picture {
-    max-width: 80px;
+    max-width: 100px;
     display: block;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
 }
 
 .button-container {
     display: flex;
-/*justify-content: space-between;*/
-    /*margin-top: 60px;*/
+    justify-content: space-between;
+    margin-top: 60px;
 }
 
-button {
-    /*padding: 40px 70px; /* Gør knapperne større */
+.button-container button {
+    padding: 40px 70px; /* Gør knapperne større */
     font-size: 1em;
-    margin: 10px; /* Mindsk afstanden mellem knapperne */
-    /*width: 230px; /* Fast bredde for alle knapper */
-    /*height: 100px; /* Fast højde for alle knapper */
+    margin: 20px; /* Mindsk afstanden mellem knapperne */
+    width: 230px; /* Fast bredde for alle knapper */
+    height: 100px; /* Fast højde for alle knapper */
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+
+.edit-btn {
+    margin-right: 1rem;
+}
+
+.edit-delete-container form button {
+    background-color: transparent;
+    border:none;
+}
+
+
+.edit-delete-container {
+
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit-btn, .delete-form {
+    margin-right: 1rem;
+}
+
+.edit {
+    color: white;
+}
+
+.delete {
+    color: white;
+}
+
+
+.edit-delete-container-edit {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+

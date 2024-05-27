@@ -1,6 +1,27 @@
 figure {
     display: flex;
     place-content: center;
+    align-items: center; /* Centrerer indholdet både vandret og lodret */
+    width: 100%; /* Gør figure-elementet til at fylde hele bredden af dens container */
+    height: 100%;
+    margin: 0; /* Fjern eventuel margin */
+}
+
+figure img {
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
+}
+
+figure i {
+    font-size: 5em;
+    color: #efefef;
+    border: 0.1em solid #efefef;
+    border-radius: 50%; /* Sørger for at cirklen omkring ikonet har en rundet form */
+    padding: 1em;
+    width: 5em; /* Indstiller bredden på ikonet og cirklen */
+    height: 5em; /* Indstiller højden på ikonet og cirklen */
+    /* box-sizing: border-box; /* Sørger for, at padding og border inkluderes i elementets totale bredde og højde */
+    margin: 0;
+
 }
 
 section img {
@@ -21,13 +42,30 @@ section, .container {
 
 }
 
+section figure {
+   align-content: center;
+    place-content: center;
+    align-items: center;
+
+}
+
+.profile-pic {
+    align-content: center;
+    place-content: center;
+    align-items: center;
+    margin-right: 57px;
+}
+
 section {
     text-align: center;
     display: flex;
     flex-direction: column;
     place-content: center;
+    /* denne er lagt ned i info i stedet.
+    align-items: center;
+     */
 }
-
+/* ny fra merge*/
 .info {
     align-items: center;
 }
@@ -48,7 +86,6 @@ section {
     align-items: center;
 }
 
-
 p {
     font-size: 1.5em;
 }
@@ -63,6 +100,12 @@ h2 {
 .contact {
     padding-bottom: 1.5rem;
 }
+.button-container {
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    place-self: flex-end;
+}
 
 .edit-btn {
     margin-right: 1rem;
@@ -70,39 +113,31 @@ h2 {
 
 .button-container form button {
     background-color: transparent;
+    color: var(--white);
     border:none;
-}
-
-
-.button-container {
-    /*position: relative;*/
-    top: 2rem;
-    right: 2rem;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.edit-btn, .delete-btn {
-    margin-right: 1rem;
-}
-
-.edit {
-    color: white;
-}
-
-.delete {
-    color: black;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: 20px;
+    padding: 1em;
 }
 
+/* fra merge minazza. i stedet for den under.
 .confirmation-container {
     margin-bottom: 40px;
+}*/
+
+
+.confirmation-container {
+    position: absolute;
+    z-index: 4;
+    background: lightgrey;
+    padding: 2em;
+    border-radius: 1em;
+    color: white;
+    width: 20em;
 }
 
 h3 {

@@ -45,7 +45,7 @@ a.client-item {
 }
 /* Denne bliver kun brugt i choose-client og search-result2*/
 .process-picture {
-    max-width: 80px;
+    max-width: 100px;
     display: block;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
 }

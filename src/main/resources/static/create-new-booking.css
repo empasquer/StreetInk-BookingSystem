@@ -10,20 +10,20 @@ body {
     font-weight: bold;
 }
 
-/*.back-arrow-container {
+.back-arrow-container {
     margin-bottom: 20px;
-}*/
+}
 
-/*.back-arrow-container a {
+.back-arrow-container a {
     color: #333;
     text-decoration: none;
     font-size: 20px;
-}*/
+}
 
 .process-picture {
-    max-width: 80px;
+    max-width: 100px;
     display: block;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
 }
 
 .booking-container {
@@ -54,10 +54,39 @@ body {
 }
 
 .form-group-dep input[type="checkbox"] {
+    webkit-appearance: none; /* Remove default checkbox styling */
+    -moz-appearance: none;
+    appearance: none;
     flex: 0 0 auto;
-    transform: scale(3);
+    border-radius: 8px; /* Rounded corners */
+    background-color: var(--input-field-gray); /* Background color */
+    outline: none; /* Remove blue focus outline */
+    cursor: pointer;
+    transform: scale(1.5);
     margin-right: 30px;
-    border-radius: 10px;
+    width: 30px; /* Custom width */
+    height: 30px;
+
+}
+
+.form-group-dep input[type="checkbox"]:checked {
+    background-color: #a22e2e; /* Background color when checked */}
+
+.form-group-dep input[type="checkbox"]::after {
+    content: '';
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 17px; /* Adjust size for check mark */
+    font-weight: bold;
+    color: white;
+}
+
+.form-group-dep input[type="checkbox"]:checked::after {
+    display: block;
+    content: '\2713';
 }
 
 .form-group-time {
@@ -76,6 +105,10 @@ body {
     margin-right: 20px;
     flex: 0 0 auto;
 }
+.form-group-time-end label {
+    margin-right: 30px;
+    flex: 0 0 auto;
+}
 
 .form-group-time .time-select,
 .form-group-time-end .time-select {
@@ -92,6 +125,18 @@ body {
     box-sizing: border-box;
 }
 
+
+
+.form-group-time input[type="time"],
+.form-group-time-end input[type="time"] {
+    font-size: 20px; /* Juster skriftstørrelsen efter behov */
+    padding: 10px; /* Juster polstring for bedre udseende */
+    border: 1px solid #ccc; /* Juster grænsefarven efter behov */
+    border-radius: 10px; /* Runde hjørner */
+    box-sizing: border-box; /* Sikrer korrekt boksmåling */
+    width: 15%; /* Sikrer fuld bredde */
+}
+
 .form-group label {
     display: block;
     margin-bottom: 5px;
@@ -99,13 +144,24 @@ body {
 
 }
 
-.form-group input[type="text"],
+.form-group input[type="text"]{
+    background-color: var(--input-field-gray);
+    border-radius: 15px;
+    height: 50px;
+    width: 95%;
+    padding: 1rem;
+    border-style: none;
+
+}
+
 .form-group textarea{
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
+    background-color: var(--input-field-gray);
+    border-radius: 15px;
+    height: 100px;
+    width: 95%;
+    padding: 1rem;
+    border-style: none;
+
 }
 
 /* ændrer tekst i drop-down menuen. */
@@ -114,9 +170,8 @@ select, option,
 textarea {
     border-radius: 10px;
     padding: 15px;
-    font-size: 12px;
+    font-size: 15px;
 }
-
 
 /* ændrer tekst i indputfelterne */
 input[type="text"],
@@ -139,7 +194,6 @@ input[type="file"] {
     position: relative;
     left: -12px;
 }
-
 
 /* ændrer "gennemse" knappen*/
 input[type="file"]::file-selector-button {
@@ -177,6 +231,13 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.image-message {
+    font-size: 0.8em;
+    color: #333333;
+    font-style: italic;
+    margin-bottom: 0.5em; /* Adding some space below the message */
 }
 
 .error-message p{

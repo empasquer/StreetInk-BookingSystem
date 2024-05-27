@@ -54,11 +54,10 @@
             <h3 th:text="${message}"></h3>
         </div>
 
-
-            <figure>
-                <img th:if="${tattooArtist.base64ProfilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.base64ProfilePicture}}" alt="Profilbillede">
-                <img th:unless="${tattooArtist.base64ProfilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede">
-            </figure>
+        <figure>
+            <img th:if="${tattooArtist.base64ProfilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.base64ProfilePicture}}" alt="Profilbillede">
+            <i th:unless="${tattooArtist.base64ProfilePicture != null}" class="fas fa-user profile-pic"></i>
+        </figure>
 
         <div class="info">
             <p th:text="${tattooArtist.username}"></p>

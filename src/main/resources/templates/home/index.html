@@ -15,7 +15,6 @@
     <h1>Choose a Profile</h1>
 
     <section>
-
         <div class="username-container">
             <div th:each="tattooArtist : ${tattooArtists}" class="username-item">
                 <div class="profile-container">
@@ -24,23 +23,10 @@
                         <i th:unless="${tattooArtist.base64ProfilePicture != null}" class="fas fa-user profile-pic-index"></i>
                     </a>
 
-                   <!-- <a th:href="@{'/login?username=' + ${tattooArtist.username}}">
-                        <img th:if="${tattooArtist.profilePicture != null}" th:src="@{'data:image/jpeg;base64,' + ${tattooArtist.profilePicture}}" alt="Profilbillede" class="profile-pic">
-                        <img th:unless="${tattooArtist.profilePicture != null}" src="/assets/Default_Profile_pic.png" alt="Standard Profilbillede" class="profile-pic">
-                    </a> -->
-
                     <div class="username" th:text="${tattooArtist.username}"></div>
                 </div>
             </div>
         </div>
-        <!-- Knap til ny profil, skal væk -->
-
-        <!--<div style="text-align: center;">
-            <form action="/create-new-profile" method="get">
-                <button type="submit" class="red-button">Create new profile</button>
-            </form>
-        </div> -->
-
     </section>
 
 </main>

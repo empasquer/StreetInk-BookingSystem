@@ -21,7 +21,6 @@
 
 
   <section>
-
     <th:block  th:if="${bookingIdToDelete!=null}" >
       <div class="confirmation-container">
         <h3>Are you sure you want to delete this booking:</h3>
@@ -31,7 +30,7 @@
         <p class="warning-text">Be aware that the booking will be deleted permanently!
           You can not retrieve any kind of information from this booking after deletion</p>
 
-        <div class="button-container-edit">
+        <div class="edit-delete-container-edit">
           <form th:action="@{/booking}" method="get">
             <input type="hidden" name="bookingId" th:value="${booking.getId()}"/>
             <input type="hidden" name="username" th:value="${session.username}"/>
@@ -45,7 +44,7 @@
       </div>
     </th:block>
 
-    <div class="button-container">
+    <div class="edit-delete-container">
       <th:block  th:if="${bookingIdToDelete == null}" >
         <form class="edit-btn" th:action="@{/edit-booking}" method="get">
           <input type="hidden" name="bookingId" th:value="${booking.getId()}" />
@@ -68,19 +67,19 @@
 
           <hr>
           <p class="tattoo-info">Tattoo Information</p>
-          <p>Deposit payed: <span th:text="${booking.isDepositPayed ? 'Yes' : 'No'}"></span></p>
-         <!-- <p>Deposit payed: <input type="checkbox" th:checked="${booking.depositPayed}" class="checkboxes"></p> -->
+          <p class="title">Deposit paid:
+            <span id="depanswer" th:text="${booking.isDepositPayed ? 'Yes' : 'No'}"></span></p>
 
-          <p>Project Title:</p>
-          <div th:text="${booking.projectTitle}"></div>
-          <p>Project Description:</p>
-          <div th:text="${booking.projectDesc}"></div>
-          <p>Personal Note:</p>
-          <div th:text="${booking.personalNote}"></div>
+          <p class="title">Project Title:</p>
+          <div class="respons" th:text="${booking.projectTitle}"></div>
+          <p class="title">Project Description:</p>
+          <div class="respons" th:text="${booking.projectDesc}"></div>
+          <p class="title">Personal Note:</p>
+          <div class="respons" th:text="${booking.personalNote}"></div>
 
-          <p>Image:</p>
+          <p class="title">Image:</p>
           <div th:if="${#lists.isEmpty(booking.projectPictures)}">
-            <p>No pictures have been uploaded</p>
+            <p class="image-message">No pictures has been uploaded</p>
           </div>
           <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
             <div th:each="picture, index : ${booking.projectPictures}">

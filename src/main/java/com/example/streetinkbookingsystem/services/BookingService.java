@@ -44,7 +44,7 @@ public class BookingService {
                                     boolean isDepositPayed,
                                     List<byte[]> pictureList){
 
-        Booking booking = new Booking();
+       /* Booking booking = new Booking();
         booking.setStartTimeSlot(startTimeSlot);
         booking.setEndTimeSlot(endTimeSlot);
         booking.setDate(date);
@@ -59,6 +59,8 @@ public class BookingService {
             return projectPicture;
                 }).collect(Collectors.toList()));
 
+        */
+
              /*return bookingRepository.createNewBooking(startTimeSlot, endTimeSlot, date, username,
                 projectTitle, projectDesc, personalNote, isDepositPayed);
 
@@ -71,8 +73,9 @@ public class BookingService {
             ProjectPicture picture = new ProjectPicture();
             picture.setPictureData(pictureData);
             picture.setBookingId(savedBooking.getId());
-            projectPictureRepository.saveProjectPicture(picture);
+            projectPictureRepository.saveProjectPictures(picture);
         }
+
 
         return savedBooking;
 
@@ -102,7 +105,7 @@ public class BookingService {
             ProjectPicture picture = new ProjectPicture();
             picture.setPictureData(pictureData);
             picture.setBookingId(bookingId);
-            projectPictureRepository.saveProjectPicture(picture);
+            projectPictureRepository.saveProjectPictures(picture);
         }
 
         bookingRepository.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc,
