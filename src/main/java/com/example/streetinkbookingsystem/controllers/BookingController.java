@@ -306,7 +306,7 @@ public class BookingController {
                                 @RequestParam String projectTitle, @RequestParam String projectDesc,
                                 @RequestParam String personalNote, @RequestParam boolean isDepositPayed, @RequestParam(required = false) List<Integer> deletePictures,
                                 @RequestParam("projectPictures") MultipartFile[] projectPictures,
-                                @RequestParam int bookingId, Model model, HttpSession session) {
+                                @RequestParam int bookingId, Model model, HttpSession session, @RequestParam(required = false) boolean sendMail) {
 
 
         if (deletePictures != null) {
@@ -325,6 +325,13 @@ public class BookingController {
                 .collect(Collectors.toList());
 
         bookingService.updateBooking(bookingId, startTimeSlot, endTimeSlot, date, projectTitle, projectDesc, personalNote, isDepositPayed, pictureList);
+
+        //If saved while wanting to send mail
+        if (sendMail) {
+            String username = (String) session.getAttribute("username");
+            emailService.sendConfirmationMail(bookingId, username);
+        }
+
         return "redirect:/booking?bookingId=" + bookingId + "&username=" + session.getAttribute("username");
     }
 
@@ -373,7 +380,6 @@ public class BookingController {
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
     }
-
 }
 
 
