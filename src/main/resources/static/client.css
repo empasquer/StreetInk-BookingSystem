@@ -96,3 +96,9 @@ button {
     gap: .3rem;
     width: 100%;
 }
+
+.process-picture {
+    max-width: 100px;
+    display: block;
+    margin: 0 auto 15px;
+}

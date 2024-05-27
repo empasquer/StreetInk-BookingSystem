@@ -1,16 +1,16 @@
 
 h2 {
-    font-size: 1.5em; /* Juster størrelsen efter behov */
+    font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 50px;
 }
 
 body {
-    font-size: 1.2em; /* Juster størrelsen efter behov */
+    font-size: 1.2em;
     font-weight: bold;
 }
 
-.back-arrow-container {
+/*.back-arrow-container {
     margin-bottom: 20px;
 }
 
@@ -19,6 +19,8 @@ body {
     text-decoration: none;
     font-size: 20px;
 }
+
+ */
 
 .process-picture {
     max-width: 100px;
@@ -100,13 +102,12 @@ body {
     align-items: center;
 }
 
-.form-group-time .time-label,
-.form-group-time-end .time-label {
-    margin-right: 20px;
-    flex: 0 0 auto;
-}
 .form-group-time-end label {
     margin-right: 30px;
+    flex: 0 0 auto;
+}
+.form-group-time label {
+    margin-right: 20px;
     flex: 0 0 auto;
 }
 

@@ -61,18 +61,14 @@ section {
     display: flex;
     flex-direction: column;
     place-content: center;
-    /* denne er lagt ned i info i stedet.
     align-items: center;
-     */
-}
-/* ny fra merge*/
-.info {
-    align-items: center;
+
 }
 
 .container {
     text-align: left;
     width: 45vw;
+
 }
 
 .fab {
