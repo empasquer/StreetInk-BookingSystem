@@ -36,8 +36,8 @@ public class TattooArtistService {
 
     /**
      * @author Nanna
-     * @param profileToDelete
-     * @return
+     *@param profileToDelete The username of the profile to be deleted
+     * @return A message indicating the result of the deletion
      */
     public String deleteProfileByUsername(String profileToDelete) {
         TattooArtist artist = tattooArtistRepository.getTattooArtistByUsername(profileToDelete);
@@ -50,65 +50,69 @@ public class TattooArtistService {
 
     /**
      * @author Nanna
-     * @param artist
-     * @return
+     * @param tattooArtist The username of the tattoo artist whose admin status is to be changed
+     * @return A message indicating change in status
      */
-    public String changeAdminStatus(TattooArtist artist) {
+    public String changeAdminStatus(String tattooArtist) {
+        TattooArtist artist = tattooArtistRepository.getTattooArtistByUsername(tattooArtist);
         boolean isAdmin = artist.getIsAdmin();
-        List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
-        int adminCount = 0;
 
+        List<TattooArtist> artists = tattooArtistRepository.showTattooArtists();
+
+        int adminCount = 0;
         for (TattooArtist currentArtist : artists) {
             if (currentArtist.getIsAdmin()) {
                 adminCount++;
             }
         }
 
+        // If the tattoo artist is not an admin
         if (!isAdmin) {
+            // Grant admin status to the tattoo artist
             tattooArtistRepository.changeAdminStatus(artist.getUsername(), true);
             return "Admin status granted";
         } else {
+            // If there is more than one admin artist, revoke admin status from the tattoo artist
             if (adminCount > 1) {
                 tattooArtistRepository.changeAdminStatus(artist.getUsername(), false);
                 return "Admin status revoked";
             } else {
+                // If there is only one admin artist, indicate that at least one admin is required
                 return "At least 1 admin required";
             }
         }
     }
 
-
     /**
      * @author Nanna
-     * @param username
-     * @param firstname
-     * @param lastName
-     * @param password
-     * @param facebookUrl
-     * @param instagramUrl
-     * @param phone
-     * @param email
-     * @param avgWorkHours
-     * @param isAdmin
-     * @param pictureData
+     * @param username The username of the tattoo artist
+     * @param firstName The first name of the tattoo artist
+     * @param lastName The last name of the tattoo artist
+     * @param password The password of the tattoo artist
+     * @param facebook The Facebook URL of the tattoo artist
+     * @param instagram The Instagram URL of the tattoo artist
+     * @param phoneNumber The phone number of the tattoo artist
+     * @param email The email address of the tattoo artist
+     * @param avgWorkHours The average work hours per day of the tattoo artist
+     * @param isAdmin A boolean indicating whether the tattoo artist is an admin
+     * @param pictureData Optional profile picture data of the tattoo artist
      */
-    public void createProfile(String username, String firstname, String lastName, String password, String facebookUrl,  String instagramUrl, int phone, String email, int avgWorkHours, boolean isAdmin, Optional<byte[]> pictureData){
+    public void createProfile(String username, String firstName, String lastName, String password, String facebook,  String instagram, int phoneNumber, String email, int avgWorkHours, boolean isAdmin, Optional<byte[]> pictureData){
         String hashedPassword = loginService.hashPassword(password);
-        tattooArtistRepository.createProfile(username,firstname,lastName,hashedPassword,facebookUrl,instagramUrl,phone, email, avgWorkHours, isAdmin,pictureData);
+        tattooArtistRepository.createProfile(username,firstName,lastName,hashedPassword,facebook,instagram,phoneNumber, email, avgWorkHours, isAdmin,pictureData);
     }
 
     /**
      * @author Nanna
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phoneNumber
-     * @param facebook
-     * @param instagram
-     * @param avgWorkHours
-     * @param newUsername
-     * @param currentUsername
-     * @param pictureData
+     * @param currentUsername The current username of the tattoo artist
+     * @param firstName The first name of the tattoo artist
+     * @param lastName The last name of the tattoo artist
+     * @param facebook The Facebook URL of the tattoo artist
+     * @param instagram The Instagram URL of the tattoo artist
+     * @param phoneNumber The phone number of the tattoo artist
+     * @param email The email address of the tattoo artist
+     * @param avgWorkHours The average work hours per day of the tattoo artist
+     * @param pictureData Optional profile picture data of the tattoo artist
      */
     public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String newUsername, String currentUsername, Optional<byte[]> pictureData) {
     tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,facebook,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
@@ -117,8 +121,8 @@ public class TattooArtistService {
 
     /**
      * @author Munazzah
-     * @param username
-     * @return String
+     * @param username To get the right password
+     * @return String the password
      */
     public String getPassword(String username) {
         return tattooArtistRepository.getPassword(username);

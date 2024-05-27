@@ -38,17 +38,15 @@
         </th:block>
 
         <div class="button-container">
-
-
-            <form class="edit-btn" th:action="@{/edit-client}" method="get">
-                <input type="hidden" name="clientId" th:value="${client.id}" />
-                <button type="submit"><i class="fa fa-edit fa-2x"></i></button>
-            </form>
             <th:block  th:if="${clientToDelete == null}" >
-            <form class="edit-btn" th:action="@{/client(clientToDelete=${client.id})}" method="post">
-                <input type="hidden" name="clientId" th:value="${client.id}" />
-                <button type="submit"><i class="fa fa-trash fa-2x"></i></button>
-            </form>
+                <form class="edit-btn" th:action="@{/edit-client}" method="get">
+                    <input type="hidden" name="clientId" th:value="${client.id}" />
+                    <button class="edit" type="submit"><i class="fa fa-edit fa-2x"></i></button>
+                </form>
+                <form class="edit-btn" th:action="@{/client(clientToDelete=${client.id})}" method="post">
+                    <input type="hidden" name="clientId" th:value="${client.id}" />
+                    <button class="delete" type="submit"><i class="fa fa-trash fa-2x"></i></button>
+                </form>
 
             </th:block>
         </div>

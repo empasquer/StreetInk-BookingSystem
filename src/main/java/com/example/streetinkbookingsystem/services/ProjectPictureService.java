@@ -68,16 +68,25 @@ public class ProjectPictureService {
         }
     }
 
+    /**
+     * @author Munazzah
+     * @param bookingId Input
+     * @return List of String that has pictures in it
+     */
     public List<String> getPicturesByBooking(int bookingId) {
         return convertToBase64(projectPictureRepository.getPicturesByBooking(bookingId));
     }
 
+    /**
+     * @author Munazzah
+     * @param bookingId Input
+     * @return List of project pictures
+     */
     public List<ProjectPicture> getPicturesAsObjects(int bookingId) {
         return projectPictureRepository.getPicturesByBooking(bookingId);
     }
-public void updateProjectPictures(int bookingId, List<byte[]> pictureDataList) {
+    public void updateProjectPictures(int bookingId, List<byte[]> pictureDataList) {
         projectPictureRepository.updateProjectPictures(bookingId,pictureDataList);
-}
-
+    }
 
 }

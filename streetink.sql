@@ -43,7 +43,7 @@ CREATE TABLE booking (
                          personal_note TEXT,
                          is_deposit_payed BOOLEAN DEFAULT 0,
                          FOREIGN KEY (client_id) REFERENCES client(id),
-                         FOREIGN KEY (username) REFERENCES tattoo_artist(username) ON DELETE CASCADE
+                         FOREIGN KEY (username) REFERENCES tattoo_artist(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS project_picture;

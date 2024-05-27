@@ -1,5 +1,8 @@
 package com.example.streetinkbookingsystem.services;
 
+import com.example.streetinkbookingsystem.models.Booking;
+import com.example.streetinkbookingsystem.models.Client;
+import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.repositories.TattooArtistRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import org.thymeleaf.context.Context;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,49 +30,89 @@ import java.util.regex.Pattern;
 
     @Autowired
     TattooArtistRepository tattooArtistRepository;
+    @Autowired
+    BookingService bookingService;
+    @Autowired
+    TattooArtistService tattooArtistService;
+
 
     /**
-     * @param clientEmail used to send the email to this address
-     * @param context     used to set variables in the email template
      * @author Nanna
-     * @summary Sends a confirmation mail to the client with the relevant booking details.
+      * @param bookingId The ID of the booking
+     * @param username The username of the tattoo artist
      */
-    public void sendConfirmationMail(String clientEmail, Context context) {
+    public void sendConfirmationMail(int bookingId, String username) {
+        // Retrieve booking details based on the booking ID
+        Booking booking = bookingService.getBookingDetail(bookingId);
+
+        // Retrieve tattoo artist details based on the username
+        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+
+        // Retrieve client details from the booking
+        Client client = booking.getClient();
+
+        // Format booking start time, end time, and date
+        String bookingEnd = booking.getEndTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingStart = booking.getStartTimeSlot().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String bookingDate = booking.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        // Prepare context for email template
+        Context context = new Context();
+        context.setVariable("ClientFirstName", client.getFirstName());
+        context.setVariable("ArtistFirstName", tattooArtist.getFirstName());
+        context.setVariable("ArtistLastName", tattooArtist.getLastName());
+        context.setVariable("ArtistPhone", tattooArtist.getPhoneNumber());
+        context.setVariable("ArtistEmail", tattooArtist.getEmail());
+        context.setVariable("ArtistFacebook", tattooArtist.getFacebook());
+        context.setVariable("ArtistInstagram", tattooArtist.getInstagram());
+        context.setVariable("BookingStart", bookingStart);
+        context.setVariable("BookingEnd", bookingEnd);
+        context.setVariable("BookingDate", bookingDate);
+        context.setVariable("BookingTitle", booking.getProjectTitle());
+        context.setVariable("BookingDescription", booking.getProjectDesc());
+
+        // Process the email template
         String processedHTMLTemplate = templateEngine.process("home/confirmation-mail", context);
-        // Start preparing the email
+
+        // Prepare the email
         MimeMessagePreparator preparator = message -> {
             MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-            helper.setTo(clientEmail);
+            helper.setTo(client.getEmail());
             helper.setSubject("Booking Confirmation");
             helper.setText(processedHTMLTemplate, true);
         };
 
-        javaMailSender.send(preparator); //send the email
-        System.out.println("sent");
+        // Send the email
+        javaMailSender.send(preparator);
     }
 
 
     /**
      * @author Nanna og Munazzah
-     * @param recipient
-     * @param subject
-     * @param content
+     * param recipient The email address of the recipient
+     * @param subject The subject of the email
+     * @param content The content of the email
      */
     public void sendEmail(String recipient, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
 
+        // Set the recipient, subject, and content of the email
         message.setTo(recipient);
         message.setSubject(subject);
         message.setText(content);
+
+        // Send the email using JavaMailSender
         javaMailSender.send(message);
     }
 
     /**
-     * @author Munazzah
-     * @param email
-     * @return boolean
      * @summary Uses regex to check if the structure of the mail is valid fx xxxx@yyy.mmm
      * and if the email is the same that is written in the database
+     *
+     * @author Munazzah
+     * @param email Input
+     * @param username To check if the given email is the same as the one in database
+     * @return True, if the email is structured as it should and is the same as in database
      */
     public boolean isValidEmail(String email, String username) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";

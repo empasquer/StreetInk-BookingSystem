@@ -97,7 +97,7 @@ public class TattooArtistRepository {
             jdbcTemplate.update(query, username, firstname, lastName, password, email, phone, facebookUrl, instagramUrl, avgWorkHours, isAdmin,picture);
         }
 
-    public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String currentUsername, String newUsername, Optional<byte[]> pictureData) {
+    public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String newUsername, String currentUsername, Optional<byte[]> pictureData) {
         StringBuilder query = new StringBuilder("UPDATE tattoo_artist SET first_name = ?, email = ?, phone_number = ?, avg_work_hours = ?, username = ?");
         List<Object> params = new ArrayList<>(Arrays.asList(firstName, email, phoneNumber, avgWorkHours, newUsername));
 

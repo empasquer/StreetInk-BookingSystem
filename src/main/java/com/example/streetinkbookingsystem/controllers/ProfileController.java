@@ -1,6 +1,5 @@
 package com.example.streetinkbookingsystem.controllers;
 
-import com.example.streetinkbookingsystem.models.Client;
 import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
 import jakarta.servlet.http.HttpSession;
@@ -27,16 +26,21 @@ public class ProfileController {
     @Autowired
     LoginService loginService;
 
+    /**
+     * @author Emma
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/profile")
-    public String seeProfile(HttpSession session, Model model) {
+    public String seeProfile(HttpSession session, Model model, @RequestParam(required = false) String profileToDelete) {
+
+        session.removeAttribute("imageData");
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-        session.removeAttribute("imageData");
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
 
         //to display profile pic:
         if (tattooArtist.getProfilePicture() != null) {
@@ -44,32 +48,73 @@ public class ProfileController {
             tattooArtist.setBase64ProfilePicture(base64Image);
         }
 
-        if (username == null) {
-            // Redirect logic when username is null or if not admin.
-            return "redirect:/";
-        } else {
-            return "home/profile";
+        //For deleting the profile if necessary
+        if (profileToDelete != null) {
+            model.addAttribute("profileToDelete", profileToDelete);
         }
 
+        return "home/profile";
+
+
+    }
+
+    /**
+     * @summary Shows the same profile page but if not admin, then shows the delete and cancel
+     * button through th:block in the view
+     *
+     * @author Munazzah
+     * @param session For login
+     * @param model To add attributes
+     * @param redirectAttributes To add error message and profileUsername
+     * @return Redirects to profile page with the username of teh profile to delete
+     */
+    @PostMapping("/profile")
+    public String deleteProfileWithWarning(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        //If admin, then redirects to same page with error messag
+        if (tattooArtist.getIsAdmin()) {
+            redirectAttributes.addFlashAttribute("message", "Please revoke admin status before deletion!");
+            return "redirect:/profile";
+        }
+
+        model.addAttribute("profileToDelete", session.getAttribute("username"));
+        redirectAttributes.addAttribute("profileToDelete", session.getAttribute("username"));
+        return "redirect:/profile?username=" + session.getAttribute("username");
+    }
+
+    /**
+     * @summary Deletes own profile and redirects to index
+     *
+     * @author Munazzah
+     * @param profileToDelete Username of the profile to delete
+     * @return Redirects to index
+     */
+    @PostMapping("/delete-own-profile")
+    public String deleteOwnProfile(@RequestParam String profileToDelete) {
+        tattooArtistService.deleteProfileByUsername(profileToDelete);
+        return "redirect:/";
     }
 
 
     /**
-     * @return get client to create-new-profile view
      * @author Nanna
+     * @param model used to add attributes for rendering the view.
+     * @param session Used to retrieve user information.
+     * @return The view name for the create-new-profile page.
      */
     @GetMapping("/create-new-profile")
     public String newProfile(Model model, HttpSession session) {
-        //to display the preview if a picture is chosen
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
+        // Used to display a preview of a picture if one is uploaded
         byte[] imageData = (byte[]) session.getAttribute("imageData");
         if (imageData != null) {
             String base64Image = Base64.getEncoder().encodeToString(imageData);
@@ -79,20 +124,23 @@ public class ProfileController {
     }
 
 
-
-
-
+    /**
+     * @author Nanna
+     * @param profilePicture The profile picture file uploaded by the user.
+     * @param action  parameter indicating whether to edit or create a profile.
+     * @param session used to store the uploaded image data.
+     * @return A redirection based on the specified action, either create a new profile or edit a profile
+     * @throws IOException if an error occurs while reading the uploaded file.
+     */
     @PostMapping("upload-profile-picture")
     public String uploadProfilePicture(@RequestParam MultipartFile profilePicture,
                                       @RequestParam(required = false) String action,
 
                                        HttpSession session) throws IOException {
         byte[] imageData = null;
-
         if (!profilePicture.isEmpty()) {
             imageData = profilePicture.getBytes();
             session.setAttribute("imageData", imageData);
-            System.out.println("now here");
         }
 
         switch (action) {
@@ -101,26 +149,26 @@ public class ProfileController {
             case "create":
                 return "redirect:/create-new-profile";
             default:
-                // Handle unexpected action values, if necessary
                 return "redirect:/";
         }
     }
 
 
     /**
-     * @param profileUsername  variables used to create a profile
-     * @param profileFirstname
-     * @param profileLastName
-     * @param profilePassword
-     * @param email
-     * @param phone
-     * @param facebookUrl
-     * @param instagramUrl
-     * @param avgWorkHours
-     * @param isAdmin
-     * @param session          used to check if the user is logged in, and check that the user is an admin
-     * @return sends information to service to create a profile and returns to manage-profiles page
      * @author Nanna
+     * @param model used add attributes for rendering the view.
+     * @param profileUsername The username of the new profile.
+     * @param profileFirstname The first name of the new profile.
+     * @param profileLastName The last name of the new profile.
+     * @param profilePassword The password of the new profile.
+     * @param email The email address of the new profile.
+     * @param phone The phone number of the new profile.
+     * @param facebookUrl The Facebook URL of the new profile.
+     * @param instagramUrl The Instagram URL of the new profile.
+     * @param avgWorkHours The average work hours per day of the new profile.
+     * @param isAdmin A boolean indicating whether the new profile is an admin.
+     * @param session to check if the user is logged in and to retrieve uploaded image data.
+     * @return redirects to the manage-profiles page after creating the new profile.
      */
     @PostMapping("/create-new-profile")
     public String createProfile(Model model, @RequestParam String profileUsername,
@@ -134,67 +182,64 @@ public class ProfileController {
                                 @RequestParam int avgWorkHours,
                                 @RequestParam(value = "isAdmin", required = false) Boolean isAdmin
           , HttpSession session) {
-        TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
+
 
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-
-        byte[] imageData = (byte[]) session.getAttribute("imageData");
-
-        if (username == null || !tattooArtist.getIsAdmin()) {
-            // Redirect logic when username is null or if not admin.
+        if (!tattooArtist.getIsAdmin()) {
+            // Redirect if not admin.
             return "redirect:/";
 
         }
+        //to display profile pic
+        byte[] imageData = (byte[]) session.getAttribute("imageData");
+        //Check if username is taken
+        TattooArtist existingProfile = tattooArtistService.getTattooArtistByUsername(profileUsername);
         if (existingProfile != null) {
             model.addAttribute("message", "This username is taken");
             return "home/create-new-profile"; // Returns the same page with the message
         } else {
-
-            boolean adminStatus = isAdmin != null && isAdmin;
+            boolean adminStatus = isAdmin != null && isAdmin; //convert null Boolean to false if needed
             tattooArtistService.createProfile(profileUsername, profileFirstname, profileLastName, profilePassword, facebookUrl, instagramUrl, phone, email, avgWorkHours, adminStatus, Optional.ofNullable(imageData));
-            session.removeAttribute("imageData");
+            session.removeAttribute("imageData"); // remove the image data when done so that it doesn't appear when creating a new profile
             return "redirect:/manage-profiles";
         }
     }
 
 
     /**
-     * @param session         used to determine if the user is logged in and an admin
-     * @param profileToDelete not required, used to send to delete endPoint that will find and delete in the database
-     * @param message         information displayed to user, both regarding admin status and deletion status
-     * @return view with list of profiles, if profileToDelete is present, present warning
-     * @author Nanna
+     * @authot Nanna
+     * @summary  retrieves the list of profiles that can be deleted or change admin status
+     * * @param model  add attributes to for rendering the view
+     *  * @param session  to check user login status
+     *  * @param profileToDelete the username of the profile to delete, if any
+     *  * @param message   an optional message to display,used to confirm profile deletion or admin status changes
+     *  * @return the view for managing profiles
+
      */
     @GetMapping("/manage-profiles")
     public String manageProfiles(Model model, HttpSession session, @RequestParam(required = false) String profileToDelete, @RequestParam(required = false) String message) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-        loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        if (username == null || !tattooArtist.getIsAdmin()) {
-            // Redirect logic when username is null or if not admin.
+        if (!tattooArtist.getIsAdmin()) {
+            // Redirect if not admin.
             return "redirect:/";
         }
+        //If deleting profile
         if (profileToDelete != null) {
             model.addAttribute("profileToDelete", profileToDelete);
         }
-
+        //Message depending on if deleting user or changing admin status
         if (message != null) {
             model.addAttribute("message", message);
         }
+        //to display list of profiles
         List<TattooArtist> profiles = tattooArtistService.showTattooArtist();
         model.addAttribute("profiles", profiles);
 
@@ -206,45 +251,22 @@ public class ProfileController {
     }
 
     /**
-     * @param profileToDelete
-     * @param redirectAttributes
-     * @param session            used to determine if user is logged in and admin
-     * @return actually noy necessary, should probably be fused with the one above
      * @author Nanna
-     */
-    @PostMapping("/manage-profiles")
-    public String manageProfilesWithWarning(@RequestParam String profileToDelete, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
-        String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        if (username == null || !tattooArtist.getIsAdmin()) {
-            // Redirect logic when username is null or if not admin.
-            return "redirect:/";
-        }
-        redirectAttributes.addAttribute("profileToDelete", profileToDelete);
-        return "redirect:/manage-profiles";
-    }
-
-
-    /**
-     * @param profileToDelete    used to find tattooArtist in database to delete.
-     * @param redirectAttributes sends a message to manage-profiles view to inform the user
-     *                           of the outcome of the deletion
-     * @param session            used to determine if user is logged in and admin
-     * @return deletes profile from database and returns to manage-profiles view.
-     * @author Nanna
+     *  @param profileToDelete      the username of the profile to delete
+     *  @param redirectAttributes   redirect messages to confirm deletion
+     *  @param session              check user login status
+     *  @param model                to add attributes to for rendering the view
+     *  @return the view for manage profiles
      */
     @PostMapping("/delete-profile")
     public String deleteProfile(@RequestParam String profileToDelete, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
-        String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
-        if (username == null || !tattooArtist.getIsAdmin()) {
-            // Redirect logic when username is null or if not admin.
+        if (!tattooArtist.getIsAdmin()) {
+            // Redirect if not admin.
             return "redirect:/";
         }
         String message = tattooArtistService.deleteProfileByUsername(profileToDelete);
@@ -254,38 +276,42 @@ public class ProfileController {
 
 
     /**
-     * @param profileToChange    used to find the profile that should change status in the database
-     * @param redirectAttributes sends message to the user to inform them of
-     *                           the outcome of the change in status.
-     * @param session            used to determine if the user is logged in and admin
-     * @return change admin status of profile and return to manage-profile view
+     *
      * @author Nanna
+     *  @param profileToChange      the username of the profile to change admin status
+     *  @param redirectAttributes   redirect messages to confirm change
+     *  @param session              check user login status
+     *  @param model                to add attributes to for rendering the view
+     *  @return the view for manage profiles
      */
     @PostMapping("/change-admin")
     public String changeAdmin(@RequestParam String profileToChange, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
-        String username = (String) session.getAttribute("username");
-        model.addAttribute("username", session.getAttribute(username));
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("tattooArtist", tattooArtist);
-
-        if (username == null || !tattooArtist.getIsAdmin()) {
-            // Redirect logic when username is null or if not admin.
+        if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
-        TattooArtist artist = tattooArtistService.getTattooArtistByUsername(profileToChange);
-        String message = tattooArtistService.changeAdminStatus(artist);
+        TattooArtist tattooArtist = loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        if (!tattooArtist.getIsAdmin()) {
+            // Redirect if not admin.
+            return "redirect:/";
+        }
+        String message = tattooArtistService.changeAdminStatus(profileToChange);
         redirectAttributes.addAttribute("message", message);
         return "redirect:/manage-profiles";
     }
 
+    /**
+     * @author Nanna
+     *  @param session              check user login status
+     *  @param model                to add attributes to for rendering the view
+     * @return view for editing a profile for session username
+     */
     @GetMapping("/edit-profile")
     public String editProfile(Model model, HttpSession session) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
-        TattooArtist artist = tattooArtistService.getTattooArtistByUsername((String) session.getAttribute("username"));
 
         // To display preview if picture is chosen
         byte[] imageData = (byte[]) session.getAttribute("imageData");
@@ -294,29 +320,51 @@ public class ProfileController {
             model.addAttribute("newBase64Image", newBase64Image);
         }
 
-
         return "home/edit-profile";
     }
 
+    /**
+     * @author Nanna
+     * @param firstName        the first name of the tattoo artist
+     * @param lastName         the last name of the tattoo artist (optional)
+     * @param email            the email address of the tattoo artist
+     * @param phoneNumber      the phone number of the tattoo artist
+     * @param facebook         the Facebook URL of the tattoo artist (optional)
+     * @param instagram        the Instagram URL of the tattoo artist (optional)
+     * @param avgWorkHours     the average work hours of the tattoo artist
+     * @param newUsername      the new username for the tattoo artist
+     * @param currentUsername  the current username of the tattoo artist
+     * @param model            to add attributes to for rendering the view
+     * @param session          to check user login status
+     * @return the view name for the profile page after updating the profile
+     */
+
     @PostMapping("/edit-profile")
-    public String updateProfile(@RequestParam String firstName, @RequestParam (required = false)String lastName,
+    public String updateProfile(@RequestParam String firstName, @RequestParam(required = false) String lastName,
                                 @RequestParam String email, @RequestParam int phoneNumber,
-                                @RequestParam (required = false) String facebook, @RequestParam (required = false) String instagram,
+                                @RequestParam(required = false) String facebook, @RequestParam(required = false) String instagram,
                                 @RequestParam int avgWorkHours, @RequestParam String newUsername,
                                 @RequestParam String currentUsername,
                                 Model model, HttpSession session) {
+        if (!loginService.isUserLoggedIn(session)) {
+            return "redirect:/";
+        }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         byte[] imageData = (byte[]) session.getAttribute("imageData");
 
-        tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername,  Optional.ofNullable(imageData));
-        session.setAttribute("username", newUsername);
+        tattooArtistService.updateTattooArtist(firstName, lastName, email, phoneNumber, facebook, instagram, avgWorkHours, newUsername, currentUsername, Optional.ofNullable(imageData));
+        // Update the session with the new username and remove image data
         session.removeAttribute("imageData");
+        if (newUsername != null) {
+            session.setAttribute("username", newUsername);
+        }
+
         return "redirect:/profile";
     }
 
     /**
      * @author Munazzah
-     * @return String
+     * @return View of reset password page
      */
     @GetMapping("/reset-password")
         public String resetPassword () {
@@ -325,14 +373,18 @@ public class ProfileController {
     }
 
     /**
+     * @summary Checks if current password matches the one in the database, and if
+     * the new password matches the repeated one, and if it does, the password is reset,
+     * and you are redirected to login
+     *
      * @author Munazzah
-     * @param currentPassword
-     * @param newPassword
-     * @param repeatedPassword
-     * @param session
-     * @param model
-     * @param redirectAttributes
-     * @return String
+     * @param currentPassword The current password
+     * @param newPassword The chosen new password
+     * @param repeatedPassword Repeated chosen new password
+     * @param session For login
+     * @param model To ass attributes to view
+     * @param redirectAttributes For error message
+     * @return Redirects to login page
      * @summary the method checks if the new password matches the repeated password and if
      * the current password matches the password in the database
      */
@@ -362,7 +414,6 @@ public class ProfileController {
 
         return "redirect:/login";
     }
-
 
 }
 

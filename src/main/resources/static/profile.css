@@ -30,7 +30,6 @@ section img {
     border-radius: 50%;
 }
 
-
 h2 {
     padding-bottom: 1.5rem;
 }
@@ -62,6 +61,12 @@ section {
     display: flex;
     flex-direction: column;
     place-content: center;
+    /* denne er lagt ned i info i stedet.
+    align-items: center;
+     */
+}
+/* ny fra merge*/
+.info {
     align-items: center;
 }
 
@@ -80,7 +85,6 @@ section {
     place-content: center;
     align-items: center;
 }
-
 
 p {
     font-size: 1.5em;
@@ -120,6 +124,12 @@ h2 {
     padding: 1em;
 }
 
+/* fra merge minazza. i stedet for den under.
+.confirmation-container {
+    margin-bottom: 40px;
+}*/
+
+
 .confirmation-container {
     position: absolute;
     z-index: 4;
@@ -128,4 +138,8 @@ h2 {
     border-radius: 1em;
     color: white;
     width: 20em;
+}
+
+h3 {
+    margin-bottom: 40px;
 }

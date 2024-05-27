@@ -17,10 +17,11 @@ public class ClientService {
     ClientRepository clientRepository;
 
     /**
-     * @author Munazzah
-     * @return ArrayList of Clients
      * @summary Takes the Arraylist from the repository, sorts it using Collections.sort() and
      * returns the sorted list
+     *
+     * @author Munazzah
+     * @return ArrayList of Clients
      */
     public ArrayList<Client> getSortedListOfClients() {
         ArrayList<Client> clients = clientRepository.getListOfClients();
@@ -31,7 +32,7 @@ public class ClientService {
 
     /**
      * @author Munazzah
-     * @param phoneNumber
+     * @param phoneNumber To get client by. Used in search
      * @return Client
      */
     public List<Client> getClientsByPhoneNumber(int phoneNumber) {
@@ -40,7 +41,7 @@ public class ClientService {
 
     /**
      * @author Munazzah
-     * @param firstname
+     * @param firstname To get client by. Used in search
      * @return List of clients
      */
     public List<Client> getClientsByFistName(String firstname) {
@@ -77,16 +78,15 @@ public class ClientService {
         clientRepository.updateClientOnBooking(bookingId, clientId);
     }
 
-
-
     /**
-     * @author Munazzah
      * @summary Is a scheduled method that runs every day at midnight, where it finds clients
-     * that havent had any booking in the past 5 years, adds them to a list, and then inactivates
+     * that haven't had any booking in the past 5 years, adds them to a list, and then inactivates
      * the clients, do their information are overwritten with the default client
      * The cron is in sec, minutes, hours, day, month, day of week
+     *
+     * @author Munazzah
      */
-    @Scheduled(cron = "0 04 21 * * ?") //Runs every day at midnight
+    @Scheduled(cron = "0 0 0 * * ?") //Runs every day at midnight
     public void cleanupInactiveClients() {
         List<Client> inactiveClientIds = clientRepository.findInactivateClients();
         if (inactiveClientIds != null) {

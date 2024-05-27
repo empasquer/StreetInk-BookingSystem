@@ -30,7 +30,7 @@ public class CalendarService {
      * @author Nanna
      * @param year used to create a localDate
      * @param month used to create a LocalDate
-     * @return all LocalDates in s specific month
+     * @return all LocalDates in a specific month
      */
     public ArrayList<LocalDate> getDaysInMonth(int year, Month month) {
         ArrayList<LocalDate> daysInMonth = new ArrayList<>();

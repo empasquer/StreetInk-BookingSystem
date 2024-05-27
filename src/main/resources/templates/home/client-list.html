@@ -14,7 +14,9 @@
 <main>
 
     <div class="back-arrow-container">
-        <a th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <a th:unless="${bookingId}" th:href="@{/dashboard}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        <a th:if="${bookingId}"th:href="@{/create-new-booking(date=${date}, bookingId=${bookingId})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+
     </div>
 
     <h1>Client List</h1>
@@ -22,6 +24,11 @@
     <section class="box-shadow">
 
         <form th:action="@{/search-result}" method="post">
+            <!--Carry on booking info if needed to create booking-->
+            <input type="hidden" id="bookingId" name="bookingId" th:value="${bookingId}">
+            <input type="hidden" id="date" name="date" th:value="${date}">
+
+
             <div>
                 <label for="search">Search by number or first name:</label>
                 <input type="text" id="search" name="search">
@@ -45,7 +52,8 @@
                 <div class="letter-header" th:text="${entry.key}">Letter</div>
                 <ul class="client-list">
                     <li th:each="client : ${entry.value}" class="client-item">
-                        <a th:href="@{/client(clientId=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                        <a th:if="${bookingId}" th:href="@{/booking-preview(bookingId=${bookingId}, date=${date}, clientId=${client.getId()})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
+                        <a th:unless="${bookingId}" th:href="@{/client(clientId=${client.id})}" th:text="${client.firstName + ' ' + client.lastName}"></a>
                     </li>
                 </ul>
             </div>

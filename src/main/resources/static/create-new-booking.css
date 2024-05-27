@@ -100,7 +100,8 @@ body {
     align-items: center;
 }
 
-.form-group-time label {
+.form-group-time .time-label,
+.form-group-time-end .time-label {
     margin-right: 20px;
     flex: 0 0 auto;
 }
@@ -114,18 +115,17 @@ body {
     flex: 1;
 }
 
-/* fra den gamle drop-down med tider.
 .form-group-time select,
 .form-group-time-end select {
-    width: 40%; /* bredden på drop-down-menuen.*/
-   /* padding: 8px;
+    width: 20%; /* bredden på drop-down-menuen.*/
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    font-size: 1em;
+    font-size: 0.8em;
     box-sizing: border-box;
 }
 
-    */
+
 
 .form-group-time input[type="time"],
 .form-group-time-end input[type="time"] {
@@ -164,17 +164,6 @@ body {
 
 }
 
-/*.form-group input[type="text"],
-.form-group textarea{
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
-
- */
-
 /* ændrer tekst i drop-down menuen. */
 input[type="file"],
 select, option,
@@ -183,7 +172,6 @@ textarea {
     padding: 15px;
     font-size: 15px;
 }
-
 
 /* ændrer tekst i indputfelterne */
 input[type="text"],
@@ -206,7 +194,6 @@ input[type="file"] {
     position: relative;
     left: -12px;
 }
-
 
 /* ændrer "gennemse" knappen*/
 input[type="file"]::file-selector-button {
@@ -251,6 +238,11 @@ button {
     color: #333333;
     font-style: italic;
     margin-bottom: 0.5em; /* Adding some space below the message */
+}
+
+.error-message p{
+    color: black;
+    text-align: center;
 }
 
 

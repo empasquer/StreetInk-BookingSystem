@@ -1,7 +1,6 @@
 package com.example.streetinkbookingsystem.controllers;
 
 import com.example.streetinkbookingsystem.models.Booking;
-import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.BookingService;
 import com.example.streetinkbookingsystem.services.LoginService;
 import com.example.streetinkbookingsystem.services.TattooArtistService;
