@@ -8,8 +8,8 @@ h2 {
 
 .booking-container {
     margin-bottom: 2em;
-    margin-left: 2em;
-    margin-right: 2em;
+/*    margin-left: 2em;
+    margin-right: 2em;*/
 }
 
 section {
@@ -44,6 +44,7 @@ div .respons{
 
 hr {
     border-color: white;
+    color: white;
     border-width: 2px;
     margin-top: 20px; /* Tilføjer mellemrum over hr-linjen */
     margin-bottom: 15px;
@@ -93,8 +94,6 @@ hr {
 
 .button-container button {
     padding: 40px 70px; /* Gør knapperne større */
-    font-size: 1em;
-    margin: 20px; /* Mindsk afstanden mellem knapperne */
     width: 230px; /* Fast bredde for alle knapper */
     height: 100px; /* Fast højde for alle knapper */
     display: flex;

@@ -125,6 +125,7 @@ button {
     color: var(--white);
     border: none;
     padding:1rem;
+    font-size: 1.5rem;
 }
 
 .red-button {
