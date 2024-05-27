@@ -21,14 +21,6 @@
     <h2 th:text="${booking.date}"></h2>
 
     <section>
-        <div class="button-container">
-            <form  th:action="@{/confirm-delete-booking}" method="get" >
-                <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
-                <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
-            </form>
-        </div>
-
-
         <form action="/edit-booking" method="post" enctype="multipart/form-data">
             <div class="booking-container">
                 <div class="information-container">
@@ -77,7 +69,7 @@
                     <div class="form-group">
                         <p>Check the images you want to delete:</p>
                         <div th:if="${#lists.isEmpty(booking.projectPictures)}">
-                            <p>No pictures have been uploaded</p>
+                            <p class="image-message">No pictures have been uploaded</p>
                         </div>
                         <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
                             <div th:each="picture, index : ${booking.projectPictures}" class="picture-container">
@@ -92,8 +84,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="image">Add image:</label>
+                        <label for="image">Image/s:</label>
                         <input type="file" id="image" name="projectPictures" multiple>
+                        <div class="image-message">
+                            <p>**If you want to upload more than one image, select them all at once.</p>
+                        </div>
                     </div>
 
                     <input type="hidden" name="bookingId" th:value="${booking.getId()}">

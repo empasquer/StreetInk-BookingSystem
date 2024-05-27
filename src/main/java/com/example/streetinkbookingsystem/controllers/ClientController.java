@@ -54,9 +54,10 @@ public class ClientController {
         // ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
         // Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand through Collections.sort)
         // Uses stream to handle everything simultaneously
-        // Uses collect (Collectors.groupingBy) to group the elements of the stream based on first letter in first name
+        // Uses collect (Collectors.groupingBy) to group the elements of the stream based on
+        //                  first letter in first name ignoring if it is lower case or upper case
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
-                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
+                .collect(Collectors.groupingBy(client -> Character.toUpperCase(client.getFirstName().charAt(0)),
                         TreeMap::new, Collectors.toList()));
         model.addAttribute("groupedClients", groupedClients);
 
