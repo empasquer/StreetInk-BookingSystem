@@ -92,3 +92,8 @@ h2 {
     margin-left: 10px;
 }
 
+.error-message p{
+    color: black;
+    text-align: center;
+}
+

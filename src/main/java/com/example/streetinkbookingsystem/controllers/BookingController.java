@@ -139,8 +139,8 @@ public class BookingController {
 
         // Ensure that booking cannot have a end-time that is before the start-time
         if (endTimeSlot.isBefore(startTimeSlot)) {
-            model.addAttribute("errorMessage", "End time cannot be before start time.");
-            return "home/create-new-booking?date="+date;
+            redirectAttributes.addFlashAttribute("errorMessage", "End time cannot be before start time.");
+            return "redirect:/create-new-booking?date="+date;
         }
 
         //Either create new booking or update the one in the making
@@ -300,6 +300,8 @@ public class BookingController {
      * @param bookingId
      * @param model
      * @param session
+     * @param redirectAttributes
+     * @param sendMail
      * @return Redirects to booking view
      */
     @PostMapping("/edit-booking")
@@ -307,8 +309,14 @@ public class BookingController {
                                 @RequestParam String projectTitle, @RequestParam String projectDesc,
                                 @RequestParam String personalNote, @RequestParam boolean isDepositPayed, @RequestParam(required = false) List<Integer> deletePictures,
                                 @RequestParam("projectPictures") MultipartFile[] projectPictures,
-                                @RequestParam int bookingId, Model model, HttpSession session, @RequestParam(required = false) boolean sendMail) {
+                                @RequestParam int bookingId, Model model, HttpSession session, @RequestParam(required = false) boolean sendMail, RedirectAttributes redirectAttributes) {
 
+
+        // Ensure that booking cannot have a end-time that is before the start-time
+        if (endTimeSlot.isBefore(startTimeSlot)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "End time cannot be before start time.");
+            return "redirect:/edit-booking?bookingId=" + bookingId;
+        }
 
         if (deletePictures != null) {
             projectPictureService.deleteProjectPictures(deletePictures);

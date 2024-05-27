@@ -179,4 +179,9 @@ button {
     justify-content: center;
 }
 
+.error-message p{
+    color: black;
+    text-align: center;
+}
+
 
