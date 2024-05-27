@@ -51,7 +51,7 @@
 
                     <p class="title">Image:</p>
                     <div th:if="${#lists.isEmpty(booking.projectPictures)}">
-                        <p class="image-message">No pictures has been uploaded</p>
+                        <p class="image-message">No pictures have been uploaded</p>
                     </div>
                     <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
                         <div th:each="picture, index : ${booking.projectPictures}">

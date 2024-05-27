@@ -92,6 +92,7 @@ input, textarea, select {
     color: var(--header-footer-color);
     box-shadow: 0 14px 18px 5px rgba(0,0,0,0.26) inset;
     padding: 10px;
+    font-size: 1.5rem;
 }
 
 
@@ -412,10 +413,6 @@ form {
 }*/
 
 
-
-input, select {
-    font-size: 1.5rem;
-}
 
 label {
     font-size: 1.8rem;
