@@ -143,6 +143,7 @@ button {
     background-color: var(--section-background-color);
     padding: 15px 45px;
     border-radius: 15px;
+    margin-bottom:1rem;
 }
 
 .back-arrow {
