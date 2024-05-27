@@ -85,8 +85,8 @@ h3 {
 }
 
 
-input, textarea {
-    border-radius: 10px;
+input, textarea, select {
+    border-radius: 15px;
     background-color: var(--input-field-gray);
     border:none;
     color: var(--header-footer-color);
@@ -137,16 +137,20 @@ button {
 }
 
 .back-arrow-container {
-    top: 2rem;
-    left: 2rem;
+/*    top: 2rem;
+    left: 2rem;*/
     align-self: start;
     background-color: var(--section-background-color);
-    padding: 10px 30px;
+    padding: 15px 45px;
     border-radius: 15px;
 }
 
 .back-arrow {
     font-size: large;
+}
+
+.back-arrow-container a {
+    font-size: 2rem;
 }
 
 /* header og footer styles */
@@ -406,3 +410,13 @@ form {
     display: block;
 }*/
 
+
+
+
+input, select {
+    font-size: 1.5rem;
+}
+
+label {
+    font-size: 1.8rem;
+}

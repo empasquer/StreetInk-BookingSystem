@@ -58,9 +58,14 @@ section {
 
 .form-group label {
     display: flex;
-    margin-left: 0.5em;
-    font-size: large;
-    margin-bottom: 0.5em;
+   /* font-size: large;*/
+
+}
+
+.form-group-SM {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
 .form-group input,
@@ -94,12 +99,12 @@ section {
 }
 
 .form-row-grid {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 30px;
-    width: 48.5em;
-    justify-content: space-between;
-    padding: 0.5em;
+/*    display: flex;*/
+/*    flex-direction: row;*/
+    margin-bottom: 3rem;
+/*    width: 48.5em;
+    justify-content: space-between;*/
+/*    padding: 0.5em;*/
 }
 
 .info-box {
@@ -137,23 +142,27 @@ section {
 .form-group,
 .form-grid-cell {
     position: relative;
-    margin-bottom: 1.5em;
+/*    margin-bottom: 1.5em;*/
 }
-
+/*
 .form-group label,
 .form-grid-cell label {
     margin-right: 0.5em;
-}
+}*/
 .form-group-SM label {
-    display: flex;
-    margin-left: 0.5em;
-    font-size: large;
-    margin-bottom: -1em;
+/*    display: flex;*/
+/*    margin-left: 0.5em;*/
+/*    font-size: large;*/
+/*    margin-bottom: -1em;*/
 }
 
 /* Hide the checkbox */
 .info-checkbox {
     display: none;
+}
+
+.form-group-button {
+    place-self: end;
 }
 
 /* Style the label as a button */
@@ -176,34 +185,34 @@ section {
     opacity: 0.9;
     padding: 1em;
     margin-top: -1.9em;
-    border-radius: 0.5em;
+    border-radius: 15px;
     position: absolute;
-    left: 0;
+    left: 27vw;
     z-index: 10;
     width: 200px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: 9em;
+/*    margin-left: 9em;*/
 }
 
-.info-message-right {
+/*.info-message-right {
     margin-left: 6em;
-}
+}*/
 
 select {
-    background: radial-gradient(white, lightgray);
-    border-radius: 1em;
-    height: 4.5em;
-    width: 4.5em;
+/*    background: radial-gradient(white, lightgray);*/
+/*    border-radius: 15px;*/
+    height: 3em;
+    width: 3em;
     text-align: center;
 }
 
-.red-button {
+/*.red-button {
     font-size: 1.5em;
     height: 4em;
     width: 100%;
     margin-top: 2em;
     font-weight: bold;
-}
+}*/
 
 .change-password {
     text-decoration: none;
@@ -211,7 +220,13 @@ select {
     justify-content: center;
     height: 50px;
     width: 290px;
-    margin-bottom: 1.4em;
+/*    margin-bottom: 1.4em;*/
     align-items: center;
-    font-size: 1.3em;
+/*    font-size: 1.3em;*/
+}
+
+
+button.red-button {
+    width: 100%;
+    height: 5vh;
 }
