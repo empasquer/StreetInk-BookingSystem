@@ -133,6 +133,7 @@ button {
     color: var(--input-field-gray);
     border:none;
     padding:1rem;
+    font-size: 1.5rem;
 }
 
 .back-arrow-container {

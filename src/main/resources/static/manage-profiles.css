@@ -9,14 +9,14 @@ section {
 }
 
 .warning-container{
-    border: solid red 4px;
+    border: solid #d01d1d 4px;
     display: flex;
     flex-direction: column;
     border-radius: 1em;
     padding: 2em;
 }
 .warning {
-    color: red;
+    color: #d01d1d;
 }
 .warning-text  {
     display: flex;
@@ -176,6 +176,10 @@ form {
     align-items: center;}
 
 
+input[type="checkbox"]:checked {
+    background-color: #a22e2e; /* Background color when checked */}
+
+
 .checkboxes:checked::after {
     content: '\2713';
     font-size: 40px;
@@ -186,6 +190,10 @@ form {
     display: flex;
     align-items: center;
 }
+
+a {
+    text-decoration: none;
+}
 h3 {
     font-size: 2em;
     font-weight: bold;
@@ -195,6 +203,6 @@ h4 {
     font-weight: bold;
 }
 p {
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: bold;
 }
