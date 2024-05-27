@@ -184,7 +184,7 @@ header {
     margin: auto;
 }
 
-
+/*måske denne ikke gør så meget.*/
 .profile-pic {
     width: 100px;
     height: 100px;
@@ -194,6 +194,53 @@ header {
     margin-top: 25px;
     margin-left: 50px;
 }
+
+/*.profile-pic-container img.profile-pic {
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges
+    font-size: 3em; /* Gør ikonet stort
+    color: #D1D1D1FF;
+    line-height: 4em; /* Vertikal centrering, justeret for at passe til størrelsen
+    border: 0.1em solid #D1D1D1FF;
+    border-radius: 50%; /* laver ikonet rundt
+    width: 2.5em
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*.profile-pic-container i.profile-pic {
+    font-size: 3em; /* Gør ikonet stort
+    color: #D1D1D1FF;
+    line-height: 4em;  Vertikal centrering, justeret for at passe til størrelsen
+    border: 0.1em solid #D1D1D1FF;
+    border-radius: 50%; /* laver ikonet rundt
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+*/
+
+.profile-pic-container img.profile-pic,
+.profile-pic-container i.profile-pic {
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
+    font-size: 3em;
+    color: #D1D1D1FF;
+    line-height: 4em; /* Vertikal centrering, justeret for at passe til størrelsen */
+    border: 0.1em solid #D1D1D1FF;
+    border-radius: 50%; /* laver ikonet rundt*/
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover; /* Sørger for, at billedet dækker hele containeren uden at forvrænges*/
+
+}
+
+
 
 /* Burger menu */
 .navbar {
@@ -246,13 +293,15 @@ a.nav-link {
 .nav-item {
     border-bottom: 2px solid var(--white);
     margin: 2.5rem 0;
-    padding: 3rem;
+    padding: 2rem;
 }
 
 .hamburger {
     display: block;
     cursor: pointer;
     z-index: 999;
+    width: 50px;  /* Tara har prøvet at justeret :S */
+    height: 50px; /* Tara har prøvet at justeret :S */
 
 }
 

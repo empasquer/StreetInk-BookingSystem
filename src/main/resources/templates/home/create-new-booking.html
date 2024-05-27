@@ -38,17 +38,17 @@
                     </div>
 
                     <div class="form-group-time">
-                        <label for="startTimeSlot">Start Time:</label>
+                        <label for="startTimeSlot">Start Time: *</label>
                         <input type="time" id="startTimeSlot" name="startTimeSlot" step="900" min="09:00" max="20:00" required th:value="${booking?.startTimeSlot ?: ''}">
                     </div>
 
                     <div class="form-group-time-end">
-                        <label for="endTimeSlot">End Time:</label>
+                        <label for="endTimeSlot">End Time: *</label>
                         <input type="time" id="endTimeSlot" name="endTimeSlot" step="900" min="09:00" max="20:00" required th:value="${booking?.endTimeSlot ?: ''}">
                     </div>
 
                     <div class="form-group">
-                        <label for="projectTitle">Project Title:</label>
+                        <label for="projectTitle">Project Title: *</label>
                         <input type="text" id="projectTitle" name="projectTitle" required th:value="${booking?.projectTitle ?: ''}">
                     </div>
 
@@ -59,19 +59,25 @@
 
                     <div class="form-group">
                         <label for="personalNote">Private Note:</label>
+                        <div class="image-message">
+                            <p>** Note for your eyes only.</p>
+                        </div>
                         <textarea id="personalNote" name="personalNote" rows="4" th:text="${booking?.personalNote ?: ''}"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="image">Image:</label>
-                        <input type="file" id="image" name="projectPictures">
+                        <input type="file" id="image" name="projectPictures" multiple>
+                        <div class="image-message">
+                            <p>**If you want to upload more than one image, you must choose them all at once.</p>
+                        </div>
                     </div>
 
                     <input type="hidden" name="date" th:value="${date}" />
 
                     <div class="button-container">
-                        <button type="submit" name="action" value="new-client" class="red-button box-shadow">New Client</button>
-                        <button type="submit" name="action" value="existing-client" class="red-button box-shadow">Existing Client</button>
+                        <button type="submit" name="action" value="new-client" class="red-button">New Client</button>
+                        <button type="submit" name="action" value="existing-client" class="red-button">Existing Client</button>
                     </div>
                 </div>
             </div>

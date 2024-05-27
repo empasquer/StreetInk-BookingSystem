@@ -17,7 +17,7 @@ public class ProjectPictureRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public void saveProjectPicture(ProjectPicture projectPicture){
+    public void saveProjectPictures(ProjectPicture projectPicture){
         String query = "INSERT INTO project_picture (booking_id, picture_data) VALUES (?, ?)";
         jdbcTemplate.update(query, projectPicture.getBookingId(), projectPicture.getPictureData());
     }

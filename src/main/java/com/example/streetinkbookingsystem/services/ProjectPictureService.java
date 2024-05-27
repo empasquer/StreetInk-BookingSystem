@@ -21,14 +21,14 @@ public class ProjectPictureService {
     @Autowired
     private ProjectPictureRepository projectPictureRepository;
 
-    @Transactional
+    //@Transactional
     public void saveProjectPictures(int bookingId, List<byte[]> pictureList){
 
        for (byte[] pictureData : pictureList){
            ProjectPicture picture = new ProjectPicture();
            picture.setBookingId(bookingId);
            picture.setPictureData(pictureData);
-           projectPictureRepository.saveProjectPicture(picture);
+           projectPictureRepository.saveProjectPictures(picture);
        }
 
        /* for (MultipartFile file : projectPictures){

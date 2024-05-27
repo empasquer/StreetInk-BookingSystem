@@ -20,7 +20,12 @@
     <h1>Edit Booking - <span th:text="${booking.date}"></span></h1>
 
     <section>
-        <form th:action="@{/edit-booking}" method="post" enctype="multipart/form-data">
+        <form  th:action="@{/confirm-delete-booking}" method="get" >
+            <button class="icon-button" type="submit"><i class="fa fa-trash fa-2x"></i></button>
+            <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
+        </form>
+
+        <form action="/edit-booking" method="post" enctype="multipart/form-data">
             <div class="booking-container">
                 <div class="information-container">
                     <h2>Tattoo Information</h2>
@@ -89,7 +94,7 @@
 
                     <input type="hidden" name="bookingId" th:value="${booking.getId()}">
 
-                    <div class="button-container-edit">
+                    <div class="edit-delete-button-container-edit">
                         <div>
                             <input type="hidden" name="bookingId" th:value="${booking.id}">
                             <button type="submit" th:value="true" class="gray-button" name="sendMail">Save and resend mail</button>

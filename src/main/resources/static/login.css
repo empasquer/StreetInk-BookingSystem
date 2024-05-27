@@ -20,6 +20,7 @@ input {
     background-color: var(--input-field-gray);
     width: 30rem;
     margin-bottom: 3.5rem;
+    font-size: 1.7rem;
 }
 
 label {

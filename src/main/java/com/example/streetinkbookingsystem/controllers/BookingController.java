@@ -82,7 +82,7 @@ public class BookingController {
 
 
     /**
-     * @author Tara
+     * @Author Tara
      * @param model
      * @param session Used to determine if the user is logged in or not. User will be redirected
      *                to index page if not logged in.
@@ -137,6 +137,20 @@ public class BookingController {
                                  RedirectAttributes redirectAttributes, Model model) {
         String username = (String) session.getAttribute("username");
 
+
+            /*List<byte[]> pictureList = Stream.of(projectPictures).filter(file -> !file.isEmpty())
+                    .map(file -> {
+                        try {
+                            return file.getBytes();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                            return null;
+                        }
+                    })
+                    .collect(Collectors.toList());
+                    */
+
+
         // Ensure that booking cannot have a end-time that is before the start-time
         if (endTimeSlot.isBefore(startTimeSlot)) {
             redirectAttributes.addFlashAttribute("errorMessage", "End time cannot be before start time.");
@@ -153,8 +167,10 @@ public class BookingController {
         } else {
             // Create new booking
             // The new booking will have a default client until another is chosen
+
             booking = bookingService.createNewBooking(startTimeSlot, endTimeSlot, date, username, projectTitle, projectDesc, personalNote, isDepositPayed, getPictureList(projectPictures));
-            projectPictureService.saveProjectPictures(booking.getId(), getPictureList(projectPictures));
+           // denne laver dobbelgemning af billeder.
+            //projectPictureService.saveProjectPictures(booking.getId(), getPictureList(projectPictures));
         }
 
         int savedBookingId = booking.getId();
@@ -162,7 +178,6 @@ public class BookingController {
         if ("new-client".equals(action)) {
             return "redirect:/add-client?bookingId=" + savedBookingId + "&date=" + date;
         } else if ("existing-client".equals(action)) {
-           // return "redirect:/choose-client?bookingId=" + savedBookingId + "&username=" + username + "&date=" + date;
             return "redirect:/client-list?bookingId=" + savedBookingId +  "&date=" + date;
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid action.");
@@ -173,7 +188,7 @@ public class BookingController {
     /**
      * Converts an array of MultipartFile objects to a list of byte arrays.
      *
-     * @author Nanna
+     * @author Nanna og Tara
      * @param projectPictures The array of MultipartFile objects.
      * @return A list of byte arrays.
      */
@@ -244,7 +259,7 @@ public class BookingController {
     /**
      * @summary Sends a confirmation email to the user.
      *
-     * @author Nanna
+     * @author Nanna og Tara
      * @param bookingId The ID of the booking to be saved.
      * @param session The HttpSession object to retrieve user information.
      * @return A redirection to the booking details page with the specified bookingId.
@@ -385,7 +400,6 @@ public class BookingController {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
-
         bookingService.deleteBooking(bookingIdToDelete);
         return "redirect:/calendar";
     }

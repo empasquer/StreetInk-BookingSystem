@@ -347,15 +347,16 @@ public class ClientController {
     @GetMapping("/choose-client")
     public String chooseClient(Model model, HttpSession session,
                                @RequestParam int bookingId, @RequestParam LocalDate date) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (loggedIn) {
-            model.addAttribute("loggedIn", loggedIn);
-        } else {
+       /* boolean loggedIn = loginService.isUserLoggedIn(session);
+        if (!loggedIn) {
             return "redirect:/";
         }
+        */
 
-        String username = (String) session.getAttribute("username");
+        String username = "Hanzoo";
+        //String username = (String) session.getAttribute("username");
         TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
+       // model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("tattooArtist", tattooArtist);
         model.addAttribute("date", date);
         //Værdier som skal videre til view
