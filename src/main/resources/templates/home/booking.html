@@ -22,11 +22,40 @@
 
 
   <section>
+    <th:block  th:if="${bookingIdToDelete!=null}" >
+      <div class="confirmation-container">
+        <h3>Are you sure you want to delete this booking:</h3>
+        <h2 class = "booking-name" th:text="${booking.getDate()} + ' at ' + ${booking.getStartTimeSlot()} + ' with '
+        + ${booking.client.getFirstName()} + ' ' + ${booking.client.getLastName()} + '?'"></h2>
+
+        <p class="warning-text">Be aware that the booking will be deleted permanently!
+          You can not retrieve any kind of information from this booking after deletion</p>
+
+        <div class="edit-delete-container-edit">
+          <form th:action="@{/booking}" method="get">
+            <input type="hidden" name="bookingId" th:value="${booking.getId()}"/>
+            <input type="hidden" name="username" th:value="${session.username}"/>
+            <button class="gray-button">Cancel</button>
+          </form>
+          <form th:action="@{/delete-booking}" method="post">
+            <input type="hidden" name="bookingIdToDelete" th:value="${bookingIdToDelete}"/>
+            <button class="red-button" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    </th:block>
+
     <div class="edit-delete-container">
-      <form class="edit-btn" th:action="@{/edit-booking}" method="get">
-        <input type="hidden" name="bookingId" th:value="${booking.getId()}" />
-        <button type="submit"><i class="fa fa-edit fa-2x"></i></button>
-      </form>
+      <th:block  th:if="${bookingIdToDelete == null}" >
+        <form class="edit-btn" th:action="@{/edit-booking}" method="get">
+          <input type="hidden" name="bookingId" th:value="${booking.getId()}" />
+          <button class="edit" type="submit"><i class="fa fa-edit fa-2x"></i></button>
+        </form>
+        <form  th:action="@{/booking}" method="post" class="delete-form" >
+          <button class="delete" type="submit"><i class="fa fa-trash fa-2x"></i></button>
+          <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
+        </form>
+      </th:block>
     </div>
 
     <div class="booking-container">

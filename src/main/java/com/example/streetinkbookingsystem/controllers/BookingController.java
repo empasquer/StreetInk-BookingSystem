@@ -196,6 +196,8 @@ public class BookingController {
         boolean loggedIn = loginService.isUserLoggedIn(session);
         if (!loggedIn) {
             return "redirect:/";
+
+
         }
 
         //tilføjer den "nye" ClientId til bookingen

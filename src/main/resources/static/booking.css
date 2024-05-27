@@ -25,7 +25,7 @@ p {
     font-size: 1.4em;
     font-weight: bold;
     margin-top: 0.8em;
-    margin-bottom: -1%;
+
 
 }
 
@@ -39,6 +39,7 @@ div .respons{
     font-style: italic;
     margin-bottom: 0.5em; /* Adding some space below the message */
     margin-top: -1%;
+
 }
 
 hr {
@@ -54,6 +55,7 @@ hr {
     text-align: center;
     color: #D2D1D1;
     margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .contact-item {
@@ -109,10 +111,10 @@ hr {
     margin-top: 60px;
 }
 
-button {
+.button-container button {
     padding: 40px 70px; /* Gør knapperne større */
     font-size: 1em;
-    margin: 10px; /* Mindsk afstanden mellem knapperne */
+    margin: 20px; /* Mindsk afstanden mellem knapperne */
     width: 230px; /* Fast bredde for alle knapper */
     height: 100px; /* Fast højde for alle knapper */
     display: flex;
@@ -139,7 +141,7 @@ button {
     justify-content: flex-end;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn, .delete-form {
     margin-right: 1rem;
 }
 
@@ -148,7 +150,7 @@ button {
 }
 
 .delete {
-    color: black;
+    color: white;
 }
 
 

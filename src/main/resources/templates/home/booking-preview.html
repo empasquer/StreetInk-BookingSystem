@@ -39,7 +39,6 @@
 
                     <hr>
                     <p class="tattoo-info">Tattoo Information</p>
-                    <p class="tattoo-info">Tattoo Information</p>
                     <p class="title">Deposit paid:
                         <span id="depanswer" th:text="${booking.isDepositPayed ? 'Yes' : 'No'}"></span></p>
 
@@ -60,7 +59,6 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
         </div>
@@ -73,7 +71,7 @@
             </form>
             <form th:action="@{/save-booking}" method="get">
                 <input type="hidden" name="bookingId" th:value="${booking.id}">
-                <button class="gray-button" type="submit">Save</button>
+                <button class="red-button" type="submit">Save</button>
             </form>
         </div>
     </section>
