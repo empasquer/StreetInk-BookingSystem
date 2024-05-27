@@ -21,6 +21,7 @@ section {
 
 hr {
     border-color: white;
+    color: white;
     border-width: 3px;
     margin-top: 20px; /* Tilføjer mellemrum over hr-linjen */
     margin-bottom: 15px;

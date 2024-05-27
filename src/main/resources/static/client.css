@@ -41,9 +41,10 @@ section {
 }
 
 
-p, a {
+p, section a {
     font-size: 1.5em;
 }
+
 
 h2 {
     font-size: 3rem;
