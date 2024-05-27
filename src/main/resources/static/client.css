@@ -38,6 +38,8 @@ section {
 
 .contact {
     padding-bottom : 1.5rem;
+    gap: 1rem;
+    display: flex;
 }
 
 
@@ -70,13 +72,11 @@ button {
     border:none;
 }
 
-.edit {
+.edit, .delete {
     color: white;
 }
 
-.delete {
-    color: black;
-}
+
 
 .buttons {
     display: flex;
