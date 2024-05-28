@@ -18,8 +18,10 @@ public class ProjectPictureRepository {
     private JdbcTemplate jdbcTemplate;
 
     /**
+     * Saves a project picture to the database.
+     *
+     * @param projectPicture the ProjectPicture object containing the booking ID and picture data to be saved
      * @Author Tara
-     * @param projectPicture
      */
     public void saveProjectPictures(ProjectPicture projectPicture){
         String query = "INSERT INTO project_picture (booking_id, picture_data) VALUES (?, ?)";
@@ -27,9 +29,11 @@ public class ProjectPictureRepository {
     }
 
     /**
+     * Retrieves a list of project pictures associated with a specific booking.
+     *
+     * @param bookingId the ID of the booking for which to retrieve project pictures
+     * @return a list of ProjectPicture objects associated with the specified booking ID
      * @Author Tara
-     * @param bookingId
-     * @return
      */
     public List<ProjectPicture> getPicturesByBooking(int bookingId) {
         String query = "SELECT * FROM project_picture WHERE booking_id = ?";

@@ -18,8 +18,10 @@ public class TattooArtistService {
     private LoginService loginService;
 
     /**
-     * @author Tara
-     * @return viser en liste med alle tatovørene
+     * Retrieves a list of all tattoo artists.
+     *
+     * @return a list containing all tattoo artists
+     * @Author Tara
      */
     public List<TattooArtist> showTattooArtist(){
         return tattooArtistRepository.showTattooArtists();

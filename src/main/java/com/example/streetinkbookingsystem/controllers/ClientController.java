@@ -304,15 +304,16 @@ public class ClientController {
     }
 
     /**
-     * @param bookingId   //* @param clientId
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phoneNumber
-     * @param description
-     * @return
-     * @Author Tara
      * @Summary Saves the new client to the booking that the user is creating
+     *
+     * @Author Tara
+     * @param bookingId   the ID of the booking to which the client is being added
+     * @param firstName   the first name of the client
+     * @param lastName    the last name of the client
+     * @param email       the email address of the client
+     * @param phoneNumber the phone number of the client
+     * @param description a description or notes about the client
+     * @return a redirect URL to the booking preview page with the updated client information
      */
     @PostMapping("/add-client")
     public String saveClient(@RequestParam int bookingId,
