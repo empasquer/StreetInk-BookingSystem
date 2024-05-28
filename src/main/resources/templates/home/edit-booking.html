@@ -30,23 +30,23 @@
                         <p th:text="${errorMessage}"></p>
                     </div>
 
-                    <div class="form-group deposit">
+                    <div class="form-group-dep">
                         <label for="isDepositPayed">Deposit Paid:</label>
                         <input type="hidden" name="isDepositPayed" th:value="${booking.getIsDepositPayed()}">
                         <input type="checkbox" id="isDepositPayed" name="isDepositPayed" th:checked="${booking.isDepositPayed}">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group-time">
                         <label for="date">Date:</label>
                         <input type="date" id="date" name="date" th:value="${booking.date}" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group-time">
                         <label for="startTimeSlot">Start Time:</label>
                         <input type="time" id="startTimeSlot" name="startTimeSlot" step="900" min="09:00" max="20:00" required th:value="${booking.startTimeSlot}">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group-time-end">
                         <label for="endTimeSlot">End Time:</label>
                         <input type="time" id="endTimeSlot" name="endTimeSlot" step="900" min="09:00" max="20:00" required th:value="${booking.endTimeSlot}">
                     </div>
@@ -93,7 +93,7 @@
 
                     <input type="hidden" name="bookingId" th:value="${booking.getId()}">
 
-                    <div class="edit-delete-button-container-edit">
+                    <div class="button-container">
                         <div>
                             <input type="hidden" name="bookingId" th:value="${booking.id}">
                             <button type="submit" th:value="true" class="gray-button" name="sendMail">Save and resend mail</button>

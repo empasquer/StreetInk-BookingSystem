@@ -14,19 +14,18 @@
     top: 5px;
     left: 5px;
     padding: 5px;
-    border-radius: 3px;
+    border-radius: 8px;
 }
 
 .checkbox {
-    webkit-appearance: none; /* Remove default checkbox styling */
     -moz-appearance: none;
     appearance: none;
-    width: 20px; /* Adjust width as needed */
-    height: 20px; /* Adjust height as needed */
-    border-radius: 8px; /* Rounded corners */
-    background-color: var(--input-field-gray); /* Background color */
-    outline: none; /* Remove blue focus outline */
-    cursor: pointer; /* Pointer cursor on hover */
+    width: 20px;
+    height: 20px;
+    border-radius: 5px !important;
+    background-color: white;
+    outline: none;
+    cursor: pointer;
 }
 
 
@@ -40,19 +39,6 @@
     margin-left: -5px;
 }
 
-.icon-button {
-    border-radius: 0.4em;
-    background-color: transparent;
-    color: white;
-    border: none;
-    width: auto;
-    padding: 2rem;
-}
-
-.deposit {
-    display: flex;
-    flex-direction: row;
-}
 
 h2 {
     font-size: 3.5rem;
@@ -81,7 +67,7 @@ h2 {
     margin-top: 30px;
 }
 
-.button-container-edit {
+.button-container-save {
     display: flex;
     justify-content: center;
 }
@@ -99,14 +85,9 @@ h2 {
     margin-left: 10px;
 }
 
-.error-message {
-    color: black;
-    text-align: center;
-}
-
 .button-container {
     display: flex;
-    place-content: flex-end;
+    place-content: center;
     margin-top: 0;
 }
 
