@@ -71,21 +71,21 @@ h2 {
 }
 
 .gray-button {
-    margin-right: 10px;
+
     margin-top: 20px;
-    margin-left: 10px;
+
 
 }
 
 .red-button {
-    margin-right: 10px;
+
     margin-top: 20px;
-    margin-left: 10px;
+
 }
 
 .button-container {
     display: flex;
-    place-content: center;
+    place-content: space-between;
     margin-top: 0;
 }
 
