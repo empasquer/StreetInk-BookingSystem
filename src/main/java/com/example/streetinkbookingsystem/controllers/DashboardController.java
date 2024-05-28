@@ -34,6 +34,7 @@ public class DashboardController {
      *
      * @param model   the model to add attributes to for rendering view
      * @param session the current HTTP session
+     * @author Emma
      * @return the name of the view to be rendered, or a redirect to login if not logged in
      */
 

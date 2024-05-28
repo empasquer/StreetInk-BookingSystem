@@ -20,14 +20,29 @@ public class DashboardService {
     @Autowired
     private TattooArtistService tattooArtistService;
 
+    /**
+     * @author Emma
+     * @param username The username of the tattoo artist whose bookings are to be counted.
+     * @return The number of bookings for the specified tattoo artist on the current day.
+     */
     public int calculateAmtBookingsADay(String username) {
         return bookingService.getBookingCountForDate(LocalDate.now(), username);
     }
 
+    /**
+     * @author Emma
+     * @param username The username of the tattoo artist whose bookings are to be counted.
+     * @return The number of bookings for the specified tattoo artist for the current week.
+     */
     public int calculateAmtBookingsAWeek(String username) {
         return bookingService.getBookingCountForThisWeek(username);
     }
 
+    /**
+     * @author Emma
+     * @param username The username of the tattoo artist whose booking percentage is to be calculated.
+     * @return The booking percentage for the specified tattoo artist for the current month, rounded to the nearest integer.
+     */
     public int calculateBookingPercentageOfMonth(String username) {
         LocalDate currentDate = LocalDate.now();
         // not counting weekends - so only week days
@@ -50,7 +65,10 @@ public class DashboardService {
         return (int) Math.round(bookingPercentage);
     }
 
-
+    /**
+     * @author Emma
+     * @return
+     */
     public int calculateMonthProgressPercentage() {
         LocalDate currentDate = LocalDate.now();
         int currentDayOfMonth = currentDate.getDayOfMonth();
@@ -60,6 +78,11 @@ public class DashboardService {
         return (int) Math.round(progressPercentage);
     }
 
+    /**
+     * @author Emma
+     * @author Emma
+     * @return The progress percentage of the current month, rounded to the nearest integer.
+     */
     public int calculateWeekdaysInMonth(LocalDate date) {
         int weekdaysInMonth = 0;
         for (int day = 1; day <= date.lengthOfMonth(); day++) {
@@ -71,6 +94,11 @@ public class DashboardService {
         return weekdaysInMonth;
     }
 
+    /**
+     * @author Emma
+     * @param bookings A list of bookings for which the total booked hours need to be calculated.
+     * @return The total number of booked hours.
+     */
     public int calculateTotalBookedHours(List<Booking> bookings) {
         int totalBookedHours = 0;
         for (Booking booking : bookings) {

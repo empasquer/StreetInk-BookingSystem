@@ -78,18 +78,40 @@ public class TattooArtistRepository {
         }
     }
 
+    /**
+     * @author Nanna
+     * @param username the username of the profile that should change status
+     * @param status the status that the admin boolean should change to
+     */
     public void changeAdminStatus(String username, boolean status) {
         String query = "UPDATE tattoo_artist SET is_admin=? WHERE username=?";
         jdbcTemplate.update(query, status, username);
     }
 
+    /**
+     * @author Nanna
+     * @param profileToDelete the username of the profile that will be deleted
+     */
     public void deleteProfileByUsername(String profileToDelete) {
         String query = "DELETE FROM tattoo_artist WHERE username =?";
          jdbcTemplate.update(query,profileToDelete);
     }
 
 
-
+    /**
+     * @author Nanna
+     * @param username      The username of the tattoo artist.
+     * @param firstname     The first name of the tattoo artist.
+     * @param lastName      The last name of the tattoo artist.
+     * @param password      The password for the profile
+     * @param facebookUrl   The Facebook URL of the tattoo artist.
+     * @param instagramUrl  The Instagram URL of the tattoo artist.
+     * @param phone         The phone number of the tattoo artist.
+     * @param email         The email address of the tattoo artist.
+     * @param avgWorkHours  The average work hours per day of the tattoo artist.
+     * @param isAdmin       Indicatates if the tattoo artist is an admin.
+     * @param pictureData   Optional profile picture of the tattoo artist.
+     */
     public void createProfile(String username, String firstname, String lastName, String password, String facebookUrl,  String instagramUrl, int phone, String email, int avgWorkHours, boolean isAdmin, Optional<byte[]> pictureData) {
         String query = "INSERT INTO tattoo_artist(username, first_name, last_name, password, email, phone_number, facebook, instagram, avg_work_hours, is_admin, profile_picture) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         // Unwrap the Optional and set to null if not present
@@ -97,6 +119,19 @@ public class TattooArtistRepository {
             jdbcTemplate.update(query, username, firstname, lastName, password, email, phone, facebookUrl, instagramUrl, avgWorkHours, isAdmin,picture);
         }
 
+    /**
+     * @author Nanna
+     * @param firstName       The updated first name of the tattoo artist.
+     * @param lastName        The updated last name of the tattoo artist.
+     * @param email           The updated email address of the tattoo artist.
+     * @param phoneNumber     The updated phone number of the tattoo artist.
+     * @param facebook        The updated Facebook URL of the tattoo artist.
+     * @param instagram       The updated Instagram URL of the tattoo artist.
+     * @param avgWorkHours    The updated average work hours per day of the tattoo artist.
+     * @param newUsername     The new username for the tattoo artist.
+     * @param currentUsername The current username of the tattoo artist.
+     * @param pictureData     Optional updated profile picture the tattoo artist.
+     */
     public void updateTattooArtist(String firstName, String lastName, String email, int phoneNumber, String facebook, String instagram, int avgWorkHours, String newUsername, String currentUsername, Optional<byte[]> pictureData) {
         StringBuilder query = new StringBuilder("UPDATE tattoo_artist SET first_name = ?, email = ?, phone_number = ?, avg_work_hours = ?, username = ?");
         List<Object> params = new ArrayList<>(Arrays.asList(firstName, email, phoneNumber, avgWorkHours, newUsername));

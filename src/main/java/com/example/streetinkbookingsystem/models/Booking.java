@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Booking {
     private int id;
     private LocalTime startTimeSlot;
