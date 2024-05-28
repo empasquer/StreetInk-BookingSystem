@@ -40,7 +40,8 @@
                     </div>
                  <div>
                      <label for="phoneNumber">Phone Number: *</label>
-                     <input type="tel" id="phoneNumber" name="phoneNumber" th:value="${client.phoneNumber}">
+                     <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{1,}" th:value="${client.phoneNumber}">
+
                  </div>
 
                 </div>
