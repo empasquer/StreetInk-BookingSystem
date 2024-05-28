@@ -120,25 +120,18 @@ public class BookingRepository {
 
 
     /**
-     * @author Tara
-     * @return list af bookinger
-     */
-    public List<Booking> showBookingList(){
-        String query = "SELECT * FROM booking";
-        RowMapper rowMapper = new BeanPropertyRowMapper(Booking.class);
-        return jdbcTemplate.query(query, rowMapper);
-    }
-
-    /**
+     * @Summary Creates a new booking with the specified details.
+     *
+     * @param startTimeSlot the start time slot for the booking
+     * @param endTimeSlot   the end time slot for the booking
+     * @param date          the date of the booking
+     * @param username      the username of the tattoo artist
+     * @param projectTitle  the title of the project
+     * @param projectDesc   the description of the project
+     * @param personalNote  a personal note about the booking
+     * @param isDepositPayed whether the deposit has been paid
+     * @return the created Booking object
      * @Author Tara
-     * @param startTimeSlot
-     * @param endTimeSlot
-     * @param date
-     * @param username
-     * @param projectTitle
-     * @param projectDesc
-     * @param personalNote
-     * @param isDepositPayed
      */
     public Booking createNewBooking (LocalTime startTimeSlot, LocalTime endTimeSlot, LocalDate date,
                                   String username, String projectTitle, String projectDesc, String personalNote,
@@ -182,7 +175,19 @@ public class BookingRepository {
         return findById(bookingId);
 
     }
-
+    /**
+     * Updates the booking with the specified details.
+     *
+     * @param bookingId     the ID of the booking to be updated
+     * @param startTimeSlot the new start time slot for the booking
+     * @param endTimeSlot   the new end time slot for the booking
+     * @param date          the new date of the booking
+     * @param projectTitle  the new title of the project
+     * @param projectDesc   the new description of the project
+     * @param personalNote  the new personal note about the booking
+     * @param isDepositPayed whether the deposit has been paid
+     * @Author Tara
+     */
     public void updateBooking(int bookingId, LocalTime startTimeSlot, LocalTime endTimeSlot,
                                  LocalDate date, String projectTitle, String projectDesc,
                                  String personalNote, boolean isDepositPayed) {
@@ -288,19 +293,5 @@ public class BookingRepository {
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
         return jdbcTemplate.query(query, rowMapper, clientId);
     }
-
-    /**
-
-    public List<Booking> getBookingsForDay(LocalDate date, String username) {
-        String query = "SELECT * FROM booking WHERE date = ? AND username = ?";
-        RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
-        return jdbcTemplate.query(query, rowMapper, date, username);
-    }
-
-
-
-     **/
-
-
 
 }

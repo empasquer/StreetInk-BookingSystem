@@ -21,8 +21,10 @@ public class TattooArtistRepository {
 
 
     /**
+     * Retrieves a list of all tattoo artists from the database.
+     *
+     * @return a list of all TattooArtist objects
      * @author Tara
-     * @return liste af alle tatovørerne
      */
     public List<TattooArtist> showTattooArtists(){
         String query = "SELECT * FROM tattoo_artist;";

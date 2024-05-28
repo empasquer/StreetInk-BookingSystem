@@ -61,13 +61,15 @@ public class ClientRepository {
     }
 
     /**
-     * @Tara TROOOOR JEG ???
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phoneNumber
-     * @param description
-     * @param clientId
+     * Updates the client with the specified details.
+     *
+     * @param firstName   the new first name of the client
+     * @param lastName    the new last name of the client
+     * @param email       the new email address of the client
+     * @param phoneNumber the new phone number of the client
+     * @param description the new description or notes about the client
+     * @param clientId    the ID of the client to be updated
+     * @Author Tara
      */
     public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description, int clientId) {
         String query = "UPDATE client SET first_name = ?, last_name = ?, email = ?, phone_number = ?, description = ? WHERE id = ?";
@@ -136,9 +138,11 @@ public class ClientRepository {
     }
 
     /**
+     * Saves a new client to the database and returns the saved client with the generated ID.
+     *
+     * @param client the client object containing the details to be saved
+     * @return the saved Client object with the generated ID
      * @Author Tara
-     * @param client
-     * @return
      */
     public Client saveClient(Client client){
         String query = "INSERT INTO client (first_name, last_name, email, phone_number, description) " +
@@ -160,6 +164,13 @@ public class ClientRepository {
     }
 
 
+    /**
+     * Updates the client ID associated with a specific booking.
+     *
+     * @param bookingId the ID of the booking to be updated
+     * @param clientId  the new client ID to associate with the booking
+     * @Author Tara
+     */
     public void updateClientOnBooking(int bookingId, int clientId){
         String query = "UPDATE booking SET client_id = ? WHERE id = ?";
         jdbcTemplate.update(query, clientId, bookingId);

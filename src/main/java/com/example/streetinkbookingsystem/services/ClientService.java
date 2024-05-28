@@ -63,18 +63,22 @@ public class ClientService {
     }
 
     /**
+     * Saves a new client to the database.
+     *
+     * @param client the client object containing the details to be saved
+     * @return the saved Client object with the generated ID
      * @Author Tara
-     * @param client
-     * @return
      */
-    public Client saveClient(Client client){
+    public Client saveClient(Client client) {
         return clientRepository.saveClient(client);
     }
 
     /**
+     * Updates the client ID associated with a specific booking.
+     *
+     * @param bookingId the ID of the booking to be updated
+     * @param clientId  the new client ID to associate with the booking
      * @Author Tara
-     * @param bookingId
-     * @param clientId
      */
     public void updateClientOnBooking(int bookingId, int clientId) {
         clientRepository.updateClientOnBooking(bookingId, clientId);
