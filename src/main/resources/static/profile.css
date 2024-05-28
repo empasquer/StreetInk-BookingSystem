@@ -49,6 +49,12 @@ section figure {
 
 }
 
+.error-message h3 {
+    padding-top: 1.5rem;
+    font-size: 2.5rem;
+    color: #333333;
+}
+
 .profile-pic {
     align-content: center;
     place-content: center;
