@@ -125,19 +125,19 @@
         </span>
                         </div>
                     </div>
-                    <select id="avgWorkHours" name="avgWorkHours" required>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
+                    <select id="avgWorkHours" name="avgWorkHours" required >
+                        <option value="1" th:selected="${tattooArtist.getAvgWorkHours() == 1}">1</option>
+                        <option value="2" th:selected="${tattooArtist.getAvgWorkHours() == 2}">2</option>
+                        <option value="3" th:selected="${tattooArtist.getAvgWorkHours() == 3}">3</option>
+                        <option value="4" th:selected="${tattooArtist.getAvgWorkHours() == 4}">4</option>
+                        <option value="5" th:selected="${tattooArtist.getAvgWorkHours() == 5}">5</option>
+                        <option value="6" th:selected="${tattooArtist.getAvgWorkHours() == 6}">6</option>
+                        <option value="7" th:selected="${tattooArtist.getAvgWorkHours() == 7}">7</option>
+                        <option value="8" th:selected="${tattooArtist.getAvgWorkHours() == 8}">8</option>
+                        <option value="9" th:selected="${tattooArtist.getAvgWorkHours() == 9}">9</option>
+                        <option value="10" th:selected="${tattooArtist.getAvgWorkHours() == 10}">10</option>
+                        <option value="11" th:selected="${tattooArtist.getAvgWorkHours() == 11}">11</option>
+                        <option value="12" th:selected="${tattooArtist.getAvgWorkHours() == 12}">12</option>
                     </select>
                 </div>
                 </div>
