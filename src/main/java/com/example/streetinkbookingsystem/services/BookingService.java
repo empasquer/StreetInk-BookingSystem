@@ -24,15 +24,19 @@ public class BookingService {
     private ProjectPictureRepository projectPictureRepository;
 
     /**
+     * Creates a new booking with the specified details and saves associated project pictures.
+     *
+     * @param startTimeSlot the start time slot for the booking
+     * @param endTimeSlot   the end time slot for the booking
+     * @param date          the date of the booking
+     * @param username      the username of the tattoo artist
+     * @param projectTitle  the title of the project
+     * @param projectDesc   the description of the project
+     * @param personalNote  a personal note about the booking
+     * @param isDepositPayed whether the deposit has been paid
+     * @param pictureList   a list of picture data to be associated with the booking
+     * @return the created Booking object
      * @author Tara
-     * @param startTimeSlot
-     * @param endTimeSlot
-     * @param date
-     * @param username
-     * @param projectTitle
-     * @param projectDesc
-     * @param personalNote
-     * @param isDepositPayed
      */
     public Booking createNewBooking(LocalTime startTimeSlot,
                                     LocalTime endTimeSlot,
