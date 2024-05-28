@@ -49,6 +49,12 @@ section figure {
 
 }
 
+.error-message h3 {
+    padding-top: 1.5rem;
+    font-size: 2.5rem;
+    color: #333333;
+}
+
 .profile-pic {
     align-content: center;
     place-content: center;
@@ -84,6 +90,7 @@ section {
     gap: 2rem;
     place-content: center;
     align-items: center;
+    width: 100%;
 }
 
 p {
@@ -138,6 +145,17 @@ h2 {
     border-radius: 1em;
     color: white;
     width: 20em;
+    top: 35vh;
+    left: 30vw;
+    color: #333333;
+}
+
+.contact i {
+  padding-right:1rem;
+}
+
+h4 {
+    font-size: 2rem;
 }
 
 h3 {

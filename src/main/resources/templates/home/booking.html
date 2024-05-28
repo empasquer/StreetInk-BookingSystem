@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/booking.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -37,6 +38,7 @@
             <button class="gray-button">Cancel</button>
           </form>
           <form th:action="@{/delete-booking}" method="post">
+            <input type="hidden" name="date" th:value="${booking.date}">
             <input type="hidden" name="bookingIdToDelete" th:value="${bookingIdToDelete}"/>
             <button class="red-button" type="submit">Delete</button>
           </form>
@@ -50,7 +52,7 @@
           <input type="hidden" name="bookingId" th:value="${booking.getId()}" />
           <button class="edit" type="submit"><i class="fa fa-edit fa-2x"></i></button>
         </form>
-        <form  th:action="@{/booking}" method="post" class="delete-form" >
+        <form th:action="@{/booking}" method="post" class="delete-form" >
           <button class="delete" type="submit"><i class="fa fa-trash fa-2x"></i></button>
           <input type="hidden" name="bookingIdToDelete" th:value="${booking.getId()}"/>
         </form>
@@ -60,7 +62,12 @@
     <div class="booking-container">
       <div th:each="booking : ${booking}" class="booking-item">
         <div class="information-container">
-          <h2 class="client-name"><a th:href="${'/client?clientId=' + booking.client.id}"  th:text="${booking.client.firstName + ' ' + booking.client.lastName}"></a></h2>
+          <h2 class="client-name">
+            <a th:href="@{/client(clientId=${booking.client.id}, bookingId=${booking.id})}"
+               th:text="${booking.client.firstName + ' ' + booking.client.lastName}">
+            </a>
+          </h2>
+
 
           <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:" th:href="'tel:' + ${booking.client.phoneNumber}" class="underline" th:text="${booking.client.phoneNumber}"></a></div>
           <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:" th:href="'mailto:' + ${booking.client.email}" class="underline" th:text="${booking.client.email}"></a></div>
@@ -79,7 +86,7 @@
 
           <p class="title">Image:</p>
           <div th:if="${#lists.isEmpty(booking.projectPictures)}">
-            <p class="image-message">No pictures has been uploaded</p>
+            <p class="image-message">No pictures have been uploaded</p>
           </div>
           <div th:unless="${#lists.isEmpty(booking.projectPictures)}">
             <div th:each="picture, index : ${booking.projectPictures}">

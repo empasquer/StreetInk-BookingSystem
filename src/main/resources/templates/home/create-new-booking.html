@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/layout.css">
     <link rel="stylesheet" href="/create-new-booking.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <header th:block th:insert="~{home/header :: header}"></header>
@@ -60,16 +61,16 @@
                     <div class="form-group">
                         <label for="personalNote">Private Note:</label>
                         <div class="image-message">
-                            <p>** Note for your eyes only.</p>
+                            <p>** For your eyes only.</p>
                         </div>
                         <textarea id="personalNote" name="personalNote" rows="4" th:text="${booking?.personalNote ?: ''}"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="image">Image:</label>
+                        <label for="image">Image/s:</label>
                         <input type="file" id="image" name="projectPictures" multiple>
                         <div class="image-message">
-                            <p>**If you want to upload more than one image, you must choose them all at once.</p>
+                            <p>**If you want to upload more than one image, select them all at once.</p>
                         </div>
                     </div>
 

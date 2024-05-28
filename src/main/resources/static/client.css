@@ -29,24 +29,50 @@ section {
     position: relative;
 }
 
+.confirmation-container {
+    position: absolute;
+    z-index: 4;
+    background: lightgrey;
+    padding: 2em;
+    border-radius: 1em;
+    color: white;
+    width: 40vw;
+/*    top: 35vh;
+    left: 30vw;*/
+    color: #333333;
+}
+
+h4 {
+    font-size: 2rem;
+}
+
+
 .container {
     text-align: left;
     width: 45vw;
     padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 
 .contact {
     padding-bottom : 1.5rem;
+    gap: 1rem;
+    display: flex;
 }
 
 
-p, a {
+p, section a {
     font-size: 1.5em;
 }
 
+
 h2 {
     font-size: 3rem;
+    place-self: center;
+    padding-bottom: 2rem;
 }
 
 button {
@@ -58,28 +84,29 @@ button {
     top: 2rem;
     right: 2rem;
     display: flex;
+    gap: 1rem;
 }
 
+/*
 .edit-btn, .delete-btn {
     margin-right: 1rem;
 }
+*/
 
 .button-container form button {
     background-color: transparent;
     border:none;
 }
 
-.edit {
+.edit, .delete {
     color: white;
 }
 
-.delete {
-    color: black;
-}
+
 
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 1rem;
 }
 
@@ -96,3 +123,9 @@ button {
     gap: .3rem;
     width: 100%;
 }
+
+/*
+.red-button {
+    width: 100%;
+    padding:2rem 0;
+}*/

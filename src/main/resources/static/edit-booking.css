@@ -5,8 +5,8 @@
 }
 
 .picture-container img {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .checkbox-container {
@@ -14,37 +14,40 @@
     top: 5px;
     left: 5px;
     padding: 5px;
-    border-radius: 3px;
+    border-radius: 8px;
 }
 
 .checkbox {
-    webkit-appearance: none; /* Remove default checkbox styling */
     -moz-appearance: none;
     appearance: none;
-    width: 20px; /* Adjust width as needed */
-    height: 20px; /* Adjust height as needed */
-    border-radius: 8px; /* Rounded corners */
-    background-color: var(--input-field-gray); /* Background color */
-    outline: none; /* Remove blue focus outline */
-    cursor: pointer; /* Pointer cursor on hover */
+    width: 50px;
+    height: 50px;
+
+    outline: none;
+    cursor: pointer;
+}
+
+.checkbox:checked {
+        background-color: #a22e2e;
 }
 
 
 .checkbox:checked::after {
     content: '\2713';
-    font-size: 15px;
-    color: black;
+    font-size: 40px;
+    color: white;
     height: 100%;
     display: flex;
     align-items: center;
-    margin-left: -5px;
 }
 
-.icon-button {
-    border-radius: 0.4em;
-    background-color: transparent;
-    color: black;
-    border: none;
+
+h2 {
+    font-size: 3.5rem;
+}
+
+h3 {
+    font-size: 2.5rem;
 }
 
 .delete-form {
@@ -66,34 +69,35 @@ h2 {
     margin-top: 30px;
 }
 
-.red-text {
-    color: red;
-}
-
-.white-text {
-    color: white;
-}
-
-.button-container-edit {
+.button-container-save {
     display: flex;
     justify-content: center;
 }
 
 .gray-button {
-    margin-right: 10px;
+
     margin-top: 20px;
-    margin-left: 10px;
+
 
 }
 
 .red-button {
-    margin-right: 10px;
+
     margin-top: 20px;
-    margin-left: 10px;
+
 }
 
-.error-message p{
-    color: black;
-    text-align: center;
+.button-container {
+    display: flex;
+    place-content: space-between;
+    margin-top: 0;
 }
 
+.image-message {
+    font-size: 0.8em;
+    color: #333333;
+    font-style: italic;
+    margin-bottom: 0.5em; /* Adding some space below the message */
+    margin-top: -1%;
+
+}

@@ -7,6 +7,7 @@ import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -265,10 +266,12 @@ public class BookingController {
      * @return A redirection to the booking details page with the specified bookingId.
      */
     @GetMapping("/save-booking")
-    public String saveBooking(@RequestParam int bookingId, HttpSession session) {
+    public String saveBooking(@RequestParam int bookingId, HttpSession session,
+                              @RequestParam String date) {
         String username = (String) session.getAttribute("username");
         emailService.sendConfirmationMail(bookingId, username);
-        return "redirect:/booking?bookingId="+bookingId;
+
+        return "redirect:/day?date=" + date;
     }
 
     /**
@@ -322,7 +325,7 @@ public class BookingController {
     @PostMapping("/edit-booking")
     public String updateBooking(@RequestParam LocalTime startTimeSlot, @RequestParam LocalTime endTimeSlot, @RequestParam LocalDate date,
                                 @RequestParam String projectTitle, @RequestParam String projectDesc,
-                                @RequestParam String personalNote, @RequestParam boolean isDepositPayed, @RequestParam(required = false) List<Integer> deletePictures,
+                                @RequestParam String personalNote,  @RequestParam(name = "isDepositPayed", defaultValue = "false") boolean isDepositPayed,  @RequestParam(required = false) List<Integer> deletePictures,
                                 @RequestParam("projectPictures") MultipartFile[] projectPictures,
                                 @RequestParam int bookingId, Model model, HttpSession session, @RequestParam(required = false) boolean sendMail, RedirectAttributes redirectAttributes) {
 
@@ -395,15 +398,14 @@ public class BookingController {
      * @return Redirects to the calendar
      */
     @PostMapping("/delete-booking")
-    public String deleteBooking(@RequestParam Integer bookingIdToDelete, HttpSession session, Model model) {
+    public String deleteBooking(@RequestParam Integer bookingIdToDelete, @RequestParam String date, HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         bookingService.deleteBooking(bookingIdToDelete);
-        return "redirect:/calendar";
+        return "redirect:/day?date=" + date;
     }
 }
-
 
 

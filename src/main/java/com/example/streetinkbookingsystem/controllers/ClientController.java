@@ -54,9 +54,10 @@ public class ClientController {
         // ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
         // Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand through Collections.sort)
         // Uses stream to handle everything simultaneously
-        // Uses collect (Collectors.groupingBy) to group the elements of the stream based on first letter in first name
+        // Uses collect (Collectors.groupingBy) to group the elements of the stream based on
+        //                  first letter in first name ignoring if it is lower case or upper case
         Map<Character, List<Client>> groupedClients = sortedClients.stream()
-                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
+                .collect(Collectors.groupingBy(client -> Character.toUpperCase(client.getFirstName().charAt(0)),
                         TreeMap::new, Collectors.toList()));
         model.addAttribute("groupedClients", groupedClients);
 
@@ -151,16 +152,22 @@ public class ClientController {
      * @param model          the model to add attributes to for rendering view
      * @param clientId       the ID of the client to view
      * @param clientToDelete the ID of the client to delete, if applicable
+     * @param bookingId      the ID of the booking, if applicable
      * @return the view name of the client detail page
      * @author Emma
      */
     @GetMapping("/client")
     public String seeClient(HttpSession session, Model model, @RequestParam("clientId") int clientId,
-                            @RequestParam(required = false) Integer clientToDelete) {
+                            @RequestParam(required = false) Integer clientToDelete,
+                            @RequestParam(required = false) Integer bookingId) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
+
+        if (bookingId != null) {
+            model.addAttribute("bookingId", bookingId);
+        }
 
         if (clientToDelete != null) {
             model.addAttribute("clientToDelete", clientToDelete);
@@ -183,14 +190,23 @@ public class ClientController {
      * @param redirectAttributes the attributes for a redirect scenario
      * @param model              the model to add attributes to for rendering view
      * @param session            the current HTTP session to check if logged in
+     * @param bookingId          the ID of the booking, if applicable
      * @return the redirect string to the client detail page with a delete warning
      * @author Emma
      */
     @PostMapping("/client")
-    public String clientWithWarning(@RequestParam Integer clientToDelete, @RequestParam int clientId, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
+    public String clientWithWarning(@RequestParam Integer clientToDelete, @RequestParam int clientId,
+                                    RedirectAttributes redirectAttributes,
+                                    Model model, HttpSession session,
+                                    @RequestParam(required = false) Integer bookingId) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
+
+        if (bookingId != null) {
+            model.addAttribute("bookingId", bookingId);
+        }
+
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
 
         Client client = clientService.getClientFromClientId(clientId);
@@ -199,6 +215,7 @@ public class ClientController {
         redirectAttributes.addAttribute("clientToDelete", clientToDelete);
         return "redirect:/client?clientId=" + clientId;
     }
+
 
     /**
      * Displays the edit client page.

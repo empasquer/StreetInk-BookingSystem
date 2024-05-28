@@ -8,8 +8,8 @@ h2 {
 
 .booking-container {
     margin-bottom: 2em;
-    margin-left: 2em;
-    margin-right: 2em;
+/*    margin-left: 2em;
+    margin-right: 2em;*/
 }
 
 section {
@@ -44,10 +44,26 @@ div .respons{
 
 hr {
     border-color: white;
+    color: white;
     border-width: 2px;
     margin-top: 20px; /* Tilføjer mellemrum over hr-linjen */
     margin-bottom: 15px;
 }
+
+
+.confirmation-container {
+    position: absolute;
+    z-index: 4;
+    background: lightgrey;
+    padding: 2em;
+    border-radius: 1em;
+    color: white;
+    width: 40vw;
+    top: 35vh;
+    left: 30vw;
+    color: #333333;
+}
+
 
 .client-name {
     font-size: 2em;
@@ -93,8 +109,6 @@ hr {
 
 .button-container button {
     padding: 40px 70px; /* Gør knapperne større */
-    font-size: 1em;
-    margin: 20px; /* Mindsk afstanden mellem knapperne */
     width: 230px; /* Fast bredde for alle knapper */
     height: 100px; /* Fast højde for alle knapper */
     display: flex;
@@ -136,7 +150,8 @@ hr {
 
 .edit-delete-container-edit {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding-top: 2rem;
 }
 
 

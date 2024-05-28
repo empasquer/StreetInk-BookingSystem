@@ -12,6 +12,14 @@ li {
     padding: 10px 20px;
 }
 
+.search-bar-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+}
+
 .letter-header {
     color: var(--white);
     font-size: 4rem;
@@ -23,8 +31,7 @@ li {
 }
 
 .client-list {
-    list-style-type: none;
-    padding: 0;
+    list-style: none;
 }
 
 .client-item {
@@ -32,6 +39,16 @@ li {
     font-size: 2rem;
     padding-left: 20px;
 }
+
+.found-client {
+/*    padding:2rem 0;*/
+    font-size: 2rem;
+}
+
+li a {
+    text-decoration: underline;
+}
+
 
 /* Ensures that the link styling is consistent within client-item */
 a.client-item {

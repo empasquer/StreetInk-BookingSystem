@@ -6,13 +6,16 @@
     <link rel="stylesheet" href="/layout.css">
     <link rel="stylesheet" href="/client.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 </head>
 <header th:block th:insert="~{home/header :: header}"></header>
 
 <main>
-    <!--    <div class="back-arrow-container">
-            <a th:href="@{/}" class="small button"><i class="fas fa-arrow-left"></i></a>
-        </div>-->
+
+        <div class="back-arrow-container">
+            <a th:if="${bookingId != null}" th:href="@{/booking(bookingId=${bookingId})}" class="small button"><i class="fas fa-arrow-left"></i></a>
+            <a th:unless="${bookingId != null}" th:href="@{/client-list}" class="small button"><i class="fas fa-arrow-left"></i></a>
+        </div>
 
     <h1 th:text="${client.firstName + '´s info'}"></h1>
 
@@ -62,7 +65,7 @@
 
         <div class="container">
             <ul>
-                <li th:each="booking : ${clientBookings}"><a th:href="@{/booking(bookingId=${booking.id},username=${username})}" class="booking gray-button box-shadow">
+                <li th:each="booking : ${clientBookings}"><a th:href="@{/booking(bookingId=${booking.id},username=${username})}" class="booking gray-button">
                     <span th:text="${booking.date}"></span>
                     <span th:text="${booking.projectTitle}"></span>
                 </a></li>
