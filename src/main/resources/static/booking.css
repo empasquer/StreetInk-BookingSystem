@@ -50,6 +50,21 @@ hr {
     margin-bottom: 15px;
 }
 
+
+.confirmation-container {
+    position: absolute;
+    z-index: 4;
+    background: lightgrey;
+    padding: 2em;
+    border-radius: 1em;
+    color: white;
+    width: 40vw;
+    top: 35vh;
+    left: 30vw;
+    color: #333333;
+}
+
+
 .client-name {
     font-size: 2em;
     font-weight: bold;
@@ -135,7 +150,8 @@ hr {
 
 .edit-delete-container-edit {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding-top: 2rem;
 }
 
 
