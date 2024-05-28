@@ -29,12 +29,31 @@ section {
     position: relative;
 }
 
+.confirmation-container {
+    position: absolute;
+    z-index: 4;
+    background: lightgrey;
+    padding: 2em;
+    border-radius: 1em;
+    color: white;
+    width: 40vw;
+/*    top: 35vh;
+    left: 30vw;*/
+    color: #333333;
+}
+
+h4 {
+    font-size: 2rem;
+}
+
+
 .container {
     text-align: left;
     width: 45vw;
     padding-top: 2rem;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 
@@ -84,7 +103,7 @@ button {
 
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 1rem;
 }
 
@@ -102,7 +121,8 @@ button {
     width: 100%;
 }
 
+/*
 .red-button {
     width: 100%;
     padding:2rem 0;
-}
+}*/
