@@ -145,6 +145,13 @@ h2 {
     border-radius: 1em;
     color: white;
     width: 20em;
+    top: 35vh;
+    left: 30vw;
+    color: #333333;
+}
+
+h4 {
+    font-size: 2rem;
 }
 
 h3 {
