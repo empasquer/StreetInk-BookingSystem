@@ -84,11 +84,14 @@ button {
     top: 2rem;
     right: 2rem;
     display: flex;
+    gap: 1rem;
 }
 
+/*
 .edit-btn, .delete-btn {
     margin-right: 1rem;
 }
+*/
 
 .button-container form button {
     background-color: transparent;
