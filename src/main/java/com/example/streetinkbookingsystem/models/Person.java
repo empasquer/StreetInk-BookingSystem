@@ -7,12 +7,10 @@ public class Person {
     private String lastName;
     private String email;
     private int phoneNumber;
-    //private JdbcTemplate jdbcTemplate;
+
 
     public Person() {
-        //this.jdbcTemplate = new JdbcTemplate();
     }
-
 
     public String getFirstName() {
         return firstName;

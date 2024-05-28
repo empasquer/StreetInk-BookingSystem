@@ -22,11 +22,11 @@ import java.util.List;
 public class DayController {
 
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
 
     /**
      * @author Nanna

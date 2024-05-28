@@ -24,13 +24,13 @@ import java.util.List;
 public class CalendarController {
 
     @Autowired
-    CalendarService calendarService;
+    private CalendarService calendarService;
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     /**
      * @author Nanna

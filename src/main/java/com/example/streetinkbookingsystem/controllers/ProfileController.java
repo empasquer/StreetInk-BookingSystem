@@ -21,10 +21,11 @@ import java.util.Optional;
 
 @Controller
 public class ProfileController {
+
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     /**
      * @author Emma

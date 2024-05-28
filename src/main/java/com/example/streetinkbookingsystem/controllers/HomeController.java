@@ -17,15 +17,14 @@ public class HomeController {
 
     @Autowired
     private TattooArtistService tattooArtistService;
-
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     /**
-     *
-     * @param model
-     * @return home/index
      * @author Tara
+     *
+     * @param model "holds" the attributes to use for the view.
+     * @return home/index - startpage where we can see all the tattoo-artists profiles.
      */
     @GetMapping("/")
     public String index(Model model){

@@ -17,7 +17,8 @@
         <a th:unless="${bookingId != null}"  th:href="@{/client-list}" class="small button"><i class="fas fa-arrow-left"></i></a>
     </div>
 
-    <h1 th:text="'Search Result for: ' + ${searchQuery}" ></h1>
+    <!-- vises kun hvis bookingId er med -->
+    <img th:if="${bookingId}" src="/assets/proBar-2.png" alt="Process Picture1/3" class="process-picture">    <h1 th:text="'Search Result for: ' + ${searchQuery}" ></h1>
 
     <section class="box-shadow">
         <div th:if="${results}">

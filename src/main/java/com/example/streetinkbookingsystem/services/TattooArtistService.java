@@ -118,7 +118,6 @@ public class TattooArtistService {
     tattooArtistRepository.updateTattooArtist(firstName,lastName,email,phoneNumber,facebook,instagram,avgWorkHours,newUsername, currentUsername, pictureData);
 }
 
-
     /**
      * @author Munazzah
      * @param username To get the right password

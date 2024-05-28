@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
-    @Autowired
-    LoginService loginService;
 
     @Autowired
-    EmailService emailService;
-
+    private LoginService loginService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private EmailService emailService;
+    @Autowired
+    private TattooArtistService tattooArtistService;
 
 
     /**

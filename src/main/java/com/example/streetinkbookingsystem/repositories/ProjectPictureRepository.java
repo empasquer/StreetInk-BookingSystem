@@ -15,13 +15,22 @@ import java.util.List;
 public class ProjectPictureRepository {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
+    /**
+     * @Author Tara
+     * @param projectPicture
+     */
     public void saveProjectPictures(ProjectPicture projectPicture){
         String query = "INSERT INTO project_picture (booking_id, picture_data) VALUES (?, ?)";
         jdbcTemplate.update(query, projectPicture.getBookingId(), projectPicture.getPictureData());
     }
 
+    /**
+     * @Author Tara
+     * @param bookingId
+     * @return
+     */
     public List<ProjectPicture> getPicturesByBooking(int bookingId) {
         String query = "SELECT * FROM project_picture WHERE booking_id = ?";
         RowMapper<ProjectPicture> rowMapper = new BeanPropertyRowMapper<>(ProjectPicture.class);

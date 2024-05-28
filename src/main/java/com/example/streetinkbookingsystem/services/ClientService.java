@@ -14,7 +14,7 @@ import java.util.List;
 public class ClientService {
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     /**
      * @summary Takes the Arraylist from the repository, sorts it using Collections.sort() and
@@ -57,23 +57,25 @@ public class ClientService {
         clientRepository.updateClient(firstName, lastName,email, phoneNumber, description, clientId);
     }
 
-    // TODO OBS Lidt dobbeltmetode. ved ikke om vi kan lave der til at det kun er én vi bruger?
-
-    public void updateExistingClient(Client client) {
-        clientRepository.updateClient(client.getFirstName(), client.getLastName(),
-                client.getEmail(), client.getPhoneNumber(),
-                client.getDescription(), client.getId());
-    }
-
     public void deleteClientInfoByClientId(int clientId) {
         clientRepository.updateClient("Unknown", null, "unknown",
                 0, null, clientId);
     }
 
+    /**
+     * @Author Tara
+     * @param client
+     * @return
+     */
     public Client saveClient(Client client){
         return clientRepository.saveClient(client);
     }
 
+    /**
+     * @Author Tara
+     * @param bookingId
+     * @param clientId
+     */
     public void updateClientOnBooking(int bookingId, int clientId) {
         clientRepository.updateClientOnBooking(bookingId, clientId);
     }

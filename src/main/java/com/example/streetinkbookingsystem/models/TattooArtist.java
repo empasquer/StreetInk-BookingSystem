@@ -8,7 +8,7 @@ public class TattooArtist extends Person {
     private byte[] profilePicture; // ændret til byte array.
     // alm. byte kan åbenbart ikke bruge Java's Base64-klasse til dette formål,
     //hvis den skal kunne samarbejde med database og thymeleaf.
-    private String base64ProfilePicture; // Add this field
+    private String base64ProfilePicture;
     private String facebook;
     private String instagram;
     private int avgWorkHours;
@@ -78,8 +78,6 @@ public class TattooArtist extends Person {
         this.isAdmin = isAdmin;
     }
 
-
-    // Getters and setters for new field
     public String getBase64ProfilePicture() {
         return base64ProfilePicture;
     }

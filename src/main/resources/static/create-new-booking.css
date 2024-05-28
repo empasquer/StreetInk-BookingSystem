@@ -1,26 +1,18 @@
 
 h2 {
-    font-size: 1.5em; /* Juster størrelsen efter behov */
+    font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 50px;
 }
 
 body {
-
+    font-size: 1.2em;
     font-weight: bold;
 }
 
 .back-arrow-container {
     margin-bottom: 20px;
 }
-
-/*
-.back-arrow-container a {
-    color: #333;
-    text-decoration: none;
-    font-size: 20px;
-}
-*/
 
 .process-picture {
     max-width: 100px;
@@ -66,22 +58,23 @@ body {
     cursor: pointer;
     transform: scale(1.5);
     margin-right: 30px;
-    width: 30px; /* Custom width */
+    width: 30px;
     height: 30px;
 
 }
 
 .form-group-dep input[type="checkbox"]:checked {
-    background-color: #a22e2e; /* Background color when checked */}
+    background-color: #a22e2e;
+}
 
 .form-group-dep input[type="checkbox"]::after {
     content: '';
-    display: none; /* Hidden by default */
+    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 17px; /* Adjust size for check mark */
+    font-size: 17px;
     font-weight: bold;
     color: white;
 }
@@ -95,22 +88,28 @@ body {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+   /* gap: 1rem;
+
+    */
 }
 .form-group-time-end {
     margin-bottom: 30px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+   /* gap: 1rem;
+
+    */
 }
 
 .form-group-time .time-label,
 .form-group-time-end .time-label {
-/*    margin-right: 20px;*/
     flex: 0 0 auto;
 }
 .form-group-time-end label {
-/*    margin-right: 30px;*/
+    margin-right: 30px;
+}
+.form-group-time label {
+    margin-right: 20px;
     flex: 0 0 auto;
 }
 
@@ -133,19 +132,17 @@ body {
 
 .form-group-time input[type="time"],
 .form-group-time-end input[type="time"] {
-    font-size: 20px; /* Juster skriftstørrelsen efter behov */
-    padding: 10px; /* Juster polstring for bedre udseende */
-    border: 1px solid #ccc; /* Juster grænsefarven efter behov */
-    border-radius: 10px; /* Runde hjørner */
-    box-sizing: border-box; /* Sikrer korrekt boksmåling */
-    width: 15%; /* Sikrer fuld bredde */
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 15%;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-
 }
 
 .form-group input[type="text"]{
@@ -155,7 +152,6 @@ body {
     width: 95%;
     padding: 1rem;
     border-style: none;
-
 }
 
 .form-group textarea{
@@ -165,7 +161,6 @@ body {
     width: 95%;
     padding: 1rem;
     border-style: none;
-
 }
 
 /* ændrer tekst i drop-down menuen. */
@@ -202,23 +197,20 @@ input[type="file"] {
 /* ændrer "gennemse" knappen*/
 input[type="file"]::file-selector-button {
     border: none;
-    color: #333333; /* textfarve */
-    content: "Upload Images";
+    color: #333333;
     padding: 8px;
     cursor: pointer;
     border-radius: 10px;
     padding: 10px;
     font-size: 20px;
     background: #f0f0f0;
-    margin-right: 10px; /* Tilføj mellemrum mellem knap og tekst */
+    margin-right: 10px;
 }
 
 input[type="file"]::after {
-    content: "No uploaded Image"; /* Ændrer standardteksten */
     color: #333;
     margin-left: 10px;
 }
-
 
 .button-container {
     display: flex;
@@ -227,11 +219,10 @@ input[type="file"]::after {
 }
 
 button {
-    padding: 40px 70px; /* Gør knapperne større */
-
-
-    width: 230px; /* Fast bredde for alle knapper */
-    height: 100px; /* Fast højde for alle knapper */
+    padding: 40px 70px;
+    margin: 10px;
+    width: 230px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -241,7 +232,7 @@ button {
     font-size: 0.8em;
     color: #333333;
     font-style: italic;
-    margin-bottom: 0.5em; /* Adding some space below the message */
+    margin-bottom: 0.5em;
 }
 
 .error-message p{

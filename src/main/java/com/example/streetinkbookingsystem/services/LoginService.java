@@ -18,12 +18,10 @@ import java.util.Random;
 @Service
 public class LoginService {
 
-
     private static final int SALT_LENGTH = 16;
 
     @Autowired
     private TattooArtistRepository tattooArtistRepository;
-
     @Autowired
     private HttpSession session;
 

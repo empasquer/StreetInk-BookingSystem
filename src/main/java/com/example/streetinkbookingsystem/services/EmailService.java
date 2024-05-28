@@ -24,16 +24,14 @@ import java.util.regex.Pattern;
 
     @Autowired
     private JavaMailSender javaMailSender;
-
     @Autowired
     private TemplateEngine templateEngine;
-
     @Autowired
-    TattooArtistRepository tattooArtistRepository;
+    private TattooArtistRepository tattooArtistRepository;
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
 
 
     /**

@@ -19,11 +19,11 @@ import java.util.List;
 public class CalendarService {
 
     @Autowired
-    DashboardService dashboardService;
+    private DashboardService dashboardService;
     @Autowired
-    TattooArtistService tattooArtistService;
+    private TattooArtistService tattooArtistService;
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
 
 
     /**

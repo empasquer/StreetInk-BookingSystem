@@ -14,11 +14,11 @@ import java.util.List;
 
 @Service
 public class DashboardService {
-    @Autowired
-    BookingService bookingService;
 
     @Autowired
-    TattooArtistService tattooArtistService;
+    private BookingService bookingService;
+    @Autowired
+    private TattooArtistService tattooArtistService;
 
     public int calculateAmtBookingsADay(String username) {
         return bookingService.getBookingCountForDate(LocalDate.now(), username);
@@ -27,8 +27,6 @@ public class DashboardService {
     public int calculateAmtBookingsAWeek(String username) {
         return bookingService.getBookingCountForThisWeek(username);
     }
-
-
 
     public int calculateBookingPercentageOfMonth(String username) {
         LocalDate currentDate = LocalDate.now();
@@ -61,7 +59,6 @@ public class DashboardService {
         double progressPercentage = ((double) currentDayOfMonth / totalDaysInMonth) * 100;
         return (int) Math.round(progressPercentage);
     }
-
 
     public int calculateWeekdaysInMonth(LocalDate date) {
         int weekdaysInMonth = 0;
