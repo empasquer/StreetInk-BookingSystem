@@ -7,6 +7,7 @@ import com.example.streetinkbookingsystem.models.TattooArtist;
 import com.example.streetinkbookingsystem.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -265,10 +266,12 @@ public class BookingController {
      * @return A redirection to the booking details page with the specified bookingId.
      */
     @GetMapping("/save-booking")
-    public String saveBooking(@RequestParam int bookingId, HttpSession session) {
+    public String saveBooking(@RequestParam int bookingId, HttpSession session,
+                              @RequestParam String date) {
         String username = (String) session.getAttribute("username");
         emailService.sendConfirmationMail(bookingId, username);
-        return "redirect:/booking?bookingId="+bookingId;
+
+        return "redirect:/day?date=" + date;
     }
 
     /**
