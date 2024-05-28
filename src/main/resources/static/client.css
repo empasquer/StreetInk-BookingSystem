@@ -33,6 +33,8 @@ section {
     text-align: left;
     width: 45vw;
     padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -50,6 +52,8 @@ p, section a {
 
 h2 {
     font-size: 3rem;
+    place-self: center;
+    padding-bottom: 2rem;
 }
 
 button {
