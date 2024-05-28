@@ -325,7 +325,7 @@ public class BookingController {
     @PostMapping("/edit-booking")
     public String updateBooking(@RequestParam LocalTime startTimeSlot, @RequestParam LocalTime endTimeSlot, @RequestParam LocalDate date,
                                 @RequestParam String projectTitle, @RequestParam String projectDesc,
-                                @RequestParam String personalNote, @RequestParam boolean isDepositPayed, @RequestParam(required = false) List<Integer> deletePictures,
+                                @RequestParam String personalNote,  @RequestParam(name = "isDepositPayed", defaultValue = "false") boolean isDepositPayed,  @RequestParam(required = false) List<Integer> deletePictures,
                                 @RequestParam("projectPictures") MultipartFile[] projectPictures,
                                 @RequestParam int bookingId, Model model, HttpSession session, @RequestParam(required = false) boolean sendMail, RedirectAttributes redirectAttributes) {
 
@@ -407,6 +407,5 @@ public class BookingController {
         return "redirect:/calendar";
     }
 }
-
 
 
