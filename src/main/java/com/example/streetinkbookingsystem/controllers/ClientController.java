@@ -329,86 +329,12 @@ public class ClientController {
         client.setEmail(email);
         client.setPhoneNumber(phoneNumber);
         client.setDescription(description);
+
         //Returns the new client so that the clientId can be used to update the default client in the booking
         client = clientService.saveClient(client);
         int clientId = client.getId();
 
         return "redirect:/booking-preview?bookingId=" + bookingId + "&clientId=" + clientId;
     }
-
-    /**
-     * @Author Tara
-     * @param model
-     * @param session
-     * @param bookingId
-     * @return
-     */
-
-    /*@GetMapping("/choose-client")
-    public String chooseClient(Model model, HttpSession session,
-                               @RequestParam int bookingId, @RequestParam LocalDate date) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
-            return "redirect:/";
-        }
-
-
-        String username = "Hanzoo";
-        String username = (String) session.getAttribute("username");
-        TattooArtist tattooArtist = tattooArtistService.getTattooArtistByUsername(username);
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("tattooArtist", tattooArtist);
-        model.addAttribute("date", date);
-        //Værdier som skal videre til view
-        //Integer bookingId = (Integer) session.getAttribute("bookingId");
-        model.addAttribute("bookingId", bookingId);
-
-
-        List<Client> sortedClients = clientService.getSortedListOfClients();
-        //ADT Map is the result here, where the key is a character (first letter) and value is List<Client>
-        //Uses TreeMap to maintain the natural order of the keys (that are sorted beforehand)
-        //Uses stream to handle everything simulationaly
-        //Uses collect (Collectors.groupingBy) to group the elements of teh stream based on first letter in first name
-        Map<Character, List<Client>> groupedClients = sortedClients.stream()
-                .collect(Collectors.groupingBy(client -> client.getFirstName().charAt(0),
-                        TreeMap::new, Collectors.toList()));
-
-        model.addAttribute("groupedClients", groupedClients);
-        return "home/choose-client";
-    }
-
-     */
-
-
-    /**
-     * @Author Tara
-     * @param session
-     * @param searchQuery
-     * @param bookingId
-     * @param model
-     * @param redirectAttributes
-     * @return
-     */
-    /*@PostMapping("/search-for-existing-client")
-    public String searchForExistingClient(HttpSession session,
-                                          @RequestParam String searchQuery,
-                                          @RequestParam int bookingId,
-                                          @RequestParam LocalDate date,
-                                          @RequestParam(required = false) int clientId,
-                                          Model model,
-                         RedirectAttributes redirectAttributes) {
-        boolean loggedIn = loginService.isUserLoggedIn(session);
-        if (!loggedIn) {
-            return "redirect:/";
-        }
-
-        String username = (String) session.getAttribute("username");
-
-
-        return "redirect:/booking-preview?bookingId=" + bookingId + "&clientId=" + clientId;
-
-    }
-
-     */
 }
 

@@ -295,20 +295,18 @@ public class BookingController {
      * @Summary Updates the booking with the new information that has been written in view
      *
      * @author Munazzah
-     * @param startTimeSlot
-     * @param endTimeSlot
-     * @param date
-     * @param projectTitle
-     * @param projectDesc
-     * @param personalNote
-     * @param isDepositPayed
-     * @param deletePictures
-     * @param projectPictures
-     * @param bookingId
-     * @param model
-     * @param session
-     * @param redirectAttributes
-     * @param sendMail
+     * @param startTimeSlot The start time of the booking slot.
+     * @param endTimeSlot The end time of the booking slot.
+     * @param date The date of the booking.
+     * @param session The HttpSession object to retrieve the username of the logged-in user.
+     * @param projectTitle The title of the project for the booking.
+     * @param projectDesc The description of the project for the booking.
+     * @param personalNote The personal notes for the booking.
+     * @param isDepositPayed A boolean indicating whether the deposit is paid for the booking (default is false).
+     * @param projectPictures The pictures uploaded for the project.
+     * @param bookingId The ID of the booking to be updated (optional).
+     * @param redirectAttributes Used for adding flash attributes for redirection.
+     * @param model The model to add attributes for rendering the view.
      * @return Redirects to booking view
      */
     @PostMapping("/edit-booking")

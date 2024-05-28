@@ -214,11 +214,11 @@ public class ProfileController {
     /**
      * @authot Nanna
      * @summary  retrieves the list of profiles that can be deleted or change admin status
-     * * @param model  add attributes to for rendering the view
-     *  * @param session  to check user login status
-     *  * @param profileToDelete the username of the profile to delete, if any
-     *  * @param message   an optional message to display,used to confirm profile deletion or admin status changes
-     *  * @return the view for managing profiles
+     * @param model  add attributes to for rendering the view
+     * @param session  to check user login status
+     * @param profileToDelete the username of the profile to delete, if any
+     * @param message   an optional message to display,used to confirm profile deletion or admin status changes
+     * @return the view for managing profiles
 
      */
     @GetMapping("/manage-profiles")

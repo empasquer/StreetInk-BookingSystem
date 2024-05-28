@@ -17,8 +17,6 @@ public class HomeController {
 
     @Autowired
     private TattooArtistService tattooArtistService;
-    @Autowired
-    private LoginService loginService;
 
     /**
      * @author Tara

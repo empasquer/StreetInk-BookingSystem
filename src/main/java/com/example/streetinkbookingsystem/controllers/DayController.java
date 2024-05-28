@@ -47,7 +47,8 @@ public class DayController {
         model.addAttribute("date", date);
         String day = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         model.addAttribute("day", day);
-        // might move to service, this makes a list of quarter hours
+
+        //This makes a list of quarter hours
         List<Double> hours = new ArrayList<>();
         for (double hour = 9; hour <= 20; hour += 0.25) {
             hours.add(hour);
@@ -68,6 +69,7 @@ public class DayController {
         LocalDate nextDate = date.plusDays(1);
         return "redirect:/day?date=" + nextDate;
     }
+
     /**
      * @author Nanna
      * @param date used to determine the previous day by subtracting a day
