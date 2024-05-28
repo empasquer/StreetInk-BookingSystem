@@ -35,6 +35,10 @@ import java.util.regex.Pattern;
 
 
     /**
+     * @summary Sends a confirmation email to the client for a specific booking.
+     *  * This method retrieves the booking details, tattoo artist details, and client details,
+     *  * then prepares and sends a confirmation email using an HTML template.
+     *
      * @author Nanna
       * @param bookingId The ID of the booking
      * @param username The username of the tattoo artist

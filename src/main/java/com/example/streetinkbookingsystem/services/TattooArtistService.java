@@ -27,8 +27,8 @@ public class TattooArtistService {
 
     /**
      * @author Emma
-     * @param username
-     * @return
+     * @param username of the tattooArist to fetch
+     * @return the tattooArtist
      */
     public TattooArtist getTattooArtistByUsername(String username) {
         return tattooArtistRepository.getTattooArtistByUsername(username);

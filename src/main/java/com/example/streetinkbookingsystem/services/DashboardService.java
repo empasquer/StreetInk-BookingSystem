@@ -67,7 +67,7 @@ public class DashboardService {
 
     /**
      * @author Emma
-     * @return
+     * @return The percentage of the current month that has passed, rounded to the nearest integer.
      */
     public int calculateMonthProgressPercentage() {
         LocalDate currentDate = LocalDate.now();
@@ -79,7 +79,6 @@ public class DashboardService {
     }
 
     /**
-     * @author Emma
      * @author Emma
      * @return The progress percentage of the current month, rounded to the nearest integer.
      */
