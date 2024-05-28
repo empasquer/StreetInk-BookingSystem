@@ -37,6 +37,7 @@
             <button class="gray-button">Cancel</button>
           </form>
           <form th:action="@{/delete-booking}" method="post">
+            <input type="hidden" name="date" th:value="${booking.date}">
             <input type="hidden" name="bookingIdToDelete" th:value="${bookingIdToDelete}"/>
             <button class="red-button" type="submit">Delete</button>
           </form>

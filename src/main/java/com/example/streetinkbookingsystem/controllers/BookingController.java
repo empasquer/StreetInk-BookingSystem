@@ -398,13 +398,13 @@ public class BookingController {
      * @return Redirects to the calendar
      */
     @PostMapping("/delete-booking")
-    public String deleteBooking(@RequestParam Integer bookingIdToDelete, HttpSession session, Model model) {
+    public String deleteBooking(@RequestParam Integer bookingIdToDelete, @RequestParam String date, HttpSession session, Model model) {
         if (!loginService.isUserLoggedIn(session)) {
             return "redirect:/";
         }
         loginService.addLoggedInUserInfo(model, session, tattooArtistService);
         bookingService.deleteBooking(bookingIdToDelete);
-        return "redirect:/calendar";
+        return "redirect:/day?date=" + date;
     }
 }
 
