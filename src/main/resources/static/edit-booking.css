@@ -5,8 +5,8 @@
 }
 
 .picture-container img {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .checkbox-container {
@@ -20,10 +20,9 @@
 .checkbox {
     -moz-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 5px !important;
-    background-color: white;
+    width: 50px;
+    height: 50px;
+    background-color: #a22e2e;
     outline: none;
     cursor: pointer;
 }
@@ -31,12 +30,11 @@
 
 .checkbox:checked::after {
     content: '\2713';
-    font-size: 15px;
-    color: black;
+    font-size: 40px;
+    color: white;
     height: 100%;
     display: flex;
     align-items: center;
-    margin-left: -5px;
 }
 
 
