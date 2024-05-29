@@ -1,9 +1,9 @@
-CREATE DATABASE IF NOT EXISTS Gruppe6_street_ink_booking_system;
-USE Gruppe6_street_ink_booking_system;
+CREATE DATABASE IF NOT EXISTS gruppe6_street_ink_booking_system;
+USE gruppe6_street_ink_booking_system;
 
 CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin123';
 GRANT USAGE ON *.* TO 'admin'@'localhost';
-GRANT SELECT, INSERT, UPDATE, DELETE ON street_ink_booking_system.* TO 'admin'@`localhost`;
+GRANT SELECT, INSERT, UPDATE, DELETE ON gruppe6_street_ink_booking_system.* TO 'admin'@`localhost`;
 
 DROP TABLE IF EXISTS tattoo_artist;
 CREATE TABLE tattoo_artist(
@@ -14,8 +14,8 @@ CREATE TABLE tattoo_artist(
                               email VARCHAR(255) NOT NULL,
                               phone_number INT NOT NULL,
                               profile_picture LONGBLOB,
-							  facebook VARCHAR(255),
-							  instagram VARCHAR(255),
+                              facebook VARCHAR(255),
+                              instagram VARCHAR(255),
                               avg_work_hours INT NOT NULL,
                               is_admin BOOLEAN DEFAULT 0
 );
