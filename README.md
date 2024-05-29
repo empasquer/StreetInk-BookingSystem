@@ -1,5 +1,5 @@
 **PLEASE NOTE!!
-IF YOU CREATE THE DATABSAE LOCALLY THEN YOU NEED TO FOLLOW THESE STEPS:
+IF YOU CREATE THE DATABASE LOCALLY THEN YOU NEED TO FOLLOW THESE STEPS:
 When you tun the system for the first time after having created the databse you need to hash the existing passwords for the dummy data!
 This is how you do it:
 1) In the LoginControllere in the login-method you need to activate the following method:   // loginService.hashExistingPasswords();
