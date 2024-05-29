@@ -14,8 +14,8 @@ CREATE TABLE tattoo_artist(
                               email VARCHAR(255) NOT NULL,
                               phone_number INT NOT NULL,
                               profile_picture LONGBLOB,
-                              facebook VARCHAR(255),
-                              instagram VARCHAR(255),
+							  facebook VARCHAR(255),
+							  instagram VARCHAR(255),
                               avg_work_hours INT NOT NULL,
                               is_admin BOOLEAN DEFAULT 0
 );
