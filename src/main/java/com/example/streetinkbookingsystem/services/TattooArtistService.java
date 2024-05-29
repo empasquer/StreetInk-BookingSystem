@@ -19,7 +19,6 @@ public class TattooArtistService {
 
     /**
      * Retrieves a list of all tattoo artists.
-     *
      * @return a list containing all tattoo artists
      * @Author Tara
      */

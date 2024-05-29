@@ -61,19 +61,20 @@ public class BookingService {
     }
 
     /**
-     * @summary Updates the booking with new parameters (or just the old ones).
-     * First it saves the pictures to the booking, and afterward, it updates the actual booking
+     * Updates the booking with new parameters (or just the old ones).
+     * First, it saves the pictures to the booking, and afterward, it updates the actual booking.
+     *
+     * @param bookingId the ID of the booking to be updated
+     * @param startTimeSlot the new start time slot for the booking
+     * @param endTimeSlot the new end time slot for the booking
+     * @param date the new date for the booking
+     * @param projectTitle the new title for the project associated with the booking
+     * @param projectDesc the new description for the project associated with the booking
+     * @param personalNote any new personal notes for the booking
+     * @param isDepositPayed flag indicating if the deposit has been paid
+     * @param pictureList a list of byte arrays representing the new pictures to be associated with the booking
      *
      * @author Munazzah
-     * @param bookingId
-     * @param startTimeSlot
-     * @param endTimeSlot
-     * @param date
-     * @param projectTitle
-     * @param projectDesc
-     * @param personalNote
-     * @param isDepositPayed
-     * @param pictureList
      */
     public void updateBooking(int bookingId, LocalTime startTimeSlot, LocalTime endTimeSlot,
                                  LocalDate date, String projectTitle, String projectDesc,
@@ -124,7 +125,7 @@ public class BookingService {
 
     /**
      * @author Nanna
-     * @param year the year of the month we wan thte bookings of
+     * @param year the year of the month we want hte bookings of
      * @param month the month that we want
      * @param username the tattooArtist connected to the bookings
      * @return a list of bookings related to the tattooArtist in the given month
@@ -173,6 +174,12 @@ public class BookingService {
         return totalMinutes;
     }
 
+    /**
+     * @Summary Retrieves a list of bookings associated with the specified client ID.
+     * @param clientId the ID of the client whose bookings are to be retrieved
+     * @return a list of {Booking} objects associated with the given client ID
+     * @author Emma
+     */
     public List<Booking> getBookingsByClientId(int clientId) {
         return bookingRepository.getBookingsByClientId(clientId);
     }

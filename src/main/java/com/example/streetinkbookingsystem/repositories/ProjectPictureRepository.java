@@ -45,11 +45,24 @@ public class ProjectPictureRepository {
         }
     }
 
+    /**
+     * @Summary Deletes a project picture from the database based on the given picture ID.
+     * @param pictureId the ID of the picture to be deleted
+     * @author Munazzah
+     */
     public void deleteProjectPictureById(int pictureId) {
         String sql = "DELETE FROM project_picture WHERE id = ?";
         jdbcTemplate.update(sql, pictureId);
     }
 
+    /**
+     * @Summary Updates the project pictures for a given booking by deleting existing pictures
+     * and inserting new ones.
+     * @param bookingId the ID of the booking whose pictures are to be updated
+     * @param pictureDataList a list of byte arrays representing the new pictures to be inserted
+     *
+     * @author Tara
+     */
     public void updateProjectPictures(int bookingId, List<byte[]> pictureDataList) {
         // First, delete existing pictures for the booking
         String deleteQuery = "DELETE FROM project_picture WHERE booking_id = ?";

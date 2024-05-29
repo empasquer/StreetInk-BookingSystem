@@ -21,8 +21,7 @@ public class TattooArtistRepository {
 
 
     /**
-     * Retrieves a list of all tattoo artists from the database.
-     *
+     * @Summary Retrieves a list of all tattoo artists from the database.
      * @return a list of all TattooArtist objects
      * @author Tara
      */
