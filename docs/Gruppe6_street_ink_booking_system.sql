@@ -1,9 +1,9 @@
-CREATE DATABASE IF NOT EXISTS street_ink_booking_system;
-USE street_ink_booking_system;
+CREATE DATABASE IF NOT EXISTS gruppe6_street_ink_booking_system;
+USE gruppe6_street_ink_booking_system;
 
 CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin123';
 GRANT USAGE ON *.* TO 'admin'@'localhost';
-GRANT SELECT, INSERT, UPDATE, DELETE ON street_ink_booking_system.* TO 'admin'@`localhost`;
+GRANT SELECT, INSERT, UPDATE, DELETE ON gruppe6_street_ink_booking_system.* TO 'admin'@`localhost`;
 
 DROP TABLE IF EXISTS tattoo_artist;
 CREATE TABLE tattoo_artist(
@@ -43,7 +43,7 @@ CREATE TABLE booking (
                          personal_note TEXT,
                          is_deposit_payed BOOLEAN DEFAULT 0,
                          FOREIGN KEY (client_id) REFERENCES client(id),
-                         FOREIGN KEY (username) REFERENCES tattoo_artist(username) ON DELETE CASCADE ON UPDATE CASCADE
+                         FOREIGN KEY (username) REFERENCES tattoo_artist(username) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS project_picture;
