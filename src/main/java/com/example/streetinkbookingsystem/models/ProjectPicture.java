@@ -1,5 +1,7 @@
 package com.example.streetinkbookingsystem.models;
-
+/**
+ * @author everyone
+ */
 public class ProjectPicture {
     private int id;
     private byte[] pictureData;

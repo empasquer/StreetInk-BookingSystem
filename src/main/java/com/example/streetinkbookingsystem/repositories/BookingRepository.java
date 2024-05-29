@@ -255,6 +255,11 @@ public class BookingRepository {
         // kan retunere forskellige værdier, og har brug for specificering
     }
 
+    /**
+     * @author Emma
+     * @param username The username of the tattoo artist
+     * @return The count of bookings for the current week
+     */
     public int getBookingCountForThisWeek(String username) {
         // Calculate the start date of the week based on the provided year, month, and week number
 
@@ -268,7 +273,13 @@ public class BookingRepository {
         return jdbcTemplate.queryForObject(query, Integer.class, startOfWeek, endOfWeek, username);
     }
 
-
+    /**
+     * @author Emma
+     * @param year The year for which to count the bookings
+     * @param month The month for which to count the bookings (1 = January, 12 = December)
+     * @param username The username of the tattoo artist
+     * @return The count of bookings for the specified month and yea
+     */
     public int getBookingCountForMonth(int year, int month, String username) {
         // Finde ud af start og slut dag på måneden
         LocalDate startOfMonth = LocalDate.of(year, month, 1);
@@ -287,7 +298,11 @@ public class BookingRepository {
         return jdbcTemplate.query(query, rowMapper, startDate, endDate, username);
     }
 
-
+    /**
+     * @author Emma
+     * @param clientId The ID of the client whose bookings are to be retrieved
+     * @return A list of Booking objects associated with the specified client, ordered by date in descending order
+     */
     public List<Booking> getBookingsByClientId(int clientId) {
         String query = "SELECT * FROM booking WHERE client_id = ? ORDER BY date DESC";
         RowMapper<Booking> rowMapper = new BeanPropertyRowMapper<>(Booking.class);
