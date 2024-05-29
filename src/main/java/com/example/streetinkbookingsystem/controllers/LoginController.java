@@ -32,6 +32,11 @@ public class LoginController {
         // passwords are hashed, otherwise you will get an error
         // Go to login, DON'T LOG IN, stop the application, remove this method
         // and run the application again!
+
+        // /!\ ATTENTION : brug kun denne metode hvis programmet køres med lokal database!!!!!
+        // hvis du bruger azure databasen skal du IKKE bruge den /!\
+
+
         // loginService.hashExistingPasswords();
         return "home/login";
     }
