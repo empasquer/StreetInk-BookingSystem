@@ -50,6 +50,7 @@ section {
 .upload-label-with-picture input[type="file"] {
     display: none;
 }
+
 .upload-label input[type="file"] {
     display: none;
 }
@@ -132,14 +133,17 @@ section {
 /* Tilføjer et tilpasset udseende for den indre checkmark */
 .checkboxes:checked::after {
     content: '\2713'; /* Tilføjer en checkmark (unicode-tegn) */
-    font-size: 50px; /* Juster størrelsen efter behov */
-    color: black; /* Farve på checkmark */
-    text-align: center; /* Justerer placering */
-    line-height: 50px; /* Justerer linjehøjde */
-    position: relative; /* Positionering relativ til parent */
-    width: 100%; /* Fylder hele checkboxen */
+    font-size: 80px; /* Juster størrelsen efter behov */
+    color: white; /* Farve på checkmark */
     height: 100%; /* Fylder hele checkboxen */
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
 }
+
+input[type="checkbox"]:checked {
+    background-color: #a22e2e; /* Background color when checked */}
+
 
 /* Show the checkmark when the checkbox is checked */
 input[type="checkbox"]:checked + .custom-checkbox:after {

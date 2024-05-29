@@ -160,15 +160,16 @@ form {
     justify-content: center;
     align-items: center;
 }
+
 /* Tilpasser størrelsen på checkbox */
 .checkboxes {
     webkit-appearance: none; /* Remove default checkbox styling */
     -moz-appearance: none;
     appearance: none;
-    width: 50px; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 8px; /* Rounded corners */
-    background-color: var(--input-field-gray); /* Background color */
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: var(--input-field-gray);
     outline: none; /* Remove blue focus outline */
     cursor: pointer; /* Pointer cursor on hover */
     display: flex;
@@ -183,9 +184,7 @@ input[type="checkbox"]:checked {
 .checkboxes:checked::after {
     content: '\2713';
     font-size: 40px;
-    color: black;
-    /* text-align: center; */
-    /* position: relative; */
+    color: white;
     height: 100%;
     display: flex;
     align-items: center;
@@ -205,9 +204,4 @@ h4 {
 p {
     font-size: 1.5em;
     font-weight: bold;
-}
-
-.red-button {
-    width: 100%;
-    padding: 1rem 0;
 }
