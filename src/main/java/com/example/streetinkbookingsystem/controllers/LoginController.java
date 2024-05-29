@@ -27,7 +27,10 @@ public class LoginController {
      */
     @GetMapping("/login")
     public String login() {
-         // loginService.hashExistingPasswords();
+        //If you have just run the script for the database
+        // for the first time, then you need to run this method to ensure that the
+        // passwords are hashed, otherwise you will get an error
+        // loginService.hashExistingPasswords();
         return "home/login";
     }
 
