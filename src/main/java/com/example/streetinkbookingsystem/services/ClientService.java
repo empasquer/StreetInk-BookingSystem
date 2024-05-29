@@ -48,15 +48,35 @@ public class ClientService {
         return clientRepository.getClientsByFirstName(firstname);
     }
 
+    /**
+     * @author Emma
+     * @param clientId id of client to get
+     * @return Client object
+     */
     public Client getClientFromClientId(int clientId) {
         return clientRepository.getClientFromClientId(clientId);
     }
 
+    /**
+     * @author Emma
+     *
+     * @param firstName   The first name of the client.
+     * @param lastName    The last name of the client.
+     * @param email       The email address of the client.
+     * @param phoneNumber The phone number of the client.
+     * @param description A brief description or note about the client.
+     * @param clientId    The unique identifier of the client to be updated.
+     */
     public void updateClient(String firstName, String lastName, String email, int phoneNumber, String description,
                              int clientId ) {
         clientRepository.updateClient(firstName, lastName,email, phoneNumber, description, clientId);
     }
 
+    /**
+     * @author Emma
+     *
+     * @param clientId client id to delete
+     */
     public void deleteClientInfoByClientId(int clientId) {
         clientRepository.updateClient("Unknown", null, "unknown",
                 0, null, clientId);
