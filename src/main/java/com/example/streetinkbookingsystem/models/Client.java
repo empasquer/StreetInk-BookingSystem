@@ -1,5 +1,7 @@
 package com.example.streetinkbookingsystem.models;
-
+/**
+ * @author everyone
+ */
 public class Client extends Person implements Comparable<Client>{
     private int id;
     private String description;

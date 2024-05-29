@@ -33,8 +33,8 @@ public class TattooArtistRepository {
 
     /**
      * @author Munazzah
-     * @param profileUsername
-     * @return TattooArtist
+     * @param profileUsername The username of the tattoo artist to be retrieved
+     * @return A TattooArtist object if found, or null if no artist with the specified username exists
      */
     public TattooArtist getTattooArtistByUsername(String profileUsername) {
         String query = "SELECT * FROM tattoo_artist WHERE username = ?";
@@ -48,8 +48,8 @@ public class TattooArtistRepository {
 
     /**
      * @author Munazzah
-     * @param username
-     * @param password
+     * @param username The username of the tattoo artist whose password needs to be updated
+     * @param password The new password to be set for the tattoo artist
      */
     public void updatePassword(String username, String password) {
         String query = "UPDATE tattoo_artist SET password=? WHERE username=?";
@@ -58,8 +58,8 @@ public class TattooArtistRepository {
 
     /**
      * @author Munazzah
-     * @param username
-     * @return String
+     * @param username The username of the tattoo artist whose password needs to be retrieved
+     * @return The password of the tattoo artist, or null if no artist is found with the given username
      */
     public String getPassword(String username) {
         String query = "SELECT password FROM tattoo_artist WHERE username=?";
@@ -70,6 +70,11 @@ public class TattooArtistRepository {
         }
     }
 
+    /**
+     * @author Munazzah
+     * @param username The username of the tattoo artist whose email needs to be retrieved
+     * @return The email of the tattoo artist, or null if no artist is found with the given username
+     */
     public String getEmail(String username) {
         String query = "SELECT email FROM tattoo_artist WHERE username=?";
         try {

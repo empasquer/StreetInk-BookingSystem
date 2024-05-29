@@ -1,7 +1,9 @@
 package com.example.streetinkbookingsystem.models;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-
+/**
+ * @author everyone
+ */
 public class Person {
     private String firstName;
     private String lastName;

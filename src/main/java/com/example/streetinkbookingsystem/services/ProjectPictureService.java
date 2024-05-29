@@ -39,7 +39,10 @@ public class ProjectPictureService {
         return base64Images;
     }
 
-
+    /**
+     * @author Munazzah
+     * @param pictureList A list of picture IDs representing the project pictures to be deleted
+     */
     public void deleteProjectPictures(List<Integer> pictureList) {
         for (Integer pictureId : pictureList){
             projectPictureRepository.deleteProjectPictureById(pictureId);

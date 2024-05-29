@@ -1,7 +1,9 @@
 package com.example.streetinkbookingsystem.models;
 
 import java.util.Base64;
-
+/**
+ * @author everyone
+ */
 public class TattooArtist extends Person {
     private String username;
     private String password;
